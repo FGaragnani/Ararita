@@ -1,5 +1,5 @@
 # Ararita
-Inspired by classic videogames such as **Final Fantasy I** and **Phantasy Star II*, Ararita follows as a turn-based RPG with plenty of personalization options!
+Inspired by classic videogames such as **Final Fantasy I** and **Phantasy Star II**, Ararita follows as a turn-based RPG with a specific focus to character personalization.
 
 ## Table of Contents
 * [Ararita](#Ararita)
