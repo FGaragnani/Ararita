@@ -20,3 +20,4 @@ Planned:
   
 ## License
 
+All code is distributed under the MIT license (see LICENSE).
