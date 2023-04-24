@@ -2,6 +2,7 @@ package com.global;
 
 import com.global.battlers.AbstractBattler;
 import com.global.battlers.PC;
+import com.global.spells.Spell;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -14,30 +15,24 @@ import java.util.*;
 
 public class Global {
 
-    /** Specifies to which index each zone refers to */
-    final public static int RIGHT_HAND = 0;
-    final public static int LEFT_HAND = 1;
-    final public static int HEAD = 2;
-    final public static int TORSO = 3;
-    final public static int LEGS = 4;
-    final public static int ACCESSORY = 5;
-
     final public static int MAX_PARTY_MEMBERS = 4;
 
     final static Path globalSets = Path.of("src/main/java/com/global/global.json");
     final static Path classSets = Path.of("src/main/java/com/global/classes");
     final static Path characterSets = Path.of("src/main/java/com/global/characters");
+    final static Path spellSets = Path.of("src/main/java/com/global/spells/data");
 
     /**
-     * A new class is added in the global manager; note: the name of the class MUST BE unique.
-     * @param className the name of the class to add
+     * A new element is added in a global manager's array; note: the name MUST BE unique.
+     * @param name the name of the class to add
+     * @param key the key to access the array
      * @throws IOException due to 'nio' usage
      */
-    public static void addClassName(String className) throws IOException {
-        if (!isPresentInJSONGlobal(className, "classNamesSet")) {
+    public static void addInGlobalArray(String name, String key) throws IOException {
+        if (!isPresentInJSONGlobal(name, key)) {
             String content = new String(Files.readAllBytes(globalSets));
             JSONObject jsonGlobal = new JSONObject(content);
-            jsonGlobal.getJSONArray("classNamesSet").put(className);
+            jsonGlobal.getJSONArray(key).put(name);
             FileWriter fileWriter = new FileWriter(globalSets.toFile());
             fileWriter.write(jsonGlobal.toString(4));
             fileWriter.close();
@@ -47,7 +42,7 @@ public class Global {
     /**
      * Adds a new class as a separate file
      * @param abstractBattler the abstract battler onto which create the JSON file
-     * @throws IOException due to 'nio'usage
+     * @throws IOException due to 'nio' usage
      */
     public static void addClass(AbstractBattler abstractBattler) throws IOException {
         File classFile = new File(classSets + "/" + abstractBattler.getCharClass() + ".json");
@@ -56,8 +51,8 @@ public class Global {
             FileWriter fileWriter = new FileWriter(classFile);
             fileWriter.write(new JSONObject(abstractBattler).toString(4));
             fileWriter.close();
-            addClassName(abstractBattler.getCharClass());
         }
+        addInGlobalArray(abstractBattler.getCharClass(), "classNamesSet");
     }
 
     /**
@@ -139,6 +134,36 @@ public class Global {
             fileWriter.write(jsonGlobal.toString(4));
             fileWriter.close();
         }
+    }
+
+    /**
+     * Updates an existing character; if the character doesn't exists, the function acts as addCharacter()
+     * @param character the character to update
+     * @throws IOException due to 'nio' usage
+     */
+    public static void updateCharacter(PC character) throws IOException {
+        File charFile = new File(characterSets + "/" + character.getName() + ".json");
+        if (!charFile.exists()) {
+            charFile.createNewFile();
+            FileWriter fileWriter = new FileWriter(charFile);
+            fileWriter.write(new JSONObject(character).toString(4));
+            fileWriter.close();
+        } else {
+            FileWriter fileWriter = new FileWriter(charFile);
+            fileWriter.write(new JSONObject(character).toString(4));
+            fileWriter.close();
+        }
+    }
+
+    public static void addSpell(Spell spell) throws IOException {
+        File spellFile = new File(spellSets + "/" + spell.getName() + ".json");
+        if(!spellFile.exists()){
+            spellFile.createNewFile();
+            FileWriter fileWriter = new FileWriter(spellFile);
+            fileWriter.write(new JSONObject(spell).toString(4));
+            fileWriter.close();
+        }
+        addInGlobalArray(spell.getName(), "spellNamesSet");
     }
 
     /**

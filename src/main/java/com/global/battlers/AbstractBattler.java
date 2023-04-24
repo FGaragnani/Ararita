@@ -160,6 +160,7 @@ public abstract class AbstractBattler implements Battler {
         for (int i = currLevel; i < getLevel(); i++) {
             levelUp();
         }
+        check();
     }
 
     public int getStrength() {

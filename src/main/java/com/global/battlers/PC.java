@@ -11,9 +11,11 @@ public class PC extends AbstractBattler {
     final static double HP_VIGOR_EFFECTIVENESS = 7;
     final static double HP_SECOND_STAT_EFFECTIVENESS = 4.5;
     final static double HP_THIRD_STAT_EFFECTIVENESS = 2.5;
+    final static double HP_LEVEL_EFFECTIVENESS = 1.7;
     final static double MP_INTELLIGENCE_EFFECTIVENESS = 8.5;
     final static double MP_SECOND_STAT_EFFECTIVENESS = 4;
     final static double MP_THIRD_STAT_EFFECTIVENESS = 1.25;
+    final static double MP_LEVEL_EFFECTIVENESS = 2.2;
 
     final static double MAIN_STAT_INCREASE = 0.15;
     final static double MAIN_EQUAL_STAT_INCREASE = 0.15;
@@ -26,7 +28,9 @@ public class PC extends AbstractBattler {
 
     String name;
 
-    /** Initializes a new Playing Character.
+    /**
+     * Initializes a new Playing Character.
+     *
      * @param name refers to the unique name of the character
      * @param charClass refers to the existing class the character will have
      */
@@ -46,6 +50,7 @@ public class PC extends AbstractBattler {
 
     /**
      * Tells if the character is dead
+     *
      * @return true, if the character is currently dead
      */
     public boolean isDead() {
@@ -54,6 +59,7 @@ public class PC extends AbstractBattler {
 
     /**
      * Reduces the character's current HP
+     *
      * @param loss how much HP the character loses
      */
     public void loseHP(int loss) {
@@ -63,6 +69,7 @@ public class PC extends AbstractBattler {
 
     /**
      * Reduces the character's current MP
+     *
      * @param loss how much MP the character loses
      */
     public void loseMP(int loss) {
@@ -88,6 +95,7 @@ public class PC extends AbstractBattler {
 
     /**
      * Determines the character's maximum Health Points
+     *
      * @return the maximum Health Points
      */
     @Override
@@ -96,11 +104,13 @@ public class PC extends AbstractBattler {
         maxHP += Math.floor(Math.max(getVigor(), 1) * HP_VIGOR_EFFECTIVENESS);
         maxHP += Math.floor(Math.max(Math.max(getStrength(), getAgility()), 1) * HP_SECOND_STAT_EFFECTIVENESS);
         maxHP += Math.floor(Math.max(Math.min(getStrength(), getAgility()), 1) * HP_THIRD_STAT_EFFECTIVENESS);
+        maxHP += Math.floor(getLevel() * HP_LEVEL_EFFECTIVENESS);
         return maxHP;
     }
 
     /**
      * Determines the character's maximum Mana Points
+     *
      * @return the maximum Mana Points
      */
     @Override
@@ -109,6 +119,7 @@ public class PC extends AbstractBattler {
         maxMP += Math.floor(Math.max(getIntelligence(), 1) * MP_INTELLIGENCE_EFFECTIVENESS);
         maxMP += Math.floor(Math.max(Math.max(getSpirit(), getArcane()), 1) * MP_SECOND_STAT_EFFECTIVENESS);
         maxMP += Math.floor(Math.max(Math.min(getSpirit(), getArcane()), 1) * MP_THIRD_STAT_EFFECTIVENESS);
+        maxMP += Math.floor(getLevel() * MP_LEVEL_EFFECTIVENESS);
         return maxMP;
     }
 
@@ -170,28 +181,29 @@ public class PC extends AbstractBattler {
 
         RandomGenerator rng = RandomGenerator.getDefault();
 
-        if(rng.nextDouble(0, 1) <= PERCENTAGE_INCREASE) {
+        if (rng.nextDouble(0, 1) <= PERCENTAGE_INCREASE) {
             setStrength(getStrength() + 1);
         }
-        if(rng.nextDouble(0, 1) <= PERCENTAGE_INCREASE) {
+        if (rng.nextDouble(0, 1) <= PERCENTAGE_INCREASE) {
             setIntelligence(getIntelligence() + 1);
         }
-        if(rng.nextDouble(0, 1) <= PERCENTAGE_INCREASE) {
+        if (rng.nextDouble(0, 1) <= PERCENTAGE_INCREASE) {
             setVigor(getVigor() + 1);
         }
-        if(rng.nextDouble(0, 1) <= PERCENTAGE_INCREASE) {
+        if (rng.nextDouble(0, 1) <= PERCENTAGE_INCREASE) {
             setAgility(getAgility() + 1);
         }
-        if(rng.nextDouble(0, 1) <= PERCENTAGE_INCREASE) {
+        if (rng.nextDouble(0, 1) <= PERCENTAGE_INCREASE) {
             setSpirit(getSpirit() + 1);
         }
-        if(rng.nextDouble(0, 1) <= PERCENTAGE_INCREASE) {
+        if (rng.nextDouble(0, 1) <= PERCENTAGE_INCREASE) {
             setArcane(getArcane() + 1);
         }
     }
 
     /**
      * Determines the character's critical chance
+     *
      * @return the character's critical chance, topped at 50%
      */
     @Override

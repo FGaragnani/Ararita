@@ -18,6 +18,6 @@
         "Bow",
         "Dagger"
     ],
-    "party": ["Domenico Modugno"],
-    "classNamesSet": []
+    "party": [],
+    "classNamesSet": ["Knight"]
 }
