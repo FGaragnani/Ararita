@@ -1,0 +1,23 @@
+{
+    "spellTypesSet": [
+        "Light",
+        "Illusion",
+        "Fire",
+        "Earth",
+        "Wind",
+        "Water",
+        "Chaos"
+    ],
+    "otherCharacters": [],
+    "spellNamesSet": [],
+    "weaponTypesSet": [
+        "Sword",
+        "Staff",
+        "Gloves",
+        "Spear",
+        "Bow",
+        "Dagger"
+    ],
+    "party": ["Domenico Modugno"],
+    "classNamesSet": []
+}
