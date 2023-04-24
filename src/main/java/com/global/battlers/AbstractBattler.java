@@ -82,6 +82,10 @@ public abstract class AbstractBattler implements Battler {
     Map<String, Integer> proficiencies;
     Set<String> spellTypes;
 
+    /**
+     * Creates a new AbstractBattler; note: this will be used to create a new class.
+     * @throws IOException due to 'nio' usage
+     */
     public AbstractBattler(int strength, int intelligence, int vigor, int agility, int spirit, int arcane, String charClass, int baseEXP, double increaseEXP, double exponentEXP, Map<String, Integer> proficiencies, Set<String> spellTypes) throws IOException {
         this.strength = strength;
         this.intelligence = intelligence;
@@ -109,22 +113,32 @@ public abstract class AbstractBattler implements Battler {
         Global.addClass(this);
     }
 
+    /**
+     * Checks if the max HP and the max MP are up-to-date.
+     */
     public void check() {
         this.HP = maxHP();
         this.MP = maxMP();
-        charLevel();
     }
 
+    /**
+     * Updates gradually the character's level.
+     */
     @Override
     public void charLevel() {
         for (int i = 1; ; i++) {
             if (this.getEXP() < EXPForLevel(i)) {
-                this.level = i;
+                this.setLevel(i);
                 break;
             }
         }
     }
 
+    /**
+     * Returns the needed EXP to reach a certain level
+     * @param level the level to reach
+     * @return the EXP needed to reach it
+     */
     @Override
     public int EXPForLevel(int level) {
         if (level == 0) {
@@ -135,6 +149,10 @@ public abstract class AbstractBattler implements Battler {
         return toRet + EXPForLevel(level - 1);
     }
 
+    /**
+     * Gives EXP to the character
+     * @param gainedEXP the amount of EXP to give
+     */
     public void gainEXP(int gainedEXP) {
         int currLevel = getLevel();
         setEXP(getEXP() + gainedEXP);
