@@ -13,10 +13,10 @@ public class Spell {
     String type;
     int basePower;
 
-    Map.Entry<String, Double> statusEffect;
+    Map<String, Double> statusEffects;
 
     /**
-     * Spell's constructor; note that when the constructor will be called, the unicity of the name must already be
+     * Spell's constructor; note that when the constructor will be called, the uniqueness of the name must already be
      * determined.
      * @param name the unique name of the spell
      * @param MPCost how much MP is needed to cast the spell
@@ -25,12 +25,12 @@ public class Spell {
      * in battle)
      */
     public Spell(String name, int MPCost, String type, int basePower,
-                 Optional<Map.Entry<String, Double>> statusEffect) throws IOException {
+                 Map<String, Double> statusEffects) throws IOException {
         this.name = name;
         this.MPCost = MPCost;
         this.type = type;
         this.basePower = basePower;
-        this.statusEffect = statusEffect.orElse(null);
+        this.statusEffects = statusEffects;
         Global.addSpell(this);
     }
 
@@ -48,5 +48,9 @@ public class Spell {
 
     public int getBasePower() {
         return basePower;
+    }
+
+    public Map<String, Double> getStatusEffects() {
+        return statusEffects;
     }
 }

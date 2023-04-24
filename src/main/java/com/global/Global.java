@@ -137,7 +137,7 @@ public class Global {
     }
 
     /**
-     * Updates an existing character; if the character doesn't exists, the function acts as addCharacter()
+     * Updates an existing character; if the character doesn't exist, the function acts as addCharacter()
      * @param character the character to update
      * @throws IOException due to 'nio' usage
      */
