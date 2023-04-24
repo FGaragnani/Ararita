@@ -4,7 +4,6 @@ import com.global.Global;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.List;
 import java.util.random.RandomGenerator;
 
 public class PC extends AbstractBattler {
@@ -46,23 +45,29 @@ public class PC extends AbstractBattler {
     }
 
     /**
-     * Tells if the character is dead.
-     * @return true, if the character is dead.
+     * Tells if the character is dead
+     * @return true, if the character is currently dead
      */
     public boolean isDead() {
         return getCurrHP() == 0;
     }
 
-    public int loseHP(int loss) {
+    /**
+     * Reduces the character's current HP
+     * @param loss how much HP the character loses
+     */
+    public void loseHP(int loss) {
         int oldHP = getCurrHP();
         setCurrHP(Math.max(0, getCurrHP() - loss));
-        return Math.min(oldHP, oldHP - loss);
     }
 
-    public int loseMP(int loss) {
+    /**
+     * Reduces the character's current MP
+     * @param loss how much MP the character loses
+     */
+    public void loseMP(int loss) {
         int oldMP = getCurrMP();
         setCurrMP(Math.max(0, getCurrMP() - loss));
-        return Math.min(oldMP, oldMP - loss);
     }
 
     public int getCurrHP() {
@@ -81,6 +86,10 @@ public class PC extends AbstractBattler {
         this.currMP = currMP;
     }
 
+    /**
+     * Determines the character's maximum Health Points
+     * @return the maximum Health Points
+     */
     @Override
     public int maxHP() {
         int maxHP = 0;
@@ -90,6 +99,10 @@ public class PC extends AbstractBattler {
         return maxHP;
     }
 
+    /**
+     * Determines the character's maximum Mana Points
+     * @return the maximum Mana Points
+     */
     @Override
     public int maxMP() {
         int maxMP = 0;
@@ -99,6 +112,15 @@ public class PC extends AbstractBattler {
         return maxMP;
     }
 
+    /**
+     * The character is levelled up, and the stats are increased.
+     * The algorithm runs as follows: the primary main stats are determined (Strength, Intelligence or both of them)
+     * and increased;
+     * then the secondary main stats are determined (Strength -> Vigor and/or Agility, Intelligence -> Spirit and/or
+     * Arcane), and increased;
+     * then the ternary main stats are determined and increased.
+     * Finally, every stat may be increased following a 1:8 probability (see PERCENTAGE_INCREASE).
+     */
     @Override
     public void levelUp() {
         if (getIntelligence() > getStrength()) {
@@ -168,6 +190,10 @@ public class PC extends AbstractBattler {
         }
     }
 
+    /**
+     * Determines the character's critical chance
+     * @return the character's critical chance, topped at 50%
+     */
     @Override
     public double critChance() {
         if (getAgility() >= 100) {

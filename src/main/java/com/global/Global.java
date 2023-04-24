@@ -28,6 +28,11 @@ public class Global {
     final static Path classSets = Path.of("src/main/java/com/global/classes");
     final static Path characterSets = Path.of("src/main/java/com/global/characters");
 
+    /**
+     * A new class is added; note: the name of the class MUST BE unique.
+     * @param className the name of the class to add
+     * @throws IOException due to 'nio' usage
+     */
     public static void addClassName(String className) throws IOException {
         if (!isPresentInJSONGlobal(className, "classNamesSet")) {
             String content = new String(Files.readAllBytes(globalSets));
@@ -40,7 +45,7 @@ public class Global {
     }
 
     public static void addClass(AbstractBattler battler) throws IOException {
-        File classFile = new File(classSets.toString() + "/" + battler.getCharClass() + ".json");
+        File classFile = new File(classSets + "/" + battler.getCharClass() + ".json");
         if (!classFile.exists()) {
             classFile.createNewFile();
             FileWriter fileWriter = new FileWriter(classFile);
@@ -51,7 +56,7 @@ public class Global {
     }
 
     public static void addCharacter(PC battler) throws IOException {
-        File charFile = new File(characterSets.toString() + "/" + battler.getName() + ".json");
+        File charFile = new File(characterSets + "/" + battler.getName() + ".json");
         if (!charFile.exists()) {
             charFile.createNewFile();
             FileWriter fileWriter = new FileWriter(charFile);
