@@ -7,16 +7,26 @@ Inspired by classic videogames such as **Final Fantasy I** and **Phantasy Star I
   * [License](#License)
 
 ## Features
-Implemented:
-* Level up and increase stats
+**Implemented**:
+* Level up your heroes and increase their stats
+* Manage your inventory
 
-Planned:
+
+**Planned**:
 * Recruiting heroes 
   * Creating their classes
   * Creating spells
+  * Equip them with weapons
 * Venture in dangerous dungeons
+  * Prepare yourself by buying merch
   * Turn-based combat system
   * 3 (or more) dungeons with a difficulty growth
+  
+  
+## Credits
+
+* [org.JSON library](https://mvnrepository.com/artifact/org.json/json)
+* Sol Schori font by [Noam Goldfarb](https://slimeplease.artstation.com/)
   
 ## License
 
