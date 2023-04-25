@@ -53,9 +53,12 @@ public class DesktopLauncher {
 		effect.put("Arcane", 1);
 		Item test4 = new ConsumableItem("Grim Soul", 1000, "Permanently boost a character's arcane.",
 				effect);
+				
+		ConsumableItem test5 = (ConsumableItem) Global.getItem("Potion");
 
  		*/
-		
+
+
 		//new Lwjgl3Application(new AraritaGame(), config);
 	}
 }
