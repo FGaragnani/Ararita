@@ -35,7 +35,12 @@ public class DesktopLauncher {
 		PC test2 = Global.getCharacter("Ruggero Ruggeri");
 		test1.unequip(Global.getWeapon("Wooden Sword"));
 
+		test1.learnSpell(new Spell("Fireball", 10, "Fire", 1, new HashMap<>()));
 		*/
+
+		Global.getCharacter("Ruggero Ruggeri").forgetSpell(Global.getSpell("Fireball"));
+
+
 		/*
 
 		The character gains EXP and its stats are updated.

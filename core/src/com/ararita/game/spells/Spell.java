@@ -4,6 +4,7 @@ import com.ararita.game.Global;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Objects;
 
 public class Spell {
 
@@ -51,5 +52,20 @@ public class Spell {
 
     public Map<String, Double> getStatusEffects() {
         return statusEffects;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Spell spell = (Spell) o;
+        return Objects.equals(name, spell.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

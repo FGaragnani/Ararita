@@ -236,7 +236,7 @@ public class PC extends AbstractBattler {
     }
 
     public void equip(Weapon weapon) throws IOException{
-        if(Global.MAX_WEAPON_EQUIPPED > getWeapons().size()){
+        if(Global.MAX_WEAPON_EQUIPPED > getWeapons().size() && Global.getMapJSONGlobal("inventory").containsKey(weapon.getName())){
             weapons.add(weapon);
             Global.equip(getName(), weapon);
         }
@@ -248,4 +248,24 @@ public class PC extends AbstractBattler {
             Global.unequip(getName(), weapon);
         }
     }
+
+    public boolean canLearn(Spell spell){
+        return spellTypes.contains(spell.getType()) && !spells.contains(spell) && spells.size() < Global.MAX_SPELLS_LEARNT;
+    }
+
+    public void learnSpell(Spell spell) throws IOException {
+        if(canLearn(spell)){
+            spells.add(spell);
+            Global.addSpell(spell);
+            Global.learnSpell(getName(), spell);
+        }
+    }
+
+    public void forgetSpell(Spell spell) throws IOException{
+        if(spells.contains(spell)){
+            spells.remove(spell);
+            Global.forgetSpell(getName(), spell);
+        }
+    }
+
 }

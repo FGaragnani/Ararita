@@ -25,6 +25,7 @@ public class Global {
     final public static int MAX_WEAPON_EQUIPPED = 1;
     final public static int MAX_INVENTORY_SPACE = 200;
     final public static double RESELL_MULTIPLIER = 0.75;
+    final public static int MAX_SPELLS_LEARNT = 20;
 
     final static Path globalSets = Path.of(Paths.get("..").normalize().toAbsolutePath().toString(), "core/src/com/ararita/game/global.json");
     final static Path classSets = Path.of(Paths.get("..").normalize().toAbsolutePath().toString(), "core/src/com" + "/ararita/game/classes");
@@ -660,6 +661,34 @@ public class Global {
                     "weapons") < MAX_WEAPON_EQUIPPED) {
                 removeItem(weapon);
                 jsonGlobal.getJSONArray("weapons").put(weapon.getName());
+                FileWriter fileWriter = new FileWriter(charFile);
+                fileWriter.write(jsonGlobal.toString(4));
+                fileWriter.close();
+            }
+        }
+    }
+
+    public static void learnSpell(String charName, Spell spell) throws IOException{
+        if(getCharacter(charName).canLearn(spell)){
+            File charFile = new File(characterSets + "/" + charName + ".json");
+            if (charFile.exists()) {
+                String content = new String(Files.readAllBytes(charFile.toPath()));
+                JSONObject jsonGlobal = new JSONObject(content);
+                jsonGlobal.getJSONArray("spells").put(spell.getName());
+                FileWriter fileWriter = new FileWriter(charFile);
+                fileWriter.write(jsonGlobal.toString(4));
+                fileWriter.close();
+                }
+            }
+        }
+
+    public static void forgetSpell(String charName, Spell spell) throws IOException{
+        if(getCharacter(charName).getSpells().contains(spell)){
+            File charFile = new File(characterSets + "/" + charName + ".json");
+            if (charFile.exists()) {
+                String content = new String(Files.readAllBytes(charFile.toPath()));
+                JSONObject jsonGlobal = new JSONObject(content);
+                jsonGlobal.getJSONArray("spells").remove(jsonGlobal.getJSONArray("spells").toList().indexOf(spell.getName()));
                 FileWriter fileWriter = new FileWriter(charFile);
                 fileWriter.write(jsonGlobal.toString(4));
                 fileWriter.close();

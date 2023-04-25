@@ -9,7 +9,7 @@
         "Chaos"
     ],
     "otherCharacters": [],
-    "spellNamesSet": [],
+    "spellNamesSet": ["Fireball"],
     "money": 0,
     "weaponTypesSet": [
         "Sword",

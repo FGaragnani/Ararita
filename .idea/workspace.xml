@@ -8,8 +8,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/Global.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/Global.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/PC.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/PC.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/items/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/Weapon.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/items/Weapon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/spells/Spell.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/spells/Spell.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -273,5 +273,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java</url>
+          <line>40</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
