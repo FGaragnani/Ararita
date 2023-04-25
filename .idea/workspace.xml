@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f872aca8-e378-4540-baef-0dc94b49fae0" name="Changes" comment="Added methods to update character and save a spell onto file">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/global/items/Consumable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/global/items/ConsumableItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/global/items/Item.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/global/Global.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/global/Global.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/global/TestApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/global/TestApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/global/battlers/AbstractBattler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/global/battlers/AbstractBattler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/global/battlers/PC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/global/battlers/PC.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/global/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/global/global.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/global/spells/Spell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/global/spells/Spell.java" afterDir="false" />
     </list>
@@ -44,8 +48,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -222,17 +226,6 @@
     <MESSAGE value="Commented methods." />
     <MESSAGE value="Added methods to update character and save a spell onto file" />
     <option name="LAST_COMMIT_MESSAGE" value="Added methods to update character and save a spell onto file" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/global/TestApp.java</url>
-          <line>19</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

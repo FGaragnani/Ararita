@@ -19,5 +19,7 @@
         "Dagger"
     ],
     "party": [],
-    "classNamesSet": ["Knight"]
+    "classNamesSet": ["Knight"],
+    "money": 0,
+    "inventory": {}
 }
