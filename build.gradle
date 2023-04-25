@@ -8,6 +8,10 @@ buildscript {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         google()
     }
+    dependencies {
+        
+
+    }
 }
 
 allprojects {
@@ -15,7 +19,7 @@ allprojects {
 
     version = '1.0'
     ext {
-        appName = "ararita"
+        appName = "Ararita"
         gdxVersion = '1.11.0'
         roboVMVersion = '2.3.19'
         box2DLightsVersion = '1.5'
