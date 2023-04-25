@@ -10,7 +10,6 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -54,6 +53,12 @@
       </state>
     </system>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="2OucksaoucjS1x8BiMh66uviL2D" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -63,7 +68,10 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/filip/Desktop/Universita'/Anno II - Semestre II/Programmazione ad Oggetti/Progetti/Ararita"
+    "last_opened_file_path": "C:/Users/filip/Desktop/Universita'/Anno II - Semestre II/Programmazione ad Oggetti/Progetti/Ararita",
+    "project.structure.last.edited": "Problems",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
 }]]></component>
   <component name="RunManager" selected="Gradle.Ararita:desktop [run]">
@@ -107,7 +115,7 @@
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/desktop" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
+        <option name="scriptParameters" value="" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -123,6 +131,10 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Android App.android" />
+      <item itemvalue="Gradle.Ararita:desktop [run]" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.Ararita:desktop [run]" />

@@ -1,4 +1,4 @@
-package com.global;
+package com.ararita.game;
 
 import com.global.battlers.AbstractBattler;
 import com.global.battlers.PC;
