@@ -21,14 +21,14 @@
     ],
     "inventory": {},
     "party": [],
-    "classNamesSet": [
-        "Knight",
-        "Black Mage"
-    ],
     "statusEffectsSet": [
         "Burn",
         "Poison",
         "Paralysis",
         "Blindness"
+    ],
+    "classNamesSet": [
+        "Knight",
+        "Black Mage"
     ]
 }

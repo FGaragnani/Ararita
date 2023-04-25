@@ -57,12 +57,26 @@ public class DesktopLauncher {
 
 		ConsumableItem test5 = (ConsumableItem) Global.getItem("Potion");
 
+
 		 */
+
+		/*
 
 		Map<String, Integer> attributes = new HashMap<>();
 		attributes.put("Strength", 40); attributes.put("Agility", -2);
 		Item test6 = new Weapon("Phinia", 1000, "A sword that was thought to have been lost in time.",
 				attributes, "Sword");
+
+		Global.setMoney(1000);
+
+		if(Global.canBuy(test6)){
+			Global.buy(test6);
+			Global.sell(test6);
+		}
+
+		Global.setMoney(0);
+
+		*/
 
 		//new Lwjgl3Application(new AraritaGame(), config);
 	}

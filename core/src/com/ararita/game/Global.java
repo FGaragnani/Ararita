@@ -23,6 +23,7 @@ public class Global {
     final public static int MAX_PARTY_MEMBERS = 4;
     final public static int MAX_WEAPON_EQUIPPED = 1;
     final public static int MAX_INVENTORY_SPACE = 100;
+    final public static double RESELL_MULTIPLIER = 0.75;
 
     final static Path globalSets = Path.of(Paths.get("..").normalize().toAbsolutePath().toString(), "core/src/com/ararita/game/global.json");
     final static Path classSets = Path.of(Paths.get("..").normalize().toAbsolutePath().toString(), "core/src/com" + "/ararita/game/classes");
@@ -391,7 +392,7 @@ public class Global {
     public static void setMoney(int amount) throws IOException {
         String content = new String(Files.readAllBytes(globalSets));
         JSONObject jsonGlobal = new JSONObject(content);
-        jsonGlobal.put("money", amount + getIntFromGlobalArray("money"));
+        jsonGlobal.put("money", amount);
         FileWriter fileWriter = new FileWriter(globalSets.toFile());
         fileWriter.write(jsonGlobal.toString(4));
         fileWriter.close();
@@ -419,19 +420,18 @@ public class Global {
      * @throws IOException If the file cannot be read or written upon.
      */
     public static void sell(Item item) throws IOException {
-        if (!getMapJSONGlobal("inventory").containsValue(item.getName())) {
+        if (!getMapJSONGlobal("inventory").containsKey(item.getName())) {
             return;
         }
         removeItem(item);
-        Global.setMoney(Global.getMoney() + item.getPrice());
+        Global.setMoney(Global.getMoney() + (int) Math.floor(item.getPrice() * RESELL_MULTIPLIER));
     }
 
     public static void buy(Item item) throws IOException{
-        if(!canBuy(item)){
-            return;
+        if (canBuy(item)) {
+            addItem(item, 1);
+            setMoney(getMoney() - item.getPrice());
         }
-        addItem(item, 1);
-        setMoney(getMoney() - item.getPrice());
     }
 
     /**
