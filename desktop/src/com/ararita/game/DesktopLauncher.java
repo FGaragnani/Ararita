@@ -1,5 +1,6 @@
 package com.ararita.game;
 
+import com.ararita.game.battlers.AbstractBattler;
 import com.ararita.game.battlers.PC;
 import com.ararita.game.items.ConsumableItem;
 import com.ararita.game.items.Item;
@@ -9,8 +10,7 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.ararita.game.AraritaGame;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 
 // Please note that on macOS your application needs to be started with the -XstartOnFirstThread JVM argument
@@ -23,8 +23,12 @@ public class DesktopLauncher {
 		/*
 		A new PC is created, is added either to the party or to 'other characters', and his file is created.
 		An error occurs if its class doesn't exist.
+		*/
 
-		PC test1 = new PC("Carletto Giochetto", "Knight");
+		/*
+		PC test0 = new PC("Carletto Giochetto", "Knight");
+		PC test1 = new PC("Ruggero Ruggeri", "Black Mage");
+		test1.gainEXP(1000);
 
 		The character gains EXP and its stats are updated.
 
@@ -39,12 +43,19 @@ public class DesktopLauncher {
 		Spell test3 = new Spell("Fire II", 30, "Fire", 2, statusEffect);
 		*/
 
+		/*
+
+		Creates a new item; the item.json file is hence created.
+
+
 
 		Map<String, Integer> effect = new HashMap<>();
-		effect.put("HP", 300);
-		Item test4 = new ConsumableItem("Maxima Potion", 200, effect);
+		effect.put("Arcane", 1);
+		Item test4 = new ConsumableItem("Grim Soul", 1000, "Permanently boost a character's arcane.",
+				effect);
 
-
-		new Lwjgl3Application(new AraritaGame(), config);
+ 		*/
+		
+		//new Lwjgl3Application(new AraritaGame(), config);
 	}
 }

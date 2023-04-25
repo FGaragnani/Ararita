@@ -15,23 +15,26 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.IntStream;
 
 public class Global {
 
     final public static int MAX_PARTY_MEMBERS = 4;
+    final public static int MAX_WEAPON_EQUIPPED = 1;
+    final public static int MAX_INVENTORY_SPACE = 100;
 
     final static Path globalSets = Path.of(Paths.get("..").normalize().toAbsolutePath().toString(), "core/src/com/ararita/game/global.json");
-    final static Path classSets = Path.of(Paths.get("..").normalize().toAbsolutePath().toString(), "core/src/com" +
-            "/ararita/game/classes");
+    final static Path classSets = Path.of(Paths.get("..").normalize().toAbsolutePath().toString(), "core/src/com" + "/ararita/game/classes");
     final static Path characterSets = Path.of(Paths.get("..").normalize().toAbsolutePath().toString(), "core/src/com/ararita/game/characters");
     final static Path spellSets = Path.of(Paths.get("..").normalize().toAbsolutePath().toString(), "core/src/com/ararita/game/spells/data");
-    final static Path itemSets = Path.of(Paths.get("..").normalize().toAbsolutePath().toString(), "core/src/com" +
-            "/ararita/game/items/data");
+    final static Path itemSets = Path.of(Paths.get("..").normalize().toAbsolutePath().toString(), "core/src/com" + "/ararita/game/items/data");
 
     /**
      * A new element is added in a global manager's array; note: the name MUST BE unique.
+     *
      * @param name The name of the class to add.
      * @param key The key to access the array.
+     *
      * @throws IOException If it can't open or write onto the file.
      */
     public static void addInGlobalArray(String name, String key) throws IOException {
@@ -47,11 +50,14 @@ public class Global {
 
     /**
      * Returns an int from the global JSON.
+     *
      * @param key To identify the needed int.
+     *
      * @return The needed int.
+     *
      * @throws IOException If the file cannot be read.
      */
-    public static int getIntFromGlobalArray(String key) throws IOException{
+    public static int getIntFromGlobalArray(String key) throws IOException {
         String content = new String(Files.readAllBytes(globalSets));
         JSONObject jsonGlobal = new JSONObject(content);
         return jsonGlobal.getInt(key);
@@ -59,7 +65,9 @@ public class Global {
 
     /**
      * Adds a new class as a separate file.
+     *
      * @param abstractBattler The abstract battler onto which create the JSON file.
+     *
      * @throws IOException If the file cannot be opened.
      */
     public static void addClass(AbstractBattler abstractBattler) throws IOException {
@@ -75,7 +83,9 @@ public class Global {
 
     /**
      * Adds a new character, and creates the appropriate file; if the party is full, it is added to the reserve.
+     *
      * @param battler The Playing Character to add.
+     *
      * @throws IOException If the file cannot be opened or written upon.
      */
     public static void addCharacter(PC battler) throws IOException {
@@ -95,7 +105,9 @@ public class Global {
 
     /**
      * A character is added in the global manager to the reserve; note: a character's name MUST BE unique.
+     *
      * @param charName The name of the character to add.
+     *
      * @throws IOException If the file cannot be opened or written upon.
      */
     public static void addToOtherCharacters(String charName) throws IOException {
@@ -111,7 +123,9 @@ public class Global {
 
     /**
      * Adds a character to the party in the global manager; note: a character's name MUST BE unique.
+     *
      * @param charName The name of the character.
+     *
      * @throws IOException If the file cannot be opened or written upon.
      */
     public static void addToParty(String charName) throws IOException {
@@ -139,7 +153,9 @@ public class Global {
 
     /**
      * A character is removed from the party in the global manager.
+     *
      * @param charName The name of the character to remove.
+     *
      * @throws IOException If the file cannot be opened or written upon.
      */
     public static void removeFromParty(String charName) throws IOException {
@@ -156,7 +172,9 @@ public class Global {
 
     /**
      * Updates an existing character; if the character doesn't exist, the function acts as addCharacter().
+     *
      * @param character The character to update.
+     *
      * @throws IOException If the file cannot be opened or written upon.
      */
     public static void updateCharacter(PC character) throws IOException {
@@ -175,12 +193,14 @@ public class Global {
 
     /**
      * Adds a spell; the method creates a JSON file to store info about it.
+     *
      * @param spell The spell to save.
+     *
      * @throws IOException If the file cannot be opened or written upon.
      */
     public static void addSpell(Spell spell) throws IOException {
         File spellFile = new File(spellSets + "/" + spell.getName() + ".json");
-        if(!spellFile.exists()){
+        if (!spellFile.exists()) {
             spellFile.createNewFile();
             FileWriter fileWriter = new FileWriter(spellFile);
             fileWriter.write(new JSONObject(spell).toString(4));
@@ -191,10 +211,13 @@ public class Global {
 
     /**
      * Checks the presence of an element in an array in the global manager.
+     *
      * @param identifier The id of the element.
      * @param key The name of the array.
-     * @return True, if the element does indeed exist.
      * @param <T> The type of the identifier.
+     *
+     * @return True, if the element does indeed exist.
+     *
      * @throws IOException If the file cannot be opened or read.
      */
     public static <T> boolean isPresentInJSONGlobal(T identifier, String key) throws IOException {
@@ -210,10 +233,13 @@ public class Global {
 
     /**
      * Returns an element took from a class JSON.
+     *
      * @param className The name of the class (unique).
      * @param identifier The id to get the needed element.
-     * @return The element to get.
      * @param <T> The type of the element to get.
+     *
+     * @return The element to get.
+     *
      * @throws IOException If the file cannot be opened or read.
      */
     public static <T> T getFromJSONClass(String className, String identifier) throws IOException {
@@ -226,9 +252,12 @@ public class Global {
     /**
      * Gets a double from a class JSON;
      * note: the getJSONClass wouldn't work with doubles, due to the JSON library usage of 'BigDecimal' class.
+     *
      * @param className The name of the class (unique).
      * @param identifier The id to get the needed element.
+     *
      * @return The double required.
+     *
      * @throws IOException If the file cannot be opened or read.
      */
     public static double getDoubleFromJSONClass(String className, String identifier) throws IOException {
@@ -241,10 +270,13 @@ public class Global {
 
     /**
      * Returns the index in which a certain identifier is in a JSON array in the global manager.
+     *
      * @param identifier The id to search for the element.
      * @param key To refer to the JSON array.
-     * @return An int referring to the index of the identifier in the array.
      * @param <T> For the identifier type.
+     *
+     * @return An int referring to the index of the identifier in the array.
+     *
      * @throws IOException If the file cannot be opened or read.
      */
     public static <T> int arrayIndexInJSONGlobal(T identifier, String key) throws IOException {
@@ -260,8 +292,11 @@ public class Global {
 
     /**
      * Returns the length of a JSON array in the global manager.
+     *
      * @param key To refer to the array.
+     *
      * @return An int referring to the array's length.
+     *
      * @throws IOException If the file cannot be opened or read.
      */
     public static int getArrayLengthJSONGlobal(String key) throws IOException {
@@ -272,10 +307,13 @@ public class Global {
 
     /**
      * Returns a List copied from a JSON Array of a class.
+     *
      * @param className The name of the class.
      * @param identifier The identifier to get the array.
-     * @return A List of T elements, a copy of the array.
      * @param <T> The type of the elements in the JSON array.
+     *
+     * @return A List of T elements, a copy of the array.
+     *
      * @throws IOException If the file cannot be opened or read.
      */
     public static <T> List<T> getArrayJSONClass(String className, String identifier) throws IOException {
@@ -290,8 +328,11 @@ public class Global {
 
     /**
      * Returns a Map from the global JSON.
+     *
      * @param identifier The id to get the map.
+     *
      * @return A Map of (String, Integer) entries.
+     *
      * @throws IOException If the file cannot be opened or read.
      */
     public static Map<String, Integer> getMapJSONGlobal(String identifier) throws IOException {
@@ -309,9 +350,12 @@ public class Global {
 
     /**
      * Returns a Map from a JSON file of a class.
+     *
      * @param className The name of the class.
      * @param identifier The id to get the map.
+     *
      * @return A Map of (String, Integer) entries.
+     *
      * @throws IOException If the file cannot be opened or read.
      */
     public static Map<String, Integer> getMapJSONClass(String className, String identifier) throws IOException {
@@ -329,22 +373,27 @@ public class Global {
 
     /**
      * Determines if an item is affordable for the party.
+     *
      * @param item The item to consider.
+     *
      * @return True, if the item could be bought.
+     *
      * @throws IOException If the file cannot be opened or read.
      */
-    public static boolean canBuy(Item item) throws IOException{
+    public static boolean canBuy(Item item) throws IOException {
         return (getIntFromGlobalArray("money") >= item.getPrice());
     }
 
     /**
      * A ConsumableItem is stored as a JSON file.
+     *
      * @param consumableItem The item to store.
+     *
      * @throws IOException If the file cannot be opened or written upon.
      */
-    public static void addConsumableItem(ConsumableItem consumableItem) throws IOException{
-        File specificItemSet = new File(itemSets.toString() + "/" + consumableItem.getName() + ".json");
-        if(!specificItemSet.exists()){
+    public static void addConsumableItem(ConsumableItem consumableItem) throws IOException {
+        File specificItemSet = new File(itemSets + "/" + consumableItem.getName() + ".json");
+        if (!specificItemSet.exists()) {
             specificItemSet.createNewFile();
             FileWriter fileWriter = new FileWriter(specificItemSet);
             fileWriter.write(new JSONObject(consumableItem).toString(4));
@@ -353,48 +402,81 @@ public class Global {
     }
 
     /**
+     * Determines if the inventory is full in the global manager.
+     *
+     * @return True, if the inventory is full.
+     *
+     * @throws IOException If the file cannot be read.
+     */
+    public static boolean isInventoryFull() throws IOException {
+        return getMapJSONGlobal("inventory").entrySet().stream().flatMapToInt((entry) -> IntStream.of(entry.getValue())).sum() >= MAX_INVENTORY_SPACE;
+    }
+
+    /**
      * Adds an item onto the inventory in global manager.
      * If the item is already present, the number count of the item is incremented; else,
      * the item is added.
+     *
      * @param item The item to add to the inventory.
      * @param count How many items to be added.
+     *
      * @throws IOException If the file cannot be read or written upon.
      */
-    public static void addItem(Item item, int count) throws IOException{
+    public static void addItem(Item item, int count) throws IOException {
         String content = new String(Files.readAllBytes(globalSets));
         JSONObject jsonGlobal = new JSONObject(content);
-        if(jsonGlobal.getJSONObject("inventory").has(item.getName())){
-            jsonGlobal.getJSONObject("inventory").put(item.getName(),
-                    jsonGlobal.getJSONObject("inventory").getInt(item.getName()) + count);
+        if (jsonGlobal.getJSONObject("inventory").has(item.getName())) {
+            jsonGlobal.getJSONObject("inventory").put(item.getName(), jsonGlobal.getJSONObject("inventory").getInt(item.getName()) + count);
         } else {
             jsonGlobal.getJSONObject("inventory").put(item.getName(), count);
         }
         FileWriter fileWriter = new FileWriter(globalSets.toFile());
         fileWriter.write(jsonGlobal.toString(4));
         fileWriter.close();
-        if(item instanceof ConsumableItem){
+        if (item instanceof ConsumableItem) {
             addConsumableItem((ConsumableItem) item);
         }
     }
 
     /**
      * Removes one item from the inventory. If the item is not present, nothing is done.
+     *
      * @param item The item to be removed.
+     *
      * @throws IOException If the file cannot be read or written upon.
      */
-    public static void removeItem(Item item) throws IOException{
+    public static void removeItem(Item item) throws IOException {
         String content = new String(Files.readAllBytes(globalSets));
         JSONObject jsonGlobal = new JSONObject(content);
-        if(!jsonGlobal.getJSONObject("inventory").has(item.getName())){
+        if (!jsonGlobal.getJSONObject("inventory").has(item.getName())) {
             return;
-        } else if(jsonGlobal.getJSONObject("inventory").getInt(item.getName()) <= 1) {
+        } else if (jsonGlobal.getJSONObject("inventory").getInt(item.getName()) <= 1) {
             jsonGlobal.getJSONObject("inventory").remove(item.getName());
         } else {
-            jsonGlobal.getJSONObject("inventory").put(item.getName(),
-                    jsonGlobal.getJSONObject("inventory").getInt(item.getName()) - 1);
+            jsonGlobal.getJSONObject("inventory").put(item.getName(), jsonGlobal.getJSONObject("inventory").getInt(item.getName()) - 1);
         }
         FileWriter fileWriter = new FileWriter(globalSets.toFile());
         fileWriter.write(jsonGlobal.toString(4));
         fileWriter.close();
+    }
+
+    /**
+     * Returns an item, given his name - it reads it from its JSON file.
+     * @param name The name of the item to find.
+     * @return The item itself.
+     * @throws IOException If the file cannot be read.
+     */
+    public static Item getItem(String name) throws IOException {
+        Path itemPath = Path.of(itemSets + "/", name + ".json");
+        JSONObject itemJSON = new JSONObject(new String(Files.readAllBytes(itemPath)));
+        if (itemJSON.getString("type").equals("Consumable")) {
+            Map<String, Integer> effect = new HashMap<>();
+            JSONObject effectJSON = itemJSON.getJSONObject("effect");
+            effectJSON.toMap().entrySet().stream().forEach((entry) -> effect.put(entry.getKey(), (Integer) entry.getValue()));
+            return new ConsumableItem(itemJSON.getString("name"), itemJSON.getInt("price"),
+                    itemJSON.getString("description"), effect);
+        } else {
+            return null;
+        }
     }
 }

@@ -1,0 +1,7 @@
+{
+    "price": 1000,
+    "effect": {"Spirit": 1},
+    "name": "Pure Soul",
+    "description": "Permanently boost a character's spirit.",
+    "type": "Consumable"
+}

@@ -105,10 +105,10 @@ public abstract class AbstractBattler implements Battler {
         this.spells = new ArrayList<>();
         this.weapons = new ArrayList<>(6);
         this.proficiencies = proficiencies;
+        this.spellTypes = new HashSet<>();
         if (spellTypes != null && !spellTypes.isEmpty()) {
-            this.spellTypes.addAll(spellTypes);
-        } else {
             this.spellTypes = new HashSet<>();
+            this.spellTypes.addAll(spellTypes);
         }
         Global.addClass(this);
     }

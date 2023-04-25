@@ -18,8 +18,8 @@ public class ConsumableItem extends Item implements Consumable {
      * @param effect What will happen if a character consumes the item (see this.use()).
      * @throws IOException If the files won't be opened or written upon.
      */
-    public ConsumableItem(String name, int price, Map<String, Integer> effect) throws IOException {
-        super(name, price);
+    public ConsumableItem(String name, int price, String description, Map<String, Integer> effect) throws IOException {
+        super(name, price, "Consumable", description);
         this.effect = effect;
         Global.addConsumableItem(this);
     }
@@ -58,6 +58,10 @@ public class ConsumableItem extends Item implements Consumable {
                 case "Arcane":
                     characterUsing.setArcane(characterUsing.getArcane() + entry.getValue());
                     break;
+                case "Life":
+                    if (characterUsing.isDead()) {
+                        characterUsing.setHP(Math.min(characterUsing.maxHP(), entry.getValue()));
+                    }
             }
             characterUsing.check();
         }

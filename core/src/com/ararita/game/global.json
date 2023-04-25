@@ -21,5 +21,8 @@
     ],
     "inventory": {},
     "party": [],
-    "classNamesSet": ["Knight"]
+    "classNamesSet": [
+        "Knight",
+        "Black Mage"
+    ]
 }

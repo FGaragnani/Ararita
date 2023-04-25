@@ -1,0 +1,7 @@
+{
+    "price": 50,
+    "effect": {"Life": 50},
+    "name": "Revitalizing",
+    "description": "Revives a dead character and heals 50 HP.",
+    "type": "Consumable"
+}

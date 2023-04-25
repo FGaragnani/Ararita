@@ -1,5 +1,6 @@
 {
     "price": 50,
-    "effect": {"HP": 100},
-    "name": "Maior Potion"
+    "effect": {"HP": 200},
+    "name": "Maior Potion",
+    "type": "Consumable"
 }

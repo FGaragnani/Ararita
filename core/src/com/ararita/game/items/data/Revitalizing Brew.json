@@ -1,0 +1,7 @@
+{
+    "price": 150,
+    "effect": {"Life": 200},
+    "name": "Revitalizing Brew",
+    "description": "Revives a dead character and heals 150 HP.",
+    "type": "Consumable"
+}

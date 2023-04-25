@@ -9,13 +9,13 @@ import java.util.random.RandomGenerator;
 public class PC extends AbstractBattler {
 
     final static double HP_VIGOR_EFFECTIVENESS = 7;
-    final static double HP_SECOND_STAT_EFFECTIVENESS = 4.5;
-    final static double HP_THIRD_STAT_EFFECTIVENESS = 2.5;
-    final static double HP_LEVEL_EFFECTIVENESS = 1.7;
-    final static double MP_INTELLIGENCE_EFFECTIVENESS = 8.5;
-    final static double MP_SECOND_STAT_EFFECTIVENESS = 4;
-    final static double MP_THIRD_STAT_EFFECTIVENESS = 1.25;
-    final static double MP_LEVEL_EFFECTIVENESS = 2.2;
+    final static double HP_SECOND_STAT_EFFECTIVENESS = 2.5;
+    final static double HP_THIRD_STAT_EFFECTIVENESS = 1.5;
+    final static double HP_LEVEL_EFFECTIVENESS = 2.5;
+    final static double MP_INTELLIGENCE_EFFECTIVENESS = 5;
+    final static double MP_SECOND_STAT_EFFECTIVENESS = 3;
+    final static double MP_THIRD_STAT_EFFECTIVENESS = 2;
+    final static double MP_LEVEL_EFFECTIVENESS = 1.25;
 
     final static double MAIN_STAT_INCREASE = 0.15;
     final static double MAIN_EQUAL_STAT_INCREASE = 0.15;
@@ -37,6 +37,8 @@ public class PC extends AbstractBattler {
         super(Global.getFromJSONClass(charClass, "strength"), Global.getFromJSONClass(charClass, "intelligence"),
                 Global.getFromJSONClass(charClass, "vigor"), Global.getFromJSONClass(charClass, "agility"), Global.getFromJSONClass(charClass, "spirit"), Global.getFromJSONClass(charClass, "arcane"), charClass, Global.getFromJSONClass(charClass, "baseEXP"), Global.getDoubleFromJSONClass(charClass, "increaseEXP"), Global.getDoubleFromJSONClass(charClass, "exponentEXP"), Global.getMapJSONClass(charClass, "proficiencies"), new HashSet<>(Global.getArrayJSONClass(charClass, "spellTypes")));
         this.name = name;
+        this.currHP = maxHP();
+        this.currMP = maxMP();
         Global.addCharacter(this);
     }
 
@@ -194,6 +196,10 @@ public class PC extends AbstractBattler {
         if (rng.nextDouble(0, 1) <= PERCENTAGE_INCREASE) {
             setArcane(getArcane() + 1);
         }
+
+        setCurrHP(maxHP());
+        setCurrMP(maxMP());
+
     }
 
     /**
