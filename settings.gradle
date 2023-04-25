@@ -1,2 +1,1 @@
-rootProject.name = 'RPG'
-
+include 'desktop', 'core', 'android'
