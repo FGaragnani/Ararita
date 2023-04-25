@@ -1,0 +1,11 @@
+{
+    "attributesAffection": {
+        "Strength": 17,
+        "Agility": -1
+    },
+    "price": 270,
+    "name": "Silver Sword",
+    "weaponType": "Sword",
+    "description": "A sword that weighs onto the wielder; however, shines marvelously.",
+    "type": "Weapon"
+}

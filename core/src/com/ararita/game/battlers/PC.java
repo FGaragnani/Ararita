@@ -30,12 +30,12 @@ public class PC extends AbstractBattler {
 
     /**
      * Initializes a new Playing Character.
+     *
      * @param name The unique name of the character.
      * @param charClass The name of an existing class the character will have.
      */
     public PC(String name, String charClass) throws IOException {
-        super(Global.getFromJSONClass(charClass, "strength"), Global.getFromJSONClass(charClass, "intelligence"),
-                Global.getFromJSONClass(charClass, "vigor"), Global.getFromJSONClass(charClass, "agility"), Global.getFromJSONClass(charClass, "spirit"), Global.getFromJSONClass(charClass, "arcane"), charClass, Global.getFromJSONClass(charClass, "baseEXP"), Global.getDoubleFromJSONClass(charClass, "increaseEXP"), Global.getDoubleFromJSONClass(charClass, "exponentEXP"), Global.getMapJSONClass(charClass, "proficiencies"), new HashSet<>(Global.getArrayJSONClass(charClass, "spellTypes")));
+        super(Global.getFromJSONClass(charClass, "strength"), Global.getFromJSONClass(charClass, "intelligence"), Global.getFromJSONClass(charClass, "vigor"), Global.getFromJSONClass(charClass, "agility"), Global.getFromJSONClass(charClass, "spirit"), Global.getFromJSONClass(charClass, "arcane"), charClass, Global.getFromJSONClass(charClass, "baseEXP"), Global.getDoubleFromJSONClass(charClass, "increaseEXP"), Global.getDoubleFromJSONClass(charClass, "exponentEXP"), Global.getMapJSONClass(charClass, "proficiencies"), new HashSet<>(Global.getArrayJSONClass(charClass, "spellTypes")));
         this.name = name;
         this.currHP = maxHP();
         this.currMP = maxMP();
@@ -52,6 +52,7 @@ public class PC extends AbstractBattler {
 
     /**
      * Tells if the character is dead.
+     *
      * @return True, if the character is currently dead.
      */
     public boolean isDead() {
@@ -60,6 +61,7 @@ public class PC extends AbstractBattler {
 
     /**
      * Reduces the character's current HP.
+     *
      * @param loss How much HP the character loses.
      */
     public void loseHP(int loss) {
@@ -69,6 +71,7 @@ public class PC extends AbstractBattler {
 
     /**
      * Reduces the character's current MP.
+     *
      * @param loss How much MP the character loses.
      */
     public void loseMP(int loss) {
@@ -94,6 +97,7 @@ public class PC extends AbstractBattler {
 
     /**
      * Determines the character's maximum Health Points.
+     *
      * @return The maximum Health Points.
      */
     @Override
@@ -108,6 +112,7 @@ public class PC extends AbstractBattler {
 
     /**
      * Determines the character's maximum Mana Points.
+     *
      * @return The maximum Mana Points.
      */
     @Override
@@ -199,11 +204,11 @@ public class PC extends AbstractBattler {
 
         setCurrHP(maxHP());
         setCurrMP(maxMP());
-
     }
 
     /**
      * Determines the character's critical chance.
+     *
      * @return The character's critical chance, topped at 50%.
      */
     @Override

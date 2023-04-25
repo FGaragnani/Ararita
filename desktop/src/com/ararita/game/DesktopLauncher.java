@@ -4,6 +4,7 @@ import com.ararita.game.battlers.AbstractBattler;
 import com.ararita.game.battlers.PC;
 import com.ararita.game.items.ConsumableItem;
 import com.ararita.game.items.Item;
+import com.ararita.game.items.Weapon;
 import com.ararita.game.spells.Spell;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
@@ -56,9 +57,13 @@ public class DesktopLauncher {
 
 		ConsumableItem test5 = (ConsumableItem) Global.getItem("Potion");
 
- 		*/
+		 */
 
+		Map<String, Integer> attributes = new HashMap<>();
+		attributes.put("Strength", 40); attributes.put("Agility", -2);
+		Item test6 = new Weapon("Phinia", 1000, "A sword that was thought to have been lost in time.",
+				attributes, "Sword");
 
-		new Lwjgl3Application(new AraritaGame(), config);
+		//new Lwjgl3Application(new AraritaGame(), config);
 	}
 }

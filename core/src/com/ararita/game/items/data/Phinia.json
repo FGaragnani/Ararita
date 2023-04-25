@@ -1,0 +1,11 @@
+{
+    "attributesAffection": {
+        "Strength": 40,
+        "Agility": -2
+    },
+    "price": 1000,
+    "name": "Phinia",
+    "weaponType": "Sword",
+    "description": "A sword that was thought to have been lost in time.",
+    "type": "Weapon"
+}

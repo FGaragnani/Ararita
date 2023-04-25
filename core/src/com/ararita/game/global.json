@@ -24,5 +24,11 @@
     "classNamesSet": [
         "Knight",
         "Black Mage"
+    ],
+    "statusEffectsSet": [
+        "Burn",
+        "Poison",
+        "Paralysis",
+        "Blindness"
     ]
 }

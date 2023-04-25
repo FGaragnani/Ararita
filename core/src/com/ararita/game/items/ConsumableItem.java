@@ -13,9 +13,12 @@ public class ConsumableItem extends Item implements Consumable {
 
     /**
      * ConsumableItem's constructor. Creates a new consumable item giving what the item will do.
+     *
      * @param name The name of the item.
      * @param price The item's price.
+     * @param description A simple description.
      * @param effect What will happen if a character consumes the item (see this.use()).
+     *
      * @throws IOException If the files won't be opened or written upon.
      */
     public ConsumableItem(String name, int price, String description, Map<String, Integer> effect) throws IOException {
@@ -28,11 +31,12 @@ public class ConsumableItem extends Item implements Consumable {
      * Applies the consumable effect onto a Playing Character. Its effect are denoted by a String (which will be an
      * attribute) and an Integer (meaning the increase of that attribute). For HP and MP, the current value must be
      * topped at maxHP() and maxMP().
+     *
      * @param characterUsing The character using the consumable item.
      */
     @Override
     public void use(PC characterUsing) {
-        for(Map.Entry<String, Integer> entry : effect.entrySet()){
+        for (Map.Entry<String, Integer> entry : effect.entrySet()) {
             switch (entry.getKey()) {
                 case "HP":
                     characterUsing.setCurrHP(Math.min(characterUsing.maxHP(), characterUsing.getCurrHP() + entry.getValue()));

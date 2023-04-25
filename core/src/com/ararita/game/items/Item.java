@@ -11,6 +11,7 @@ public abstract class Item {
 
     /**
      * Item's constructor.
+     *
      * @param name The name of the item.
      * @param price The price of the item.
      */

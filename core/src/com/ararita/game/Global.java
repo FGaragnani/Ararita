@@ -4,6 +4,7 @@ import com.ararita.game.battlers.AbstractBattler;
 import com.ararita.game.battlers.PC;
 import com.ararita.game.items.ConsumableItem;
 import com.ararita.game.items.Item;
+import com.ararita.game.items.Weapon;
 import com.ararita.game.spells.Spell;
 import org.json.JSONObject;
 
@@ -372,6 +373,31 @@ public class Global {
     }
 
     /**
+     * Returns the amount of money stored in the global manager.
+     *
+     * @return The amount of money.
+     */
+    public static int getMoney() throws IOException {
+        return getIntFromGlobalArray("money");
+    }
+
+    /**
+     * Sets the amount of money to the global handler.
+     *
+     * @param amount The amount of money to add.
+     *
+     * @throws IOException If the file cannot be opened or written upon.
+     */
+    public static void setMoney(int amount) throws IOException {
+        String content = new String(Files.readAllBytes(globalSets));
+        JSONObject jsonGlobal = new JSONObject(content);
+        jsonGlobal.put("money", amount + getIntFromGlobalArray("money"));
+        FileWriter fileWriter = new FileWriter(globalSets.toFile());
+        fileWriter.write(jsonGlobal.toString(4));
+        fileWriter.close();
+    }
+
+    /**
      * Determines if an item is affordable for the party.
      *
      * @param item The item to consider.
@@ -381,7 +407,31 @@ public class Global {
      * @throws IOException If the file cannot be opened or read.
      */
     public static boolean canBuy(Item item) throws IOException {
-        return (getIntFromGlobalArray("money") >= item.getPrice());
+        return getMoney() >= item.getPrice();
+    }
+
+    /**
+     * An item is sold. It is removed from the inventory and then adds its price to the money amount.
+     * If the item is not present, nothing happens.
+     *
+     * @param item The item to be sold.
+     *
+     * @throws IOException If the file cannot be read or written upon.
+     */
+    public static void sell(Item item) throws IOException {
+        if (!getMapJSONGlobal("inventory").containsValue(item.getName())) {
+            return;
+        }
+        removeItem(item);
+        Global.setMoney(Global.getMoney() + item.getPrice());
+    }
+
+    public static void buy(Item item) throws IOException{
+        if(!canBuy(item)){
+            return;
+        }
+        addItem(item, 1);
+        setMoney(getMoney() - item.getPrice());
     }
 
     /**
@@ -397,6 +447,23 @@ public class Global {
             specificItemSet.createNewFile();
             FileWriter fileWriter = new FileWriter(specificItemSet);
             fileWriter.write(new JSONObject(consumableItem).toString(4));
+            fileWriter.close();
+        }
+    }
+
+    /**
+     * A weapon is stored onto his own JSON file.
+     *
+     * @param weapon The weapon to store.
+     *
+     * @throws IOException If the file cannot be created or written upon.
+     */
+    public static void addWeapon(Weapon weapon) throws IOException {
+        File specificWeapon = new File(itemSets + "/" + weapon.getName() + ".json");
+        if (!specificWeapon.exists()) {
+            specificWeapon.createNewFile();
+            FileWriter fileWriter = new FileWriter(specificWeapon);
+            fileWriter.write(new JSONObject(weapon).toString(4));
             fileWriter.close();
         }
     }
@@ -435,6 +502,8 @@ public class Global {
         fileWriter.close();
         if (item instanceof ConsumableItem) {
             addConsumableItem((ConsumableItem) item);
+        } else {
+            addWeapon((Weapon) item);
         }
     }
 
@@ -462,8 +531,11 @@ public class Global {
 
     /**
      * Returns an item, given his name - it reads it from its JSON file.
+     *
      * @param name The name of the item to find.
+     *
      * @return The item itself.
+     *
      * @throws IOException If the file cannot be read.
      */
     public static Item getItem(String name) throws IOException {
@@ -472,11 +544,13 @@ public class Global {
         if (itemJSON.getString("type").equals("Consumable")) {
             Map<String, Integer> effect = new HashMap<>();
             JSONObject effectJSON = itemJSON.getJSONObject("effect");
-            effectJSON.toMap().entrySet().stream().forEach((entry) -> effect.put(entry.getKey(), (Integer) entry.getValue()));
-            return new ConsumableItem(itemJSON.getString("name"), itemJSON.getInt("price"),
-                    itemJSON.getString("description"), effect);
+            effectJSON.toMap().forEach((key, value) -> effect.put(key, (Integer) value));
+            return new ConsumableItem(itemJSON.getString("name"), itemJSON.getInt("price"), itemJSON.getString("description"), effect);
         } else {
-            return null;
+            Map<String, Integer> attributes = new HashMap<>();
+            JSONObject effectJSON = itemJSON.getJSONObject("attributesAffection");
+            effectJSON.toMap().forEach((key, value) -> attributes.put(key, (Integer) value));
+            return new Weapon(itemJSON.getString("name"), itemJSON.getInt("price"), itemJSON.getString("description"), attributes, itemJSON.getString("weaponType"));
         }
     }
 }

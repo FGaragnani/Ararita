@@ -84,6 +84,7 @@ public abstract class AbstractBattler implements Battler {
 
     /**
      * Creates a new AbstractBattler; note: this will be used to create a new class.
+     *
      * @throws IOException If the files cannot be read or written upon.
      */
     public AbstractBattler(int strength, int intelligence, int vigor, int agility, int spirit, int arcane, String charClass, int baseEXP, double increaseEXP, double exponentEXP, Map<String, Integer> proficiencies, Set<String> spellTypes) throws IOException {
@@ -136,7 +137,9 @@ public abstract class AbstractBattler implements Battler {
 
     /**
      * Returns the needed EXP to reach a certain level.
+     *
      * @param level The level to reach.
+     *
      * @return The EXP needed to reach it.
      */
     @Override
@@ -151,6 +154,7 @@ public abstract class AbstractBattler implements Battler {
 
     /**
      * Gives EXP to the character.
+     *
      * @param gainedEXP The amount of EXP to give.
      */
     public void gainEXP(int gainedEXP) {
