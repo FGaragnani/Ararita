@@ -16,13 +16,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Global {
 
     final public static int MAX_PARTY_MEMBERS = 4;
     final public static int MAX_WEAPON_EQUIPPED = 1;
-    final public static int MAX_INVENTORY_SPACE = 100;
+    final public static int MAX_INVENTORY_SPACE = 200;
     final public static double RESELL_MULTIPLIER = 0.75;
 
     final static Path globalSets = Path.of(Paths.get("..").normalize().toAbsolutePath().toString(), "core/src/com/ararita/game/global.json");
@@ -97,11 +98,11 @@ public class Global {
             FileWriter fileWriter = new FileWriter(charFile);
             fileWriter.write(new JSONObject(battler).toString(4));
             fileWriter.close();
-        }
-        if (getArrayLengthJSONGlobal("party") >= MAX_PARTY_MEMBERS) {
-            addToOtherCharacters(battler.getName());
-        } else {
-            addToParty(battler.getName());
+            if (getArrayLengthJSONGlobal("party") >= MAX_PARTY_MEMBERS) {
+                addToOtherCharacters(battler.getName());
+            } else {
+                addToParty(battler.getName());
+            }
         }
     }
 
@@ -183,14 +184,34 @@ public class Global {
         File charFile = new File(characterSets + "/" + character.getName() + ".json");
         if (!charFile.exists()) {
             charFile.createNewFile();
-            FileWriter fileWriter = new FileWriter(charFile);
-            fileWriter.write(new JSONObject(character).toString(4));
-            fileWriter.close();
-        } else {
-            FileWriter fileWriter = new FileWriter(charFile);
-            fileWriter.write(new JSONObject(character).toString(4));
-            fileWriter.close();
         }
+        JSONObject toWrite = new JSONObject(character);
+        toWrite.remove("weapons"); toWrite.remove("spells");
+        toWrite.put("weapons", character.getWeapons().stream().map(Item::getName).collect(Collectors.toList()));
+        toWrite.put("spells", character.getSpells().stream().map(Spell::getName).collect(Collectors.toList()));
+        FileWriter fileWriter = new FileWriter(charFile);
+        fileWriter.write(toWrite.toString(4));
+        fileWriter.close();
+    }
+
+    public static PC getCharacter(String charName) throws IOException {
+        if (isPresentInJSONGlobal(charName, "otherCharacters") || isPresentInJSONGlobal(charName, "party")) {
+            File charFile = new File(characterSets + "/" + charName + ".json");
+            if (charFile.exists()) {
+                String content = new String(Files.readAllBytes(charFile.toPath()));
+                JSONObject jsonGlobal = new JSONObject(content);
+                List<Weapon> weapons = new ArrayList<>();
+                List<Spell> spells = new ArrayList<>();
+                for (Object name : jsonGlobal.getJSONArray("weapons")) {
+                    weapons.add(getWeapon((String) name));
+                }
+                for (Object name : jsonGlobal.getJSONArray("spells")) {
+                    spells.add(getSpell((String) name));
+                }
+                return new PC(jsonGlobal.getInt("strength"), jsonGlobal.getInt("intelligence"), jsonGlobal.getInt("vigor"), jsonGlobal.getInt("agility"), jsonGlobal.getInt("spirit"), jsonGlobal.getInt("arcane"), jsonGlobal.getString("charClass"), charName, jsonGlobal.getInt("currHP"), jsonGlobal.getInt("currMP"), jsonGlobal.getInt("level"), jsonGlobal.getInt("EXP"), weapons, spells);
+            }
+        }
+        return null;
     }
 
     /**
@@ -209,6 +230,20 @@ public class Global {
             fileWriter.close();
         }
         addInGlobalArray(spell.getName(), "spellNamesSet");
+    }
+
+    public static Spell getSpell(String name) throws IOException {
+        File spellFile = new File(spellSets + "/" + name + ".json");
+        if (spellFile.exists()) {
+            String content = new String(Files.readAllBytes(spellFile.toPath()));
+            JSONObject jsonGlobal = new JSONObject(content);
+            Map<String, Double> statusEffects = new HashMap<>();
+            for (Map.Entry<String, Object> e : jsonGlobal.getJSONObject("statusEffects").toMap().entrySet()) {
+                statusEffects.put(e.getKey(), (Double) e.getValue());
+            }
+            return new Spell(jsonGlobal.getString("name"), jsonGlobal.getInt("MPCost"), jsonGlobal.getString("type"), jsonGlobal.getInt("basePower"), statusEffects);
+        }
+        return null;
     }
 
     /**
@@ -307,6 +342,12 @@ public class Global {
         return jsonGlobal.getJSONArray(key).length();
     }
 
+    public static int getArrayLengthJSONChar(String charName, String key) throws IOException{
+        String content = new String(Files.readAllBytes(Path.of(characterSets + "/" + charName + ".json")));
+        JSONObject jsonGlobal = new JSONObject(content);
+        return jsonGlobal.getJSONArray(key).length();
+    }
+
     /**
      * Returns a List copied from a JSON Array of a class.
      *
@@ -399,7 +440,7 @@ public class Global {
     }
 
     /**
-     * Determines if an item is affordable for the party.
+     * Determines if an item is affordable for the party and if there is enough space in the inventory.
      *
      * @param item The item to consider.
      *
@@ -408,7 +449,7 @@ public class Global {
      * @throws IOException If the file cannot be opened or read.
      */
     public static boolean canBuy(Item item) throws IOException {
-        return getMoney() >= item.getPrice();
+        return getMoney() >= item.getPrice() && !isInventoryFull();
     }
 
     /**
@@ -427,7 +468,14 @@ public class Global {
         Global.setMoney(Global.getMoney() + (int) Math.floor(item.getPrice() * RESELL_MULTIPLIER));
     }
 
-    public static void buy(Item item) throws IOException{
+    /**
+     * An item is bought, if it can be bought.
+     *
+     * @param item The item to buy.
+     *
+     * @throws IOException If the file cannot be read or written upon.
+     */
+    public static void buy(Item item) throws IOException {
         if (canBuy(item)) {
             addItem(item, 1);
             setMoney(getMoney() - item.getPrice());
@@ -468,6 +516,20 @@ public class Global {
         }
     }
 
+    public static Weapon getWeapon(String weaponName) throws IOException {
+        File specificWeapon = new File(itemSets + "/" + weaponName + ".json");
+        if (specificWeapon.exists()) {
+            String content = new String(Files.readAllBytes(specificWeapon.toPath()));
+            JSONObject jsonGlobal = new JSONObject(content);
+            Map<String, Integer> attributesAffection = new HashMap<>();
+            for (Map.Entry<String, Object> e : jsonGlobal.getJSONObject("attributesAffection").toMap().entrySet()) {
+                attributesAffection.put(e.getKey(), (Integer) e.getValue());
+            }
+            return new Weapon(weaponName, jsonGlobal.getInt("price"), jsonGlobal.getString("description"), attributesAffection, jsonGlobal.getString("weaponType"));
+        }
+        return null;
+    }
+
     /**
      * Determines if the inventory is full in the global manager.
      *
@@ -490,6 +552,9 @@ public class Global {
      * @throws IOException If the file cannot be read or written upon.
      */
     public static void addItem(Item item, int count) throws IOException {
+        if (isInventoryFull()) {
+            return;
+        }
         String content = new String(Files.readAllBytes(globalSets));
         JSONObject jsonGlobal = new JSONObject(content);
         if (jsonGlobal.getJSONObject("inventory").has(item.getName())) {
@@ -551,6 +616,54 @@ public class Global {
             JSONObject effectJSON = itemJSON.getJSONObject("attributesAffection");
             effectJSON.toMap().forEach((key, value) -> attributes.put(key, (Integer) value));
             return new Weapon(itemJSON.getString("name"), itemJSON.getInt("price"), itemJSON.getString("description"), attributes, itemJSON.getString("weaponType"));
+        }
+    }
+
+    /**
+     * A character unequips a certain weapon. If possible (i.g. the character has indeed the weapon and there is
+     * enough space in the inventory), the equipment is hence put into the inventory.
+     *
+     * @param charName The name of the character.
+     * @param weapon The weapon to remove.
+     *
+     * @throws IOException If the files cannot be read or written upon.
+     */
+    public static void unequip(String charName, Weapon weapon) throws IOException {
+        File charFile = new File(characterSets + "/" + charName + ".json");
+        if (charFile.exists()) {
+            String content = new String(Files.readAllBytes(charFile.toPath()));
+            JSONObject jsonGlobal = new JSONObject(content);
+            if (jsonGlobal.getJSONArray("weapons").toList().contains(weapon.getName()) && !isInventoryFull()) {
+                addItem(weapon, 1);
+                jsonGlobal.getJSONArray("weapons").remove(jsonGlobal.getJSONArray("weapons").toList().indexOf(weapon.getName()));
+                FileWriter fileWriter = new FileWriter(charFile);
+                fileWriter.write(jsonGlobal.toString(4));
+                fileWriter.close();
+            }
+        }
+    }
+
+    /**
+     * A character is equipped with a weapon from the inventory.
+     *
+     * @param charName The character's name.
+     * @param weapon The weapon to equip.
+     *
+     * @throws IOException If the files cannot be read or written upon.
+     */
+    public static void equip(String charName, Weapon weapon) throws IOException {
+        File charFile = new File(characterSets + "/" + charName + ".json");
+        if (charFile.exists()) {
+            String content = new String(Files.readAllBytes(charFile.toPath()));
+            JSONObject jsonGlobal = new JSONObject(content);
+            if (getMapJSONGlobal("inventory").containsKey(weapon.getName()) && getArrayLengthJSONChar(charName,
+                    "weapons") < MAX_WEAPON_EQUIPPED) {
+                removeItem(weapon);
+                jsonGlobal.getJSONArray("weapons").put(weapon.getName());
+                FileWriter fileWriter = new FileWriter(charFile);
+                fileWriter.write(jsonGlobal.toString(4));
+                fileWriter.close();
+            }
         }
     }
 }

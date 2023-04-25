@@ -30,6 +30,13 @@ public class DesktopLauncher {
 		PC test0 = new PC("Carletto Giochetto", "Knight");
 		PC test1 = new PC("Ruggero Ruggeri", "Black Mage");
 		test1.gainEXP(1000);
+		test1.equip(Global.getWeapon("Wooden Sword"));
+		Global.updateCharacter(test1);
+		PC test2 = Global.getCharacter("Ruggero Ruggeri");
+		test1.unequip(Global.getWeapon("Wooden Sword"));
+
+		*/
+		/*
 
 		The character gains EXP and its stats are updated.
 

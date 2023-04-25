@@ -1,9 +1,12 @@
 package com.ararita.game.battlers;
 
 import com.ararita.game.Global;
+import com.ararita.game.items.Weapon;
+import com.ararita.game.spells.Spell;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.random.RandomGenerator;
 
 public class PC extends AbstractBattler {
@@ -40,6 +43,19 @@ public class PC extends AbstractBattler {
         this.currHP = maxHP();
         this.currMP = maxMP();
         Global.addCharacter(this);
+    }
+
+    public PC(int strength, int intelligence, int vigor, int agility, int spirit, int arcane, String charClass, String name, int currHP, int currMP, int level, int EXP, List<Weapon> weapons, List<Spell> spells) throws IOException {
+        super(strength, intelligence, vigor, agility, spirit, arcane, charClass, Global.getFromJSONClass(charClass, "baseEXP"), Global.getDoubleFromJSONClass(charClass, "increaseEXP"), Global.getDoubleFromJSONClass(charClass, "exponentEXP"), Global.getMapJSONClass(charClass, "proficiencies"), new HashSet<>(Global.getArrayJSONClass(charClass, "spellTypes")));
+        this.name = name;
+        this.currHP = currHP;
+        this.currMP = currMP;
+        this.level = level;
+        this.EXP = EXP;
+        this.weapons.addAll(weapons);
+        this.spells.addAll(spells);
+        this.HP = maxHP();
+        this.MP = maxMP();
     }
 
     public String getName() {
@@ -217,5 +233,19 @@ public class PC extends AbstractBattler {
             return 0.5;
         }
         return getAgility() / 200.0;
+    }
+
+    public void equip(Weapon weapon) throws IOException{
+        if(Global.MAX_WEAPON_EQUIPPED > getWeapons().size()){
+            weapons.add(weapon);
+            Global.equip(getName(), weapon);
+        }
+    }
+
+    public void unequip(Weapon weapon) throws IOException{
+        if(weapons.contains(weapon) && !Global.isInventoryFull()){
+            weapons.remove(weapon);
+            Global.unequip(getName(), weapon);
+        }
     }
 }

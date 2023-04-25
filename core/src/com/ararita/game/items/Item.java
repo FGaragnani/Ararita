@@ -1,5 +1,6 @@
 package com.ararita.game.items;
 
+import java.util.Objects;
 import java.util.function.Function;
 
 public abstract class Item {
@@ -52,5 +53,20 @@ public abstract class Item {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Item item = (Item) o;
+        return price == item.price && Objects.equals(name, item.name) && Objects.equals(type, item.type) && Objects.equals(description, item.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, price, type, description);
     }
 }

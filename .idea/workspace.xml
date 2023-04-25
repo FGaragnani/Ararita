@@ -7,8 +7,9 @@
     <list default="true" id="5676402a-2187-4a8f-bfe0-ac646c9fd387" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/Global.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/Global.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/PC.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/PC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/items/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/Weapon.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/items/Weapon.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -59,7 +60,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2OucksaoucjS1x8BiMh66uviL2D" />
   <component name="ProjectViewState">
