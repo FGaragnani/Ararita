@@ -1,6 +1,8 @@
 sourceCompatibility = 1.8
 dependencies {
     implementation 'org.json:json:20230227'
+    implementation 'junit:junit:4.13.1'
+    implementation 'org.junit.jupiter:junit-jupiter:5.8.1'
 }
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 

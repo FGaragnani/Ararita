@@ -5,17 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5676402a-2187-4a8f-bfe0-ac646c9fd387" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/core/src/com/ararita/game/GlobalTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/Global.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/Global.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/AbstractBattler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/AbstractBattler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/Battler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/Battler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/PC.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/PC.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/ConsumableItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/items/ConsumableItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/items/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/Weapon.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/items/Weapon.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/spells/Spell.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/spells/Spell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/core/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,6 +62,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -87,12 +81,27 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "create.test.in.the.same.root": "true",
+    "jdk.selected.JAVA_MODULE": "17",
     "last_opened_file_path": "C:/Users/filip/Desktop/Universita'/Anno II - Semestre II/Programmazione ad Oggetti/Progetti/Ararita/core/src/resources/json-20230227.jar",
-    "project.structure.last.edited": "Global Libraries",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.ararita.game" />
+    </key>
+  </component>
   <component name="RunManager" selected="Gradle.Ararita:desktop [run]">
     <configuration name="android" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="Ararita.android.main" />
@@ -134,7 +143,7 @@
       <module name="Ararita.desktop.main" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.ararita.game.*" />
+          <option name="PATTERN" value=".*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -147,7 +156,7 @@
       <module name="Ararita.core.main" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.ararita.game.*" />
+          <option name="PATTERN" value=".*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
