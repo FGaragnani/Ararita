@@ -25,7 +25,8 @@ Inspired by classic videogames such as **Final Fantasy I** and **Phantasy Star I
   
 ## Credits
 
-* [org.JSON library](https://mvnrepository.com/artifact/org.json/json)
+* [LibGDX](https://github.com/libgdx/libgdx)
+* [org.JSON](https://mvnrepository.com/artifact/org.json/json)
 * Sol Schori font by [Noam Goldfarb](https://slimeplease.artstation.com/)
   
 ## License
