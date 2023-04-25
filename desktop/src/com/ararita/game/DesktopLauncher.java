@@ -1,15 +1,50 @@
 package com.ararita.game;
 
+import com.ararita.game.battlers.PC;
+import com.ararita.game.items.ConsumableItem;
+import com.ararita.game.items.Item;
+import com.ararita.game.spells.Spell;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.ararita.game.AraritaGame;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Consumer;
+
 // Please note that on macOS your application needs to be started with the -XstartOnFirstThread JVM argument
 public class DesktopLauncher {
-	public static void main (String[] arg) {
+	public static void main (String[] arg) throws IOException {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.setTitle("Ararita");
+
+		/*
+		A new PC is created, is added either to the party or to 'other characters', and his file is created.
+		An error occurs if its class doesn't exist.
+
+		PC test1 = new PC("Carletto Giochetto", "Knight");
+
+		The character gains EXP and its stats are updated.
+
+		test1.gainEXP(1000);
+		Global.updateCharacter(test1);
+
+		Two spells are created; they are immediately saved in the global manager.
+
+		Map<String, Double> statusEffect = new HashMap<String, Double>();
+		statusEffect.put("Burn", 0.1);
+		Spell test2 = new Spell("Fire I", 10, "Fire", 1, new HashMap<>());
+		Spell test3 = new Spell("Fire II", 30, "Fire", 2, statusEffect);
+		*/
+
+
+		Map<String, Integer> effect = new HashMap<>();
+		effect.put("HP", 300);
+		Item test4 = new ConsumableItem("Maxima Potion", 200, effect);
+
+
 		new Lwjgl3Application(new AraritaGame(), config);
 	}
 }

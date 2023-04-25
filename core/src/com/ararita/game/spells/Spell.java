@@ -1,6 +1,6 @@
-package com.global.spells;
+package com.ararita.game.spells;
 
-import com.global.Global;
+import com.ararita.game.Global;
 
 import java.io.IOException;
 import java.util.Map;

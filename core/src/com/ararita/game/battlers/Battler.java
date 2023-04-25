@@ -1,4 +1,4 @@
-package com.global.battlers;
+package com.ararita.game.battlers;
 
 public interface Battler {
 

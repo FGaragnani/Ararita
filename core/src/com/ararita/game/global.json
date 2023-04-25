@@ -10,6 +10,7 @@
     ],
     "otherCharacters": [],
     "spellNamesSet": [],
+    "money": 0,
     "weaponTypesSet": [
         "Sword",
         "Staff",
@@ -18,8 +19,7 @@
         "Bow",
         "Dagger"
     ],
+    "inventory": {},
     "party": [],
-    "classNamesSet": ["Knight"],
-    "money": 0,
-    "inventory": {}
+    "classNamesSet": ["Knight"]
 }

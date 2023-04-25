@@ -1,8 +1,8 @@
-package com.global.battlers;
+package com.ararita.game.battlers;
 
-import com.global.Global;
-import com.global.items.Weapon;
-import com.global.spells.Spell;
+import com.ararita.game.Global;
+import com.ararita.game.items.Weapon;
+import com.ararita.game.spells.Spell;
 
 import java.io.IOException;
 import java.util.*;

@@ -1,6 +1,6 @@
-package com.global.items;
+package com.ararita.game.items;
 
-import com.global.battlers.PC;
+import com.ararita.game.battlers.PC;
 
 public interface Consumable {
 

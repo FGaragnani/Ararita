@@ -1,9 +1,10 @@
 package com.ararita.game;
 
-import com.global.battlers.AbstractBattler;
-import com.global.battlers.PC;
-import com.global.items.Item;
-import com.global.spells.Spell;
+import com.ararita.game.battlers.AbstractBattler;
+import com.ararita.game.battlers.PC;
+import com.ararita.game.items.ConsumableItem;
+import com.ararita.game.items.Item;
+import com.ararita.game.spells.Spell;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -12,16 +13,20 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class Global {
 
     final public static int MAX_PARTY_MEMBERS = 4;
 
-    final static Path globalSets = Path.of("src/main/java/com/global/global.json");
-    final static Path classSets = Path.of("src/main/java/com/global/classes");
-    final static Path characterSets = Path.of("src/main/java/com/global/characters");
-    final static Path spellSets = Path.of("src/main/java/com/global/spells/data");
+    final static Path globalSets = Path.of(Paths.get("..").normalize().toAbsolutePath().toString(), "core/src/com/ararita/game/global.json");
+    final static Path classSets = Path.of(Paths.get("..").normalize().toAbsolutePath().toString(), "core/src/com" +
+            "/ararita/game/classes");
+    final static Path characterSets = Path.of(Paths.get("..").normalize().toAbsolutePath().toString(), "core/src/com/ararita/game/characters");
+    final static Path spellSets = Path.of(Paths.get("..").normalize().toAbsolutePath().toString(), "core/src/com/ararita/game/spells/data");
+    final static Path itemSets = Path.of(Paths.get("..").normalize().toAbsolutePath().toString(), "core/src/com" +
+            "/ararita/game/items/data");
 
     /**
      * A new element is added in a global manager's array; note: the name MUST BE unique.
@@ -333,6 +338,21 @@ public class Global {
     }
 
     /**
+     * A ConsumableItem is stored as a JSON file.
+     * @param consumableItem The item to store.
+     * @throws IOException If the file cannot be opened or written upon.
+     */
+    public static void addConsumableItem(ConsumableItem consumableItem) throws IOException{
+        File specificItemSet = new File(itemSets.toString() + "/" + consumableItem.getName() + ".json");
+        if(!specificItemSet.exists()){
+            specificItemSet.createNewFile();
+            FileWriter fileWriter = new FileWriter(specificItemSet);
+            fileWriter.write(new JSONObject(consumableItem).toString(4));
+            fileWriter.close();
+        }
+    }
+
+    /**
      * Adds an item onto the inventory in global manager.
      * If the item is already present, the number count of the item is incremented; else,
      * the item is added.
@@ -352,6 +372,9 @@ public class Global {
         FileWriter fileWriter = new FileWriter(globalSets.toFile());
         fileWriter.write(jsonGlobal.toString(4));
         fileWriter.close();
+        if(item instanceof ConsumableItem){
+            addConsumableItem((ConsumableItem) item);
+        }
     }
 
     /**
