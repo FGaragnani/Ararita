@@ -4,6 +4,7 @@ Inspired by classic videogames such as **Final Fantasy I** and **Phantasy Star I
 ## Table of Contents
 * [Ararita](#Ararita)
   * [Features](#Features)
+  * [Credits](#Credits)
   * [License](#License)
 
 ## Features
