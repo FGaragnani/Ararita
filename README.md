@@ -10,13 +10,12 @@ Inspired by classic videogames such as **Final Fantasy I** and **Phantasy Star I
 **Implemented**:
 * Level up your heroes and increase their stats
 * Manage your inventory
-
-
-**Planned**:
 * Recruiting heroes 
   * Creating their classes
   * Creating spells
   * Equip them with weapons
+
+**Planned**:
 * Venture in dangerous dungeons
   * Prepare yourself by buying merch
   * Turn-based combat system
