@@ -62,11 +62,11 @@ public abstract class Item {
         if (o == null || getClass() != o.getClass())
             return false;
         Item item = (Item) o;
-        return price == item.price && Objects.equals(name, item.name) && Objects.equals(type, item.type) && Objects.equals(description, item.description);
+        return name.equals(item.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, price, type, description);
+        return Objects.hash(name);
     }
 }

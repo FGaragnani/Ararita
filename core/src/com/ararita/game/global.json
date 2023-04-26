@@ -9,8 +9,11 @@
         "Chaos"
     ],
     "otherCharacters": [],
-    "spellNamesSet": ["Fireball"],
-    "money": 2000,
+    "spellNamesSet": [
+        "Fireball",
+        "Greater Fireball"
+    ],
+    "money": 0,
     "weaponTypesSet": [
         "Sword",
         "Staff",
@@ -20,13 +23,13 @@
         "Dagger"
     ],
     "inventory": {},
-    "party": [],
     "statusEffectsSet": [
         "Burn",
         "Poison",
         "Paralysis",
         "Blindness"
     ],
+    "party": [],
     "classNamesSet": [
         "Knight",
         "Black Mage"

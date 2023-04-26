@@ -7,6 +7,7 @@ import com.ararita.game.spells.Spell;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.random.RandomGenerator;
 
 public class PC extends AbstractBattler {
@@ -116,7 +117,6 @@ public class PC extends AbstractBattler {
      *
      * @return The maximum Health Points.
      */
-    @Override
     public int maxHP() {
         int maxHP = 0;
         maxHP += Math.floor(Math.max(getVigor(), 1) * HP_VIGOR_EFFECTIVENESS);
@@ -131,7 +131,6 @@ public class PC extends AbstractBattler {
      *
      * @return The maximum Mana Points.
      */
-    @Override
     public int maxMP() {
         int maxMP = 0;
         maxMP += Math.floor(Math.max(getIntelligence(), 1) * MP_INTELLIGENCE_EFFECTIVENESS);
@@ -150,7 +149,6 @@ public class PC extends AbstractBattler {
      * then the ternary main stats are determined and increased.
      * Finally, every stat may be increased following a 1:8 probability (see PERCENTAGE_INCREASE).
      */
-    @Override
     public void levelUp() {
         if (getIntelligence() > getStrength()) {
             setIntelligence((int) (getIntelligence() + Math.floor(Math.max(getIntelligence() * MAIN_STAT_INCREASE, 1))));
@@ -227,7 +225,6 @@ public class PC extends AbstractBattler {
      *
      * @return The character's critical chance, topped at 50%.
      */
-    @Override
     public double critChance() {
         if (getAgility() >= 100) {
             return 0.5;
@@ -235,37 +232,88 @@ public class PC extends AbstractBattler {
         return getAgility() / 200.0;
     }
 
-    public void equip(Weapon weapon) throws IOException{
-        if(Global.MAX_WEAPON_EQUIPPED > getWeapons().size() && Global.getMapJSONGlobal("inventory").containsKey(weapon.getName())){
+    /**
+     * The character equips a certain weapon. It is achieved if and only if the weapon is inside the inventory and
+     * the character doesn't have too many weapons equipped.
+     *
+     * @param weapon The weapon to equip.
+     *
+     * @throws IOException If the character file can't be read or written upon.
+     */
+    public void equip(Weapon weapon) throws IOException {
+        if (Global.MAX_WEAPON_EQUIPPED > getWeapons().size() && Global.getInventory().containsKey(weapon.getName())) {
             weapons.add(weapon);
             Global.equip(getName(), weapon);
         }
     }
 
-    public void unequip(Weapon weapon) throws IOException{
-        if(weapons.contains(weapon) && !Global.isInventoryFull()){
+    /**
+     * The character unequips a certain weapon. It is achieved if and only if the character indeed had the weapon
+     * equipped and if the inventory is not full.
+     *
+     * @param weapon The weapon to unequip.
+     *
+     * @throws IOException If the file cannot be read or written upon.
+     */
+    public void unequip(Weapon weapon) throws IOException {
+        if (weapons.contains(weapon) && !Global.isInventoryFull()) {
             weapons.remove(weapon);
             Global.unequip(getName(), weapon);
         }
     }
 
-    public boolean canLearn(Spell spell){
+    /**
+     * Determines if the PC can learn a spell.
+     *
+     * @param spell The spell which could be learned.
+     *
+     * @return True, if the spell can indeed be read.
+     */
+    public boolean canLearn(Spell spell) {
         return spellTypes.contains(spell.getType()) && !spells.contains(spell) && spells.size() < Global.MAX_SPELLS_LEARNT;
     }
 
+    /**
+     * The character learns a new spell, if it can.
+     *
+     * @param spell The spell to learn.
+     *
+     * @throws IOException If the file cannot be read or written upon.
+     */
     public void learnSpell(Spell spell) throws IOException {
-        if(canLearn(spell)){
+        if (canLearn(spell)) {
             spells.add(spell);
             Global.addSpell(spell);
             Global.learnSpell(getName(), spell);
         }
     }
 
-    public void forgetSpell(Spell spell) throws IOException{
-        if(spells.contains(spell)){
+    /**
+     * A character forgets a spell, if it can.
+     *
+     * @param spell The spell to forget.
+     *
+     * @throws IOException If the file cannot be read or written upon.
+     */
+    public void forgetSpell(Spell spell) throws IOException {
+        if (spells.contains(spell)) {
             spells.remove(spell);
             Global.forgetSpell(getName(), spell);
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        PC pc = (PC) o;
+        return name.equals(pc.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }

@@ -2,6 +2,7 @@ package com.ararita.game;
 
 import com.ararita.game.battlers.AbstractBattler;
 import com.ararita.game.battlers.PC;
+import com.ararita.game.battlers.Enemy;
 import com.ararita.game.items.ConsumableItem;
 import com.ararita.game.items.Item;
 import com.ararita.game.items.Weapon;
@@ -27,11 +28,12 @@ public class Global {
     final public static double RESELL_MULTIPLIER = 0.75;
     final public static int MAX_SPELLS_LEARNT = 20;
 
-    final static Path globalSets = Path.of(Paths.get("..").normalize().toAbsolutePath().toString(), "core/src/com/ararita/game/global.json");
-    final static Path classSets = Path.of(Paths.get("..").normalize().toAbsolutePath().toString(), "core/src/com" + "/ararita/game/classes");
-    final static Path characterSets = Path.of(Paths.get("..").normalize().toAbsolutePath().toString(), "core/src/com/ararita/game/characters");
-    final static Path spellSets = Path.of(Paths.get("..").normalize().toAbsolutePath().toString(), "core/src/com/ararita/game/spells/data");
-    final static Path itemSets = Path.of(Paths.get("..").normalize().toAbsolutePath().toString(), "core/src/com" + "/ararita/game/items/data");
+    final static Path globalSets = Path.of(System.getProperty("user.dir"), "core/src/com/ararita/game/global.json");
+    final static Path classSets = Path.of(Paths.get(".").normalize().toAbsolutePath().toString(), "core/src/com" + "/ararita/game/classes");
+    final static Path characterSets = Path.of(Paths.get(".").normalize().toAbsolutePath().toString(), "core/src/com/ararita/game/characters");
+    final static Path spellSets = Path.of(Paths.get(".").normalize().toAbsolutePath().toString(), "core/src/com/ararita/game/spells/data");
+    final static Path itemSets = Path.of(Paths.get(".").normalize().toAbsolutePath().toString(), "core/src/com" + "/ararita/game/items/data");
+    final static Path enemySets = Path.of(Paths.get(".").normalize().toAbsolutePath().toString(), "core/src/com" + "/ararita/game/enemies/data");
 
     /**
      * A new element is added in a global manager's array; note: the name MUST BE unique.
@@ -187,7 +189,8 @@ public class Global {
             charFile.createNewFile();
         }
         JSONObject toWrite = new JSONObject(character);
-        toWrite.remove("weapons"); toWrite.remove("spells");
+        toWrite.remove("weapons");
+        toWrite.remove("spells");
         toWrite.put("weapons", character.getWeapons().stream().map(Item::getName).collect(Collectors.toList()));
         toWrite.put("spells", character.getSpells().stream().map(Spell::getName).collect(Collectors.toList()));
         FileWriter fileWriter = new FileWriter(charFile);
@@ -195,6 +198,15 @@ public class Global {
         fileWriter.close();
     }
 
+    /**
+     * Returns a PC from a saved file given its name.
+     *
+     * @param charName The name of the character.
+     *
+     * @return The constructed character from file.
+     *
+     * @throws IOException If the files cannot be opened or read.
+     */
     public static PC getCharacter(String charName) throws IOException {
         if (isPresentInJSONGlobal(charName, "otherCharacters") || isPresentInJSONGlobal(charName, "party")) {
             File charFile = new File(characterSets + "/" + charName + ".json");
@@ -233,6 +245,15 @@ public class Global {
         addInGlobalArray(spell.getName(), "spellNamesSet");
     }
 
+    /**
+     * Returns a Spell from a file.
+     *
+     * @param name The name of the spell.
+     *
+     * @return The constructed spell.
+     *
+     * @throws IOException If the file cannot be opened or read.
+     */
     public static Spell getSpell(String name) throws IOException {
         File spellFile = new File(spellSets + "/" + name + ".json");
         if (spellFile.exists()) {
@@ -343,7 +364,17 @@ public class Global {
         return jsonGlobal.getJSONArray(key).length();
     }
 
-    public static int getArrayLengthJSONChar(String charName, String key) throws IOException{
+    /**
+     * Returns the length of an array from a character's JSON.
+     *
+     * @param charName The name of the character.
+     * @param key The name of the array.
+     *
+     * @return The length of the array.
+     *
+     * @throws IOException If the file cannot be opened or read.
+     */
+    public static int getArrayLengthJSONChar(String charName, String key) throws IOException {
         String content = new String(Files.readAllBytes(Path.of(characterSets + "/" + charName + ".json")));
         JSONObject jsonGlobal = new JSONObject(content);
         return jsonGlobal.getJSONArray(key).length();
@@ -413,6 +444,47 @@ public class Global {
             toRet.put(id, jsonMap.getInt(id));
         }
         return toRet;
+    }
+
+    /**
+     * Returns the inventory from the global manager.
+     *
+     * @return The inventory as a map of strings and integers.
+     *
+     * @throws IOException If the file cannot be opened or read.
+     */
+    public static Map<String, Integer> getInventory() throws IOException {
+        return getMapJSONGlobal("inventory");
+    }
+
+    /**
+     * Completely empties the inventory in the global manager.
+     *
+     * @throws IOException If the file cannot be read or written upon.
+     */
+    public static void emptyInventory() throws IOException {
+        String content = new String(Files.readAllBytes(globalSets));
+        JSONObject jsonGlobal = new JSONObject(content);
+        jsonGlobal.remove("inventory");
+        jsonGlobal.put("inventory", new HashMap<>());
+        FileWriter fileWriter = new FileWriter(globalSets.toFile());
+        fileWriter.write(jsonGlobal.toString(4));
+        fileWriter.close();
+    }
+
+    public static void emptyCharacters() throws IOException {
+        String content = new String(Files.readAllBytes(globalSets));
+        JSONObject jsonGlobal = new JSONObject(content);
+        jsonGlobal.remove("party");
+        jsonGlobal.put("party", new ArrayList<>());
+        jsonGlobal.remove("otherCharacters");
+        jsonGlobal.put("otherCharacters", new ArrayList<>());
+        FileWriter fileWriter = new FileWriter(globalSets.toFile());
+        fileWriter.write(jsonGlobal.toString(4));
+        fileWriter.close();
+        for (File f : characterSets.toFile().listFiles()) {
+            f.delete();
+        }
     }
 
     /**
@@ -517,6 +589,15 @@ public class Global {
         }
     }
 
+    /**
+     * Returns a Weapon from its file.
+     *
+     * @param weaponName The name of the weapon.
+     *
+     * @return The constructed weapon.
+     *
+     * @throws IOException If the file cannot be opened or read.
+     */
     public static Weapon getWeapon(String weaponName) throws IOException {
         File specificWeapon = new File(itemSets + "/" + weaponName + ".json");
         if (specificWeapon.exists()) {
@@ -657,8 +738,7 @@ public class Global {
         if (charFile.exists()) {
             String content = new String(Files.readAllBytes(charFile.toPath()));
             JSONObject jsonGlobal = new JSONObject(content);
-            if (getMapJSONGlobal("inventory").containsKey(weapon.getName()) && getArrayLengthJSONChar(charName,
-                    "weapons") < MAX_WEAPON_EQUIPPED) {
+            if (getMapJSONGlobal("inventory").containsKey(weapon.getName()) && getArrayLengthJSONChar(charName, "weapons") < MAX_WEAPON_EQUIPPED) {
                 removeItem(weapon);
                 jsonGlobal.getJSONArray("weapons").put(weapon.getName());
                 FileWriter fileWriter = new FileWriter(charFile);
@@ -668,8 +748,16 @@ public class Global {
         }
     }
 
-    public static void learnSpell(String charName, Spell spell) throws IOException{
-        if(getCharacter(charName).canLearn(spell)){
+    /**
+     * A spell is added onto the learnt spells' array in its JSON file.
+     *
+     * @param charName The name of the character learning the spell.
+     * @param spell The spell the character will learn.
+     *
+     * @throws IOException If the file cannot be read or written upon.
+     */
+    public static void learnSpell(String charName, Spell spell) throws IOException {
+        if (getCharacter(charName).canLearn(spell)) {
             File charFile = new File(characterSets + "/" + charName + ".json");
             if (charFile.exists()) {
                 String content = new String(Files.readAllBytes(charFile.toPath()));
@@ -678,12 +766,20 @@ public class Global {
                 FileWriter fileWriter = new FileWriter(charFile);
                 fileWriter.write(jsonGlobal.toString(4));
                 fileWriter.close();
-                }
             }
         }
+    }
 
-    public static void forgetSpell(String charName, Spell spell) throws IOException{
-        if(getCharacter(charName).getSpells().contains(spell)){
+    /**
+     * A spell is erased from the JSON file of a character.
+     *
+     * @param charName The name of the character forgetting a certain spell.
+     * @param spell The spell the character is forgetting.
+     *
+     * @throws IOException If the file cannot be read or written upon.
+     */
+    public static void forgetSpell(String charName, Spell spell) throws IOException {
+        if (getCharacter(charName).getSpells().contains(spell)) {
             File charFile = new File(characterSets + "/" + charName + ".json");
             if (charFile.exists()) {
                 String content = new String(Files.readAllBytes(charFile.toPath()));
@@ -695,4 +791,43 @@ public class Global {
             }
         }
     }
+
+    public static void addEnemy(Enemy enemy) throws IOException {
+        File specificEnemy = new File(enemySets + "/" + enemy.getName() + ".json");
+        if (!specificEnemy.exists()) {
+            specificEnemy.createNewFile();
+            FileWriter fileWriter = new FileWriter(specificEnemy);
+            fileWriter.write(new JSONObject(specificEnemy).toString(4));
+            fileWriter.close();
+        }
+    }
+
+    public static Enemy getEnemy(String name) throws IOException{
+        File specificEnemy = new File(enemySets + "/" + name + ".json");
+        if (specificEnemy.exists()) {
+            String content = new String(Files.readAllBytes(specificEnemy.toPath()));
+            JSONObject jsonObject = new JSONObject(content);
+            Map<Item, Double> toDrop = new HashMap<>();
+            for(Map.Entry<String, Object> e : jsonObject.getJSONObject("toDrop").toMap().entrySet()){
+                toDrop.put(getItem(e.getKey()), (Double) e.getValue());
+            }
+            return new Enemy(jsonObject.getString("name"), jsonObject.getInt("attack"), jsonObject.getInt("defense"),
+                    jsonObject.getInt("magicDefense"), jsonObject.getInt("speed"), jsonObject.getInt("currHP"),
+                    jsonObject.getInt("money"), toDrop);
+        }
+        return null;
+    }
+
+    public static int calculatePhysicalAttack(PC pc){
+        double multiplier =
+                pc.getWeapons().stream().filter( (weapon) -> pc.getProficiencies().containsKey(weapon.getWeaponType())).count() / 2.0;
+        return (int) ((pc.getStrength() + (int) Math.floor((pc.getVigor() + pc.getAgility())/6.0)) * (multiplier + 0.5));
+    }
+
+    public static int calculatePhysicalDefence(PC pc){
+        return pc.getVigor() + (int) Math.floor(pc.getVigor()/2.0);
+    }
+
+
+
 }

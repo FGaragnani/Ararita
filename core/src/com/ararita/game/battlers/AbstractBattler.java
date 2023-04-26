@@ -9,7 +9,7 @@ import java.util.*;
 
 import static java.lang.Math.ceil;
 
-public abstract class AbstractBattler implements Battler {
+public abstract class AbstractBattler {
 
     /*
 
@@ -125,7 +125,6 @@ public abstract class AbstractBattler implements Battler {
     /**
      * Updates gradually the character's level.
      */
-    @Override
     public void charLevel() {
         for (int i = 1; ; i++) {
             if (this.getEXP() < EXPForLevel(i)) {
@@ -142,7 +141,6 @@ public abstract class AbstractBattler implements Battler {
      *
      * @return The EXP needed to reach it.
      */
-    @Override
     public int EXPForLevel(int level) {
         if (level == 0) {
             return 0;
@@ -298,4 +296,9 @@ public abstract class AbstractBattler implements Battler {
     public void setSpellTypes(Set<String> spellTypes) {
         this.spellTypes = spellTypes;
     }
+
+    public abstract int maxMP();
+    public abstract int maxHP();
+    public abstract void levelUp();
+
 }

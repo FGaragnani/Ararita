@@ -1,0 +1,7 @@
+{
+    "statusEffects": {"Burn": 0.1},
+    "basePower": 2,
+    "name": "Greater Fireball",
+    "type": "Fire",
+    "MPCost": 30
+}
