@@ -302,6 +302,12 @@ public class PC extends AbstractBattler {
         }
     }
 
+    public int hasAttackPower(){
+        double multiplier =
+                getWeapons().stream().filter( (weapon) -> this.getProficiencies().containsKey(weapon.getWeaponType())).count() / 2.0;
+        return (int) ((getStrength() + (int) Math.floor((getVigor() + getAgility())/6.0)) * (multiplier + 0.5));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)

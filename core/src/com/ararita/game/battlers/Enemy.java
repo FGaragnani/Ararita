@@ -52,6 +52,10 @@ public class Enemy implements Battler {
         return damage;
     }
 
+    public int hasAttackPower(){
+        return attack;
+    }
+
     public String getName() {
         return name;
     }

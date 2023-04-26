@@ -818,12 +818,6 @@ public class Global {
         return null;
     }
 
-    public static int calculatePhysicalAttack(PC pc){
-        double multiplier =
-                pc.getWeapons().stream().filter( (weapon) -> pc.getProficiencies().containsKey(weapon.getWeaponType())).count() / 2.0;
-        return (int) ((pc.getStrength() + (int) Math.floor((pc.getVigor() + pc.getAgility())/6.0)) * (multiplier + 0.5));
-    }
-
     public static int calculatePhysicalDefence(PC pc){
         return pc.getVigor() + (int) Math.floor(pc.getVigor()/2.0);
     }
