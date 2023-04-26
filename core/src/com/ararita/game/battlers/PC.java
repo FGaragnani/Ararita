@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.random.RandomGenerator;
 
-public class PC extends AbstractBattler {
+public class PC extends AbstractBattler implements Battler {
 
     final static double HP_VIGOR_EFFECTIVENESS = 7;
     final static double HP_SECOND_STAT_EFFECTIVENESS = 2.5;
@@ -302,10 +302,31 @@ public class PC extends AbstractBattler {
         }
     }
 
-    public int hasAttackPower(){
+    public int hasPhysicalAttackPower(){
         double multiplier =
                 getWeapons().stream().filter( (weapon) -> this.getProficiencies().containsKey(weapon.getWeaponType())).count() / 2.0;
         return (int) ((getStrength() + (int) Math.floor((getVigor() + getAgility())/6.0)) * (multiplier + 0.5));
+    }
+
+    @Override
+    public int hasMagicalAttackPower() {
+        double multiplier =
+                getWeapons().stream().filter( (weapon) -> this.getProficiencies().containsKey(weapon.getWeaponType())).count() / 2.0;
+        return (int) ((getIntelligence() + (int) Math.floor((getSpirit() + getArcane())/6.0)) * (multiplier + 0.5));
+    }
+
+    public int hasPhysicalDefense(){
+        return getVigor() + (int) Math.floor(getStrength()/2.0);
+    }
+
+    @Override
+    public int hasMagicalDefense() {
+        return getIntelligence() + (int) Math.floor((getSpirit() + getArcane()) / 6.0);
+    }
+
+    @Override
+    public int hasAttackSpeed() {
+        return getAgility()*2 - (int) Math.floor(getVigor()/3.0);
     }
 
     @Override

@@ -19,8 +19,7 @@ public class Enemy implements Battler {
     Map<Item, Double> toDrop;
     Optional<String> statusEffect;
 
-    public Enemy(String name, int attack, int defense, int magicDefense, int speed, int currHP,
-     int money, Map<Item, Double> toDrop) throws IOException {
+    public Enemy(String name, int attack, int defense, int magicDefense, int speed, int currHP, int money, Map<Item, Double> toDrop) throws IOException {
         this.name = name;
         this.attack = attack;
         this.defense = defense;
@@ -32,28 +31,46 @@ public class Enemy implements Battler {
         Global.addEnemy(this);
     }
 
-    public Enemy(String name) throws IOException{
+    public Enemy(String name) throws IOException {
         Global.getEnemy(name);
     }
 
-    public boolean isDead(){
+    public boolean isDead() {
         return getCurrHP() <= 0;
     }
 
-    public int getPhysicalDamage(int attack){
+    public int getPhysicalDamage(int attack) {
         int damage = Math.max(1, attack - defense);
         setCurrHP(getCurrHP() - damage);
         return damage;
     }
 
-    public int getMagicalDamage(int attack){
+    public int getMagicalDamage(int attack) {
         int damage = Math.max(1, attack - magicDefense);
         setCurrHP(getCurrHP() - damage);
         return damage;
     }
 
-    public int hasAttackPower(){
+    public int hasPhysicalAttackPower() {
         return attack;
+    }
+
+    @Override
+    public int hasMagicalAttackPower() {
+        return attack;
+    }
+
+    public int hasPhysicalDefense() {
+        return defense;
+    }
+
+    public int hasMagicalDefense() {
+        return magicDefense;
+    }
+
+    @Override
+    public int hasAttackSpeed() {
+        return speed;
     }
 
     public String getName() {
@@ -129,7 +146,7 @@ public class Enemy implements Battler {
         this.statusEffect = Optional.of(statusEffect);
     }
 
-    public void removeStatusEffect(){
+    public void removeStatusEffect() {
         this.statusEffect = Optional.empty();
     }
 
