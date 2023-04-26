@@ -5,12 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5676402a-2187-4a8f-bfe0-ac646c9fd387" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/core/src/com/ararita/game/GlobalTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/Global.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/Global.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/PC.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/PC.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/spells/Spell.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/spells/Spell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +90,7 @@
       <recent name="com.ararita.game" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Ararita [run]">
+  <component name="RunManager" selected="JUnit.GlobalTest">
     <configuration name="android" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="Ararita.android.main" />
       <option name="DEPLOY" value="true" />
@@ -213,26 +210,20 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="Ararita:desktop [dependentComponents]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/desktop" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="dependentComponents" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
+    <configuration name="GlobalTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Ararita.core.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.ararita.game.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.ararita.game" />
+      <option name="MAIN_CLASS_NAME" value="com.ararita.game.GlobalTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <list>
       <item itemvalue="Android App.android" />
@@ -240,15 +231,15 @@
       <item itemvalue="Gradle.Ararita [dependencies]" />
       <item itemvalue="Gradle.Ararita [run]" />
       <item itemvalue="Gradle.Ararita [test]" />
-      <item itemvalue="Gradle.Ararita:desktop [dependentComponents]" />
+      <item itemvalue="JUnit.GlobalTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.GlobalTest" />
         <item itemvalue="Gradle.Ararita [run]" />
         <item itemvalue="Gradle.Ararita [test]" />
         <item itemvalue="Gradle.Ararita [dependencies]" />
         <item itemvalue="Gradle.Ararita [buildDependents]" />
-        <item itemvalue="Gradle.Ararita:desktop [dependentComponents]" />
       </list>
     </recent_temporary>
   </component>
