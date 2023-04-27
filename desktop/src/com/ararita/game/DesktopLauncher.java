@@ -21,6 +21,8 @@ public class DesktopLauncher {
 		config.setForegroundFPS(60);
 		config.setTitle("Ararita");
 
+		System.out.println(Global.getMoney());
+
 		//new Lwjgl3Application(new AraritaGame(), config);
 	}
 }

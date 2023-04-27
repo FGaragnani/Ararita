@@ -5,10 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5676402a-2187-4a8f-bfe0-ac646c9fd387" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/Global.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/Global.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/GlobalBattle.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/GlobalBattle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/Battler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/Battler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/Enemy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/PC.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/PC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,8 +50,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JUnit5 Test Class" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -75,7 +79,7 @@
     "jdk.selected.JAVA_MODULE": "17",
     "last_directory_selection": "C:/Users/filip/Desktop/Universita'/Anno II - Semestre II/Programmazione ad Oggetti/Progetti/Ararita/desktop/src",
     "last_opened_file_path": "C:/Users/filip/Desktop/Universita/Anno II - Semestre II/Programmazione ad Oggetti/Progetti/Ararita",
-    "project.structure.last.edited": "Libraries",
+    "project.structure.last.edited": "Artifacts",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2505747"
   }
@@ -147,8 +151,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GlobalTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Ararita.desktop.main" />
+    <configuration name="GlobalTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Ararita.core.main" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.ararita.game.*" />
@@ -162,7 +166,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GlobalTest.equip" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="GlobalTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Ararita.desktop.main" />
       <extension name="coverage">
         <pattern>
@@ -172,8 +176,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="com.ararita.game" />
       <option name="MAIN_CLASS_NAME" value="com.ararita.game.GlobalTest" />
-      <option name="METHOD_NAME" value="equip" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -213,18 +216,18 @@
     <list>
       <item itemvalue="Android App.android" />
       <item itemvalue="Application.DesktopLauncher" />
-      <item itemvalue="JUnit.GlobalTest.equip" />
+      <item itemvalue="JUnit.GlobalTest (1)" />
       <item itemvalue="JUnit.GlobalTest.getMoney" />
       <item itemvalue="JUnit.GlobalTest.getMoney (1)" />
       <item itemvalue="JUnit.GlobalTest" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.DesktopLauncher" />
+        <item itemvalue="JUnit.GlobalTest (1)" />
         <item itemvalue="JUnit.GlobalTest.getMoney (1)" />
+        <item itemvalue="Application.DesktopLauncher" />
         <item itemvalue="JUnit.GlobalTest.getMoney" />
         <item itemvalue="JUnit.GlobalTest" />
-        <item itemvalue="JUnit.GlobalTest.equip" />
       </list>
     </recent_temporary>
   </component>

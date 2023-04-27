@@ -4,6 +4,7 @@ import com.ararita.game.Global;
 import com.ararita.game.items.Item;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -18,8 +19,24 @@ public class Enemy implements Battler {
     int money;
     Map<Item, Double> toDrop;
     Optional<String> statusEffect;
+    List<String> weakTo;
 
-    public Enemy(String name, int attack, int defense, int magicDefense, int speed, int currHP, int money, Map<Item, Double> toDrop) throws IOException {
+    /**
+     * A new Enemy is created from scratch.
+     *
+     * @param name The unique name of the enemy.
+     * @param attack The enemy's attack value.
+     * @param defense The enemy's defense value.
+     * @param magicDefense The enemy's magical defense value.
+     * @param speed The enemy's speed value.
+     * @param currHP The enemy's HP.
+     * @param money The enemy's drop money.
+     * @param toDrop The enemy's drop items.
+     * @param weakTo The enemy's weaknesses.
+     *
+     * @throws IOException If the file can't be read or written to.
+     */
+    public Enemy(String name, int attack, int defense, int magicDefense, int speed, int currHP, int money, Map<Item, Double> toDrop, List<String> weakTo) throws IOException {
         this.name = name;
         this.attack = attack;
         this.defense = defense;
@@ -28,27 +45,43 @@ public class Enemy implements Battler {
         this.currHP = currHP;
         this.money = money;
         this.toDrop = toDrop;
+        this.weakTo = weakTo;
         Global.addEnemy(this);
     }
 
+    /**
+     * Another constructor. A new enemy is created from its file.
+     * @param name The enemy's name.
+     * @throws IOException If the file can't be opened or read.
+     */
     public Enemy(String name) throws IOException {
         Global.getEnemy(name);
     }
 
+    /**
+     * Determines if the enemy is dead.
+     * @return True, if he is dead.
+     */
     public boolean isDead() {
         return getCurrHP() <= 0;
     }
 
-    public int getPhysicalDamage(int attack) {
+    /**
+     * The enemy suffers a physical damage.
+     * @param attack The damage suffered.
+     */
+    public void getPhysicalDamage(int attack) {
         int damage = Math.max(1, attack - defense);
         setCurrHP(getCurrHP() - damage);
-        return damage;
     }
 
-    public int getMagicalDamage(int attack) {
+    /**
+     * The enemy suffers magical damage.
+     * @param attack The magical damage suffered.
+     */
+    public void getMagicalDamage(int attack) {
         int damage = Math.max(1, attack - magicDefense);
         setCurrHP(getCurrHP() - damage);
-        return damage;
     }
 
     public int hasPhysicalAttackPower() {
@@ -71,6 +104,20 @@ public class Enemy implements Battler {
     @Override
     public int hasAttackSpeed() {
         return speed;
+    }
+
+    @Override
+    public boolean canAttack() {
+
+        if (getStatusEffect().equals(Optional.of("Blindness"))) {
+            return Global.getRandomZeroOne() < Global.BLINDNESS_INEFFICIENCY;
+        }
+
+        return !isDead() && !getStatusEffect().equals(Optional.of("Paralysis"));
+    }
+
+    public void sufferDamage(int damage) {
+        setCurrHP(damage);
     }
 
     public String getName() {
@@ -118,7 +165,7 @@ public class Enemy implements Battler {
     }
 
     public void setCurrHP(int currHP) {
-        this.currHP = currHP;
+        this.currHP = Math.max(currHP, 0);
     }
 
     public Map<Item, Double> getToDrop() {
@@ -152,5 +199,13 @@ public class Enemy implements Battler {
 
     public Optional<String> getStatusEffect() {
         return statusEffect;
+    }
+
+    public List<String> getWeakTo() {
+        return weakTo;
+    }
+
+    public void setWeakTo(List<String> weakTo) {
+        this.weakTo = weakTo;
     }
 }

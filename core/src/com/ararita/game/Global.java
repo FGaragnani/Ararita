@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.random.RandomGenerator;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -27,13 +28,29 @@ public class Global {
     final public static int MAX_INVENTORY_SPACE = 200;
     final public static double RESELL_MULTIPLIER = 0.75;
     final public static int MAX_SPELLS_LEARNT = 20;
+    final public static double WEAKNESS_MULTIPLIER = 1.5;
 
-    final static Path globalSets = Path.of(System.getProperty("user.dir"), "core/src/com/ararita/game/global.json");
+    final public static double BURN_CURE = 0.5;
+    final public static double BLINDNESS_INEFFICIENCY = 0.5;
+    final public static double BURN_DAMAGE = 0.06;
+    final public static double POISON_DAMAGE = 0.02;
+
+    final static Path globalSets = Path.of(Paths.get(".").normalize().toAbsolutePath().toString(), "core/src" + "/com/ararita/game" + "/global.json");
     final static Path classSets = Path.of(Paths.get(".").normalize().toAbsolutePath().toString(), "core/src/com" + "/ararita/game/classes");
     final static Path characterSets = Path.of(Paths.get(".").normalize().toAbsolutePath().toString(), "core/src/com/ararita/game/characters");
     final static Path spellSets = Path.of(Paths.get(".").normalize().toAbsolutePath().toString(), "core/src/com/ararita/game/spells/data");
     final static Path itemSets = Path.of(Paths.get(".").normalize().toAbsolutePath().toString(), "core/src/com" + "/ararita/game/items/data");
     final static Path enemySets = Path.of(Paths.get(".").normalize().toAbsolutePath().toString(), "core/src/com" + "/ararita/game/enemies/data");
+
+    /**
+     * Chooses a random double in the interval [0, 1].
+     *
+     * @return The random double.
+     */
+    public static double getRandomZeroOne() {
+        RandomGenerator rng = RandomGenerator.getDefault();
+        return rng.nextDouble(0, 1);
+    }
 
     /**
      * A new element is added in a global manager's array; note: the name MUST BE unique.
@@ -65,6 +82,14 @@ public class Global {
         return jsonGlobal.getInt(key);
     }
 
+    /**
+     * A JSONObject is written onto a file.
+     *
+     * @param pathToWrite The path of the file to write onto.
+     * @param jsonObject The JSONObject to write on the file.
+     *
+     * @throws IOException If the file cannot be opened or written upon.
+     */
     public static void writeJSON(Path pathToWrite, JSONObject jsonObject) throws IOException {
         if (pathToWrite.toFile().exists()) {
             FileWriter fileWriter = new FileWriter(pathToWrite.toFile());
@@ -73,8 +98,17 @@ public class Global {
         }
     }
 
+    /**
+     * A JSONObject is read from a file.
+     *
+     * @param filePath The path of the file storing the JSON.
+     *
+     * @return The JSONObject read.
+     *
+     * @throws IOException If the file cannot be read or written upon.
+     */
     public static JSONObject getJSON(Path filePath) throws IOException {
-        String content = new String(Files.readAllBytes(globalSets));
+        String content = new String(Files.readAllBytes(filePath));
         return new JSONObject(content);
     }
 
@@ -87,8 +121,7 @@ public class Global {
      */
     public static void addClass(AbstractBattler abstractBattler) throws IOException {
         File classFile = new File(classSets + "/" + abstractBattler.getCharClass() + ".json");
-        if (!classFile.exists()) {
-            classFile.createNewFile();
+        if (!classFile.createNewFile()) {
             writeJSON(classFile.toPath(), new JSONObject(abstractBattler));
         }
         addInGlobalArray(abstractBattler.getCharClass(), "classNamesSet");
@@ -103,8 +136,7 @@ public class Global {
      */
     public static void addCharacter(PC battler) throws IOException {
         File charFile = new File(characterSets + "/" + battler.getName() + ".json");
-        if (!charFile.exists()) {
-            charFile.createNewFile();
+        if (!charFile.createNewFile()) {
             writeJSON(charFile.toPath(), new JSONObject(battler));
             if (getArrayLengthJSONGlobal("party") >= MAX_PARTY_MEMBERS) {
                 addToOtherCharacters(battler.getName());
@@ -171,9 +203,7 @@ public class Global {
      */
     public static void updateCharacter(PC character) throws IOException {
         File charFile = new File(characterSets + "/" + character.getName() + ".json");
-        if (!charFile.exists()) {
-            charFile.createNewFile();
-        }
+        charFile.createNewFile();
         JSONObject toWrite = new JSONObject(character);
         toWrite.remove("weapons");
         toWrite.remove("spells");
@@ -219,8 +249,7 @@ public class Global {
      */
     public static void addSpell(Spell spell) throws IOException {
         File spellFile = new File(spellSets + "/" + spell.getName() + ".json");
-        if (!spellFile.exists()) {
-            spellFile.createNewFile();
+        if (!spellFile.createNewFile()) {
             writeJSON(spellFile.toPath(), new JSONObject(spell));
         }
         addInGlobalArray(spell.getName(), "spellNamesSet");
@@ -352,8 +381,29 @@ public class Global {
      */
     public static int getArrayLengthJSONChar(String charName, String key) throws IOException {
         Path charFile = Path.of(characterSets + "/" + charName + ".json");
-        JSONObject jsonGlobal = getJSON(charFile);
-        return jsonGlobal.getJSONArray(key).length();
+        return getListJSON(charFile, key).size();
+    }
+
+    /**
+     * A list is read from a file containing a JSON.
+     *
+     * @param filePath The path of the file.
+     * @param identifier The name of the array stored.
+     * @param <T> The type contained in the array.
+     *
+     * @return A new List of T.
+     *
+     * @throws IOException If the file cannot be read.
+     */
+    public static <T> List<T> getListJSON(Path filePath, String identifier) throws IOException {
+        JSONObject jsonGlobal = getJSON(filePath);
+        List<T> toRet = new ArrayList<>();
+        if (jsonGlobal.has(identifier)) {
+            for (Object i : jsonGlobal.getJSONArray(identifier)) {
+                toRet.add((T) i);
+            }
+        }
+        return toRet;
     }
 
     /**
@@ -369,11 +419,7 @@ public class Global {
      */
     public static <T> List<T> getArrayJSONClass(String className, String identifier) throws IOException {
         Path specificClassSet = Path.of(classSets.toString(), "/", className + ".json");
-        JSONObject jsonGlobal = getJSON(specificClassSet);
-        if (!jsonGlobal.has(identifier)) {
-            return new ArrayList<>();
-        }
-        return (List<T>) jsonGlobal.getJSONArray(identifier).toList();
+        return getListJSON(specificClassSet, identifier);
     }
 
     /**
@@ -441,6 +487,11 @@ public class Global {
         writeJSON(globalSets, jsonGlobal);
     }
 
+    /**
+     * The characters data is wiped from memory. Useful for testing.
+     *
+     * @throws IOException If the files cannot be deleted.
+     */
     public static void emptyCharacters() throws IOException {
         JSONObject jsonGlobal = getJSON(globalSets);
         jsonGlobal.remove("party");
@@ -527,8 +578,7 @@ public class Global {
      */
     public static void addConsumableItem(ConsumableItem consumableItem) throws IOException {
         File specificItemSet = new File(itemSets + "/" + consumableItem.getName() + ".json");
-        if (!specificItemSet.exists()) {
-            specificItemSet.createNewFile();
+        if (!specificItemSet.createNewFile()) {
             writeJSON(specificItemSet.toPath(), new JSONObject(consumableItem));
         }
     }
@@ -542,8 +592,7 @@ public class Global {
      */
     public static void addWeapon(Weapon weapon) throws IOException {
         File specificWeapon = new File(itemSets + "/" + weapon.getName() + ".json");
-        if (!specificWeapon.exists()) {
-            specificWeapon.createNewFile();
+        if (!specificWeapon.createNewFile()) {
             writeJSON(specificWeapon.toPath(), new JSONObject(weapon));
         }
     }
@@ -578,7 +627,7 @@ public class Global {
      * @throws IOException If the file cannot be read.
      */
     public static boolean isInventoryFull() throws IOException {
-        return getMapJSONGlobal("inventory").entrySet().stream().flatMapToInt((entry) -> IntStream.of(entry.getValue())).sum() >= MAX_INVENTORY_SPACE;
+        return getInventory().entrySet().stream().flatMapToInt((entry) -> IntStream.of(entry.getValue())).sum() >= MAX_INVENTORY_SPACE;
     }
 
     /**
@@ -732,14 +781,29 @@ public class Global {
         }
     }
 
+    /**
+     * An Enemy file is stored in memory.
+     *
+     * @param enemy The enemy to store.
+     *
+     * @throws IOException If the file cannot be created or written upon.
+     */
     public static void addEnemy(Enemy enemy) throws IOException {
         File specificEnemy = new File(enemySets + "/" + enemy.getName() + ".json");
-        if (!specificEnemy.exists()) {
-            specificEnemy.createNewFile();
+        if (!specificEnemy.createNewFile()) {
             writeJSON(specificEnemy.toPath(), new JSONObject(enemy));
         }
     }
 
+    /**
+     * An Enemy is retrieved from memory.
+     *
+     * @param name The name of the enemy.
+     *
+     * @return The Enemy scanned from its file.
+     *
+     * @throws IOException If the file cannot be opened or read.
+     */
     public static Enemy getEnemy(String name) throws IOException {
         File specificEnemy = new File(enemySets + "/" + name + ".json");
         if (specificEnemy.exists()) {
@@ -748,7 +812,8 @@ public class Global {
             for (Map.Entry<String, Object> e : jsonObject.getJSONObject("toDrop").toMap().entrySet()) {
                 toDrop.put(getItem(e.getKey()), (Double) e.getValue());
             }
-            return new Enemy(jsonObject.getString("name"), jsonObject.getInt("attack"), jsonObject.getInt("defense"), jsonObject.getInt("magicDefense"), jsonObject.getInt("speed"), jsonObject.getInt("currHP"), jsonObject.getInt("money"), toDrop);
+            List<String> weakTo = getListJSON(specificEnemy.toPath(), "weakTo");
+            return new Enemy(jsonObject.getString("name"), jsonObject.getInt("attack"), jsonObject.getInt("defense"), jsonObject.getInt("magicDefense"), jsonObject.getInt("speed"), jsonObject.getInt("currHP"), jsonObject.getInt("money"), toDrop, weakTo);
         }
         return null;
     }

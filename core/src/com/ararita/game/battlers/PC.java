@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.random.RandomGenerator;
 
 public class PC extends AbstractBattler implements Battler {
 
@@ -46,6 +45,9 @@ public class PC extends AbstractBattler implements Battler {
         Global.addCharacter(this);
     }
 
+    /**
+     * A second constructor taking every parameter. Useful for Global.getCharacter().
+     */
     public PC(int strength, int intelligence, int vigor, int agility, int spirit, int arcane, String charClass, String name, int currHP, int currMP, int level, int EXP, List<Weapon> weapons, List<Spell> spells) throws IOException {
         super(strength, intelligence, vigor, agility, spirit, arcane, charClass, Global.getFromJSONClass(charClass, "baseEXP"), Global.getDoubleFromJSONClass(charClass, "increaseEXP"), Global.getDoubleFromJSONClass(charClass, "exponentEXP"), Global.getMapJSONClass(charClass, "proficiencies"), new HashSet<>(Global.getArrayJSONClass(charClass, "spellTypes")));
         this.name = name;
@@ -101,7 +103,7 @@ public class PC extends AbstractBattler implements Battler {
     }
 
     public void setCurrHP(int currHP) {
-        this.currHP = currHP;
+        this.currHP = Math.max(currHP, 0);
     }
 
     public int getCurrMP() {
@@ -195,29 +197,49 @@ public class PC extends AbstractBattler implements Battler {
             }
         }
 
-        RandomGenerator rng = RandomGenerator.getDefault();
-
-        if (rng.nextDouble(0, 1) <= PERCENTAGE_INCREASE) {
+        if (Global.getRandomZeroOne() <= PERCENTAGE_INCREASE) {
             setStrength(getStrength() + 1);
         }
-        if (rng.nextDouble(0, 1) <= PERCENTAGE_INCREASE) {
+        if (Global.getRandomZeroOne() <= PERCENTAGE_INCREASE) {
             setIntelligence(getIntelligence() + 1);
         }
-        if (rng.nextDouble(0, 1) <= PERCENTAGE_INCREASE) {
+        if (Global.getRandomZeroOne() <= PERCENTAGE_INCREASE) {
             setVigor(getVigor() + 1);
         }
-        if (rng.nextDouble(0, 1) <= PERCENTAGE_INCREASE) {
+        if (Global.getRandomZeroOne() <= PERCENTAGE_INCREASE) {
             setAgility(getAgility() + 1);
         }
-        if (rng.nextDouble(0, 1) <= PERCENTAGE_INCREASE) {
+        if (Global.getRandomZeroOne() <= PERCENTAGE_INCREASE) {
             setSpirit(getSpirit() + 1);
         }
-        if (rng.nextDouble(0, 1) <= PERCENTAGE_INCREASE) {
+        if (Global.getRandomZeroOne() <= PERCENTAGE_INCREASE) {
             setArcane(getArcane() + 1);
         }
 
         setCurrHP(maxHP());
         setCurrMP(maxMP());
+    }
+
+    /**
+     * The character suffers a certain amount of physical damage.
+     *
+     * @param attack The damage suffered.
+     */
+    @Override
+    public void getPhysicalDamage(int attack) {
+        int damage = Math.max(1, attack - hasPhysicalDefense());
+        setCurrHP(getCurrHP() - damage);
+    }
+
+    /**
+     * The character suffers some Magical damage.
+     *
+     * @param attack The magical damage suffered.
+     */
+    @Override
+    public void getMagicalDamage(int attack) {
+        int damage = Math.max(1, attack - hasPhysicalDefense());
+        setCurrHP(getCurrHP() - damage);
     }
 
     /**
@@ -302,31 +324,90 @@ public class PC extends AbstractBattler implements Battler {
         }
     }
 
-    public int hasPhysicalAttackPower(){
-        double multiplier =
-                getWeapons().stream().filter( (weapon) -> this.getProficiencies().containsKey(weapon.getWeaponType())).count() / 2.0;
-        return (int) ((getStrength() + (int) Math.floor((getVigor() + getAgility())/6.0)) * (multiplier + 0.5));
+    /**
+     * The character 'Physical Attack' is calculated.
+     *
+     * @return The character's Physical Attack.
+     */
+    public int hasPhysicalAttackPower() {
+        double multiplier = getWeapons().stream().filter((weapon) -> this.getProficiencies().containsKey(weapon.getWeaponType())).count() / 2.0;
+        return (int) ((getStrength() + (int) Math.floor((getVigor() + getAgility()) / 6.0)) * (multiplier + 0.5));
     }
 
+    /**
+     * The character 'Magical Attack' is calculated.
+     *
+     * @return The character's Magical Attack.
+     */
     @Override
     public int hasMagicalAttackPower() {
-        double multiplier =
-                getWeapons().stream().filter( (weapon) -> this.getProficiencies().containsKey(weapon.getWeaponType())).count() / 2.0;
-        return (int) ((getIntelligence() + (int) Math.floor((getSpirit() + getArcane())/6.0)) * (multiplier + 0.5));
+        double multiplier = getWeapons().stream().filter((weapon) -> this.getProficiencies().containsKey(weapon.getWeaponType())).count() / 2.0;
+        return (int) ((getIntelligence() + (int) Math.floor((getSpirit() + getArcane()) / 6.0)) * (multiplier + 0.5));
     }
 
-    public int hasPhysicalDefense(){
-        return getVigor() + (int) Math.floor(getStrength()/2.0);
+    /**
+     * The character 'Physical Defense' is calculated.
+     *
+     * @return The character's Physical Defense.
+     */
+    public int hasPhysicalDefense() {
+        return getVigor() + (int) Math.floor(getStrength() / 2.0);
     }
 
+    /**
+     * The character 'Magical Defense' is calculated.
+     *
+     * @return The character's Magical Defense.
+     */
     @Override
     public int hasMagicalDefense() {
         return getIntelligence() + (int) Math.floor((getSpirit() + getArcane()) / 6.0);
     }
 
+    /**
+     * The character's Speed is calculated.
+     *
+     * @return The character's Speed.
+     */
     @Override
     public int hasAttackSpeed() {
-        return getAgility()*2 - (int) Math.floor(getVigor()/3.0);
+        return getAgility() * 2 - (int) Math.floor(getVigor() / 3.0);
+    }
+
+    /**
+     * Determines if the character can indeed attack.
+     *
+     * @return True, if the character can attack.
+     */
+    @Override
+    public boolean canAttack() {
+        return !isDead();
+    }
+
+    /**
+     * Determines if a character can cast a spell.
+     *
+     * @param spell The spell to cast.
+     *
+     * @return True, if it can cast the spell.
+     */
+    public boolean canCast(Spell spell) {
+        return spells.contains(spell) && spell.getMPCost() >= getCurrMP();
+    }
+
+    /**
+     * A spell is cast and its damage calculated.
+     *
+     * @param spell The spell to cast.
+     *
+     * @return The spell's damage.
+     */
+    public int cast(Spell spell) {
+        if (!canCast(spell)) {
+            return 0;
+        }
+        this.setCurrMP(getCurrMP() - spell.getMPCost());
+        return (int) (hasMagicalAttackPower() * (spell.getBasePower() / 3.0));
     }
 
     @Override
