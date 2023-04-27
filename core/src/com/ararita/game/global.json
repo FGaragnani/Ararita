@@ -12,7 +12,7 @@
         "Fireball",
         "Greater Fireball"
     ],
-    "money": 0,
+    "money": 1000,
     "weaponTypesSet": [
         "Sword",
         "Staff",

@@ -35,7 +35,9 @@ public class Global {
     final public static double BURN_DAMAGE = 0.06;
     final public static double POISON_DAMAGE = 0.02;
 
-    final static Path globalSets = Path.of(Paths.get(".").normalize().toAbsolutePath().toString(), "core/src" + "/com/ararita/game" + "/global.json");
+    final static Path globalSets = Path.of(Paths.get(".").normalize().toAbsolutePath().toString(),
+            "core/src" +
+            "/com/ararita/game" + "/global.json");
     final static Path classSets = Path.of(Paths.get(".").normalize().toAbsolutePath().toString(), "core/src/com" + "/ararita/game/classes");
     final static Path characterSets = Path.of(Paths.get(".").normalize().toAbsolutePath().toString(), "core/src/com/ararita/game/characters");
     final static Path spellSets = Path.of(Paths.get(".").normalize().toAbsolutePath().toString(), "core/src/com/ararita/game/spells/data");
