@@ -410,6 +410,33 @@ public class PC extends AbstractBattler implements Battler {
         return (int) (hasMagicalAttackPower() * (spell.getBasePower() / 3.0));
     }
 
+    /**
+     * The character is updated onto its file.
+     *
+     * @throws IOException If the file cannot be opened or read.
+     */
+    public void update() throws IOException {
+        Global.updateCharacter(this);
+    }
+
+    /**
+     * If possible, the character is added to the party.
+     *
+     * @throws IOException If the file cannot be read or written upon.
+     */
+    public void addToParty() throws IOException {
+        if(Global.getArrayLengthJSONGlobal("party") < Global.MAX_PARTY_MEMBERS
+            && Global.isPresentInJSONGlobal(this.getName(), "otherCharacters")) {
+            Global.addToParty(this.getName());
+        }
+    }
+
+    public void addToReserve() throws IOException{
+        if(Global.isPresentInJSONGlobal(this.getName(), "otherCharacters")){
+            Global.addToOtherCharacters(this.getName());
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)

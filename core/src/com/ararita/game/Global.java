@@ -35,9 +35,7 @@ public class Global {
     final public static double BURN_DAMAGE = 0.06;
     final public static double POISON_DAMAGE = 0.02;
 
-    final static Path globalSets = Path.of(Paths.get(".").normalize().toAbsolutePath().toString(),
-            "core/src" +
-            "/com/ararita/game" + "/global.json");
+    final static Path globalSets = Path.of(Paths.get(".").normalize().toAbsolutePath().toString(), "core/src" + "/com/ararita/game" + "/global.json");
     final static Path classSets = Path.of(Paths.get(".").normalize().toAbsolutePath().toString(), "core/src/com" + "/ararita/game/classes");
     final static Path characterSets = Path.of(Paths.get(".").normalize().toAbsolutePath().toString(), "core/src/com/ararita/game/characters");
     final static Path spellSets = Path.of(Paths.get(".").normalize().toAbsolutePath().toString(), "core/src/com/ararita/game/spells/data");
@@ -123,7 +121,7 @@ public class Global {
      */
     public static void addClass(AbstractBattler abstractBattler) throws IOException {
         File classFile = new File(classSets + "/" + abstractBattler.getCharClass() + ".json");
-        if (!classFile.createNewFile()) {
+        if (classFile.createNewFile()) {
             writeJSON(classFile.toPath(), new JSONObject(abstractBattler));
         }
         addInGlobalArray(abstractBattler.getCharClass(), "classNamesSet");
@@ -138,7 +136,7 @@ public class Global {
      */
     public static void addCharacter(PC battler) throws IOException {
         File charFile = new File(characterSets + "/" + battler.getName() + ".json");
-        if (!charFile.createNewFile()) {
+        if (charFile.createNewFile()) {
             writeJSON(charFile.toPath(), new JSONObject(battler));
             if (getArrayLengthJSONGlobal("party") >= MAX_PARTY_MEMBERS) {
                 addToOtherCharacters(battler.getName());
@@ -156,8 +154,11 @@ public class Global {
      * @throws IOException If the file cannot be opened or written upon.
      */
     public static void addToOtherCharacters(String charName) throws IOException {
-        if (!isPresentInJSONGlobal(charName, "party") && !isPresentInJSONGlobal(charName, "otherCharacters")) {
+        if (isPresentInJSONGlobal(charName, "party")) {
             addInGlobalArray(charName, "otherCharacters");
+            JSONObject jsonGlobal = getJSON(globalSets);
+            jsonGlobal.getJSONArray("party").remove(getListJSON(globalSets, "party").indexOf(charName));
+            writeJSON(globalSets, jsonGlobal);
         }
     }
 
@@ -173,10 +174,11 @@ public class Global {
             return;
         } else if (isPresentInJSONGlobal(charName, "party")) {
             return;
-        } else if (!isPresentInJSONGlobal(charName, "otherCharacters")) {
-            addInGlobalArray(charName, "party");
         } else {
-            addInGlobalArray(charName, "otherCharacters");
+            addInGlobalArray(charName, "party");
+            JSONObject globalJson = getJSON(globalSets);
+            globalJson.getJSONArray("otherCharacters").remove(getListJSON(globalSets, "otherCharacters").indexOf(charName));
+            writeJSON(globalSets, globalJson);
         }
     }
 
@@ -190,7 +192,7 @@ public class Global {
     public static void removeFromParty(String charName) throws IOException {
         if (isPresentInJSONGlobal(charName, "party")) {
             JSONObject jsonGlobal = getJSON(globalSets);
-            jsonGlobal.getJSONArray("party").remove(arrayIndexInJSONGlobal("party", charName));
+            jsonGlobal.getJSONArray("party").remove(getListJSON(globalSets, "party").indexOf(charName));
             jsonGlobal.getJSONArray("otherCharacters").put(charName);
             writeJSON(globalSets, jsonGlobal);
         }
@@ -226,20 +228,19 @@ public class Global {
     public static PC getCharacter(String charName) throws IOException {
         if (isPresentInJSONGlobal(charName, "otherCharacters") || isPresentInJSONGlobal(charName, "party")) {
             File charFile = new File(characterSets + "/" + charName + ".json");
-            if (charFile.exists()) {
-                JSONObject jsonGlobal = getJSON(charFile.toPath());
-                List<Weapon> weapons = new ArrayList<>();
-                List<Spell> spells = new ArrayList<>();
-                for (Object name : jsonGlobal.getJSONArray("weapons")) {
-                    weapons.add(getWeapon((String) name));
-                }
-                for (Object name : jsonGlobal.getJSONArray("spells")) {
-                    spells.add(getSpell((String) name));
-                }
-                return new PC(jsonGlobal.getInt("strength"), jsonGlobal.getInt("intelligence"), jsonGlobal.getInt("vigor"), jsonGlobal.getInt("agility"), jsonGlobal.getInt("spirit"), jsonGlobal.getInt("arcane"), jsonGlobal.getString("charClass"), charName, jsonGlobal.getInt("currHP"), jsonGlobal.getInt("currMP"), jsonGlobal.getInt("level"), jsonGlobal.getInt("EXP"), weapons, spells);
+            JSONObject jsonGlobal = getJSON(charFile.toPath());
+            List<Weapon> weapons = new ArrayList<>();
+            List<Spell> spells = new ArrayList<>();
+            for (Object name : jsonGlobal.getJSONArray("weapons")) {
+                weapons.add(getWeapon((String) name));
             }
+            for (Object name : jsonGlobal.getJSONArray("spells")) {
+                spells.add(getSpell((String) name));
+            }
+            return new PC(jsonGlobal.getInt("strength"), jsonGlobal.getInt("intelligence"), jsonGlobal.getInt("vigor"), jsonGlobal.getInt("agility"), jsonGlobal.getInt("spirit"), jsonGlobal.getInt("arcane"), jsonGlobal.getString("charClass"), charName, jsonGlobal.getInt("currHP"), jsonGlobal.getInt("currMP"), jsonGlobal.getInt("level"), jsonGlobal.getInt("EXP"), weapons, spells);
+        } else {
+            throw new IOException("The character is non-existent in the global manager.");
         }
-        return null;
     }
 
     /**
@@ -251,7 +252,7 @@ public class Global {
      */
     public static void addSpell(Spell spell) throws IOException {
         File spellFile = new File(spellSets + "/" + spell.getName() + ".json");
-        if (!spellFile.createNewFile()) {
+        if (spellFile.createNewFile()) {
             writeJSON(spellFile.toPath(), new JSONObject(spell));
         }
         addInGlobalArray(spell.getName(), "spellNamesSet");
@@ -580,7 +581,7 @@ public class Global {
      */
     public static void addConsumableItem(ConsumableItem consumableItem) throws IOException {
         File specificItemSet = new File(itemSets + "/" + consumableItem.getName() + ".json");
-        if (!specificItemSet.createNewFile()) {
+        if (specificItemSet.createNewFile()) {
             writeJSON(specificItemSet.toPath(), new JSONObject(consumableItem));
         }
     }
@@ -594,7 +595,7 @@ public class Global {
      */
     public static void addWeapon(Weapon weapon) throws IOException {
         File specificWeapon = new File(itemSets + "/" + weapon.getName() + ".json");
-        if (!specificWeapon.createNewFile()) {
+        if (specificWeapon.createNewFile()) {
             writeJSON(specificWeapon.toPath(), new JSONObject(weapon));
         }
     }
@@ -792,7 +793,7 @@ public class Global {
      */
     public static void addEnemy(Enemy enemy) throws IOException {
         File specificEnemy = new File(enemySets + "/" + enemy.getName() + ".json");
-        if (!specificEnemy.createNewFile()) {
+        if (specificEnemy.createNewFile()) {
             writeJSON(specificEnemy.toPath(), new JSONObject(enemy));
         }
     }
@@ -817,6 +818,6 @@ public class Global {
             List<String> weakTo = getListJSON(specificEnemy.toPath(), "weakTo");
             return new Enemy(jsonObject.getString("name"), jsonObject.getInt("attack"), jsonObject.getInt("defense"), jsonObject.getInt("magicDefense"), jsonObject.getInt("speed"), jsonObject.getInt("currHP"), jsonObject.getInt("money"), toDrop, weakTo);
         }
-        return null;
+        throw new IOException("The Enemy file is non existent.");
     }
 }
