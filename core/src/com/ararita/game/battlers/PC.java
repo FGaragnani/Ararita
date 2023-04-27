@@ -425,14 +425,18 @@ public class PC extends AbstractBattler implements Battler {
      * @throws IOException If the file cannot be read or written upon.
      */
     public void addToParty() throws IOException {
-        if(Global.getArrayLengthJSONGlobal("party") < Global.MAX_PARTY_MEMBERS
-            && Global.isPresentInJSONGlobal(this.getName(), "otherCharacters")) {
+        if (Global.getArrayLengthJSONGlobal("party") < Global.MAX_PARTY_MEMBERS && Global.isPresentInJSONGlobal(this.getName(), "otherCharacters")) {
             Global.addToParty(this.getName());
         }
     }
 
-    public void addToReserve() throws IOException{
-        if(Global.isPresentInJSONGlobal(this.getName(), "otherCharacters")){
+    /**
+     * If possible, the character is added to the reserve.
+     *
+     * @throws IOException If the file cannot be read or written upon.
+     */
+    public void addToReserve() throws IOException {
+        if (Global.isPresentInJSONGlobal(this.getName(), "otherCharacters")) {
             Global.addToOtherCharacters(this.getName());
         }
     }

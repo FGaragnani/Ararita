@@ -8,17 +8,25 @@ import com.ararita.game.spells.Spell;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.random.RandomGenerator;
 
 public class GlobalBattle {
 
     public List<Battler> battlers;
 
+    /**
+     * A GlobalBattle constructor.
+     * @param battlers The list of the battlers in the battle.
+     */
     public GlobalBattle(List<Battler> battlers) {
         this.battlers = battlers;
         sortBattleOrder();
     }
 
+    /**
+     * A GlobalBattle constructor.
+     * @param enemy The enemy to fight.
+     * @param party The party of players.
+     */
     public GlobalBattle(Enemy enemy, List<PC> party) {
         this.battlers = new ArrayList<>();
         this.battlers.addAll(party);
@@ -26,6 +34,11 @@ public class GlobalBattle {
         sortBattleOrder();
     }
 
+    /**
+     * A GlobalBattle constructor. The other Battlers are implicitly the one in the 'Party' array in the global manager.
+     * @param enemy The enemy to fight.
+     * @throws IOException If the file cannot be read or written upon.
+     */
     public GlobalBattle(Enemy enemy) throws IOException {
         this.battlers = new ArrayList<>();
         for (Object o : Global.getListJSON(Global.globalSets, "party")) {
@@ -35,6 +48,10 @@ public class GlobalBattle {
         sortBattleOrder();
     }
 
+    /**
+     * Determines if the battle has ended, which happens when the enemy died or when the party did.
+     * @return True, if the battle has ended.
+     */
     public boolean isBattleFinished() {
         for (Battler battler : battlers) {
             if (battler instanceof Enemy) {
@@ -48,10 +65,18 @@ public class GlobalBattle {
         return battlers.stream().allMatch(Battler::isDead);
     }
 
+    /**
+     * The battlers are sorted out of their speed.
+     */
     public void sortBattleOrder() {
         battlers.sort((o1, o2) -> o2.hasAttackSpeed() - o1.hasAttackSpeed());
     }
 
+    /**
+     * An attack is performed.
+     * @param attacker The battler who attacks.
+     * @param attacked The battler who is attacked.
+     */
     public void attack(Battler attacker, Battler attacked) {
         if (!attacker.canAttack()) {
             return;
@@ -83,6 +108,12 @@ public class GlobalBattle {
         }
     }
 
+    /**
+     * A spell is cast.
+     * @param attacker The one casting the spell.
+     * @param attacked The enemy attacked.
+     * @param spell The spell cast.
+     */
     public void cast(PC attacker, Enemy attacked, Spell spell) {
 
         if (!attacker.canCast(spell)) {
@@ -102,6 +133,22 @@ public class GlobalBattle {
                 attacked.setStatusEffect(entry.getKey());
             }
         }
+    }
+
+    /**
+     * Determines if the battle is won.
+     * @return True, if the battle has ended and was won.
+     */
+    public boolean isWon(){
+        return isBattleFinished() && battlers.stream().filter( (b) -> b instanceof PC).anyMatch( (pc) -> !pc.isDead());
+    }
+
+    /**
+     * Determines if the battle is lost.
+     * @return True, if the battle has ended and was lost.
+     */
+    public boolean isLost(){
+        return isBattleFinished() && battlers.stream().filter( (b) -> b instanceof PC).allMatch(Battler::isDead);
     }
 
     public List<Battler> getBattlers() {
