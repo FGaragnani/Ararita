@@ -13,6 +13,7 @@ This project was done for the 'Programmazione ad Oggetti e Lab.' course at UniMO
 **Implemented**:
 * Level up your heroes and increase their stats
 * Manage your inventory
+  * Prepare yourself by buying merch
 * Recruiting heroes 
   * Creating their classes
   * Creating spells
@@ -20,7 +21,6 @@ This project was done for the 'Programmazione ad Oggetti e Lab.' course at UniMO
 
 **Planned**:
 * Venture in dangerous dungeons
-  * Prepare yourself by buying merch
   * Turn-based combat system
   * 3 (or more) dungeons with a difficulty growth
   
