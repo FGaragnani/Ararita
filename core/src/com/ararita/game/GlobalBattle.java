@@ -67,10 +67,10 @@ public class GlobalBattle {
                     enemy.removeStatusEffect();
                     return;
                 } else {
-                    enemy.getPhysicalDamage(Math.max(1, (int) ((enemy).getCurrHP() * Global.BURN_DAMAGE)));
+                    enemy.sufferDamage(Math.max(1, (int) ((enemy).getCurrHP() * Global.BURN_DAMAGE)));
                 }
             } else if (enemy.getStatusEffect().equals(Optional.of("Poison"))) {
-                enemy.getPhysicalDamage(Math.max(1, (int) ((enemy).getCurrHP() * Global.POISON_DAMAGE)));
+                enemy.sufferDamage(Math.max(1, (int) ((enemy).getCurrHP() * Global.POISON_DAMAGE)));
             }
         }
         if (attacker instanceof PC && attacked instanceof Enemy) {

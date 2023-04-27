@@ -51,7 +51,9 @@ public class Enemy implements Battler {
 
     /**
      * Another constructor. A new enemy is created from its file.
+     *
      * @param name The enemy's name.
+     *
      * @throws IOException If the file can't be opened or read.
      */
     public Enemy(String name) throws IOException {
@@ -60,6 +62,7 @@ public class Enemy implements Battler {
 
     /**
      * Determines if the enemy is dead.
+     *
      * @return True, if he is dead.
      */
     public boolean isDead() {
@@ -68,6 +71,7 @@ public class Enemy implements Battler {
 
     /**
      * The enemy suffers a physical damage.
+     *
      * @param attack The damage suffered.
      */
     public void getPhysicalDamage(int attack) {
@@ -77,6 +81,7 @@ public class Enemy implements Battler {
 
     /**
      * The enemy suffers magical damage.
+     *
      * @param attack The magical damage suffered.
      */
     public void getMagicalDamage(int attack) {
@@ -84,28 +89,57 @@ public class Enemy implements Battler {
         setCurrHP(getCurrHP() - damage);
     }
 
+    /**
+     * The enemy's 'Physical Attack' is calculated.
+     *
+     * @return The enemy's Physical Attack.
+     */
     public int hasPhysicalAttackPower() {
         return attack;
     }
 
+    /**
+     * The enemy's 'Magical Attack' is calculated.
+     *
+     * @return The enemy's Magical Attack.
+     */
     @Override
     public int hasMagicalAttackPower() {
         return attack;
     }
 
+    /**
+     * The enemy's 'Physical Defense' is calculated.
+     *
+     * @return The enemy's Physical Defense.
+     */
     public int hasPhysicalDefense() {
         return defense;
     }
 
+    /**
+     * The enemy's 'Magical Defense' is calculated.
+     *
+     * @return The enemy's Magical Defense.
+     */
     public int hasMagicalDefense() {
         return magicDefense;
     }
 
+    /**
+     * The enemy's 'Speed' is calculated.
+     * @return The enemy's Speed.
+     */
     @Override
     public int hasAttackSpeed() {
         return speed;
     }
 
+    /**
+     * Determines if the enemy can attack.
+     *
+     * @return True, if the enemy can attack.
+     */
     @Override
     public boolean canAttack() {
 
@@ -116,6 +150,10 @@ public class Enemy implements Battler {
         return !isDead() && !getStatusEffect().equals(Optional.of("Paralysis"));
     }
 
+    /**
+     * The enemy suffers physical damage.
+     * @param damage The damage suffered.
+     */
     public void sufferDamage(int damage) {
         setCurrHP(damage);
     }
@@ -193,6 +231,9 @@ public class Enemy implements Battler {
         this.statusEffect = Optional.of(statusEffect);
     }
 
+    /**
+     * The enemy's status effect is removed.
+     */
     public void removeStatusEffect() {
         this.statusEffect = Optional.empty();
     }
