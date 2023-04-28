@@ -1,5 +1,7 @@
 package com.ararita.game.battlers;
 
+import java.nio.file.Path;
+
 public interface Battler {
     void getPhysicalDamage(int attack);
     void getMagicalDamage(int attack);

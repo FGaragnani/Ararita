@@ -1,0 +1,23 @@
+{
+    "baseEXP": 100,
+    "MP": 0,
+    "strength": 2,
+    "level": 1,
+    "vigor": 2,
+    "spirit": 2,
+    "HP": 0,
+    "exponentEXP": 1.19,
+    "increaseEXP": 1.4,
+    "intelligence": 2,
+    "proficiencies": {
+        "Spear": 1,
+        "Bow": 3
+    },
+    "spellTypes": ["Wind"],
+    "charClass": "Ranger",
+    "EXP": 0,
+    "agility": 6,
+    "spells": [],
+    "arcane": 1,
+    "weapons": []
+}

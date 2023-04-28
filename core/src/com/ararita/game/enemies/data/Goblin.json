@@ -1,0 +1,15 @@
+{
+    "money": 10,
+    "toDrop": {"Potion": 0.1},
+    "defense": 3,
+    "attack": 5,
+    "name": "Goblin",
+    "magicDefense": 1,
+    "dead": false,
+    "currHP": 30,
+    "weakTo": [
+        "Sword",
+        "Fire"
+    ],
+    "speed": 6
+}

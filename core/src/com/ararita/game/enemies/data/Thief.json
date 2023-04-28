@@ -1,0 +1,19 @@
+{
+    "money": 20,
+    "toDrop": {
+        "Ether": 0.04,
+        "Potion": 0.07
+    },
+    "defense": 2,
+    "attack": 2,
+    "name": "Thief",
+    "magicDefense": 5,
+    "dead": false,
+    "currHP": 25,
+    "speed": 10,
+    "weakTo": [
+        "Wind",
+        "Spear",
+        "Gloves"
+    ]
+}

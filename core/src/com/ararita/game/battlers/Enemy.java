@@ -4,6 +4,7 @@ import com.ararita.game.Global;
 import com.ararita.game.items.Item;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -20,6 +21,8 @@ public class Enemy implements Battler {
     Map<Item, Double> toDrop;
     Optional<String> statusEffect;
     List<String> weakTo;
+
+    Path image;
 
     /**
      * A new Enemy is created from scratch.
@@ -57,7 +60,16 @@ public class Enemy implements Battler {
      * @throws IOException If the file can't be opened or read.
      */
     public Enemy(String name) throws IOException {
-        Global.getEnemy(name);
+        Enemy toCopy = Global.getEnemy(name);
+        this.name = name;
+        this.attack = toCopy.getAttack();
+        this.defense = toCopy.getDefense();
+        this.magicDefense = toCopy.getMagicDefense();
+        this.speed = toCopy.getSpeed();
+        this.currHP = toCopy.getCurrHP();
+        this.money = toCopy.getMoney();
+        this.toDrop = toCopy.getToDrop();
+        this.weakTo = toCopy.getWeakTo();
     }
 
     /**
@@ -128,6 +140,7 @@ public class Enemy implements Battler {
 
     /**
      * The enemy's 'Speed' is calculated.
+     *
      * @return The enemy's Speed.
      */
     @Override
@@ -152,6 +165,7 @@ public class Enemy implements Battler {
 
     /**
      * The enemy suffers physical damage.
+     *
      * @param damage The damage suffered.
      */
     public void sufferDamage(int damage) {
@@ -248,5 +262,13 @@ public class Enemy implements Battler {
 
     public void setWeakTo(List<String> weakTo) {
         this.weakTo = weakTo;
+    }
+
+    public Path getImage() {
+        return image;
+    }
+
+    public void setImage(Path image) {
+        this.image = image;
     }
 }

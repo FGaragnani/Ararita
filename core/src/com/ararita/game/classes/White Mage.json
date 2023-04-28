@@ -1,0 +1,27 @@
+{
+    "baseEXP": 100,
+    "MP": 0,
+    "strength": 1,
+    "level": 1,
+    "vigor": 2,
+    "spirit": 4,
+    "HP": 0,
+    "exponentEXP": 1.25,
+    "increaseEXP": 1.29,
+    "intelligence": 6,
+    "proficiencies": {
+        "Bow": 1,
+        "Staff": 3
+    },
+    "spellTypes": [
+        "Water",
+        "Wind",
+        "Light"
+    ],
+    "charClass": "White Mage",
+    "agility": 1,
+    "EXP": 0,
+    "spells": [],
+    "arcane": 1,
+    "weapons": []
+}

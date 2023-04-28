@@ -5,11 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5676402a-2187-4a8f-bfe0-ac646c9fd387" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/Ararita.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/Ararita.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/Global.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/Global.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/GlobalBattle.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/GlobalBattle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/GlobalTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/GlobalTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/Battler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/Battler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/Enemy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/PC.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/PC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -67,21 +70,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "create.test.in.the.same.root": "true",
-    "jdk.selected.JAVA_MODULE": "17",
-    "last_directory_selection": "C:/Users/filip/Desktop/Universita'/Anno II - Semestre II/Programmazione ad Oggetti/Progetti/Ararita/desktop/src",
-    "last_opened_file_path": "C:/Users/filip/Desktop/Universita/Anno II - Semestre II/Programmazione ad Oggetti/Progetti/Ararita/assets",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2505747"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;create.test.in.the.same.root&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
+    &quot;last_directory_selection&quot;: &quot;C:/Users/filip/Desktop/Universita'/Anno II - Semestre II/Programmazione ad Oggetti/Progetti/Ararita/desktop/src&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/filip/Desktop/Universita/Anno II - Semestre II/Programmazione ad Oggetti/Progetti/Ararita/assets&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2505747&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets" />
@@ -103,7 +106,7 @@
       <recent name="com.ararita.game" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.GlobalTest (1)">
+  <component name="RunManager" selected="JUnit.GlobalTest">
     <configuration name="android" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="Ararita.android.main" />
       <option name="DEPLOY" value="true" />
@@ -220,14 +223,14 @@
     <list>
       <item itemvalue="Android App.android" />
       <item itemvalue="Application.DesktopLauncher" />
-      <item itemvalue="JUnit.GlobalTest (1)" />
+      <item itemvalue="JUnit.GlobalTest" />
       <item itemvalue="JUnit.GlobalTest.addCharacter" />
       <item itemvalue="JUnit.GlobalTest.getFromJSONClass" />
       <item itemvalue="JUnit.GlobalTest.getInventory" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.GlobalTest (1)" />
+        <item itemvalue="JUnit.GlobalTest" />
         <item itemvalue="Application.DesktopLauncher" />
         <item itemvalue="JUnit.GlobalTest.getInventory" />
         <item itemvalue="JUnit.GlobalTest.getFromJSONClass" />

@@ -1,5 +1,6 @@
 package com.ararita.game;
 
+import com.ararita.game.battlers.Enemy;
 import com.ararita.game.battlers.PC;
 import com.ararita.game.items.ConsumableItem;
 import com.ararita.game.items.Item;
@@ -163,7 +164,6 @@ class GlobalTest {
     @Test
     void getSpell() {
         try {
-            Path spellFile = Path.of(Global.spellSets + "/Void Arrow.json");
             Spell voidArrow = new Spell("Void Arrow", 5, "Chaos", 1, new HashMap<>());
             assertEquals(Global.getSpell("Void Arrow").getName(), voidArrow.getName());
             assertEquals(Global.getSpell(voidArrow.getName()).getBasePower(), 1);
@@ -396,29 +396,53 @@ class GlobalTest {
     void forgetSpell() {
         try {
             Spell fireball = new Spell("Fireball", 10, "Fire", 1, Map.of("Burn", 0.1));
-            Spell holyLight = new Spell("Holy Light", 10, "Light", 1, new HashMap<>());
+            Spell voidArrow = new Spell("Void Arrow", 10, "Chaos", 1, new HashMap<>());
             PC test = new PC("test", "Black Mage");
             test.learnSpell(fireball);
+            test.learnSpell(voidArrow);
             test.update();
             test.forgetSpell(fireball);
+            test.update();
+            assertFalse(test.getSpells().contains(fireball));
+            test.forgetSpell(voidArrow);
+            assertTrue(Global.getCharacter(test.getName()).getSpells().isEmpty());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Test
     void addEnemy() {
+        try {
+            Enemy goblin = new Enemy("Goblin", 5, 3, 1, 6, 30, 10, Map.of(Global.getItem("Potion"), 0.1), List.of("Sword", "Fire"));
+            assertTrue(Global.getJSONFilePath(Global.enemySets, goblin.getName()).toFile().exists());
+            Enemy thief = new Enemy("Thief", 2, 2, 5, 10, 25, 20, Map.of(Global.getItem("Potion"), 0.07, Global.getItem("Ether"), 0.04), List.of("Wind", "Spear", "Gloves"));
+            assertTrue(Global.getJSONFilePath(Global.enemySets, thief.getName()).toFile().exists());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     void getEnemy() {
+        try {
+            Enemy goblin = new Enemy("Goblin");
+            assertTrue(goblin.getWeakTo().contains("Sword"));
+            assertEquals(30, goblin.getCurrHP());
+            assertTrue(Global.getEnemy("Thief").getToDrop().containsKey(Global.getItem("Ether")));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     void isPresentInJSONList() {
         try {
             assertTrue(Global.isPresentInJSONList(Global.globalSets, "Fire", "spellTypesSet"));
+            assertTrue(Global.isPresentInJSONList(Global.globalSets, "Chaos", "spellTypesSet"));
+            assertTrue(Global.isPresentInJSONList(Global.globalSets, "Light", "spellTypesSet"));
+            assertTrue(Global.isPresentInJSONList(Global.globalSets, "Wind", "spellTypesSet"));
+            assertTrue(Global.isPresentInJSONList(Global.globalSets, "Burn", "statusEffectsSet"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -426,5 +450,11 @@ class GlobalTest {
 
     @Test
     void getConsumableItem() {
+        try {
+            ConsumableItem item = Global.getConsumableItem("Potion");
+            assertEquals(50, item.getEffect().get("HP"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

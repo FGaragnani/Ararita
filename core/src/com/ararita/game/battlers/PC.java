@@ -5,6 +5,7 @@ import com.ararita.game.items.Weapon;
 import com.ararita.game.spells.Spell;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -30,6 +31,7 @@ public class PC extends AbstractBattler implements Battler {
     int currMP;
 
     String name;
+    Path image;
 
     /**
      * Initializes a new Playing Character.
@@ -439,6 +441,27 @@ public class PC extends AbstractBattler implements Battler {
         if (Global.isPresentInJSONList(Global.globalSets, getName(), "party")) {
             Global.addToOtherCharacters(this.getName());
         }
+    }
+
+    public int classCost() {
+        int initialCost = 10;
+        for(int proficiencyValue : proficiencies.values()){
+            initialCost += (getIncreaseEXP() + getExponentEXP()) * Math.pow(10, proficiencyValue);
+        }
+        int i = 1;
+        for(String spellType : spellTypes){
+            initialCost += (getIncreaseEXP() + getExponentEXP()) * Math.pow(10, i);
+            i++;
+        }
+        return initialCost;
+    }
+
+    public Path getImage() {
+        return image;
+    }
+
+    public void setImage(Path image) {
+        this.image = image;
     }
 
     @Override

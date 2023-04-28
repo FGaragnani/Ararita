@@ -16,12 +16,12 @@ import java.util.function.Consumer;
 
 // Please note that on macOS your application needs to be started with the -XstartOnFirstThread JVM argument
 public class DesktopLauncher {
-	public static void main (String[] arg) throws IOException {
-		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-		config.setForegroundFPS(60);
-		config.setTitle("Ararita");
-		config.setWindowIcon("Ararita.jpg");
+    public static void main(String[] arg) throws IOException {
+        Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+        config.setForegroundFPS(60);
+        config.setTitle("Ararita");
+        config.setWindowIcon("Ararita.jpg");
 
-		//new Lwjgl3Application(new AraritaGame(), config);
-	}
+        //new Lwjgl3Application(new AraritaGame(), config);
+    }
 }

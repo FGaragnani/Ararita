@@ -121,12 +121,20 @@ public class GlobalBattle {
         }
 
         double multiplier = 1;
-        long count = ((PC) attacker).getWeapons().stream().map(Weapon::getWeaponType).filter((weaponType) -> ((Enemy) attacked).getWeakTo().contains(weaponType)).count();
+        long count =
+                (attacker.getWeapons().stream().map(Weapon::getWeaponType).filter((weaponType) -> attacked.getWeakTo().contains(weaponType)).count());
         if (count > 0) {
             multiplier = Math.pow(Global.WEAKNESS_MULTIPLIER, count);
         }
 
-        attacked.getMagicalDamage((int) (attacker.cast(spell) * multiplier));
+        double statEffect;
+        if(Set.of("Light", "Water", "Wind").contains(spell.getType())){
+            statEffect = Math.sqrt(attacker.getSpirit() + attacker.getIntelligence()) / 5;
+        } else {
+            statEffect = Math.sqrt(attacker.getArcane() + attacker.getIntelligence()) / 5;
+        }
+
+        attacked.getMagicalDamage((int) (attacker.cast(spell) * (multiplier + statEffect)));
 
         for (Map.Entry<String, Double> entry : spell.getStatusEffects().entrySet()) {
             if (Global.getRandomZeroOne() < entry.getValue()) {

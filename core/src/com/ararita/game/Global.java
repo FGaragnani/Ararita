@@ -29,6 +29,7 @@ public class Global {
     final public static double RESELL_MULTIPLIER = 0.75;
     final public static int MAX_SPELLS_LEARNT = 20;
     final public static double WEAKNESS_MULTIPLIER = 1.5;
+    final public static int INITIAL_ATTRIBUTES_POINT = 15;
 
     final public static double BURN_CURE = 0.5;
     final public static double BLINDNESS_INEFFICIENCY = 0.5;
@@ -785,7 +786,12 @@ public class Global {
     public static void addEnemy(Enemy enemy) throws IOException {
         File specificEnemy = getJSONFilePath(enemySets, enemy.getName()).toFile();
         if (specificEnemy.createNewFile()) {
-            writeJSON(specificEnemy.toPath(), new JSONObject(enemy));
+            JSONObject enemyJSON = new JSONObject(enemy);
+            enemyJSON.remove("toDrop");
+            Map<String, Double> toDrop = new HashMap<>();
+            enemy.getToDrop().forEach((key, value) -> toDrop.put(key.getName(), value));
+            enemyJSON.put("toDrop", toDrop);
+            writeJSON(specificEnemy.toPath(), enemyJSON);
         }
     }
 
@@ -800,19 +806,16 @@ public class Global {
      */
     public static Enemy getEnemy(String name) throws IOException {
         File specificEnemy = getJSONFilePath(enemySets, name).toFile();
-        if (specificEnemy.exists()) {
-            JSONObject jsonObject = getJSON(specificEnemy.toPath());
-            Map<Item, Double> toDrop = new HashMap<>();
-            getDoubleMapJSON(specificEnemy.toPath(), "toDrop").entrySet().forEach(e -> {
-                try {
-                    toDrop.put(Global.getItem(e.getKey()), e.getValue());
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-            });
-            List<String> weakTo = getListJSON(specificEnemy.toPath(), "weakTo");
-            return new Enemy(jsonObject.getString("name"), jsonObject.getInt("attack"), jsonObject.getInt("defense"), jsonObject.getInt("magicDefense"), jsonObject.getInt("speed"), jsonObject.getInt("currHP"), jsonObject.getInt("money"), toDrop, weakTo);
-        }
-        throw new IOException("The Enemy file is non existent.");
+        JSONObject jsonObject = getJSON(specificEnemy.toPath());
+        Map<Item, Double> toDrop = new HashMap<>();
+        getDoubleMapJSON(specificEnemy.toPath(), "toDrop").entrySet().forEach(e -> {
+            try {
+                toDrop.put(Global.getItem(e.getKey()), e.getValue());
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        List<String> weakTo = getListJSON(specificEnemy.toPath(), "weakTo");
+        return new Enemy(jsonObject.getString("name"), jsonObject.getInt("attack"), jsonObject.getInt("defense"), jsonObject.getInt("magicDefense"), jsonObject.getInt("speed"), jsonObject.getInt("currHP"), jsonObject.getInt("money"), toDrop, weakTo);
     }
 }
