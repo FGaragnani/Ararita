@@ -7,7 +7,7 @@ This project was done for the 'Programmazione ad Oggetti e Lab.' course at UniMO
 * [Ararita](#Ararita)
   * [Overview](#Overview)  
   * [Features](#Features)
-  * [How to install](#How to install)
+  * [Installing](#Installing)
   * [Credits](#Credits)
   * [License](#License)
 
@@ -29,7 +29,7 @@ To do.
   * Turn-based combat system
   * 3 (or more) dungeons with a difficulty growth
  
-## How to install
+## Installing
 To do.
   
 ## Credits
