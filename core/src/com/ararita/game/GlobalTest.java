@@ -2,6 +2,7 @@ package com.ararita.game;
 
 import com.ararita.game.battlers.PC;
 import com.ararita.game.items.Item;
+import com.ararita.game.items.Weapon;
 import com.ararita.game.spells.Spell;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -270,15 +271,15 @@ class GlobalTest {
     }
 
     @Test
-    void addConsumableItem() {
-    }
-
-    @Test
-    void addWeapon() {
-    }
-
-    @Test
     void getWeapon() {
+        try {
+            Weapon weapon = Global.getWeapon("Wooden Sword");
+            assertEquals(20, weapon.getPrice());
+            assertEquals("Sword", weapon.getWeaponType());
+            assertEquals(150, Global.getWeapon("Bronze Sword").getPrice());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
@@ -339,5 +340,9 @@ class GlobalTest {
 
     @Test
     void isPresentInJSONList() {
+    }
+
+    @Test
+    void getConsumableItem() {
     }
 }
