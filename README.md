@@ -5,9 +5,14 @@ This project was done for the 'Programmazione ad Oggetti e Lab.' course at UniMO
 
 ## Table of Contents
 * [Ararita](#Ararita)
+  * [Overview](#Overview)  
   * [Features](#Features)
+  * [How to install](#How to install)
   * [Credits](#Credits)
   * [License](#License)
+
+## Overview
+To do.
 
 ## Features
 **Implemented**:
@@ -23,7 +28,9 @@ This project was done for the 'Programmazione ad Oggetti e Lab.' course at UniMO
 * Venture in dangerous dungeons
   * Turn-based combat system
   * 3 (or more) dungeons with a difficulty growth
-  
+ 
+## How to install
+To do.
   
 ## Credits
 
