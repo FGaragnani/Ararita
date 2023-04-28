@@ -1,6 +1,7 @@
 package com.ararita.game;
 
 import com.ararita.game.battlers.PC;
+import com.ararita.game.items.ConsumableItem;
 import com.ararita.game.items.Item;
 import com.ararita.game.items.Weapon;
 import com.ararita.game.spells.Spell;
@@ -137,6 +138,10 @@ class GlobalTest {
             test.gainEXP(1000);
             test.update();
             assertEquals(test.getLevel(), Global.getCharacter("test").getLevel());
+            Global.addItem(Global.getItem("Bronze Sword"), 1);
+            test.equip(Global.getWeapon("Bronze Sword"));
+            test.update();
+            assertEquals(Global.getCharacter("test").getWeapons(), List.of(Global.getWeapon("Bronze Sword")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -242,13 +247,13 @@ class GlobalTest {
             Item ether = Global.getItem("Ether");
             Global.sell(ether);
             assertEquals(0, Global.getMoney());
-            assertTrue(Global.getMapJSONGlobal("inventory").isEmpty());
+            assertTrue(Global.getInventory().isEmpty());
             Global.addItem(ether, 2);
             Global.sell(ether);
-            assertEquals(Global.getMapJSONGlobal("inventory").get("Ether"), 1);
+            assertEquals(Global.getInventory().get("Ether"), 1);
             assertEquals(Math.floor(ether.getPrice() * Global.RESELL_MULTIPLIER), Global.getMoney());
             Global.sell(ether);
-            assertTrue(Global.getMapJSONGlobal("inventory").isEmpty());
+            assertTrue(Global.getInventory().isEmpty());
             assertEquals(2 * Math.floor(ether.getPrice() * Global.RESELL_MULTIPLIER), Global.getMoney());
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -277,6 +282,7 @@ class GlobalTest {
             assertEquals(20, weapon.getPrice());
             assertEquals("Sword", weapon.getWeaponType());
             assertEquals(150, Global.getWeapon("Bronze Sword").getPrice());
+            assertEquals(Map.of("Strength", 10), Global.getWeapon("Bronze Sword").getAttributesAffection());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -304,30 +310,101 @@ class GlobalTest {
 
     @Test
     void addItem() {
+        try {
+            Global.addItem(Global.getConsumableItem("Ether"), 3);
+            assertEquals(Global.getInventory().get("Ether"), 3);
+            assertTrue(Global.getInventory().containsKey("Ether"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     void removeItem() {
+        try {
+            Global.addItem(Global.getItem("Potion"), 2);
+            Global.removeItem(Global.getItem("Potion"));
+            assertTrue(Global.getInventory().containsKey("Potion"));
+            assertEquals(Global.getInventory().get("Potion"), 1);
+            Global.removeItem(Global.getItem("Potion"));
+            assertTrue(Global.getInventory().isEmpty());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     void getItem() {
+        try {
+            ConsumableItem item = Global.getConsumableItem("Potion");
+            assertEquals(item.getEffect().get("HP"), 50);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     void unequip() {
+        try {
+            PC test = new PC("test", "Black Mage");
+            Global.addItem(Global.getItem("Silver Sword"), 3);
+            test.equip(Global.getWeapon("Silver Sword"));
+            test.update();
+            assertTrue(Global.getCharacter(test.getName()).getWeapons().contains((Weapon) Global.getItem("Silver Sword")));
+            test.unequip(Global.getWeapon("Silver Sword"));
+            test.update();
+            assertTrue(Global.getCharacter(test.getName()).getWeapons().isEmpty());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     void equip() {
+        try {
+            PC test = new PC("test", "Knight");
+            assertFalse(test.getWeapons().contains(Global.getWeapon("Wooden Sword")));
+            Global.addItem(Global.getItem("Wooden Sword"), 2);
+            test.equip(Global.getWeapon("Wooden Sword"));
+            assertTrue(test.getWeapons().contains(Global.getWeapon("Wooden Sword")));
+            test.update();
+            assertTrue(Global.getCharacter("test").getWeapons().contains(Global.getWeapon("Wooden Sword")));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     void learnSpell() {
+        try {
+            Spell fireball = new Spell("Fireball", 10, "Fire", 1, Map.of("Burn", 0.1));
+            Spell holyLight = new Spell("Holy Light", 10, "Light", 1, new HashMap<>());
+            PC test = new PC("test", "Black Mage");
+            test.learnSpell(fireball);
+            test.update();
+            assertTrue(test.getSpells().contains(Global.getSpell("Fireball")));
+            assertEquals(Global.getCharacter("test").getSpells(), test.getSpells());
+            assertEquals(Global.getCharacter("test").getSpells().get(0).getStatusEffects(), Map.of("Burn", 0.1));
+            test.learnSpell(holyLight);
+            assertFalse(test.getSpells().contains(Global.getSpell("Holy Light")));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     void forgetSpell() {
+        try {
+            Spell fireball = new Spell("Fireball", 10, "Fire", 1, Map.of("Burn", 0.1));
+            Spell holyLight = new Spell("Holy Light", 10, "Light", 1, new HashMap<>());
+            PC test = new PC("test", "Black Mage");
+            test.learnSpell(fireball);
+            test.update();
+            test.forgetSpell(fireball);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Test
@@ -340,6 +417,11 @@ class GlobalTest {
 
     @Test
     void isPresentInJSONList() {
+        try {
+            assertTrue(Global.isPresentInJSONList(Global.globalSets, "Fire", "spellTypesSet"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test

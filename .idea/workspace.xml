@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5676402a-2187-4a8f-bfe0-ac646c9fd387" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/assets/Ararita.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Ararita.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/Global.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/Global.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/GlobalTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/GlobalTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,13 +76,16 @@
     "create.test.in.the.same.root": "true",
     "jdk.selected.JAVA_MODULE": "17",
     "last_directory_selection": "C:/Users/filip/Desktop/Universita'/Anno II - Semestre II/Programmazione ad Oggetti/Progetti/Ararita/desktop/src",
-    "last_opened_file_path": "C:/Users/filip/Desktop/Universita/Anno II - Semestre II/Programmazione ad Oggetti/Progetti/Ararita",
+    "last_opened_file_path": "C:/Users/filip/Desktop/Universita/Anno II - Semestre II/Programmazione ad Oggetti/Progetti/Ararita/assets",
     "project.structure.last.edited": "Artifacts",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2505747"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets" />
+    </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
@@ -133,6 +139,19 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="DesktopLauncher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.ararita.game.DesktopLauncher" />
+      <module name="Ararita.desktop.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.ararita.game.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="GlobalTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Ararita.core.main" />
       <extension name="coverage">
@@ -161,22 +180,6 @@
       <option name="PACKAGE_NAME" value="com.ararita.game" />
       <option name="MAIN_CLASS_NAME" value="com.ararita.game.GlobalTest" />
       <option name="METHOD_NAME" value="addCharacter" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GlobalTest.canBuy" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Ararita.core.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.ararita.game.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.ararita.game" />
-      <option name="MAIN_CLASS_NAME" value="com.ararita.game.GlobalTest" />
-      <option name="METHOD_NAME" value="canBuy" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -216,19 +219,19 @@
     </configuration>
     <list>
       <item itemvalue="Android App.android" />
+      <item itemvalue="Application.DesktopLauncher" />
       <item itemvalue="JUnit.GlobalTest (1)" />
       <item itemvalue="JUnit.GlobalTest.addCharacter" />
-      <item itemvalue="JUnit.GlobalTest.canBuy" />
       <item itemvalue="JUnit.GlobalTest.getFromJSONClass" />
       <item itemvalue="JUnit.GlobalTest.getInventory" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.GlobalTest (1)" />
+        <item itemvalue="Application.DesktopLauncher" />
         <item itemvalue="JUnit.GlobalTest.getInventory" />
         <item itemvalue="JUnit.GlobalTest.getFromJSONClass" />
         <item itemvalue="JUnit.GlobalTest.addCharacter" />
-        <item itemvalue="JUnit.GlobalTest.canBuy" />
       </list>
     </recent_temporary>
   </component>

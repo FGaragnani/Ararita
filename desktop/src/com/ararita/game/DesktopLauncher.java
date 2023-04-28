@@ -20,6 +20,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.setTitle("Ararita");
+		config.setWindowIcon("Ararita.jpg");
 
 		//new Lwjgl3Application(new AraritaGame(), config);
 	}

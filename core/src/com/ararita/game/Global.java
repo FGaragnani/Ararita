@@ -81,7 +81,7 @@ public class Global {
      * A new element is added in a JSON array; note: the name MUST BE unique.
      *
      * @param filePath The path of the file.
-     * @param name The name of the class to add.
+     * @param name The name to add to the array.
      * @param key The key to access the array.
      *
      * @throws IOException If it can't open or write onto the file.
@@ -238,8 +238,8 @@ public class Global {
         if (isPresentInJSONList(globalSets, charName, "party")) {
             JSONObject jsonGlobal = getJSON(globalSets);
             jsonGlobal.getJSONArray("party").remove(getListJSON(globalSets, "party").indexOf(charName));
-            jsonGlobal.getJSONArray("otherCharacters").put(charName);
             writeJSON(globalSets, jsonGlobal);
+            addInJSONArray(globalSets, charName, "otherCharacters");
         }
     }
 
@@ -274,9 +274,21 @@ public class Global {
         if (isPresentInJSONList(globalSets, charName, "otherCharacters") || isPresentInJSONList(globalSets, charName, "party")) {
             Path charFile = getJSONFilePath(characterSets, charName);
             JSONObject jsonGlobal = getJSON(charFile);
-            List<Weapon> weapons = getListJSON(charFile, "weapons");
-            List<Spell> spells = getListJSON(charFile, "spells");
-            return new PC(jsonGlobal.getInt("strength"), jsonGlobal.getInt("intelligence"), jsonGlobal.getInt("vigor"), jsonGlobal.getInt("agility"), jsonGlobal.getInt("spirit"), jsonGlobal.getInt("arcane"), jsonGlobal.getString("charClass"), charName, jsonGlobal.getInt("currHP"), jsonGlobal.getInt("currMP"), jsonGlobal.getInt("level"), jsonGlobal.getInt("EXP"), weapons, spells);
+            List<String> weapons = getListJSON(charFile, "weapons");
+            List<String> spells = getListJSON(charFile, "spells");
+            return new PC(jsonGlobal.getInt("strength"), jsonGlobal.getInt("intelligence"), jsonGlobal.getInt("vigor"), jsonGlobal.getInt("agility"), jsonGlobal.getInt("spirit"), jsonGlobal.getInt("arcane"), jsonGlobal.getString("charClass"), charName, jsonGlobal.getInt("currHP"), jsonGlobal.getInt("currMP"), jsonGlobal.getInt("level"), jsonGlobal.getInt("EXP"), weapons.stream().map((name) -> {
+                try {
+                    return Global.getWeapon(name);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }).collect(Collectors.toList()), spells.stream().map((name) -> {
+                try {
+                    return Global.getSpell(name);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }).collect(Collectors.toList()));
         } else {
             throw new IOException("The character is non-existent in the global manager.");
         }
@@ -425,19 +437,6 @@ public class Global {
     }
 
     /**
-     * Returns a Map from the global JSON.
-     *
-     * @param identifier The id to get the map.
-     *
-     * @return A Map of (String, Integer) entries.
-     *
-     * @throws IOException If the file cannot be opened or read.
-     */
-    public static Map<String, Integer> getMapJSONGlobal(String identifier) throws IOException {
-        return getMapJSON(globalSets, identifier);
-    }
-
-    /**
      * Returns a Map from a JSON file of a class.
      *
      * @param className The name of the class.
@@ -460,7 +459,7 @@ public class Global {
      * @throws IOException If the file cannot be opened or read.
      */
     public static Map<String, Integer> getInventory() throws IOException {
-        return getMapJSONGlobal("inventory");
+        return getMapJSON(globalSets, "inventory");
     }
 
     /**
@@ -534,7 +533,7 @@ public class Global {
      * @throws IOException If the file cannot be read or written upon.
      */
     public static void sell(Item item) throws IOException {
-        if (!getMapJSONGlobal("inventory").containsKey(item.getName())) {
+        if (!getInventory().containsKey(item.getName())) {
             return;
         }
         removeItem(item);
@@ -730,10 +729,10 @@ public class Global {
         File charFile = getJSONFilePath(characterSets, charName).toFile();
         if (charFile.exists()) {
             JSONObject jsonGlobal = getJSON(charFile.toPath());
-            if (getMapJSONGlobal("inventory").containsKey(weapon.getName()) && getArrayLengthJSON(charFile.toPath(), "weapons") < MAX_WEAPON_EQUIPPED) {
+            if (getInventory().containsKey(weapon.getName()) && getArrayLengthJSON(charFile.toPath(), "weapons") < MAX_WEAPON_EQUIPPED) {
                 removeItem(weapon);
-                jsonGlobal.getJSONArray("weapons").put(weapon.getName());
                 writeJSON(charFile.toPath(), jsonGlobal);
+                addInJSONArray(charFile.toPath(), weapon.getName(), "weapons");
             }
         }
     }
@@ -804,9 +803,13 @@ public class Global {
         if (specificEnemy.exists()) {
             JSONObject jsonObject = getJSON(specificEnemy.toPath());
             Map<Item, Double> toDrop = new HashMap<>();
-            for (Map.Entry<String, Object> e : jsonObject.getJSONObject("toDrop").toMap().entrySet()) {
-                toDrop.put(getItem(e.getKey()), (Double) e.getValue());
-            }
+            getDoubleMapJSON(specificEnemy.toPath(), "toDrop").entrySet().forEach(e -> {
+                try {
+                    toDrop.put(Global.getItem(e.getKey()), e.getValue());
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
             List<String> weakTo = getListJSON(specificEnemy.toPath(), "weakTo");
             return new Enemy(jsonObject.getString("name"), jsonObject.getInt("attack"), jsonObject.getInt("defense"), jsonObject.getInt("magicDefense"), jsonObject.getInt("speed"), jsonObject.getInt("currHP"), jsonObject.getInt("money"), toDrop, weakTo);
         }
