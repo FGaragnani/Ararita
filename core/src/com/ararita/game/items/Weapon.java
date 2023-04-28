@@ -26,7 +26,7 @@ public class Weapon extends Item {
     public Weapon(String name, int price, String description, Map<String, Integer> attributesAffection, String weaponType) throws IOException {
         super(name, price, "Weapon", description);
         this.attributesAffection = attributesAffection;
-        if (Global.isPresentInJSONGlobal(weaponType, "weaponTypesSet")) {
+        if (Global.isPresentInJSONList(Global.globalSets, weaponType, "weaponTypesSet")) {
             this.weaponType = weaponType;
             Global.addWeapon(this);
         } else {

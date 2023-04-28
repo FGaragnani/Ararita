@@ -8,11 +8,8 @@
         "Chaos"
     ],
     "otherCharacters": [],
-    "spellNamesSet": [
-        "Fireball",
-        "Greater Fireball"
-    ],
     "money": 0,
+    "spellNamesSet": [],
     "weaponTypesSet": [
         "Sword",
         "Staff",
