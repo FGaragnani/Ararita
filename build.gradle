@@ -9,8 +9,6 @@ buildscript {
         google()
     }
     dependencies {
-        
-
     }
 }
 
@@ -49,6 +47,7 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:$gdxControllersVersion"
+        api 'org.json:json:20230227'
     }
 }
 

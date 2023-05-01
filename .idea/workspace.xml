@@ -5,25 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5676402a-2187-4a8f-bfe0-ac646c9fd387" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/Ararita/assets/orig/images/white-pixel.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/Ararita/assets/orig/pack/pack.atlas" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/Ararita/assets/orig/pack/pack.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/Ararita/project.dt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/Ararita/project.h2d" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/Ararita/scenes/MainScene.dt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/Pixthulhu/pixthulhu-ui.atlas" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/Pixthulhu/pixthulhu-ui.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/Pixthulhu/pixthulhu-ui.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/SettingsScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/json-20230227.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/mainFontWhite.fnt" beforeDir="false" afterPath="$PROJECT_DIR$/assets/mainFontWhite.fnt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/Ararita.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/Ararita.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/CityScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/CityScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/MainMenuScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/MainMenuScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/SettingsScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/SettingsScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

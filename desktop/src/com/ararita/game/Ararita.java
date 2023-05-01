@@ -4,6 +4,9 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import org.json.JSONObject;
+
+import java.util.Map;
 
 /**
  * Handles the multiple screens in the game.
@@ -19,7 +22,7 @@ public class Ararita extends Game {
         batch = new SpriteBatch();
 
         normalFont = new BitmapFont(Gdx.files.internal("mainFontWhite.fnt"));
-        normalFont.getData().setScale(1.3f, 1.85f);
+        normalFont.getData().setScale(2.6f, 3.5f);
 
         titleFont = new BitmapFont(Gdx.files.internal("mainFontWhite.fnt"));
         titleFont.getData().setScale(9f, 13f);
