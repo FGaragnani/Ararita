@@ -1,5 +1,5 @@
 {
-com.badlogic.gdx.graphics.g2d.BitmapFont: {
+BitmapFont: {
 	font: {
 		file: ../mainFontWhite.fnt
 	}
@@ -10,7 +10,7 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 		file: ../mainFontWhite.fnt
 	}
 }
-com.badlogic.gdx.graphics.Color: {
+Color: {
 	black: {
 		r: 0
 		g: 0
@@ -54,7 +54,7 @@ com.badlogic.gdx.graphics.Color: {
 		a: 1
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+TintedDrawable: {
 	field: {
 		name: white
 		color: {
@@ -92,7 +92,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 		}
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+ButtonStyle: {
 	default: {
 		up: button
 		down: button-pressed
@@ -107,7 +107,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 		down: button-arcade-pressed
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
+CheckBoxStyle: {
 	default: {
 		checkboxOn: checkbox-on
 		checkboxOff: checkbox-off
@@ -115,7 +115,7 @@ com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
 		fontColor: field
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
+ImageButtonStyle: {
 	default: {
 		up: button
 		down: button-pressed
@@ -126,7 +126,7 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 		checked: button-pressed
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
+ImageTextButtonStyle: {
 	default: {
 		font: subtitle
 		fontColor: field
@@ -134,7 +134,7 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
 		down: button-pressed
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+LabelStyle: {
 	default: {
 		font: font
 		fontColor: white
@@ -148,7 +148,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		fontColor: white
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
+ListStyle: {
 	default: {
 		font: subtitle
 		fontColorSelected: white
@@ -157,7 +157,7 @@ com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
 		background: list
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
+ProgressBarStyle: {
 	default-horizontal: {
 		background: progress-bar-horizontal
 		knobBefore: progress-bar-horizontal-knob
@@ -175,7 +175,7 @@ com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
 		knobBefore: progress-bar-mana-knob
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
+ScrollPaneStyle: {
 	default: {
 		hScroll: scrollbar-horizontal
 		hScrollKnob: scrollbar-horizontal-knob
@@ -183,7 +183,7 @@ com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
 		vScrollKnob: scrollbar-vertical-knob
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
+SelectBoxStyle: {
 	default: {
 		font: subtitle
 		fontColor: red
@@ -192,7 +192,7 @@ com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
 		listStyle: default
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
+SliderStyle: {
 	default-horizontal: {
 		background: slider-horizontal
 		knob: slider-knob
@@ -202,7 +202,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
 		knob: slider-knob
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
+SplitPaneStyle: {
 	default-horizontal: {
 		handle: split-pane-horizontal
 	}
@@ -210,7 +210,7 @@ com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
 		handle: split-pane-vertical
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+TextButtonStyle: {
 	default: {
 		font: subtitle
 		fontColor: field
@@ -231,7 +231,7 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		down: button-arcade-pressed
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+TextFieldStyle: {
 	default: {
 		font: font
 		fontColor: black
@@ -240,18 +240,18 @@ com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 		selection: shadow
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+TextTooltipStyle: {
 	default: {
 		label: default
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle: {
+TouchpadStyle: {
 	default: {
 		background: touchpad
 		knob: touchpad-knob
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
+WindowStyle: {
 	default: {
 		background: window
 		titleFont: font

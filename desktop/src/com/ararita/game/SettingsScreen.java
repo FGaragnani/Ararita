@@ -5,7 +5,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -14,7 +13,6 @@ import com.badlogic.gdx.utils.*;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.Map;
 
 public class SettingsScreen implements Screen {
@@ -40,9 +38,6 @@ public class SettingsScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
 
-        JsonReader jsonReader = new JsonReader();
-        JsonValue jsonSettings = jsonReader.parse(Gdx.files.local("assets/settings.json"));
-
         this.skin = new Skin(Gdx.files.internal("Pixthulhu/pixthulhu-ui.json"));
 
         sliderStyle = skin.get("default-horizontal", Slider.SliderStyle.class);
@@ -50,8 +45,8 @@ public class SettingsScreen implements Screen {
         soundEffectsSlider = new Slider(0, 100, 1, false, sliderStyle);
         volumeSlider.setWidth(300);
         soundEffectsSlider.setWidth(300);
-        volumeSlider.setValue(jsonSettings.getInt("Volume"));
-        soundEffectsSlider.setValue(jsonSettings.getInt("Sound Effects"));
+        volumeSlider.setValue(game.volume);
+        soundEffectsSlider.setValue(game.soundEffects);
         volumeSlider.setPosition(((Gdx.graphics.getWidth() - volumeSlider.getWidth()) / 2) - 100, Gdx.graphics.getHeight() - 300);
         soundEffectsSlider.setPosition(((Gdx.graphics.getWidth() - soundEffectsSlider.getWidth()) / 2) - 100, Gdx.graphics.getHeight() - 500);
 
@@ -69,6 +64,8 @@ public class SettingsScreen implements Screen {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+                game.volume = (int) volumeSlider.getValue();
+                game.soundEffects = (int) soundEffectsSlider.getValue();
                 dispose();
                 game.setScreen(new MainMenuScreen(game));
             }

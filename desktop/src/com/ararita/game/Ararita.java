@@ -4,9 +4,8 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import org.json.JSONObject;
-
-import java.util.Map;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 
 /**
  * Handles the multiple screens in the game.
@@ -18,7 +17,15 @@ public class Ararita extends Game {
     public BitmapFont bigFont;
     public BitmapFont normalFont;
 
+    int volume;
+    int soundEffects;
+
     public void create() {
+
+        JsonValue jsonSettings = new JsonReader().parse(Gdx.files.local("assets/settings.json"));
+        volume = jsonSettings.getInt("Volume");
+        soundEffects = jsonSettings.getInt("Sound Effects");
+
         batch = new SpriteBatch();
 
         normalFont = new BitmapFont(Gdx.files.internal("mainFontWhite.fnt"));
