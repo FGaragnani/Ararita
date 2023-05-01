@@ -2,12 +2,11 @@ package com.ararita.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.*;
 import org.json.JSONObject;
@@ -23,11 +22,16 @@ public class SettingsScreen implements Screen {
     OrthographicCamera camera;
     Skin skin;
 
+    Dialog confirmDeleteDialog;
+
     Slider.SliderStyle sliderStyle;
     Slider volumeSlider;
     Slider soundEffectsSlider;
 
+    Label soundEffectLabel;
+    Label.LabelStyle labelStyle;
     TextButton.TextButtonStyle textButtonStyle;
+    TextButton deleteButton;
     TextButton backButton;
 
     public SettingsScreen(final Ararita game) {
@@ -50,17 +54,44 @@ public class SettingsScreen implements Screen {
         volumeSlider.setPosition(((Gdx.graphics.getWidth() - volumeSlider.getWidth()) / 2) - 100, Gdx.graphics.getHeight() - 300);
         soundEffectsSlider.setPosition(((Gdx.graphics.getWidth() - soundEffectsSlider.getWidth()) / 2) - 100, Gdx.graphics.getHeight() - 500);
 
+        labelStyle = skin.get("default", Label.LabelStyle.class);
+        labelStyle.font = game.normalFont;
+        soundEffectLabel = new Label("Sound Effects: 100.0", skin);
+        soundEffectLabel.setPosition(soundEffectsSlider.getX() + 325, soundEffectsSlider.getY() + 15);
+
         textButtonStyle = skin.get("default", TextButton.TextButtonStyle.class);
         textButtonStyle.font = game.bigFont;
         backButton = new TextButton("Back", textButtonStyle);
-        backButton.setPosition((Gdx.graphics.getWidth() - backButton.getWidth()) / 2, Gdx.graphics.getHeight() - 900);
+        backButton.setPosition((Gdx.graphics.getWidth() - backButton.getWidth()) / 2, Gdx.graphics.getHeight() - 950);
+        deleteButton = new TextButton("Erase Data", textButtonStyle);
+        deleteButton.setPosition((Gdx.graphics.getWidth() - deleteButton.getWidth()) / 2, Gdx.graphics.getHeight() - 720);
+
+        confirmDeleteDialog = new Dialog("", skin) {
+            public void result(Object confirm) {
+                if (confirm.equals("true")) {
+                    try {
+                        Global.emptyCharacters();
+                        Global.emptyInventory();
+                        Global.emptySpell();
+                    } catch (IOException e) {
+                        throw new RuntimeException("Deleting files is impossible!");
+                    }
+                } else {
+                    confirmDeleteDialog.setVisible(false);
+                }
+            }
+        };
+        confirmDeleteDialog.setResizable(false);
+        confirmDeleteDialog.text("Do you want to delete all your save files? These include classes, spells and characters!", labelStyle);
+        confirmDeleteDialog.button("Yes", true, textButtonStyle);
+        confirmDeleteDialog.button("No", false, textButtonStyle);
+        confirmDeleteDialog.setPosition(0, 0);
 
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    Global.writeJSON(Gdx.files.local("assets/settings.json").file().toPath(), new JSONObject(Map.of("Volume",
-                            volumeSlider.getValue(), "Sound Effects", soundEffectsSlider.getValue())));
+                    Global.writeJSON(Gdx.files.local("assets/settings.json").file().toPath(), new JSONObject(Map.of("Volume", volumeSlider.getValue(), "Sound Effects", soundEffectsSlider.getValue())));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -71,9 +102,18 @@ public class SettingsScreen implements Screen {
             }
         });
 
+        deleteButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                confirmDeleteDialog.show(stage);
+            }
+        });
+
+        stage.addActor(soundEffectLabel);
         stage.addActor(volumeSlider);
         stage.addActor(soundEffectsSlider);
         stage.addActor(backButton);
+        stage.addActor(deleteButton);
     }
 
     @Override
@@ -93,7 +133,7 @@ public class SettingsScreen implements Screen {
         stage.draw();
         game.titleFont.draw(game.batch, "SETTINGS", 730, Gdx.graphics.getHeight() - 50);
         game.normalFont.draw(game.batch, "Volume: " + volumeSlider.getValue(), volumeSlider.getX() + 325, volumeSlider.getY() + 39);
-        game.normalFont.draw(game.batch, "Sound Effects: " + soundEffectsSlider.getValue(), soundEffectsSlider.getX() + 325, soundEffectsSlider.getY() + 39);
+        soundEffectLabel.setText("Sound Effects: " + soundEffectsSlider.getValue());
 
         game.batch.end();
     }

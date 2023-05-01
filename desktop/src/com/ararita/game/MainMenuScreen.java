@@ -30,11 +30,10 @@ public class MainMenuScreen implements Screen {
      */
     public MainMenuScreen(final Ararita game) {
         this.game = game;
-        stage = new Stage();
+        this.stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
         this.skin = new Skin(Gdx.files.internal("Pixthulhu/pixthulhu-ui.json"));
-
         this.camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
 
