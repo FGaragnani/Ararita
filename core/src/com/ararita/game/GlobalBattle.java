@@ -15,6 +15,7 @@ public class GlobalBattle {
 
     /**
      * A GlobalBattle constructor.
+     *
      * @param battlers The list of the battlers in the battle.
      */
     public GlobalBattle(List<Battler> battlers) {
@@ -24,6 +25,7 @@ public class GlobalBattle {
 
     /**
      * A GlobalBattle constructor.
+     *
      * @param enemy The enemy to fight.
      * @param party The party of players.
      */
@@ -36,7 +38,9 @@ public class GlobalBattle {
 
     /**
      * A GlobalBattle constructor. The other Battlers are implicitly the one in the 'Party' array in the global manager.
+     *
      * @param enemy The enemy to fight.
+     *
      * @throws IOException If the file cannot be read or written upon.
      */
     public GlobalBattle(Enemy enemy) throws IOException {
@@ -50,6 +54,7 @@ public class GlobalBattle {
 
     /**
      * Determines if the battle has ended, which happens when the enemy died or when the party did.
+     *
      * @return True, if the battle has ended.
      */
     public boolean isBattleFinished() {
@@ -74,6 +79,7 @@ public class GlobalBattle {
 
     /**
      * An attack is performed.
+     *
      * @param attacker The battler who attacks.
      * @param attacked The battler who is attacked.
      */
@@ -104,12 +110,16 @@ public class GlobalBattle {
             if (count > 0) {
                 multiplier = Math.pow(Global.WEAKNESS_MULTIPLIER, count);
             }
+            if(Global.getRandomZeroOne() <= attacker.critChance()){
+                multiplier *= 1.5;
+            }
             attacked.getPhysicalDamage((int) (attacker.hasPhysicalAttackPower() * multiplier));
         }
     }
 
     /**
      * A spell is cast.
+     *
      * @param attacker The one casting the spell.
      * @param attacked The enemy attacked.
      * @param spell The spell cast.
@@ -121,14 +131,13 @@ public class GlobalBattle {
         }
 
         double multiplier = 1;
-        long count =
-                (attacker.getWeapons().stream().map(Weapon::getWeaponType).filter((weaponType) -> attacked.getWeakTo().contains(weaponType)).count());
+        long count = (attacker.getWeapons().stream().map(Weapon::getWeaponType).filter((weaponType) -> attacked.getWeakTo().contains(weaponType)).count());
         if (count > 0) {
             multiplier = Math.pow(Global.WEAKNESS_MULTIPLIER, count);
         }
 
         double statEffect;
-        if(Set.of("Light", "Water", "Wind").contains(spell.getType())){
+        if (Set.of("Light", "Water", "Wind").contains(spell.getType())) {
             statEffect = Math.sqrt(attacker.getSpirit() + attacker.getIntelligence()) / 5;
         } else {
             statEffect = Math.sqrt(attacker.getArcane() + attacker.getIntelligence()) / 5;
@@ -145,18 +154,20 @@ public class GlobalBattle {
 
     /**
      * Determines if the battle is won.
+     *
      * @return True, if the battle has ended and was won.
      */
-    public boolean isWon(){
-        return isBattleFinished() && battlers.stream().filter( (b) -> b instanceof PC).anyMatch( (pc) -> !pc.isDead());
+    public boolean isWon() {
+        return isBattleFinished() && battlers.stream().filter((b) -> b instanceof PC).anyMatch((pc) -> !pc.isDead());
     }
 
     /**
      * Determines if the battle is lost.
+     *
      * @return True, if the battle has ended and was lost.
      */
-    public boolean isLost(){
-        return isBattleFinished() && battlers.stream().filter( (b) -> b instanceof PC).allMatch(Battler::isDead);
+    public boolean isLost() {
+        return isBattleFinished() && battlers.stream().filter((b) -> b instanceof PC).allMatch(Battler::isDead);
     }
 
     public List<Battler> getBattlers() {
