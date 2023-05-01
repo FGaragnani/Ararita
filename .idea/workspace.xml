@@ -5,9 +5,54 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5676402a-2187-4a8f-bfe0-ac646c9fd387" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/Ararita.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/CityScreen.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/MainMenuScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/GlobalBattle.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/GlobalBattle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/PC.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/PC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/AraritaGame.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/Drawable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Ant Party (Black)/Ant Party (Black).fnt" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/Angel Code Format/Ant Party (Black)/Ant Party (Black).fnt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Ant Party (Black)/Ant Party (Black).png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/Angel Code Format/Ant Party (Black)/Ant Party (Black).png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Ant Party (White)/Ant Party (White).fnt" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/Angel Code Format/Ant Party (White)/Ant Party (White).fnt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Ant Party (White)/Ant Party (White).png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/Angel Code Format/Ant Party (White)/Ant Party (White).png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Breadcrumbs &amp; Flakery (Black)/Breadcrumbs &amp; Flakery (Black).fnt" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/Angel Code Format/Breadcrumbs &amp; Flakery (Black)/Breadcrumbs &amp; Flakery (Black).fnt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Breadcrumbs &amp; Flakery (Black)/Breadcrumbs &amp; Flakery (Black).png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/Angel Code Format/Breadcrumbs &amp; Flakery (Black)/Breadcrumbs &amp; Flakery (Black).png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Breadcrumbs &amp; Flakery (White)/Breadcrumbs &amp; Flakery (White)-export.fnt" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/Angel Code Format/Breadcrumbs &amp; Flakery (White)/Breadcrumbs &amp; Flakery (White)-export.fnt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Breadcrumbs &amp; Flakery (White)/Breadcrumbs &amp; Flakery (White)-export.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/Angel Code Format/Breadcrumbs &amp; Flakery (White)/Breadcrumbs &amp; Flakery (White)-export.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Corvid Conspirator (Black)/Corvid Conspirator (Black).fnt" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/Angel Code Format/Corvid Conspirator (Black)/Corvid Conspirator (Black).fnt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Corvid Conspirator (Black)/Corvid Conspirator (Black).png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/Angel Code Format/Corvid Conspirator (Black)/Corvid Conspirator (Black).png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Corvid Conspirator (White)/Corvid Conspirator (White).fnt" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/Angel Code Format/Corvid Conspirator (White)/Corvid Conspirator (White).fnt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Corvid Conspirator (White)/Corvid Conspirator (White).png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/Angel Code Format/Corvid Conspirator (White)/Corvid Conspirator (White).png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Counting Apples (Black)/Counting Apples (Black).fnt" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/Angel Code Format/Counting Apples (Black)/Counting Apples (Black).fnt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Counting Apples (Black)/Counting Apples (Black).png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/Angel Code Format/Counting Apples (Black)/Counting Apples (Black).png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Counting Apples (White)/Counting Apples (White).fnt" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/Angel Code Format/Counting Apples (White)/Counting Apples (White).fnt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Counting Apples (White)/Counting Apples (White).png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/Angel Code Format/Counting Apples (White)/Counting Apples (White).png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Sol Schori (Black)/Sol Schori (Black).fnt" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/Angel Code Format/Sol Schori (Black)/mainFontBlack.fnt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Sol Schori (Black)/Sol Schori (Black).png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/Angel Code Format/Sol Schori (Black)/mainFontBlack.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Sol Schori (White/Sol Schori (White).fnt" beforeDir="false" afterPath="$PROJECT_DIR$/assets/mainFontWhite.fnt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Sol Schori (White/Sol Schori (White).png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/mainFontWhite.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Sol Schori Thin (Black)/Sol Schori Thin(Black).fnt" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/Angel Code Format/Sol Schori Thin (Black)/Sol Schori Thin(Black).fnt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Sol Schori Thin (Black)/Sol Schori Thin(Black).png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/Angel Code Format/Sol Schori Thin (Black)/Sol Schori Thin(Black).png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Sol Schori Thin (White)/Sol Schori Thin(White).fnt" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/Angel Code Format/Sol Schori Thin (White)/Sol Schori Thin(White).fnt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Sol Schori Thin (White)/Sol Schori Thin(White).png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/Angel Code Format/Sol Schori Thin (White)/Sol Schori Thin(White).png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Varnished (Black)/Varnished (Black).fnt" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/Angel Code Format/Varnished (Black)/Varnished (Black).fnt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Varnished (Black)/Varnished (Black).png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/Angel Code Format/Varnished (Black)/Varnished (Black).png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Varnished (White)/Varnished (White).fnt" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/Angel Code Format/Varnished (White)/Varnished (White).fnt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Angel Code Format/Varnished (White)/Varnished (White).png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/Angel Code Format/Varnished (White)/Varnished (White).png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/TrueType (one color versions)/Ant Party.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/TrueType (one color versions)/Ant Party.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/TrueType (one color versions)/Breadcrumbs &amp; Flakery.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/TrueType (one color versions)/Breadcrumbs &amp; Flakery.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/TrueType (one color versions)/Corvid Conspirator v1.1.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/TrueType (one color versions)/Corvid Conspirator v1.1.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/TrueType (one color versions)/Counting Apples.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/TrueType (one color versions)/Counting Apples.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/TrueType (one color versions)/Sol Schori Bold.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/TrueType (one color versions)/Sol Schori Bold.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/TrueType (one color versions)/Sol Schori.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/TrueType (one color versions)/Sol Schori.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/TrueType (one color versions)/Varnished.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Slime's Pixel Font Pack!/TrueType (one color versions)/Varnished.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Unity Packages/Ant Party.unitypackage" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Unity Packages/Breadcrumbs &amp; Flakery.unitypackage" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Unity Packages/Corvid Conspirator.unitypackage" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Unity Packages/Counting Apples.unitypackage" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Unity Packages/Sol Schori.unitypackage" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/Slime's Pixel Font Pack!/Unity Packages/Varnished.unitypackage" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/resources/json-20230227.jar" beforeDir="false" afterPath="$PROJECT_DIR$/assets/json-20230227.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -46,8 +91,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -88,11 +133,11 @@
       <recent name="" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets" />
+      <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets\Slime's Pixel Font Pack!\Angel Code Format\Sol Schori (Black)" />
       <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\core\src\com\ararita\game" />
       <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\core\src" />
       <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets\src\com\ararita\game\spells" />
-      <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets\src\com\ararita\game\items" />
-      <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets\src\com\ararita\game" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
