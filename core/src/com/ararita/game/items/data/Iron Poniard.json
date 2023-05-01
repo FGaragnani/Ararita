@@ -1,0 +1,11 @@
+{
+    "attributesAffection": {
+        "Arcane": 9,
+        "Strength": 13
+    },
+    "price": 270,
+    "name": "Iron Poniard",
+    "weaponType": "Dagger",
+    "description": "A long dagger with an iron hilt.",
+    "type": "Weapon"
+}

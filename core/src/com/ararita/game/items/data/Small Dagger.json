@@ -1,0 +1,11 @@
+{
+    "attributesAffection": {
+        "Arcane": 1,
+        "Strength": 3
+    },
+    "price": 20,
+    "name": "Small Dagger",
+    "weaponType": "Dagger",
+    "description": "This dagger may be found lying in dirty suburbs.",
+    "type": "Weapon"
+}

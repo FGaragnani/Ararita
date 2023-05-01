@@ -1,0 +1,11 @@
+{
+    "attributesAffection": {
+        "Spirit": 11,
+        "Strength": 22
+    },
+    "price": 600,
+    "name": "Iron Bow",
+    "weaponType": "Bow",
+    "description": "One of the most accurate bows to be found.",
+    "type": "Weapon"
+}

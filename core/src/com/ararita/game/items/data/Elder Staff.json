@@ -1,0 +1,11 @@
+{
+    "attributesAffection": {
+        "Intelligence": 30,
+        "Arcane": 10
+    },
+    "price": 1000,
+    "name": "Elder Staff",
+    "weaponType": "Staff",
+    "description": "A small inscription says: 'Cthulhu fhtagn'.",
+    "type": "Weapon"
+}

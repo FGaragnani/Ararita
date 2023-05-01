@@ -1,0 +1,11 @@
+{
+    "attributesAffection": {
+        "Strength": 31,
+        "Agility": 12
+    },
+    "price": 1000,
+    "name": "Midas' Spear",
+    "weaponType": "Spear",
+    "description": "A spear of a long-forgotten king.",
+    "type": "Weapon"
+}

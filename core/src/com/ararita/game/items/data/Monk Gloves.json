@@ -1,0 +1,11 @@
+{
+    "attributesAffection": {
+        "Strength": 29,
+        "Agility": 10
+    },
+    "price": 1000,
+    "name": "Monk Gloves",
+    "weaponType": "Gloves",
+    "description": "These gloves, crafted by an old monk, are perfect to balance damage and speed.",
+    "type": "Weapon"
+}

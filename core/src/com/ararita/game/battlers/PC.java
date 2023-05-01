@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class PC extends AbstractBattler implements Battler {
 
@@ -333,7 +334,7 @@ public class PC extends AbstractBattler implements Battler {
      */
     public int hasPhysicalAttackPower() {
         double multiplier = getWeapons().stream().filter((weapon) -> this.getProficiencies().containsKey(weapon.getWeaponType())).count() / 2.0;
-        return (int) ((getStrength() + (int) Math.floor((getVigor() + getAgility()) / 6.0)) * (multiplier + 0.5));
+        return (int) ((getEquippedStat("Strength") + (int) Math.floor((getEquippedStat("Vigor") + getEquippedStat("Agility")) / 6.0)) * (multiplier + 0.5));
     }
 
     /**
@@ -344,7 +345,7 @@ public class PC extends AbstractBattler implements Battler {
     @Override
     public int hasMagicalAttackPower() {
         double multiplier = getWeapons().stream().filter((weapon) -> this.getProficiencies().containsKey(weapon.getWeaponType())).count() / 2.0;
-        return (int) ((getIntelligence() + (int) Math.floor((getSpirit() + getArcane()) / 6.0)) * (multiplier + 0.5));
+        return (int) ((getEquippedStat("Intelligence") + (int) Math.floor((getEquippedStat("Spirit") + getEquippedStat("Arcane")) / 6.0)) * (multiplier + 0.5));
     }
 
     /**
@@ -353,7 +354,7 @@ public class PC extends AbstractBattler implements Battler {
      * @return The character's Physical Defense.
      */
     public int hasPhysicalDefense() {
-        return getVigor() + (int) Math.floor(getStrength() / 2.0);
+        return getEquippedStat("Vigor") + (int) Math.floor(getEquippedStat("Strength") / 2.0);
     }
 
     /**
@@ -363,7 +364,7 @@ public class PC extends AbstractBattler implements Battler {
      */
     @Override
     public int hasMagicalDefense() {
-        return getIntelligence() + (int) Math.floor((getSpirit() + getArcane()) / 6.0);
+        return getEquippedStat("Intelligence") + (int) Math.floor((getEquippedStat("Spirit") + getEquippedStat("Arcane")) / 6.0);
     }
 
     /**
@@ -373,7 +374,7 @@ public class PC extends AbstractBattler implements Battler {
      */
     @Override
     public int hasAttackSpeed() {
-        return getAgility() * 2 - (int) Math.floor(getVigor() / 3.0);
+        return getEquippedStat("Agility") * 2 - (int) Math.floor(getEquippedStat("Vigor") / 3.0);
     }
 
     /**
@@ -394,7 +395,7 @@ public class PC extends AbstractBattler implements Battler {
      * @return True, if it can cast the spell.
      */
     public boolean canCast(Spell spell) {
-        return spells.contains(spell) && spell.getMPCost() >= getCurrMP();
+        return (spells.contains(spell)) && (spell.getMPCost() >= getCurrMP());
     }
 
     /**
@@ -405,11 +406,11 @@ public class PC extends AbstractBattler implements Battler {
      * @return The spell's damage.
      */
     public int cast(Spell spell) {
-        if (!canCast(spell)) {
-            return 0;
+        if (canCast(spell)) {
+            this.setCurrMP(getCurrMP() - spell.getMPCost());
+            return (int) (hasMagicalAttackPower() * (spell.getBasePower() / 3.0));
         }
-        this.setCurrMP(getCurrMP() - spell.getMPCost());
-        return (int) (hasMagicalAttackPower() * (spell.getBasePower() / 3.0));
+        return 0;
     }
 
     /**
@@ -443,17 +444,26 @@ public class PC extends AbstractBattler implements Battler {
         }
     }
 
+    /**
+     * The money cost to create this class is calculated.
+     *
+     * @return The cost of the class.
+     */
     public int classCost() {
         int initialCost = 10;
-        for(int proficiencyValue : proficiencies.values()){
+        for (int proficiencyValue : proficiencies.values()) {
             initialCost += (getIncreaseEXP() + getExponentEXP()) * Math.pow(10, proficiencyValue);
         }
         int i = 1;
-        for(String spellType : spellTypes){
+        for (String spellType : spellTypes) {
             initialCost += (getIncreaseEXP() + getExponentEXP()) * Math.pow(10, i);
             i++;
         }
         return initialCost;
+    }
+
+    public int getEquippedStat(String stat) {
+        return getStrength() + getWeapons().stream().flatMapToInt((weapon) -> IntStream.of(weapon.getAttributesAffection().getOrDefault(stat, 0))).sum();
     }
 
     public Path getImage() {

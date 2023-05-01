@@ -1,0 +1,8 @@
+{
+    "attributesAffection": {"Intelligence": 17},
+    "price": 270,
+    "name": "Curved Staff",
+    "weaponType": "Staff",
+    "description": "An elegant staff, to be managed by those expert enough.",
+    "type": "Weapon"
+}

@@ -84,11 +84,17 @@ public class GlobalBattle {
      * @param attacked The battler who is attacked.
      */
     public void attack(Battler attacker, Battler attacked) {
+
+        double multiplier = 1;
+
         if (!attacker.canAttack()) {
             return;
         }
         if (attacked instanceof PC) {
-            attacked.getPhysicalDamage(attacker.hasPhysicalAttackPower());
+            if(Global.getRandomZeroOne() <= attacker.critChance()){
+                multiplier *= 1.5;
+            }
+            attacked.getPhysicalDamage((int) (attacker.hasPhysicalAttackPower() * multiplier));
         }
         if (attacker instanceof Enemy) {
             Enemy enemy = (Enemy) attacker;
@@ -105,10 +111,9 @@ public class GlobalBattle {
             }
         }
         if (attacker instanceof PC && attacked instanceof Enemy) {
-            double multiplier = 1;
             long count = ((PC) attacker).getWeapons().stream().map(Weapon::getWeaponType).filter((weaponType) -> ((Enemy) attacked).getWeakTo().contains(weaponType)).count();
             if (count > 0) {
-                multiplier = Math.pow(Global.WEAKNESS_MULTIPLIER, count);
+                multiplier *= Math.pow(Global.WEAKNESS_MULTIPLIER, count);
             }
             if(Global.getRandomZeroOne() <= attacker.critChance()){
                 multiplier *= 1.5;

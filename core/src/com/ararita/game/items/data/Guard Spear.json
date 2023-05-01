@@ -1,0 +1,8 @@
+{
+    "attributesAffection": {"Strength": 5},
+    "price": 20,
+    "name": "Guard Spear",
+    "weaponType": "Spear",
+    "description": "A spear used by city guards.",
+    "type": "Weapon"
+}

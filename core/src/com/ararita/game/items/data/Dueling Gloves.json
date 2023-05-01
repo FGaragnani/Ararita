@@ -1,0 +1,11 @@
+{
+    "attributesAffection": {
+        "Strength": 23,
+        "Agility": 6
+    },
+    "price": 600,
+    "name": "Dueling Gloves",
+    "weaponType": "Gloves",
+    "description": "Heavy gloves, difficult to use but easy to hit hard.",
+    "type": "Weapon"
+}
