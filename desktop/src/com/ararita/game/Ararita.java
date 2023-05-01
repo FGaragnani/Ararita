@@ -12,19 +12,26 @@ public class Ararita extends Game {
 
     public SpriteBatch batch;
     public BitmapFont titleFont;
+    public BitmapFont bigFont;
     public BitmapFont normalFont;
 
     public void create() {
         batch = new SpriteBatch();
+
         normalFont = new BitmapFont(Gdx.files.internal("mainFontWhite.fnt"));
         normalFont.getData().setScale(1.3f, 1.85f);
+
         titleFont = new BitmapFont(Gdx.files.internal("mainFontWhite.fnt"));
-        titleFont.getData().setScale(3.5f, 5.1f);
+        titleFont.getData().setScale(9f, 13f);
+
+        bigFont = new BitmapFont(Gdx.files.internal("mainFontWhite.fnt"));
+        bigFont.getData().setScale(7f, 10f);
+
         this.setScreen(new MainMenuScreen(this));
     }
 
     public void render() {
-        super.render(); // important!
+        super.render();
     }
 
     public void dispose() {
@@ -32,6 +39,5 @@ public class Ararita extends Game {
         normalFont.dispose();
         titleFont.dispose();
     }
-
 
 }

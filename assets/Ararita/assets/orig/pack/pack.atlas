@@ -1,0 +1,5 @@
+pack.png
+	size: 16, 16
+	filter: Linear, Linear
+white-pixel
+	bounds: 1, 1, 1, 1

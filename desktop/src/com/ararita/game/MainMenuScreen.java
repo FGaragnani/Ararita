@@ -3,13 +3,26 @@ package com.ararita.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.kotcrab.vis.ui.widget.VisTextButton;
 
 public class MainMenuScreen implements Screen {
 
     final Ararita game;
+    Stage stage;
 
     OrthographicCamera camera;
+    Skin skin;
+
+    TextButton.TextButtonStyle textButtonStyle;
+    TextButton mainButton;
+    TextButton settingsButton;
+    TextButton exitButton;
 
     /**
      * The MainMenuScreen is created.
@@ -18,9 +31,48 @@ public class MainMenuScreen implements Screen {
      */
     public MainMenuScreen(final Ararita game) {
         this.game = game;
+        stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
 
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        this.skin = new Skin(Gdx.files.internal("Pixthulhu/pixthulhu-ui.json"));
+
+        this.camera = new OrthographicCamera();
+        camera.setToOrtho(false, 1920, 1080);
+
+        this.textButtonStyle = skin.get("default", TextButton.TextButtonStyle.class);
+        textButtonStyle.font = game.bigFont;
+        mainButton = new TextButton("Play", textButtonStyle);
+        settingsButton = new TextButton("Settings", textButtonStyle);
+        exitButton = new TextButton("Exit", textButtonStyle);
+        mainButton.setPosition((Gdx.graphics.getWidth() - mainButton.getWidth()) / 2, Gdx.graphics.getHeight() - 400);
+        settingsButton.setPosition((Gdx.graphics.getWidth() - settingsButton.getWidth()) / 2, Gdx.graphics.getHeight() - 600);
+        exitButton.setPosition((Gdx.graphics.getWidth() - mainButton.getWidth()) / 2, Gdx.graphics.getHeight() - 800);
+
+        mainButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new CityScreen(game));
+            }
+        });
+
+        settingsButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new SettingsScreen(game));
+            }
+        });
+
+        exitButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                dispose();
+                Gdx.app.exit();
+            }
+        });
+
+        stage.addActor(mainButton);
+        stage.addActor(settingsButton);
+        stage.addActor(exitButton);
     }
 
     @Override
@@ -36,19 +88,11 @@ public class MainMenuScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        game.titleFont.draw(game.batch, "ARARITA", 300, 350);
+
+        stage.draw();
+        game.titleFont.draw(game.batch, "ARARITA", 730, Gdx.graphics.getHeight() - 50);
+
         game.batch.end();
-
-        if (Gdx.input.isTouched()) {
-            // game.setScreen(new CityScreen(game));
-
-            game.batch.begin();
-            game.normalFont.draw(game.batch, "You touched the screen!!! ", 100, 150);
-            game.normalFont.draw(game.batch, "Wow!", 100, 100);
-            game.batch.end();
-
-            dispose();
-        }
     }
 
     @Override
@@ -73,6 +117,7 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
+        skin.dispose();
     }
 }
