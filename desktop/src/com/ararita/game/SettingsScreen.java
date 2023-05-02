@@ -11,7 +11,6 @@ import com.badlogic.gdx.utils.*;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.Map;
 
 public class SettingsScreen implements Screen {
 

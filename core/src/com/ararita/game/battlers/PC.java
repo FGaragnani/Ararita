@@ -43,8 +43,10 @@ public class PC extends AbstractBattler implements Battler {
     public PC(String name, String charClass) throws IOException {
         super(Global.getFromJSONClass(charClass, "strength"), Global.getFromJSONClass(charClass, "intelligence"), Global.getFromJSONClass(charClass, "vigor"), Global.getFromJSONClass(charClass, "agility"), Global.getFromJSONClass(charClass, "spirit"), Global.getFromJSONClass(charClass, "arcane"), charClass, Global.getFromJSONClass(charClass, "baseEXP"), Global.getDoubleFromJSONClass(charClass, "increaseEXP"), Global.getDoubleFromJSONClass(charClass, "exponentEXP"), Global.getMapJSONClass(charClass, "proficiencies"), new HashSet<>(Global.getArrayJSONClass(charClass, "spellTypes")));
         this.name = name;
-        this.currHP = maxHP();
-        this.currMP = maxMP();
+        this.HP = maxHP();
+        this.currHP = this.HP;
+        this.MP = maxMP();
+        this.currMP = this.MP;
         Global.addCharacter(this);
     }
 

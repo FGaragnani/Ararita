@@ -1,5 +1,6 @@
 package com.ararita.game;
 
+import com.ararita.game.battlers.PC;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -12,11 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.sun.tools.javac.util.StringUtils;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.function.BiConsumer;
 
 public class CharacterCreationScreen implements Screen {
 
@@ -131,6 +130,10 @@ public class CharacterCreationScreen implements Screen {
                 try {
                     if (Global.isPresentInJSONList(Global.globalSets, charNameField.getText(), "party") || Global.isPresentInJSONList(Global.globalSets, charNameField.getText(), "otherCharacters")) {
                         nameExistsDialog.show(stage);
+                    } else if (!charClassSelectBox.getSelected().equals("Create new...")) {
+                        Global.addCharacter(new PC(charNameField.getText(), charClassSelectBox.getSelected()));
+                        dispose();
+                        game.setScreen(new CityScreen(game));
                     }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -217,17 +220,14 @@ public class CharacterCreationScreen implements Screen {
             text.append("Spirit: ").append(jsonClass.getInt("spirit")).append("\n");
             text.append("Arcane: ").append(jsonClass.getInt("arcane")).append("\n");
             text.append("\n").append("Proficiencies: \n");
-            jsonClass.getJSONObject("proficiencies").toMap().forEach(new BiConsumer<String, Object>() {
-                @Override
-                public void accept(String s, Object o) {
-                    text.append("\t").append(s).append(":");
-                    if((int) o >= 0){
-                        text.append(" +".repeat((int) o));
-                    } else {
-                        text.append(" -".repeat((int) o));
-                    }
-                    text.append("\n");
+            jsonClass.getJSONObject("proficiencies").toMap().forEach((s, o) -> {
+                text.append("\t").append(s).append(":");
+                if((int) o >= 0){
+                    text.append(" +".repeat((int) o));
+                } else {
+                    text.append(" -".repeat((int) o));
                 }
+                text.append("\n");
             });
             text.append("Learnable spells: ");
             text.append(jsonClass.getJSONArray("spellTypes").toList());
