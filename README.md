@@ -1,4 +1,4 @@
-![Title](https://user-images.githubusercontent.com/101595335/235437255-5fd26da9-541b-4778-ac11-3c463676a4b6.png)
+![Title](https://user-images.githubusercontent.com/101595335/235752910-d8e160a0-c3e9-4a5d-abf8-e94362007559.png)
 
 Inspired by classic videogames such as **Final Fantasy I** and **Phantasy Star II**, Ararita follows as a turn-based RPG with a specific focus to character personalization.
 
@@ -23,6 +23,7 @@ To do.
   * Prepare yourself by buying merch
 * Recruiting heroes 
   * Creating their classes
+
   * Creating spells
   * Equip them with weapons
 
