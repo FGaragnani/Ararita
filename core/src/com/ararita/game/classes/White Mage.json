@@ -15,7 +15,6 @@
     },
     "spellTypes": [
         "Water",
-        "Wind",
         "Light"
     ],
     "charClass": "White Mage",

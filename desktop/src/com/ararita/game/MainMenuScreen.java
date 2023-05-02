@@ -35,7 +35,7 @@ public class MainMenuScreen implements Screen {
         this.stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
-        this.skin = new Skin(Gdx.files.internal("Pixthulhu/pixthulhu-ui.json"));
+        this.skin = game.skin;
         this.camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
 
@@ -126,6 +126,5 @@ public class MainMenuScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-        skin.dispose();
     }
 }

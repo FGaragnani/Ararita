@@ -50,7 +50,7 @@ public class SettingsScreen implements Screen {
         volumeSlider.setPosition(((Gdx.graphics.getWidth() - volumeSlider.getWidth()) / 2) - 100, Gdx.graphics.getHeight() - 300);
         soundEffectsSlider.setPosition(((Gdx.graphics.getWidth() - soundEffectsSlider.getWidth()) / 2) - 100, Gdx.graphics.getHeight() - 500);
 
-        soundEffectLabel = new Label("Sound Effects: " + game.soundEffects, skin);
+        soundEffectLabel = new Label("Sound Effects: " + (float) game.soundEffects, skin);
         soundEffectLabel.setPosition(soundEffectsSlider.getX() + 325, soundEffectsSlider.getY() + 15);
 
         backButton = new TextButton("Back", game.textButtonStyle);
@@ -59,8 +59,9 @@ public class SettingsScreen implements Screen {
         deleteButton.setPosition((Gdx.graphics.getWidth() - deleteButton.getWidth()) / 2, Gdx.graphics.getHeight() - 720);
 
         confirmDeleteDialog = new Dialog("", skin) {
-            public void result(Object confirm) {
-                if (confirm.equals("true")) {
+            @Override
+            protected void result(Object object) {
+                if ((boolean) object) {
                     try {
                         Global.emptyCharacters();
                         Global.emptyInventory();
@@ -72,15 +73,13 @@ public class SettingsScreen implements Screen {
                         throw new RuntimeException("Deleting files is impossible!");
                     }
                 }
-                confirmDeleteDialog.setVisible(false);
+                this.setVisible(false);
             }
         };
         confirmDeleteDialog.setResizable(false);
         confirmDeleteDialog.text(" Do you want to delete all your save files?\n These include classes, spells and " +
                 "characters!\n", game.labelStyle);
-        confirmDeleteDialog.button("Yes", true, game.textButtonStyle);
-        confirmDeleteDialog.button("No", false, game.textButtonStyle);
-        confirmDeleteDialog.setPosition(0, 0);
+        confirmDeleteDialog.button("Yes", true, game.textButtonStyle).button("No", false, game.textButtonStyle);
 
         backButton.addListener(new ChangeListener() {
             @Override
@@ -136,11 +135,12 @@ public class SettingsScreen implements Screen {
 
         game.batch.begin();
 
-        stage.draw();
         game.titleFont.draw(game.batch, "SETTINGS", 730, Gdx.graphics.getHeight() - 50);
         game.normalFont.draw(game.batch, "Volume: " + volumeSlider.getValue(), volumeSlider.getX() + 325, volumeSlider.getY() + 39);
 
         game.batch.end();
+
+        stage.draw();
     }
 
     @Override

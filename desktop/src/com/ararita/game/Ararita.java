@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.SplitPane;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
@@ -22,6 +23,7 @@ public class Ararita extends Game {
     public BitmapFont mediumFont;
     public TextButton.TextButtonStyle textButtonStyle;
     public Label.LabelStyle labelStyle;
+    public SplitPane.SplitPaneStyle splitPaneStyle;
 
     Skin skin;
 
@@ -58,6 +60,8 @@ public class Ararita extends Game {
 
         textButtonStyle = skin.get("default", TextButton.TextButtonStyle.class);
         textButtonStyle.font = this.bigFont;
+
+        splitPaneStyle = skin.get("default-horizontal", SplitPane.SplitPaneStyle.class);
 
         this.setScreen(new MainMenuScreen(this));
     }
