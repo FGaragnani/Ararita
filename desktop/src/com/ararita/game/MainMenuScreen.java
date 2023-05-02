@@ -10,6 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import java.io.IOException;
+
 public class MainMenuScreen implements Screen {
 
     final Ararita game;
@@ -37,8 +39,7 @@ public class MainMenuScreen implements Screen {
         this.camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
 
-        this.textButtonStyle = skin.get("default", TextButton.TextButtonStyle.class);
-        textButtonStyle.font = game.bigFont;
+        this.textButtonStyle = game.textButtonStyle;
         mainButton = new TextButton("Play", textButtonStyle);
         settingsButton = new TextButton("Settings", textButtonStyle);
         exitButton = new TextButton("Exit", textButtonStyle);
@@ -50,7 +51,11 @@ public class MainMenuScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(game.newPlayer){
-                    game.setScreen(new CharacterCreationScreen(game));
+                    try {
+                        game.setScreen(new CharacterCreationScreen(game, true));
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
                 else {
                     game.setScreen(new CityScreen(game));

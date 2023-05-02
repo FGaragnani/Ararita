@@ -28,8 +28,6 @@ public class SettingsScreen implements Screen {
     Slider soundEffectsSlider;
 
     Label soundEffectLabel;
-    Label.LabelStyle labelStyle;
-    TextButton.TextButtonStyle textButtonStyle;
     TextButton deleteButton;
     TextButton backButton;
 
@@ -40,8 +38,7 @@ public class SettingsScreen implements Screen {
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
-
-        this.skin = new Skin(Gdx.files.internal("Pixthulhu/pixthulhu-ui.json"));
+        skin = game.skin;
 
         sliderStyle = skin.get("default-horizontal", Slider.SliderStyle.class);
         volumeSlider = new Slider(0, 100, 1, false, sliderStyle);
@@ -53,16 +50,12 @@ public class SettingsScreen implements Screen {
         volumeSlider.setPosition(((Gdx.graphics.getWidth() - volumeSlider.getWidth()) / 2) - 100, Gdx.graphics.getHeight() - 300);
         soundEffectsSlider.setPosition(((Gdx.graphics.getWidth() - soundEffectsSlider.getWidth()) / 2) - 100, Gdx.graphics.getHeight() - 500);
 
-        labelStyle = skin.get("default", Label.LabelStyle.class);
-        labelStyle.font = game.normalFont;
         soundEffectLabel = new Label("Sound Effects: " + game.soundEffects, skin);
         soundEffectLabel.setPosition(soundEffectsSlider.getX() + 325, soundEffectsSlider.getY() + 15);
 
-        textButtonStyle = skin.get("default", TextButton.TextButtonStyle.class);
-        textButtonStyle.font = game.bigFont;
-        backButton = new TextButton("Back", textButtonStyle);
+        backButton = new TextButton("Back", game.textButtonStyle);
         backButton.setPosition((Gdx.graphics.getWidth() - backButton.getWidth()) / 2, Gdx.graphics.getHeight() - 950);
-        deleteButton = new TextButton("Erase Data", textButtonStyle);
+        deleteButton = new TextButton("Erase Data", game.textButtonStyle);
         deleteButton.setPosition((Gdx.graphics.getWidth() - deleteButton.getWidth()) / 2, Gdx.graphics.getHeight() - 720);
 
         confirmDeleteDialog = new Dialog("", skin) {
@@ -83,16 +76,20 @@ public class SettingsScreen implements Screen {
             }
         };
         confirmDeleteDialog.setResizable(false);
-        confirmDeleteDialog.text("Do you want to delete all your save files? These include classes, spells and characters!", labelStyle);
-        confirmDeleteDialog.button("Yes", true, textButtonStyle);
-        confirmDeleteDialog.button("No", false, textButtonStyle);
+        confirmDeleteDialog.text(" Do you want to delete all your save files?\n These include classes, spells and " +
+                "characters!\n", game.labelStyle);
+        confirmDeleteDialog.button("Yes", true, game.textButtonStyle);
+        confirmDeleteDialog.button("No", false, game.textButtonStyle);
         confirmDeleteDialog.setPosition(0, 0);
 
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    Global.writeJSON(Gdx.files.local("assets/settings.json").file().toPath(), new JSONObject(Map.of("Volume", volumeSlider.getValue(), "Sound Effects", soundEffectsSlider.getValue())));
+                    JSONObject jsonSettings = Global.getJSON(Gdx.files.local("assets/settings.json").file().toPath());
+                    jsonSettings.put("Volume", volumeSlider.getValue());
+                    jsonSettings.put("Sound Effects", volumeSlider.getValue());
+                    Global.writeJSON(Gdx.files.local("assets/settings.json").file().toPath(), jsonSettings);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -106,6 +103,7 @@ public class SettingsScreen implements Screen {
         deleteButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                confirmDeleteDialog.setVisible(true);
                 confirmDeleteDialog.show(stage);
             }
         });
@@ -167,7 +165,6 @@ public class SettingsScreen implements Screen {
 
     @Override
     public void dispose() {
-        skin.dispose();
         stage.dispose();
     }
 }
