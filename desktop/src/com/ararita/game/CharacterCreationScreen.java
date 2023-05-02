@@ -31,9 +31,7 @@ public class CharacterCreationScreen implements Screen {
     Label stats;
 
     TextField charNameField;
-    TextField.TextFieldStyle textFieldStyle;
     SelectBox<String> charClassSelectBox;
-    SelectBox.SelectBoxStyle selectBoxStyle;
 
     TextButton confirmButton;
     TextButton exitButton;
@@ -47,6 +45,10 @@ public class CharacterCreationScreen implements Screen {
     boolean newPlayer;
 
     public CharacterCreationScreen(final Ararita game, boolean newPlayer) throws IOException {
+        /*
+            First initializations.
+         */
+
         this.game = game;
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
@@ -57,10 +59,19 @@ public class CharacterCreationScreen implements Screen {
         this.camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
 
+        /*
+            Setting the background texture.
+         */
         backgroundTexture = new Texture(Gdx.files.local("assets/background.png"));
         backgroundSprite = new Sprite(backgroundTexture);
         backgroundSprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
+
+        /*
+            Creating the two dialogs.
+            One will pop up before creating a new class.
+            The other will pop up for invalid inputs.
+         */
         classCreationDialog = new Dialog("", skin) {
             public void result(Object confirm) {
                 if (confirm.equals("true")) {
@@ -86,7 +97,9 @@ public class CharacterCreationScreen implements Screen {
         nameExistsDialog.button("Ok!", true, game.textButtonStyle);
         nameExistsDialog.setPosition(0, 0);
 
-        JSONObject jsonGlobal = Global.getJSON(Global.globalSets);
+        /*
+            Setting the title.
+         */
 
         titleStyle = skin.get("default", Label.LabelStyle.class);
         titleStyle.font = game.titleFont;
@@ -94,23 +107,33 @@ public class CharacterCreationScreen implements Screen {
         title.setColor(Color.BLACK);
         title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() - 150);
 
-        textFieldStyle = skin.get("default", TextField.TextFieldStyle.class);
-        textFieldStyle.font = game.normalFont;
+        /*
+            Creating the TextField - for the character's name.
+         */
+
+        TextField.TextFieldStyle textFieldStyle = game.textFieldStyle;
         charNameField = new TextField("Character Name", textFieldStyle);
         charNameField.setWidth(400);
         charNameField.setPosition((Gdx.graphics.getWidth() - charNameField.getWidth()) / 2 - 300, Gdx.graphics.getHeight() - 350);
 
-        selectBoxStyle = skin.get("default", SelectBox.SelectBoxStyle.class);
-        selectBoxStyle.font = game.normalFont;
-        selectBoxStyle.listStyle.font = game.normalFont;
-        selectBoxStyle.listStyle.selection.setTopHeight(10);
+        /*
+            Creating the SelectBox - for selecting the character's class.
+            Creating its listener.
+         */
+
+        JSONObject jsonGlobal = Global.getJSON(Global.globalSets);
+
+        SelectBox.SelectBoxStyle selectBoxStyle = game.selectBoxStyle;
         charClassSelectBox = new SelectBox<>(selectBoxStyle);
         Array<String> classArray = new Array<>();
         jsonGlobal.getJSONArray("classNamesSet").toList().forEach((str) -> classArray.add(str.toString()));
-        classArray.add("Create new...");
+        if (!newPlayer) {
+            classArray.add("Create new...");
+        }
         charClassSelectBox.setItems(classArray);
         charClassSelectBox.setWidth(400);
         charClassSelectBox.setPosition((Gdx.graphics.getWidth() - charClassSelectBox.getWidth()) / 2 - 300, Gdx.graphics.getHeight() - 500);
+
         charClassSelectBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -121,6 +144,11 @@ public class CharacterCreationScreen implements Screen {
                 }
             }
         });
+
+        /*
+            Creating the button for creation.
+            Creating its Listener.
+         */
 
         confirmButton = new TextButton("Confirm", game.textButtonStyle);
         confirmButton.setPosition((Gdx.graphics.getWidth() - (confirmButton.getWidth())) / 2, Gdx.graphics.getHeight() - 850);
@@ -140,12 +168,17 @@ public class CharacterCreationScreen implements Screen {
                 }
             }
         });
+
+        /*
+            Creating the Exit Button.
+         */
+
         exitButton = new TextButton("Exit", game.textButtonStyle);
         exitButton.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, Gdx.graphics.getHeight() - 1000);
 
-        if (newPlayer) {
-            exitButton.setVisible(false);
-        }
+        /*
+            Creating the class Stats label.
+         */
 
         stats = new Label("", game.labelStyle);
         stats.setFontScale(2.7f, 3.65f);
@@ -157,7 +190,9 @@ public class CharacterCreationScreen implements Screen {
         stage.addActor(charNameField);
         stage.addActor(charClassSelectBox);
         stage.addActor(confirmButton);
-        stage.addActor(exitButton);
+        if(!newPlayer) {
+            stage.addActor(exitButton);
+        }
         stage.addActor(stats);
     }
 
@@ -209,7 +244,12 @@ public class CharacterCreationScreen implements Screen {
         stage.dispose();
     }
 
-    public void statUpdate(){
+    /**
+     * Updates the stat Label text.
+     * Getting the class name from the SelectBox, it updates the label with
+     * the class' info.
+     */
+    public void statUpdate() {
         StringBuilder text = new StringBuilder();
         try {
             JSONObject jsonClass = Global.getJSON(Global.getJSONFilePath(Global.classSets, charClassSelectBox.getSelected()));
@@ -222,7 +262,7 @@ public class CharacterCreationScreen implements Screen {
             text.append("\n").append("Proficiencies: \n");
             jsonClass.getJSONObject("proficiencies").toMap().forEach((s, o) -> {
                 text.append("\t").append(s).append(":");
-                if((int) o >= 0){
+                if ((int) o >= 0) {
                     text.append(" +".repeat((int) o));
                 } else {
                     text.append(" -".repeat((int) o));

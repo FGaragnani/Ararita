@@ -4,10 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.SplitPane;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 
@@ -21,9 +18,13 @@ public class Ararita extends Game {
     public BitmapFont bigFont;
     public BitmapFont normalFont;
     public BitmapFont mediumFont;
+
     public TextButton.TextButtonStyle textButtonStyle;
     public Label.LabelStyle labelStyle;
     public SplitPane.SplitPaneStyle splitPaneStyle;
+    public Slider.SliderStyle sliderStyle;
+    public TextField.TextFieldStyle textFieldStyle;
+    public SelectBox.SelectBoxStyle selectBoxStyle;
 
     Skin skin;
 
@@ -62,6 +63,15 @@ public class Ararita extends Game {
         textButtonStyle.font = this.bigFont;
 
         splitPaneStyle = skin.get("default-horizontal", SplitPane.SplitPaneStyle.class);
+        sliderStyle = skin.get("default-horizontal", Slider.SliderStyle.class);
+
+        textFieldStyle = skin.get("default", TextField.TextFieldStyle.class);
+        textFieldStyle.font = this.normalFont;
+
+        selectBoxStyle = skin.get("default", SelectBox.SelectBoxStyle.class);
+        selectBoxStyle.font = this.normalFont;
+        selectBoxStyle.listStyle.font = this.normalFont;
+        selectBoxStyle.listStyle.selection.setTopHeight(10);
 
         this.setScreen(new MainMenuScreen(this));
     }

@@ -31,6 +31,11 @@ public class MainMenuScreen implements Screen {
      * @param game The game for the Main Menu.
      */
     public MainMenuScreen(final Ararita game) {
+
+        /*
+            First initializations.
+         */
+
         this.game = game;
         this.stage = new Stage();
         Gdx.input.setInputProcessor(stage);
@@ -39,6 +44,10 @@ public class MainMenuScreen implements Screen {
         this.camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
 
+        /*
+            Creating the three main buttons.
+         */
+
         this.textButtonStyle = game.textButtonStyle;
         mainButton = new TextButton("Play", textButtonStyle);
         settingsButton = new TextButton("Settings", textButtonStyle);
@@ -46,6 +55,10 @@ public class MainMenuScreen implements Screen {
         mainButton.setPosition((Gdx.graphics.getWidth() - mainButton.getWidth()) / 2, Gdx.graphics.getHeight() - 400);
         settingsButton.setPosition((Gdx.graphics.getWidth() - settingsButton.getWidth()) / 2, Gdx.graphics.getHeight() - 600);
         exitButton.setPosition((Gdx.graphics.getWidth() - mainButton.getWidth()) / 2, Gdx.graphics.getHeight() - 800);
+
+        /*
+            Adding the buttons' listeners.
+         */
 
         mainButton.addListener(new ChangeListener() {
             @Override

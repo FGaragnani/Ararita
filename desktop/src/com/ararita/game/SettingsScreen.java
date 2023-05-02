@@ -22,7 +22,6 @@ public class SettingsScreen implements Screen {
 
     Dialog confirmDeleteDialog;
 
-    Slider.SliderStyle sliderStyle;
     Slider volumeSlider;
     Slider soundEffectsSlider;
 
@@ -31,6 +30,9 @@ public class SettingsScreen implements Screen {
     TextButton backButton;
 
     public SettingsScreen(final Ararita game) {
+        /*
+            First initializations.
+         */
         this.game = game;
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
@@ -39,7 +41,10 @@ public class SettingsScreen implements Screen {
         camera.setToOrtho(false, 1920, 1080);
         skin = game.skin;
 
-        sliderStyle = skin.get("default-horizontal", Slider.SliderStyle.class);
+        /*
+            Creating the two sliders.
+         */
+        Slider.SliderStyle sliderStyle = game.sliderStyle;
         volumeSlider = new Slider(0, 100, 1, false, sliderStyle);
         soundEffectsSlider = new Slider(0, 100, 1, false, sliderStyle);
         volumeSlider.setWidth(300);
@@ -49,13 +54,25 @@ public class SettingsScreen implements Screen {
         volumeSlider.setPosition(((Gdx.graphics.getWidth() - volumeSlider.getWidth()) / 2) - 100, Gdx.graphics.getHeight() - 300);
         soundEffectsSlider.setPosition(((Gdx.graphics.getWidth() - soundEffectsSlider.getWidth()) / 2) - 100, Gdx.graphics.getHeight() - 500);
 
+        /*
+            Creating the SoundEffects Label.
+         */
         soundEffectLabel = new Label("Sound Effects: " + (float) game.soundEffects, skin);
         soundEffectLabel.setPosition(soundEffectsSlider.getX() + 325, soundEffectsSlider.getY() + 15);
+
+        /*
+            Creating the two main buttons.
+         */
 
         backButton = new TextButton("Back", game.textButtonStyle);
         backButton.setPosition((Gdx.graphics.getWidth() - backButton.getWidth()) / 2, Gdx.graphics.getHeight() - 950);
         deleteButton = new TextButton("Erase Data", game.textButtonStyle);
         deleteButton.setPosition((Gdx.graphics.getWidth() - deleteButton.getWidth()) / 2, Gdx.graphics.getHeight() - 720);
+
+        /*
+            Creating the dialog.
+            This will show up before erasing the saved data.
+         */
 
         confirmDeleteDialog = new Dialog("", skin) {
             @Override
@@ -79,6 +96,10 @@ public class SettingsScreen implements Screen {
         confirmDeleteDialog.text(" Do you want to delete all your save files?\n These include classes, spells and " +
                 "characters!\n", game.labelStyle);
         confirmDeleteDialog.button("Yes", true, game.textButtonStyle).button("No", false, game.textButtonStyle);
+
+        /*
+            Adding the listeners to the actors.
+         */
 
         backButton.addListener(new ChangeListener() {
             @Override
