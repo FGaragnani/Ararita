@@ -2,7 +2,6 @@ package com.ararita.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -56,7 +55,7 @@ public class SettingsScreen implements Screen {
 
         labelStyle = skin.get("default", Label.LabelStyle.class);
         labelStyle.font = game.normalFont;
-        soundEffectLabel = new Label("Sound Effects: 100.0", skin);
+        soundEffectLabel = new Label("Sound Effects: " + game.soundEffects, skin);
         soundEffectLabel.setPosition(soundEffectsSlider.getX() + 325, soundEffectsSlider.getY() + 15);
 
         textButtonStyle = skin.get("default", TextButton.TextButtonStyle.class);
@@ -73,12 +72,14 @@ public class SettingsScreen implements Screen {
                         Global.emptyCharacters();
                         Global.emptyInventory();
                         Global.emptySpell();
+                        JSONObject jsonSettings = Global.getJSON(Gdx.files.local("assets/settings.json").file().toPath());
+                        jsonSettings.put("New", true);
+                        Global.writeJSON(Gdx.files.local("assets/settings.json").file().toPath(), jsonSettings);
                     } catch (IOException e) {
                         throw new RuntimeException("Deleting files is impossible!");
                     }
-                } else {
-                    confirmDeleteDialog.setVisible(false);
                 }
+                confirmDeleteDialog.setVisible(false);
             }
         };
         confirmDeleteDialog.setResizable(false);
@@ -109,6 +110,13 @@ public class SettingsScreen implements Screen {
             }
         });
 
+        soundEffectsSlider.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                soundEffectLabel.setText("Sound Effects: " + soundEffectsSlider.getValue());
+            }
+        });
+
         stage.addActor(soundEffectLabel);
         stage.addActor(volumeSlider);
         stage.addActor(soundEffectsSlider);
@@ -133,7 +141,6 @@ public class SettingsScreen implements Screen {
         stage.draw();
         game.titleFont.draw(game.batch, "SETTINGS", 730, Gdx.graphics.getHeight() - 50);
         game.normalFont.draw(game.batch, "Volume: " + volumeSlider.getValue(), volumeSlider.getX() + 325, volumeSlider.getY() + 39);
-        soundEffectLabel.setText("Sound Effects: " + soundEffectsSlider.getValue());
 
         game.batch.end();
     }

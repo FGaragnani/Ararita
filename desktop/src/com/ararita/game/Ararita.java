@@ -20,11 +20,14 @@ public class Ararita extends Game {
     int volume;
     int soundEffects;
 
+    boolean newPlayer;
+
     public void create() {
 
         JsonValue jsonSettings = new JsonReader().parse(Gdx.files.local("assets/settings.json"));
         volume = jsonSettings.getInt("Volume");
         soundEffects = jsonSettings.getInt("Sound Effects");
+        newPlayer = jsonSettings.getBoolean("New");
 
         batch = new SpriteBatch();
 
