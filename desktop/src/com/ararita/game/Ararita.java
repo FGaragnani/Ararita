@@ -27,8 +27,10 @@ public class Ararita extends Game {
     public Slider.SliderStyle sliderStyle;
     public TextField.TextFieldStyle textFieldStyle;
     public SelectBox.SelectBoxStyle selectBoxStyle;
+    public ImageButton.ImageButtonStyle imageButtonStyle;
 
     public final java.util.List<String> spriteNames = List.of("Fighter", "Magician", "Healer", "Ninja", "Archer", "Monk");
+    public final int spriteFrameCols = 3;
 
     Skin skin;
 
