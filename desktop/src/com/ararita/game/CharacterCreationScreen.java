@@ -43,7 +43,7 @@ public class CharacterCreationScreen implements Screen {
     Dialog classCreationDialog;
     Dialog nameExistsDialog;
 
-    ImageButton spriteImage;
+    Image spriteImage;
     Animation<TextureRegion> charAnimation;
     Texture charSheet;
     TextureRegion[][] tmp;
@@ -77,11 +77,15 @@ public class CharacterCreationScreen implements Screen {
         backgroundSprite = new Sprite(backgroundTexture);
         backgroundSprite.setSize((int) (Gdx.graphics.getWidth() * 1.1), (int) (Gdx.graphics.getHeight() * 1.1));
 
+        /*
+            Creating the ImageButton and the texture.
+         */
+
         charSheet = new Texture(Gdx.files.internal("msprites.png"));
         tmp = TextureRegion.split(charSheet, charSheet.getWidth() / (game.spriteFrameCols * 6), charSheet.getHeight());
-        spriteImage = new ImageButton(skin.get("default", ImageButton.ImageButtonStyle.class));
-        spriteImage.setPosition(Gdx.graphics.getWidth() - 450, Gdx.graphics.getHeight() - 500);
-        spriteImage.setDisabled(true);
+        spriteImage = new Image();
+        spriteImage.setPosition(Gdx.graphics.getWidth() - 500, Gdx.graphics.getHeight() - 550);
+        spriteImage.setScale(11);
 
         /*
             Creating the two dialogs.
@@ -130,8 +134,7 @@ public class CharacterCreationScreen implements Screen {
         TextField.TextFieldStyle textFieldStyle = game.textFieldStyle;
         charNameField = new TextField("Character Name", textFieldStyle);
         charNameField.setWidth(400);
-        charNameField.setPosition((Gdx.graphics.getWidth() - charNameField.getWidth()) / 2,
-                Gdx.graphics.getHeight() - 350);
+        charNameField.setPosition((Gdx.graphics.getWidth() - charNameField.getWidth()) / 2, Gdx.graphics.getHeight() - 350);
 
         /*
             Creating the SelectBox - for selecting the character's class.
@@ -174,6 +177,12 @@ public class CharacterCreationScreen implements Screen {
         charImageSelectBox.setPosition((Gdx.graphics.getWidth() - charImageSelectBox.getWidth()) / 2, Gdx.graphics.getHeight() - 600);
         charImageSelectBox.setSelected("Fighter");
         changeSprite(charImageSelectBox.getSelected());
+        charImageSelectBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                changeSprite(charImageSelectBox.getSelected());
+            }
+        });
 
         /*
             Creating the button for confirmation.
@@ -213,7 +222,7 @@ public class CharacterCreationScreen implements Screen {
         stats = new Label("", game.labelStyle);
         stats.setFontScale(2.8f, 3.8f);
         stats.setColor(Color.BLACK);
-        stats.setPosition(300, 600);
+        stats.setPosition(300, Gdx.graphics.getHeight() - 480);
         statUpdate();
 
         stage.addActor(title);
@@ -242,15 +251,11 @@ public class CharacterCreationScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         TextureRegion currentFrame = charAnimation.getKeyFrame(stateTime / 8, true);
-        spriteImage.getStyle().imageUp = new TextureRegionDrawable(currentFrame);
-        spriteImage.getImage().setScale(10);
-        spriteImage.getImage().setPosition(spriteImage.getOriginX(), spriteImage.getOriginY());
-        spriteImage.setSize(currentFrame.getRegionWidth() * 10, currentFrame.getRegionHeight() * 10);
+        spriteImage.setDrawable(new TextureRegionDrawable(currentFrame));
+        spriteImage.setSize(currentFrame.getRegionWidth(), currentFrame.getRegionHeight());
 
         game.batch.begin();
-
         backgroundSprite.draw(game.batch);
-
         game.batch.end();
 
         stage.draw();
@@ -318,8 +323,13 @@ public class CharacterCreationScreen implements Screen {
         }
     }
 
+    /**
+     * Modifies charAnimation according to the spriteName given.
+     *
+     * @param spriteName The name of the sprite (which is in game.spriteNames) to change the animation.
+     */
     public void changeSprite(String spriteName) {
-        int listPosition = game.spriteNames.indexOf(spriteName);
+        int listPosition = game.spriteNames.indexOf(spriteName) * 3;
         TextureRegion[] walkFrames = new TextureRegion[game.spriteFrameCols];
         int index = 0;
         for (int i = listPosition; i < game.spriteFrameCols + listPosition; i++) {
