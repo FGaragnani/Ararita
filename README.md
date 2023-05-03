@@ -38,13 +38,13 @@ To do.
 ## Credits
 
 * Code used:
- * [LibGDX](https://github.com/libgdx/libgdx)
- * JSON utility library: [org.JSON](https://mvnrepository.com/artifact/org.json/json)
+  * [LibGDX](https://github.com/libgdx/libgdx)
+  * JSON utility library: [org.JSON](https://mvnrepository.com/artifact/org.json/json)
 * Font used:
- * Sol Schori by [Noam Goldfarb](https://slimeplease.artstation.com/)
+  * Sol Schori by [Noam Goldfarb](https://slimeplease.artstation.com/)
 * Assets by:
- * Pixthulhu LibGDX's [Skins](https://github.com/czyzby/gdx-skins/tree/master/pixthulhu) by Raymond "Raeleus" Buckley
- * 16-bit [character sprites](https://opengameart.org/content/twelve-16x18-rpg-sprites-plus-base) by Antifarea, comissioned by OpenGameArt
+  * Pixthulhu LibGDX's [Skins](https://github.com/czyzby/gdx-skins/tree/master/pixthulhu) by Raymond "Raeleus" Buckley
+  * 16-bit [character sprites](https://opengameart.org/content/twelve-16x18-rpg-sprites-plus-base) by Antifarea, comissioned by OpenGameArt
   
 ## License
 
