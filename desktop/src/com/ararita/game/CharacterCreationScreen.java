@@ -32,6 +32,7 @@ public class CharacterCreationScreen implements Screen {
 
     TextField charNameField;
     SelectBox<String> charClassSelectBox;
+    SelectBox<String> charImageSelectBox;
 
     TextButton confirmButton;
     TextButton exitButton;
@@ -62,10 +63,10 @@ public class CharacterCreationScreen implements Screen {
         /*
             Setting the background texture.
          */
+
         backgroundTexture = new Texture(Gdx.files.local("assets/background.png"));
         backgroundSprite = new Sprite(backgroundTexture);
-        backgroundSprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
+        backgroundSprite.setSize((int) (Gdx.graphics.getWidth() * 1.1), (int) (Gdx.graphics.getHeight() * 1.1));
 
         /*
             Creating the two dialogs.
@@ -145,8 +146,15 @@ public class CharacterCreationScreen implements Screen {
             }
         });
 
+        charImageSelectBox = new SelectBox<>(selectBoxStyle);
+        Array<String> imageArray = new Array<>();
+        game.spriteNames.forEach((str) -> imageArray.add(str + " M", str + " F"));
+        charImageSelectBox.setItems(imageArray);
+        charImageSelectBox.setWidth(400);
+        charImageSelectBox.setPosition((Gdx.graphics.getWidth() - charImageSelectBox.getWidth()) / 2 - 300, Gdx.graphics.getHeight() - 600);
+
         /*
-            Creating the button for creation.
+            Creating the button for confirmation.
             Creating its Listener.
          */
 
@@ -181,7 +189,7 @@ public class CharacterCreationScreen implements Screen {
          */
 
         stats = new Label("", game.labelStyle);
-        stats.setFontScale(2.7f, 3.65f);
+        stats.setFontScale(2.8f, 3.8f);
         stats.setColor(Color.BLACK);
         stats.setPosition(1100, 600);
         statUpdate();
@@ -189,8 +197,9 @@ public class CharacterCreationScreen implements Screen {
         stage.addActor(title);
         stage.addActor(charNameField);
         stage.addActor(charClassSelectBox);
+        stage.addActor(charImageSelectBox);
         stage.addActor(confirmButton);
-        if(!newPlayer) {
+        if (!newPlayer) {
             stage.addActor(exitButton);
         }
         stage.addActor(stats);
@@ -259,7 +268,7 @@ public class CharacterCreationScreen implements Screen {
             text.append("Vigor: ").append(jsonClass.getInt("vigor")).append("\n");
             text.append("Spirit: ").append(jsonClass.getInt("spirit")).append("\n");
             text.append("Arcane: ").append(jsonClass.getInt("arcane")).append("\n");
-            text.append("\n").append("Proficiencies: \n");
+            text.append("Proficiencies: \n");
             jsonClass.getJSONObject("proficiencies").toMap().forEach((s, o) -> {
                 text.append("\t").append(s).append(":");
                 if ((int) o >= 0) {
@@ -269,8 +278,8 @@ public class CharacterCreationScreen implements Screen {
                 }
                 text.append("\n");
             });
-            text.append("Learnable spells: ");
-            text.append(jsonClass.getJSONArray("spellTypes").toList());
+            text.append("Learnable spell types:\n");
+            jsonClass.getJSONArray("spellTypes").toList().forEach((str) -> text.append("\t- ").append(str.toString()).append("\n"));
             text.append("\n");
             stats.setText(text.toString());
         } catch (IOException e) {

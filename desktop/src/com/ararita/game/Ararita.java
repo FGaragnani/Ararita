@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 
+import java.util.List;
+
 /**
  * Handles the multiple screens in the game.
  */
@@ -25,6 +27,8 @@ public class Ararita extends Game {
     public Slider.SliderStyle sliderStyle;
     public TextField.TextFieldStyle textFieldStyle;
     public SelectBox.SelectBoxStyle selectBoxStyle;
+
+    public final java.util.List<String> spriteNames = List.of("Fighter", "Magician", "Healer", "Ninja", "Archer", "Monk");
 
     Skin skin;
 
@@ -85,5 +89,4 @@ public class Ararita extends Game {
         normalFont.dispose();
         titleFont.dispose();
     }
-
 }
