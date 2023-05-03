@@ -5,23 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5676402a-2187-4a8f-bfe0-ac646c9fd387" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/README/charcs.gif" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/Ararita.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/assets/General/Ararita.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/Pixthulhu/pixthulhu-ui.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Pixthulhu/pixthulhu-ui.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/background.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Backgrounds/paperbg.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/mainFontWhite.fnt" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Font/mainFontWhite.fnt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/mainFontWhite.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Font/mainFontWhite.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/msprites-noalpha.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/General/msprites-noalpha.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/msprites.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/General/msprites.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Settings/settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/title.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/README/title.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/title2.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/README/title2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Settings/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Settings/settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/Ararita.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/Ararita.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/CharacterCreationScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/CharacterCreationScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/CityScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/CityScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/SettingsScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/SettingsScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/MainMenuScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/MainMenuScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

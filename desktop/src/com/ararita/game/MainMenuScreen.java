@@ -110,10 +110,11 @@ public class MainMenuScreen implements Screen {
 
         game.batch.begin();
 
-        stage.draw();
         game.titleFont.draw(game.batch, "ARARITA", 730, Gdx.graphics.getHeight() - 50);
 
         game.batch.end();
+
+        stage.draw();
     }
 
     @Override

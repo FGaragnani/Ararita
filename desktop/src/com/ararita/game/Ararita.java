@@ -34,6 +34,7 @@ public class Ararita extends Game {
     public final int spriteFrameCols = 3;
 
     public String settingsPath = "assets/Settings/settings.json";
+    public String stylesPath = "Pixthulhu/pixthulhu-ui.json";
 
     Skin skin;
 
@@ -44,7 +45,7 @@ public class Ararita extends Game {
 
     public void create() {
 
-        this.skin = new Skin(Gdx.files.internal("Pixthulhu/pixthulhu-ui.json"));
+        this.skin = new Skin(Gdx.files.internal(stylesPath));
 
         JsonValue jsonSettings = new JsonReader().parse(Gdx.files.local(settingsPath));
         volume = jsonSettings.getInt("Volume");
