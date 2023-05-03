@@ -14,23 +14,24 @@ This project was done for the 'Programmazione ad Oggetti e Lab.' course at UniMO
   * [License](#License)
 
 ## Overview
-To do.
+**Ararita** mix the traditional turn-based RPG with some unique features.
+| ![charcs](https://user-images.githubusercontent.com/101595335/236061241-506f9c12-c654-4ada-907a-f037b0abb8d1.gif) |
+| :--: |
+| **Create your own party of adventurers!** |
+
+More todo.
+
 
 ## Features
-**Implemented**:
-* Level up your heroes and increase their stats
-* Manage your inventory
-  * Prepare yourself by buying merch
-* Recruiting heroes 
-  * Creating their classes
-
-  * Creating spells
+* Recruit heroes:
+  * Create their classes
+  * Create their spells
   * Equip them with weapons
+  * Manage your inventory
 
-**Planned**:
-* Venture in dangerous dungeons
+* Venture in dangerous dungeons:
   * Turn-based combat system
-  * 3 (or more) dungeons with a difficulty growth
+  * Final dungeon boss battles
  
 ## Installing
 To do.
