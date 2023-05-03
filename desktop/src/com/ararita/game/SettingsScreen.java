@@ -82,9 +82,10 @@ public class SettingsScreen implements Screen {
                         Global.emptyCharacters();
                         Global.emptyInventory();
                         Global.emptySpell();
-                        JSONObject jsonSettings = Global.getJSON(Gdx.files.local("assets/settings.json").file().toPath());
+                        JSONObject jsonSettings = Global.getJSON(Gdx.files.local(game.settingsPath).file().toPath());
                         jsonSettings.put("New", true);
-                        Global.writeJSON(Gdx.files.local("assets/settings.json").file().toPath(), jsonSettings);
+                        game.newPlayer = true;
+                        Global.writeJSON(Gdx.files.local(game.settingsPath).file().toPath(), jsonSettings);
                     } catch (IOException e) {
                         throw new RuntimeException("Deleting files is impossible!");
                     }
@@ -93,8 +94,7 @@ public class SettingsScreen implements Screen {
             }
         };
         confirmDeleteDialog.setResizable(false);
-        confirmDeleteDialog.text(" Do you want to delete all your save files?\n These include classes, spells and " +
-                "characters!\n", game.labelStyle);
+        confirmDeleteDialog.text(" Do you want to delete all your save files?\n These include classes, spells and " + "characters!\n", game.labelStyle);
         confirmDeleteDialog.button("Yes", true, game.textButtonStyle).button("No", false, game.textButtonStyle);
 
         /*
@@ -105,10 +105,10 @@ public class SettingsScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    JSONObject jsonSettings = Global.getJSON(Gdx.files.local("assets/settings.json").file().toPath());
+                    JSONObject jsonSettings = Global.getJSON(Gdx.files.local(game.settingsPath).file().toPath());
                     jsonSettings.put("Volume", volumeSlider.getValue());
                     jsonSettings.put("Sound Effects", volumeSlider.getValue());
-                    Global.writeJSON(Gdx.files.local("assets/settings.json").file().toPath(), jsonSettings);
+                    Global.writeJSON(Gdx.files.local(game.settingsPath).file().toPath(), jsonSettings);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

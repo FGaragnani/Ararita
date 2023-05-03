@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 
+import java.nio.file.Path;
 import java.util.List;
 
 /**
@@ -32,6 +33,8 @@ public class Ararita extends Game {
     public final java.util.List<String> spriteNames = List.of("Fighter", "Magician", "Healer", "Ninja", "Archer", "Monk");
     public final int spriteFrameCols = 3;
 
+    public String settingsPath = "assets/Settings/settings.json";
+
     Skin skin;
 
     int volume;
@@ -43,23 +46,23 @@ public class Ararita extends Game {
 
         this.skin = new Skin(Gdx.files.internal("Pixthulhu/pixthulhu-ui.json"));
 
-        JsonValue jsonSettings = new JsonReader().parse(Gdx.files.local("assets/settings.json"));
+        JsonValue jsonSettings = new JsonReader().parse(Gdx.files.local(settingsPath));
         volume = jsonSettings.getInt("Volume");
         soundEffects = jsonSettings.getInt("Sound Effects");
         newPlayer = jsonSettings.getBoolean("New");
 
         batch = new SpriteBatch();
 
-        normalFont = new BitmapFont(Gdx.files.internal("mainFontWhite.fnt"));
+        normalFont = new BitmapFont(Gdx.files.internal("Font/mainFontWhite.fnt"));
         normalFont.getData().setScale(2.7f, 3.65f);
 
-        titleFont = new BitmapFont(Gdx.files.internal("mainFontWhite.fnt"));
+        titleFont = new BitmapFont(Gdx.files.internal("Font/mainFontWhite.fnt"));
         titleFont.getData().setScale(9f, 13f);
 
-        bigFont = new BitmapFont(Gdx.files.internal("mainFontWhite.fnt"));
+        bigFont = new BitmapFont(Gdx.files.internal("Font/mainFontWhite.fnt"));
         bigFont.getData().setScale(7f, 10f);
 
-        mediumFont = new BitmapFont(Gdx.files.internal("mainFontWhite.fnt"));
+        mediumFont = new BitmapFont(Gdx.files.internal("Font/mainFontWhite.fnt"));
         mediumFont.getData().setScale(4.8f, 6.75f);
 
         labelStyle = skin.get("default", Label.LabelStyle.class);

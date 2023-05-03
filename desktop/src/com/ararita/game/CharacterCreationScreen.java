@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
 public class CharacterCreationScreen implements Screen {
 
@@ -73,7 +74,7 @@ public class CharacterCreationScreen implements Screen {
             Setting the background texture.
          */
 
-        backgroundTexture = new Texture(Gdx.files.local("assets/background.png"));
+        backgroundTexture = new Texture(Gdx.files.local("assets/Backgrounds/paperbg.png"));
         backgroundSprite = new Sprite(backgroundTexture);
         backgroundSprite.setSize((int) (Gdx.graphics.getWidth() * 1.1), (int) (Gdx.graphics.getHeight() * 1.1));
 
@@ -81,7 +82,7 @@ public class CharacterCreationScreen implements Screen {
             Creating the ImageButton and the texture.
          */
 
-        charSheet = new Texture(Gdx.files.internal("msprites.png"));
+        charSheet = new Texture(Gdx.files.internal("General/msprites.png"));
         tmp = TextureRegion.split(charSheet, charSheet.getWidth() / (game.spriteFrameCols * 6), charSheet.getHeight());
         spriteImage = new Image();
         spriteImage.setPosition(Gdx.graphics.getWidth() - 500, Gdx.graphics.getHeight() - 550);
@@ -199,6 +200,12 @@ public class CharacterCreationScreen implements Screen {
                         nameExistsDialog.show(stage);
                     } else if (!charClassSelectBox.getSelected().equals("Create new...")) {
                         Global.addCharacter(new PC(charNameField.getText(), charClassSelectBox.getSelected()));
+                        if(newPlayer) {
+                            JSONObject jsonSettings = Global.getJSON(Path.of(game.settingsPath));
+                            jsonSettings.put("New", false);
+                            game.newPlayer = false;
+                            Global.writeJSON(Path.of(game.settingsPath), jsonSettings);
+                        }
                         dispose();
                         game.setScreen(new CityScreen(game));
                     }
@@ -326,7 +333,7 @@ public class CharacterCreationScreen implements Screen {
     /**
      * Modifies charAnimation according to the spriteName given.
      *
-     * @param spriteName The name of the sprite (which is in game.spriteNames) to change the animation.
+     * @param spriteName The name of the sprite (which is in game.spriteNames) to change the animation to.
      */
     public void changeSprite(String spriteName) {
         int listPosition = game.spriteNames.indexOf(spriteName) * 3;
