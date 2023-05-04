@@ -27,6 +27,7 @@ public class CityScreen implements Screen {
     TextButton classCreateButton;
     TextButton spellCreateButton;
     TextButton shopButton;
+    TextButton partyManageButton;
     TextButton mainMenuButton;
 
     Texture backgroundTexture;
@@ -53,7 +54,7 @@ public class CityScreen implements Screen {
             Setting the background texture.
          */
 
-        backgroundTexture = new Texture(Gdx.files.local("assets/Backgrounds/paperbg.png"));
+        backgroundTexture = new Texture(Gdx.files.local("assets/Backgrounds/city.png"));
         backgroundSprite = new Sprite(backgroundTexture);
         backgroundSprite.setSize((int) (Gdx.graphics.getWidth() * 1.1), (int) (Gdx.graphics.getHeight() * 1.1));
 
@@ -80,7 +81,7 @@ public class CityScreen implements Screen {
          */
 
         classCreateButton = new TextButton(" Create new \n class ", textButtonStyle);
-        classCreateButton.setPosition((Gdx.graphics.getWidth() - classCreateButton.getWidth()) / 4, Gdx.graphics.getHeight() - 550);
+        classCreateButton.setPosition((Gdx.graphics.getWidth() - classCreateButton.getWidth()) / 4, Gdx.graphics.getHeight() - 580);
         classCreateButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -94,7 +95,7 @@ public class CityScreen implements Screen {
          */
 
         spellCreateButton = new TextButton(" Create new \n spell ", textButtonStyle);
-        spellCreateButton.setPosition((Gdx.graphics.getWidth() - classCreateButton.getWidth()) / 4, Gdx.graphics.getHeight() - 750);
+        spellCreateButton.setPosition((Gdx.graphics.getWidth() - classCreateButton.getWidth()) / 4, Gdx.graphics.getHeight() - 810);
         spellCreateButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -107,9 +108,9 @@ public class CityScreen implements Screen {
             Initialize the Shop Button and its listener.
          */
 
-        spellCreateButton = new TextButton(" Enter the \n shop ", textButtonStyle);
-        spellCreateButton.setPosition((Gdx.graphics.getWidth() - classCreateButton.getWidth()) * 3 / 4, Gdx.graphics.getHeight() - 350);
-        spellCreateButton.addListener(new ChangeListener() {
+        shopButton = new TextButton(" Enter the \n shop ", textButtonStyle);
+        shopButton.setPosition((Gdx.graphics.getWidth() - shopButton.getWidth()) * 3 / 4, Gdx.graphics.getHeight() - 350);
+        shopButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 dispose();
@@ -118,11 +119,25 @@ public class CityScreen implements Screen {
         });
 
         /*
+            Initialize the Party Manage Button and its listener.
+         */
+
+        partyManageButton = new TextButton(" Manage \n the party ", textButtonStyle);
+        partyManageButton.setPosition((Gdx.graphics.getWidth() - partyManageButton.getWidth()) * 3 / 4, Gdx.graphics.getHeight() - 580);
+        partyManageButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                dispose();
+                game.setScreen(new PartyManagerScreen(game));
+            }
+        });
+
+        /*
             Initialize the Main Menu button and its listener.
          */
 
         mainMenuButton = new TextButton(" Back to \n Main Menu ", textButtonStyle);
-        mainMenuButton.setPosition((Gdx.graphics.getWidth() - charCreateButton.getWidth()) * 3 / 4, Gdx.graphics.getHeight() - 750);
+        mainMenuButton.setPosition((Gdx.graphics.getWidth() - mainMenuButton.getWidth()) * 3 / 4, Gdx.graphics.getHeight() - 810);
         mainMenuButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -138,6 +153,8 @@ public class CityScreen implements Screen {
         stage.addActor(charCreateButton);
         stage.addActor(classCreateButton);
         stage.addActor(spellCreateButton);
+        stage.addActor(shopButton);
+        stage.addActor(partyManageButton);
         stage.addActor(mainMenuButton);
     }
 
