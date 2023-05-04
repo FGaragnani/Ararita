@@ -467,12 +467,20 @@ public class PC extends AbstractBattler implements Battler {
      */
     public int classCost() {
         int initialCost = 10;
-        for (int proficiencyValue : proficiencies.values()) {
-            initialCost += (1 / (getIncreaseEXP() * getExponentEXP())) * Math.pow(10, proficiencyValue);
-        }
         int i = 1;
+        for (int proficiencyValue : proficiencies.values()) {
+            initialCost += (1 / ((Math.pow(getIncreaseEXP(), 2) * Math.pow(getExponentEXP(), 2)))) * Math.pow(10, proficiencyValue) * Math.pow(i, 1.2);
+            if(initialCost > 10000000){
+                return 10000000;
+            }
+            i++;
+        }
+        i = 1;
         for (String spellType : spellTypes) {
-            initialCost += (1 / (getIncreaseEXP() * getExponentEXP())) * Math.pow(10, i);
+            initialCost += (1 / ((Math.pow(getIncreaseEXP(), 2) * Math.pow(getExponentEXP(), 2)))) * Math.pow(10, i);
+            if(initialCost > 10000000){
+                return 10000000;
+            }
             i++;
         }
         return initialCost;

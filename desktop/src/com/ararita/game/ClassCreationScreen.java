@@ -12,9 +12,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -36,6 +38,13 @@ public class ClassCreationScreen implements Screen {
 
     TextField classNameField;
     Slider expSlider;
+    SelectBox<String> statSelectBox;
+    SelectBox<String> proficiencySelectBox;
+    SelectBox<String> spellTypeSelectBox;
+    TextButton statPlus;
+    TextButton statMinus;
+    TextButton proficiencyPlus;
+    TextButton proficiencyMinus;
 
     TextButton confirmButton;
     TextButton exitButton;
@@ -43,7 +52,7 @@ public class ClassCreationScreen implements Screen {
     Texture backgroundTexture;
     Sprite backgroundSprite;
 
-    List<Integer> statsList = List.of(0, 0, 0, 0, 0, 0);
+    List<Integer> statsList;
     Map<String, Integer> proficiencies;
     Set<String> spellTypes;
     double increaseEXP = 1.5;
@@ -61,6 +70,14 @@ public class ClassCreationScreen implements Screen {
         this.skin = new Skin(Gdx.files.internal(game.stylesPath));
         this.camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
+        statsList = new ArrayList<>();
+        statsList.addAll(List.of(0, 0, 0, 0, 0, 0));
+        Array<String> proficiencyList = new Array<>();
+        try {
+            Global.getListJSON(Global.globalSets, "weaponTypesSet").forEach(weaponType -> proficiencyList.add((String) weaponType));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         proficiencies = new HashMap<>();
         spellTypes = new HashSet<>();
 
@@ -142,7 +159,7 @@ public class ClassCreationScreen implements Screen {
             Creating the EXP Slider.
          */
 
-        expSlider = new Slider(1, 3, 0.01f, false, game.sliderStyle);
+        expSlider = new Slider(1.6f, 2.95f, 0.01f, false, game.sliderStyle);
         expSlider.setWidth(300);
         expSlider.setValue(3);
         expSlider.setPosition((Gdx.graphics.getWidth() - expSlider.getWidth()) / 2, Gdx.graphics.getHeight() - 450);
@@ -165,6 +182,81 @@ public class ClassCreationScreen implements Screen {
         updateEXP();
 
         /*
+            Setting the style for all plus and minuses button.
+         */
+
+        TextButton.TextButtonStyle plusMinusStyle = skin.get("default", TextButton.TextButtonStyle.class);
+        plusMinusStyle.font = game.normalFont;
+
+        /*
+            Creating the Stat Select Box and its buttons.
+         */
+
+        statSelectBox = new SelectBox<>(game.selectBoxStyle);
+        statSelectBox.setItems("Strength", "Intelligence", "Vigor", "Agility", "Spirit", "Arcane");
+        statSelectBox.setWidth(300);
+        statSelectBox.setPosition(Gdx.graphics.getWidth() - 460, Gdx.graphics.getHeight() - 300);
+        statPlus = new TextButton("+", plusMinusStyle);
+        statPlus.setSize(80, 90);
+        statPlus.setPosition(Gdx.graphics.getWidth() - 100, Gdx.graphics.getHeight() - 310);
+        statMinus = new TextButton("-", skin.get("default", TextButton.TextButtonStyle.class));
+        statMinus.setPosition(Gdx.graphics.getWidth() - 600, Gdx.graphics.getHeight() - 310);
+        statMinus.setSize(80, 90);
+        statPlus.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(getRemainingPoints() > 0){
+                    int index = statSelectBox.getSelectedIndex();
+                    int listElement = statsList.get(index);
+                    statsList.set(index, listElement + 1);
+                    updateStats();
+                }
+            }
+        });
+
+        statMinus.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                int index = statSelectBox.getSelectedIndex();
+                if(statsList.get(index) > 0){
+                    statsList.set(index, statsList.get(index) - 1);
+                    updateStats();
+                }
+            }
+        });
+
+        /*
+            Creating the Proficiency Select Box and buttons.
+         */
+
+        proficiencySelectBox = new SelectBox<>(game.selectBoxStyle);
+        proficiencySelectBox.setItems(proficiencyList);
+        proficiencySelectBox.setWidth(300);
+        proficiencySelectBox.setPosition(Gdx.graphics.getWidth() - 460, Gdx.graphics.getHeight() - 460);
+        proficiencyPlus = new TextButton("+", plusMinusStyle);
+        proficiencyPlus.setSize(80, 90);
+        proficiencyPlus.setPosition(Gdx.graphics.getWidth() - 100, Gdx.graphics.getHeight() - 470);
+        proficiencyMinus = new TextButton("-", skin.get("default", TextButton.TextButtonStyle.class));
+        proficiencyMinus.setPosition(Gdx.graphics.getWidth() - 600, Gdx.graphics.getHeight() - 470);
+        proficiencyMinus.setSize(80, 90);
+
+        proficiencyPlus.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(!proficiencies.containsKey(proficiencySelectBox.getSelected())){
+                    proficiencies.put(proficiencySelectBox.getSelected(), 1);
+                } else {
+                    int currProficiency = proficiencies.get(proficiencySelectBox.getSelected());
+                    if(currProficiency < 3) {
+                        proficiencies.put(proficiencySelectBox.getSelected(), currProficiency + 1);
+                    }
+                }
+                updateStats();
+                updateCost();
+            }
+        });
+
+        /*
             Adding all actors.
          */
 
@@ -176,6 +268,12 @@ public class ClassCreationScreen implements Screen {
         stage.addActor(classNameField);
         stage.addActor(expSlider);
         stage.addActor(expGrowthLabel);
+        stage.addActor(statSelectBox);
+        stage.addActor(statPlus);
+        stage.addActor(statMinus);
+        stage.addActor(proficiencySelectBox);
+        stage.addActor(proficiencyPlus);
+        stage.addActor(proficiencyMinus);
     }
 
     @Override
@@ -195,6 +293,7 @@ public class ClassCreationScreen implements Screen {
         game.batch.end();
 
         stage.draw();
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
     }
 
     @Override
@@ -237,6 +336,7 @@ public class ClassCreationScreen implements Screen {
      * The stats label is updated.
      */
     public void updateStats() {
+        int otherLines = 0;
         StringBuilder text = new StringBuilder();
         text.append("Attributes Points: ").append(getRemainingPoints()).append("\n\n");
         text.append(" Strength: ").append(statsList.get(0)).append("\n");
@@ -256,14 +356,15 @@ public class ClassCreationScreen implements Screen {
                 }
                 text.append("\n");
             });
+            otherLines += proficiencies.size();
         }
         if (!spellTypes.isEmpty()) {
             text.append("Learnable spell types:\n");
             spellTypes.forEach((str) -> text.append(" - ").append(str).append("\n"));
-            text.append("\n");
+            otherLines += spellTypes.size();
         }
         stats.setText(text);
-        stats.setPosition(300, Gdx.graphics.getHeight() - 400);
+        stats.setPosition(300, Gdx.graphics.getHeight() - 400 - (18 * otherLines));
     }
 
     /**
@@ -287,23 +388,17 @@ public class ClassCreationScreen implements Screen {
         }
     }
 
-    public void updateEXP(){
+    public void updateEXP() {
         float expSum = expSlider.getValue();
-        if(expSum == 3){
-            increaseEXP = 1.5f;
-            exponentEXP = 1.5f;
-        } else {
-            increaseEXP = game.getRandom(expSum / 2, 1.5f);
-            exponentEXP = 1.5f - increaseEXP;
-        }
-        if(expSum >= 2.333){
+        increaseEXP = expSum;
+        exponentEXP = 1.5f - increaseEXP;
+        if (expSum >= 2.333) {
             expGrowthLabel.setText("EXP Growth: Slow");
-        } else if(expSum <= 1.666){
+        } else if (expSum <= 1.666) {
             expGrowthLabel.setText("EXP Growth: Fast");
         } else {
             expGrowthLabel.setText("EXP Growth: Medium");
         }
         expGrowthLabel.setPosition(expSlider.getX() + 20, Gdx.graphics.getHeight() - 500);
     }
-
 }

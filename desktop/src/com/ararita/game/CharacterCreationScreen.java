@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import org.json.JSONObject;
@@ -143,8 +144,7 @@ public class CharacterCreationScreen implements Screen {
 
         JSONObject jsonGlobal = Global.getJSON(Global.globalSets);
 
-        SelectBox.SelectBoxStyle selectBoxStyle = game.selectBoxStyle;
-        charClassSelectBox = new SelectBox<>(selectBoxStyle);
+        charClassSelectBox = new SelectBox<>(game.selectBoxStyle);
         Array<String> classArray = new Array<>();
         jsonGlobal.getJSONArray("classNamesSet").toList().forEach((str) -> classArray.add(str.toString()));
         if (!newPlayer) {
@@ -169,7 +169,7 @@ public class CharacterCreationScreen implements Screen {
             Creating the Image Select Box and its listener.
          */
 
-        charImageSelectBox = new SelectBox<>(selectBoxStyle);
+        charImageSelectBox = new SelectBox<>(game.selectBoxStyle);
         Array<String> imageArray = new Array<>();
         game.spriteNames.forEach(imageArray::add);
         charImageSelectBox.setItems(imageArray);
@@ -201,7 +201,7 @@ public class CharacterCreationScreen implements Screen {
                         PC toAdd = new PC(charNameField.getText(), charClassSelectBox.getSelected());
                         toAdd.setImage(charImageSelectBox.getSelected());
                         Global.addCharacter(toAdd);
-                        if(newPlayer) {
+                        if (newPlayer) {
                             game.newPlayer = false;
                             game.settingsUpdate();
                         }
@@ -308,6 +308,7 @@ public class CharacterCreationScreen implements Screen {
      * the class' info.
      */
     public void statUpdate() {
+        int otherLines = 0;
         StringBuilder text = new StringBuilder();
         try {
             JSONObject jsonClass = Global.getJSON(Global.getJSONFilePath(Global.classSets, charClassSelectBox.getSelected()));
@@ -327,10 +328,12 @@ public class CharacterCreationScreen implements Screen {
                 }
                 text.append("\n");
             });
+            otherLines += jsonClass.getJSONObject("proficiencies").toMap().size();
             text.append("Learnable spell types:\n");
             jsonClass.getJSONArray("spellTypes").toList().forEach((str) -> text.append("\t- ").append(str.toString()).append("\n"));
-            text.append("\n");
+            otherLines += jsonClass.getJSONArray("spellTypes").toList().size();
             stats.setText(text.toString());
+            stats.setPosition(300, Gdx.graphics.getHeight() - 480 - (18 * (otherLines - 1)));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
