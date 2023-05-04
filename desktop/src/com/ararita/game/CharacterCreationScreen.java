@@ -94,7 +94,7 @@ public class CharacterCreationScreen implements Screen {
          */
         classCreationDialog = new Dialog("", skin) {
             public void result(Object confirm) {
-                if (confirm.equals("true")) {
+                if (confirm.equals(true)) {
                     game.setScreen(new ClassCreationScreen(game));
                 }
                 hide();

@@ -32,6 +32,7 @@ public class ClassCreationScreen implements Screen {
     Label.LabelStyle titleStyle;
 
     Label stats;
+    Label costLabel;
 
     TextButton confirmButton;
     TextButton exitButton;
@@ -116,6 +117,11 @@ public class ClassCreationScreen implements Screen {
             }
         });
 
+        costLabel = new Label("", stats.getStyle());
+        costLabel.setColor(Color.BLACK);
+        costLabel.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, confirmButton.getY() + 155);
+        updateCost();
+
         /*
             Adding all actors.
          */
@@ -124,6 +130,7 @@ public class ClassCreationScreen implements Screen {
         stage.addActor(stats);
         stage.addActor(confirmButton);
         stage.addActor(exitButton);
+        stage.addActor(costLabel);
 
     }
 
@@ -194,6 +201,13 @@ public class ClassCreationScreen implements Screen {
         text.append(" Spirit: ").append(statsList.get(4)).append("\n");
         text.append(" Arcane: ").append(statsList.get(5)).append("\n");
         stats.setText(text);
+    }
+
+    /**
+     * The cost label is updated.
+     */
+    public void updateCost(){
+        costLabel.setText("Class cost: " + getClassCost());
     }
 
     /**
