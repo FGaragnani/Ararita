@@ -220,6 +220,13 @@ public class CharacterCreationScreen implements Screen {
 
         exitButton = new TextButton("Exit", game.textButtonStyle);
         exitButton.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, Gdx.graphics.getHeight() - 1000);
+        exitButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                dispose();
+                game.setScreen(new CityScreen(game));
+            }
+        });
 
         /*
             Creating the class Stats label.

@@ -92,6 +92,9 @@ public class Ararita extends Game {
         super.render();
     }
 
+    /**
+     * Saves the local values into the JSON settings file.
+     */
     public void settingsUpdate(){
         try {
             JSONObject jsonSettings = Global.getJSON(Path.of(settingsPath));

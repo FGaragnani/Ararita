@@ -3,6 +3,8 @@ package com.ararita.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -22,7 +24,11 @@ public class CityScreen implements Screen {
 
     TextButton.TextButtonStyle textButtonStyle;
     TextButton charCreateButton;
+    TextButton classCreateButton;
     TextButton mainMenuButton;
+
+    Texture backgroundTexture;
+    Sprite backgroundSprite;
 
     public CityScreen(final Ararita game) {
 
@@ -42,7 +48,15 @@ public class CityScreen implements Screen {
         textButtonStyle.font = game.normalFont;
 
         /*
-            Initialize Character Creation Button and its listener.
+            Setting the background texture.
+         */
+
+        backgroundTexture = new Texture(Gdx.files.local("assets/Backgrounds/paperbg.png"));
+        backgroundSprite = new Sprite(backgroundTexture);
+        backgroundSprite.setSize((int) (Gdx.graphics.getWidth() * 1.1), (int) (Gdx.graphics.getHeight() * 1.1));
+
+        /*
+            Initialize the Character Creation Button and its listener.
          */
 
         charCreateButton = new TextButton(" Recruit new \n character ", textButtonStyle);
@@ -60,7 +74,21 @@ public class CityScreen implements Screen {
         });
 
         /*
-            Initialize the Main Menu button.
+            Initialize the Class Creation Button and its listener.
+         */
+
+        classCreateButton = new TextButton(" Create new \n class ", textButtonStyle);
+        charCreateButton.setPosition((Gdx.graphics.getWidth() - charCreateButton.getWidth()) / 3, Gdx.graphics.getHeight() - 400);
+        charCreateButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                dispose();
+                game.setScreen(new ClassCreationScreen(game));
+            }
+        });
+
+        /*
+            Initialize the Main Menu button and its listener.
          */
 
         mainMenuButton = new TextButton(" Main \n Menu ", textButtonStyle);
@@ -79,6 +107,7 @@ public class CityScreen implements Screen {
 
         stage.addActor(charCreateButton);
         stage.addActor(mainMenuButton);
+        stage.addActor(classCreateButton);
     }
 
     @Override
@@ -94,9 +123,7 @@ public class CityScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-
-        //game.titleFont.draw(game.batch, "ARARITA", 730, Gdx.graphics.getHeight() - 50);
-
+        backgroundSprite.draw(game.batch);
         game.batch.end();
 
         stage.draw();
@@ -125,5 +152,6 @@ public class CityScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+        backgroundTexture.dispose();
     }
 }
