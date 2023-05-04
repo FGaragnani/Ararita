@@ -1,15 +1,23 @@
 package com.ararita.game;
 
+import com.ararita.game.battlers.PC;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.IntStream;
 
 public class ClassCreationScreen implements Screen {
 
@@ -22,8 +30,15 @@ public class ClassCreationScreen implements Screen {
     Label title;
     Label.LabelStyle titleStyle;
 
+    Label stats;
+
+    TextButton confirmButton;
+    TextButton exitButton;
+
     Texture backgroundTexture;
     Sprite backgroundSprite;
+
+    List<Integer> statsList = List.of(0, 0, 0, 0, 0, 0);
 
     public ClassCreationScreen(final Ararita game){
         /*
@@ -57,10 +72,51 @@ public class ClassCreationScreen implements Screen {
         title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() - 150);
 
         /*
+            Setting the stats Label.
+         */
+
+        stats = new Label("", game.labelStyle);
+        stats.setFontScale(2.8f, 3.8f);
+        stats.setColor(Color.BLACK);
+        stats.setPosition(300, Gdx.graphics.getHeight() - 400);
+        updateStats();
+
+        /*
+            Creating the button for confirmation.
+            Creating its Listener.
+         */
+
+        confirmButton = new TextButton("Confirm", game.textButtonStyle);
+        confirmButton.setPosition((Gdx.graphics.getWidth() - (confirmButton.getWidth())) / 2, Gdx.graphics.getHeight() - 850);
+        confirmButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                // TODO
+            }
+        });
+
+        /*
+            Creating the Exit Button.
+         */
+
+        exitButton = new TextButton("Exit", game.textButtonStyle);
+        exitButton.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, Gdx.graphics.getHeight() - 1000);
+        exitButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                dispose();
+                game.setScreen(new CityScreen(game));
+            }
+        });
+
+        /*
             Adding all actors.
          */
-        
+
         stage.addActor(title);
+        stage.addActor(stats);
+        stage.addActor(confirmButton);
+        stage.addActor(exitButton);
 
     }
 
@@ -108,4 +164,26 @@ public class ClassCreationScreen implements Screen {
         stage.dispose();
         backgroundTexture.dispose();
     }
+
+    /**
+     * Determines how many attribute points are left to add.
+     *
+     * @return The attribute points still to set.
+     */
+    public int getRemainingPoints(){
+        return Global.INITIAL_ATTRIBUTES_POINT - statsList.stream().flatMapToInt(IntStream::of).sum();
+    }
+
+    public void updateStats(){
+        StringBuilder text = new StringBuilder();
+        text.append("Attributes Points: ").append(getRemainingPoints()).append("\n\n");
+        text.append(" Strength: ").append(statsList.get(0)).append("\n");
+        text.append(" Intelligence: ").append(statsList.get(1)).append("\n");
+        text.append(" Vigor: ").append(statsList.get(2)).append("\n");
+        text.append(" Agility: ").append(statsList.get(3)).append("\n");
+        text.append(" Spirit: ").append(statsList.get(4)).append("\n");
+        text.append(" Arcane: ").append(statsList.get(5)).append("\n");
+        stats.setText(text);
+    }
+
 }
