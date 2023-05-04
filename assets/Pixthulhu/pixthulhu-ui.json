@@ -186,7 +186,7 @@ ScrollPaneStyle: {
 SelectBoxStyle: {
 	default: {
 		font: subtitle
-		fontColor: red
+		fontColor: white
 		background: select-box
 		scrollStyle: default
 		listStyle: default

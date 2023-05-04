@@ -34,6 +34,7 @@ public class Ararita extends Game {
 
     public final java.util.List<String> spriteNames = List.of("Fighter", "Magician", "Healer", "Ninja", "Archer", "Monk");
     public final int spriteFrameCols = 3;
+    public final int baseEXP = 100;
 
     public String settingsPath = "assets/Settings/settings.json";
     public String stylesPath = "Pixthulhu/pixthulhu-ui.json";
