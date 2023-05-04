@@ -256,7 +256,7 @@ public class CharacterCreationScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 
-        TextureRegion currentFrame = charAnimation.getKeyFrame(stateTime / 8, true);
+        TextureRegion currentFrame = charAnimation.getKeyFrame(stateTime, true);
         spriteImage.setDrawable(new TextureRegionDrawable(currentFrame));
         spriteImage.setSize(currentFrame.getRegionWidth(), currentFrame.getRegionHeight());
 
@@ -341,7 +341,7 @@ public class CharacterCreationScreen implements Screen {
         for (int i = listPosition; i < game.spriteFrameCols + listPosition; i++) {
             walkFrames[index++] = tmp[0][i];
         }
-        charAnimation = new Animation<>(0.025f, walkFrames);
+        charAnimation = new Animation<>(0.200f, walkFrames);
         stateTime = 0f;
     }
 }

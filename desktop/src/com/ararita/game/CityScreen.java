@@ -22,8 +22,9 @@ public class CityScreen implements Screen {
 
     TextButton.TextButtonStyle textButtonStyle;
     TextButton charCreateButton;
+    TextButton mainMenuButton;
 
-    public CityScreen(final Ararita game){
+    public CityScreen(final Ararita game) {
 
         /*
             First initialization.
@@ -44,14 +45,13 @@ public class CityScreen implements Screen {
             Initialize Character Creation Button and its listener.
          */
 
-        charCreateButton = new TextButton(" Create new \n character ", textButtonStyle);
-        charCreateButton.setPosition((Gdx.graphics.getWidth() - charCreateButton.getWidth())/3,
-                Gdx.graphics.getHeight() - 200);
+        charCreateButton = new TextButton(" Recruit new \n character ", textButtonStyle);
+        charCreateButton.setPosition((Gdx.graphics.getWidth() - charCreateButton.getWidth()) / 3, Gdx.graphics.getHeight() - 200);
         charCreateButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                dispose();
                 try {
+                    dispose();
                     game.setScreen(new CharacterCreationScreen(game, false));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -59,8 +59,26 @@ public class CityScreen implements Screen {
             }
         });
 
-        stage.addActor(charCreateButton);
+        /*
+            Initialize the Main Menu button.
+         */
 
+        mainMenuButton = new TextButton(" Main \n Menu ", textButtonStyle);
+        mainMenuButton.setPosition((Gdx.graphics.getWidth() - charCreateButton.getWidth()) * 2 / 3, Gdx.graphics.getHeight() - 800);
+        mainMenuButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                dispose();
+                game.setScreen(new MainMenuScreen(game));
+            }
+        });
+
+        /*
+            Add all actors to the stage.
+         */
+
+        stage.addActor(charCreateButton);
+        stage.addActor(mainMenuButton);
     }
 
     @Override
