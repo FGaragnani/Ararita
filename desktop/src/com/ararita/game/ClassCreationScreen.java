@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -58,6 +59,11 @@ public class ClassCreationScreen implements Screen {
     Set<String> spellTypes;
     double increaseEXP = 1.5;
     double exponentEXP = 1.5;
+
+    Dialog nameLengthDialog;
+    Dialog nameExistsDialog;
+    Dialog classCreationDialog;
+    Dialog moneyDialog;
 
     public ClassCreationScreen(final Ararita game) {
         /*
@@ -134,7 +140,19 @@ public class ClassCreationScreen implements Screen {
         confirmButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                // TODO
+                try {
+                    if (Global.isPresentInJSONList(Global.globalSets, classNameField.getText(), "classNamesSet")){
+                        nameExistsDialog.show(stage);
+                    } else if (classNameField.getText().length() < 1 || classNameField.getText().length() > 12) {
+                        nameLengthDialog.show(stage);
+                    } else if (getClassCost() > Global.getMoney()) {
+                        moneyDialog.show(stage);
+                    } else {
+                        classCreationDialog.show(stage);
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -267,9 +285,8 @@ public class ClassCreationScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if (proficiencies.containsKey(proficiencySelectBox.getSelected())) {
-                    proficiencies.put(proficiencySelectBox.getSelected(),
-                            proficiencies.get(proficiencySelectBox.getSelected()) - 1);
-                    if(proficiencies.get(proficiencySelectBox.getSelected()) == 0){
+                    proficiencies.put(proficiencySelectBox.getSelected(), proficiencies.get(proficiencySelectBox.getSelected()) - 1);
+                    if (proficiencies.get(proficiencySelectBox.getSelected()) == 0) {
                         proficiencies.remove(proficiencySelectBox.getSelected());
                     }
                     updateStats();
@@ -310,6 +327,79 @@ public class ClassCreationScreen implements Screen {
                 updateStats();
             }
         });
+
+        /*
+            Creating the four dialogs.
+         */
+
+        classCreationDialog = new Dialog("", skin) {
+            public void result(Object confirm) {
+                if (confirm.equals(true)) {
+                    try {
+                        AbstractBattler classToCreate = new AbstractBattler(statsList.get(0), statsList.get(1), statsList.get(2), statsList.get(3), statsList.get(4), statsList.get(5), classNameField.getText(), game.baseEXP, increaseEXP, exponentEXP, proficiencies, spellTypes, true) {
+                            @Override
+                            public int maxMP() {
+                                return 0;
+                            }
+
+                            @Override
+                            public int maxHP() {
+                                return 0;
+                            }
+
+                            @Override
+                            public void levelUp() {
+
+                            }
+                        };
+                        Global.setMoney(Global.getMoney() - getClassCost());
+                        dispose();
+                        game.setScreen(new CityScreen(game));
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                hide();
+            }
+        };
+        classCreationDialog.setResizable(false);
+        classCreationDialog.text(" Do you want to create \n the " + classNameField.getText() + " class?\n", game.labelStyle);
+        classCreationDialog.button("Yes", true, game.textButtonStyle);
+        classCreationDialog.button("No", false, game.textButtonStyle);
+        classCreationDialog.setPosition(0, 0);
+
+        nameExistsDialog = new Dialog("", skin) {
+
+            public void result(Object confirm) {
+                hide();
+            }
+        };
+        nameExistsDialog.setResizable(false);
+        nameExistsDialog.text(" The class' name given is already used.\n Choose another!\n", game.labelStyle);
+        nameExistsDialog.button("Ok!", true, game.textButtonStyle);
+        nameExistsDialog.setPosition(0, 0);
+
+        nameLengthDialog = new Dialog("", skin) {
+
+            public void result(Object confirm) {
+                hide();
+            }
+        };
+        nameLengthDialog.setResizable(false);
+        nameLengthDialog.text(" The name must be at least 1 and \n max 12 characters long. Choose another!\n", game.labelStyle);
+        nameLengthDialog.button("Ok!", true, game.textButtonStyle);
+        nameLengthDialog.setPosition(0, 0);
+
+        moneyDialog = new Dialog("", skin) {
+
+            public void result(Object confirm) {
+                hide();
+            }
+        };
+        moneyDialog.setResizable(false);
+        moneyDialog.text(" You don't have enough money\n to create this new class\n", game.labelStyle);
+        moneyDialog.button("Ok!", true, game.textButtonStyle);
+        moneyDialog.setPosition(0, 0);
 
         /*
             Adding all actors.
@@ -430,6 +520,7 @@ public class ClassCreationScreen implements Screen {
      */
     public void updateCost() {
         costLabel.setText("Class cost: " + getClassCost());
+        costLabel.setX((Gdx.graphics.getWidth() - confirmButton.getWidth()) / 2);
     }
 
     /**
