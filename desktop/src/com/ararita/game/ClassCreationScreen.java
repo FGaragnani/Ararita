@@ -16,7 +16,6 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.*;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -45,6 +44,8 @@ public class ClassCreationScreen implements Screen {
     TextButton statMinus;
     TextButton proficiencyPlus;
     TextButton proficiencyMinus;
+    TextButton spellTypesPlus;
+    TextButton spellTypesMinus;
 
     TextButton confirmButton;
     TextButton exitButton;
@@ -79,6 +80,12 @@ public class ClassCreationScreen implements Screen {
             throw new RuntimeException(e);
         }
         proficiencies = new HashMap<>();
+        Array<String> spellLists = new Array<>();
+        try {
+            Global.getListJSON(Global.globalSets, "spellTypesSet").forEach(spellType -> spellLists.add((String) spellType));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         spellTypes = new HashSet<>();
 
         /*
@@ -205,7 +212,7 @@ public class ClassCreationScreen implements Screen {
         statPlus.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(getRemainingPoints() > 0){
+                if (getRemainingPoints() > 0) {
                     int index = statSelectBox.getSelectedIndex();
                     int listElement = statsList.get(index);
                     statsList.set(index, listElement + 1);
@@ -218,7 +225,7 @@ public class ClassCreationScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 int index = statSelectBox.getSelectedIndex();
-                if(statsList.get(index) > 0){
+                if (statsList.get(index) > 0) {
                     statsList.set(index, statsList.get(index) - 1);
                     updateStats();
                 }
@@ -243,16 +250,64 @@ public class ClassCreationScreen implements Screen {
         proficiencyPlus.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(!proficiencies.containsKey(proficiencySelectBox.getSelected())){
+                if (!proficiencies.containsKey(proficiencySelectBox.getSelected())) {
                     proficiencies.put(proficiencySelectBox.getSelected(), 1);
                 } else {
                     int currProficiency = proficiencies.get(proficiencySelectBox.getSelected());
-                    if(currProficiency < 3) {
+                    if (currProficiency < 3) {
                         proficiencies.put(proficiencySelectBox.getSelected(), currProficiency + 1);
                     }
                 }
                 updateStats();
                 updateCost();
+            }
+        });
+
+        proficiencyMinus.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (proficiencies.containsKey(proficiencySelectBox.getSelected())) {
+                    proficiencies.put(proficiencySelectBox.getSelected(),
+                            proficiencies.get(proficiencySelectBox.getSelected()) - 1);
+                    if(proficiencies.get(proficiencySelectBox.getSelected()) == 0){
+                        proficiencies.remove(proficiencySelectBox.getSelected());
+                    }
+                    updateStats();
+                    updateCost();
+                }
+            }
+        });
+
+        /*
+            Creating the SpellType Select Box and its two buttons.
+         */
+
+        spellTypeSelectBox = new SelectBox<>(game.selectBoxStyle);
+        spellTypeSelectBox.setItems(spellLists);
+        spellTypeSelectBox.setWidth(300);
+        spellTypeSelectBox.setPosition(Gdx.graphics.getWidth() - 460, Gdx.graphics.getHeight() - 620);
+        spellTypesPlus = new TextButton("+", plusMinusStyle);
+        spellTypesPlus.setSize(80, 90);
+        spellTypesPlus.setPosition(Gdx.graphics.getWidth() - 100, Gdx.graphics.getHeight() - 630);
+        spellTypesMinus = new TextButton("-", skin.get("default", TextButton.TextButtonStyle.class));
+        spellTypesMinus.setPosition(Gdx.graphics.getWidth() - 600, Gdx.graphics.getHeight() - 630);
+        spellTypesMinus.setSize(80, 90);
+
+        spellTypesPlus.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                spellTypes.add(spellTypeSelectBox.getSelected());
+                updateCost();
+                updateStats();
+            }
+        });
+
+        spellTypesMinus.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                spellTypes.remove(spellTypeSelectBox.getSelected());
+                updateCost();
+                updateStats();
             }
         });
 
@@ -274,6 +329,9 @@ public class ClassCreationScreen implements Screen {
         stage.addActor(proficiencySelectBox);
         stage.addActor(proficiencyPlus);
         stage.addActor(proficiencyMinus);
+        stage.addActor(spellTypeSelectBox);
+        stage.addActor(spellTypesPlus);
+        stage.addActor(spellTypesMinus);
     }
 
     @Override

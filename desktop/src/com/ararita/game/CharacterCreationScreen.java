@@ -14,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import org.json.JSONObject;
@@ -43,6 +42,7 @@ public class CharacterCreationScreen implements Screen {
 
     Dialog classCreationDialog;
     Dialog nameExistsDialog;
+    Dialog nameLengthDialog;
 
     Image spriteImage;
     Animation<TextureRegion> charAnimation;
@@ -89,9 +89,9 @@ public class CharacterCreationScreen implements Screen {
         spriteImage.setScale(11);
 
         /*
-            Creating the two dialogs.
+            Creating the three dialogs.
             One will pop up before creating a new class.
-            The other will pop up for invalid inputs.
+            The other two will pop up for invalid inputs.
          */
         classCreationDialog = new Dialog("", skin) {
             public void result(Object confirm) {
@@ -117,6 +117,17 @@ public class CharacterCreationScreen implements Screen {
         nameExistsDialog.text(" The character's name given is already used by another character.\n Choose another!\n", game.labelStyle);
         nameExistsDialog.button("Ok!", true, game.textButtonStyle);
         nameExistsDialog.setPosition(0, 0);
+
+        nameLengthDialog = new Dialog("", skin) {
+
+            public void result(Object confirm) {
+                hide();
+            }
+        };
+        nameLengthDialog.setResizable(false);
+        nameLengthDialog.text(" The name must be at least 1 and max 12 characters long.\n Choose another!\n", game.labelStyle);
+        nameLengthDialog.button("Ok!", true, game.textButtonStyle);
+        nameLengthDialog.setPosition(0, 0);
 
         /*
             Setting the title.
@@ -197,6 +208,8 @@ public class CharacterCreationScreen implements Screen {
                 try {
                     if (Global.isPresentInJSONList(Global.globalSets, charNameField.getText(), "party") || Global.isPresentInJSONList(Global.globalSets, charNameField.getText(), "otherCharacters")) {
                         nameExistsDialog.show(stage);
+                    } else if (charNameField.getText().length() < 1 || charNameField.getText().length() > 12) {
+                        nameLengthDialog.show(stage);
                     } else if (!charClassSelectBox.getSelected().equals("Create new...")) {
                         PC toAdd = new PC(charNameField.getText(), charClassSelectBox.getSelected());
                         toAdd.setImage(charImageSelectBox.getSelected());
