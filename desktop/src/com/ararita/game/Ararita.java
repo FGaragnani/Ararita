@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.random.RandomGenerator;
 
 /**
  * Handles the multiple screens in the game.
@@ -112,5 +113,11 @@ public class Ararita extends Game {
         batch.dispose();
         normalFont.dispose();
         titleFont.dispose();
+        bigFont.dispose();
+    }
+
+    public float getRandom(float min, float max){
+        RandomGenerator rng = RandomGenerator.getDefault();
+        return rng.nextFloat(min, max);
     }
 }

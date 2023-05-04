@@ -44,9 +44,9 @@ public class SettingsScreen implements Screen {
         /*
             Creating the two sliders.
          */
-        Slider.SliderStyle sliderStyle = game.sliderStyle;
-        volumeSlider = new Slider(0, 100, 1, false, sliderStyle);
-        soundEffectsSlider = new Slider(0, 100, 1, false, sliderStyle);
+
+        volumeSlider = new Slider(0, 100, 1, false, game.sliderStyle);
+        soundEffectsSlider = new Slider(0, 100, 1, false, game.sliderStyle);
         volumeSlider.setWidth(300);
         soundEffectsSlider.setWidth(300);
         volumeSlider.setValue(game.volume);

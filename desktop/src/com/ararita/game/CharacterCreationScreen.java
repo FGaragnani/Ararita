@@ -65,7 +65,7 @@ public class CharacterCreationScreen implements Screen {
 
         this.newPlayer = newPlayer;
 
-        this.skin = game.skin;
+        this.skin = new Skin(Gdx.files.internal(game.stylesPath));
         this.camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
 
