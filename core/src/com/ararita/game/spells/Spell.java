@@ -54,6 +54,17 @@ public class Spell {
         return statusEffects;
     }
 
+    public int moneyCost(){
+        int baseCost = 10;
+        baseCost += Math.floor(10 * Math.pow(this.basePower, 3));
+        int i = 1;
+        for(Map.Entry<String, Double> statusEffect : statusEffects.entrySet()){
+            baseCost *= (1+(statusEffect.getValue()*10)) * i;
+            i++;
+        }
+        return baseCost;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)

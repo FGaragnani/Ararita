@@ -25,6 +25,7 @@ public class CityScreen implements Screen {
     TextButton.TextButtonStyle textButtonStyle;
     TextButton charCreateButton;
     TextButton classCreateButton;
+    TextButton spellCreateButton;
     TextButton mainMenuButton;
 
     Texture backgroundTexture;
@@ -60,7 +61,7 @@ public class CityScreen implements Screen {
          */
 
         charCreateButton = new TextButton(" Recruit new \n character ", textButtonStyle);
-        charCreateButton.setPosition((Gdx.graphics.getWidth() - charCreateButton.getWidth()) / 3, Gdx.graphics.getHeight() - 200);
+        charCreateButton.setPosition((Gdx.graphics.getWidth() - charCreateButton.getWidth()) / 4, Gdx.graphics.getHeight() - 350);
         charCreateButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -78,8 +79,8 @@ public class CityScreen implements Screen {
          */
 
         classCreateButton = new TextButton(" Create new \n class ", textButtonStyle);
-        charCreateButton.setPosition((Gdx.graphics.getWidth() - charCreateButton.getWidth()) / 3, Gdx.graphics.getHeight() - 400);
-        charCreateButton.addListener(new ChangeListener() {
+        classCreateButton.setPosition((Gdx.graphics.getWidth() - classCreateButton.getWidth()) / 4, Gdx.graphics.getHeight() - 550);
+        classCreateButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 dispose();
@@ -88,11 +89,25 @@ public class CityScreen implements Screen {
         });
 
         /*
+            Initialize the Spell Creation Button and its listener.
+         */
+
+        spellCreateButton = new TextButton(" Create new \n spell ", textButtonStyle);
+        spellCreateButton.setPosition((Gdx.graphics.getWidth() - classCreateButton.getWidth()) / 4, Gdx.graphics.getHeight() - 750);
+        spellCreateButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                dispose();
+                game.setScreen(new SpellCreationScreen(game));
+            }
+        });
+
+        /*
             Initialize the Main Menu button and its listener.
          */
 
         mainMenuButton = new TextButton(" Main \n Menu ", textButtonStyle);
-        mainMenuButton.setPosition((Gdx.graphics.getWidth() - charCreateButton.getWidth()) * 2 / 3, Gdx.graphics.getHeight() - 800);
+        mainMenuButton.setPosition((Gdx.graphics.getWidth() - charCreateButton.getWidth()) * 3 / 4, Gdx.graphics.getHeight() - 750);
         mainMenuButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -106,8 +121,9 @@ public class CityScreen implements Screen {
          */
 
         stage.addActor(charCreateButton);
-        stage.addActor(mainMenuButton);
         stage.addActor(classCreateButton);
+        stage.addActor(spellCreateButton);
+        stage.addActor(mainMenuButton);
     }
 
     @Override
@@ -153,5 +169,6 @@ public class CityScreen implements Screen {
     public void dispose() {
         stage.dispose();
         backgroundTexture.dispose();
+        skin.dispose();
     }
 }

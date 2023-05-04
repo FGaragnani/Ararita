@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-public class ClassCreationScreen implements Screen {
+public class SpellCreationScreen implements Screen {
 
     final Ararita game;
     Stage stage;
@@ -15,7 +15,7 @@ public class ClassCreationScreen implements Screen {
     OrthographicCamera camera;
     Skin skin;
 
-    public ClassCreationScreen(final Ararita game){
+    public SpellCreationScreen(final Ararita game){
         /*
             First initialization.
          */
@@ -70,6 +70,6 @@ public class ClassCreationScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
     }
 }
