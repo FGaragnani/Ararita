@@ -26,6 +26,7 @@ public class CityScreen implements Screen {
     TextButton charCreateButton;
     TextButton classCreateButton;
     TextButton spellCreateButton;
+    TextButton shopButton;
     TextButton mainMenuButton;
 
     Texture backgroundTexture;
@@ -103,10 +104,24 @@ public class CityScreen implements Screen {
         });
 
         /*
+            Initialize the Shop Button and its listener.
+         */
+
+        spellCreateButton = new TextButton(" Enter the \n shop ", textButtonStyle);
+        spellCreateButton.setPosition((Gdx.graphics.getWidth() - classCreateButton.getWidth()) * 3 / 4, Gdx.graphics.getHeight() - 350);
+        spellCreateButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                dispose();
+                game.setScreen(new ShopScreen(game));
+            }
+        });
+
+        /*
             Initialize the Main Menu button and its listener.
          */
 
-        mainMenuButton = new TextButton(" Main \n Menu ", textButtonStyle);
+        mainMenuButton = new TextButton(" Back to \n Main Menu ", textButtonStyle);
         mainMenuButton.setPosition((Gdx.graphics.getWidth() - charCreateButton.getWidth()) * 3 / 4, Gdx.graphics.getHeight() - 750);
         mainMenuButton.addListener(new ChangeListener() {
             @Override
