@@ -6,9 +6,7 @@ import com.ararita.game.spells.Spell;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public class PC extends AbstractBattler implements Battler {
@@ -41,7 +39,7 @@ public class PC extends AbstractBattler implements Battler {
      * @param charClass The name of an existing class the character will have.
      */
     public PC(String name, String charClass) throws IOException {
-        super(Global.getFromJSONClass(charClass, "strength"), Global.getFromJSONClass(charClass, "intelligence"), Global.getFromJSONClass(charClass, "vigor"), Global.getFromJSONClass(charClass, "agility"), Global.getFromJSONClass(charClass, "spirit"), Global.getFromJSONClass(charClass, "arcane"), charClass, Global.getFromJSONClass(charClass, "baseEXP"), Global.getDoubleFromJSONClass(charClass, "increaseEXP"), Global.getDoubleFromJSONClass(charClass, "exponentEXP"), Global.getMapJSONClass(charClass, "proficiencies"), new HashSet<>(Global.getArrayJSONClass(charClass, "spellTypes")));
+        super(Global.getFromJSONClass(charClass, "strength"), Global.getFromJSONClass(charClass, "intelligence"), Global.getFromJSONClass(charClass, "vigor"), Global.getFromJSONClass(charClass, "agility"), Global.getFromJSONClass(charClass, "spirit"), Global.getFromJSONClass(charClass, "arcane"), charClass, Global.getFromJSONClass(charClass, "baseEXP"), Global.getDoubleFromJSONClass(charClass, "increaseEXP"), Global.getDoubleFromJSONClass(charClass, "exponentEXP"), Global.getMapJSONClass(charClass, "proficiencies"), new HashSet<>(Global.getArrayJSONClass(charClass, "spellTypes")), true);
         this.name = name;
         this.HP = maxHP();
         this.currHP = this.HP;
@@ -51,10 +49,26 @@ public class PC extends AbstractBattler implements Battler {
     }
 
     /**
-     * A second constructor taking every parameter. Useful for Global.getCharacter().
+     * A second constructor taking some parameters. Useful for Global.getCharacter().
      */
     public PC(int strength, int intelligence, int vigor, int agility, int spirit, int arcane, String charClass, String name, int currHP, int currMP, int level, int EXP, List<Weapon> weapons, List<Spell> spells) throws IOException {
-        super(strength, intelligence, vigor, agility, spirit, arcane, charClass, Global.getFromJSONClass(charClass, "baseEXP"), Global.getDoubleFromJSONClass(charClass, "increaseEXP"), Global.getDoubleFromJSONClass(charClass, "exponentEXP"), Global.getMapJSONClass(charClass, "proficiencies"), new HashSet<>(Global.getArrayJSONClass(charClass, "spellTypes")));
+        super(strength, intelligence, vigor, agility, spirit, arcane, charClass, Global.getFromJSONClass(charClass, "baseEXP"), Global.getDoubleFromJSONClass(charClass, "increaseEXP"), Global.getDoubleFromJSONClass(charClass, "exponentEXP"), Global.getMapJSONClass(charClass, "proficiencies"), new HashSet<>(Global.getArrayJSONClass(charClass, "spellTypes")), true);
+        this.name = name;
+        this.currHP = currHP;
+        this.currMP = currMP;
+        this.level = level;
+        this.EXP = EXP;
+        this.weapons.addAll(weapons);
+        this.spells.addAll(spells);
+        this.HP = maxHP();
+        this.MP = maxMP();
+    }
+
+    /**
+     * A third constructor taking every parameter. Useful for ClassCreationScreen class' cost preview.
+     */
+    public PC(int strength, int intelligence, int vigor, int agility, int spirit, int arcane, String charClass, String name, int currHP, int currMP, int level, int EXP, int baseEXP, double increaseEXP, double exponentEXP, Map<String, Integer> proficiencies, Set<String> spellTypes, List<Weapon> weapons, List<Spell> spells) throws IOException {
+        super(strength, intelligence, vigor, agility, spirit, arcane, charClass, baseEXP, increaseEXP, exponentEXP, proficiencies, spellTypes, false);
         this.name = name;
         this.currHP = currHP;
         this.currMP = currMP;
@@ -454,11 +468,11 @@ public class PC extends AbstractBattler implements Battler {
     public int classCost() {
         int initialCost = 10;
         for (int proficiencyValue : proficiencies.values()) {
-            initialCost += (getIncreaseEXP() + getExponentEXP()) * Math.pow(10, proficiencyValue);
+            initialCost += (1 / (getIncreaseEXP() * getExponentEXP())) * Math.pow(10, proficiencyValue);
         }
         int i = 1;
         for (String spellType : spellTypes) {
-            initialCost += (getIncreaseEXP() + getExponentEXP()) * Math.pow(10, i);
+            initialCost += (1 / (getIncreaseEXP() * getExponentEXP())) * Math.pow(10, i);
             i++;
         }
         return initialCost;

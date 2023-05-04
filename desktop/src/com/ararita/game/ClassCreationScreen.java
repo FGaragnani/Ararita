@@ -1,5 +1,6 @@
 package com.ararita.game;
 
+import com.ararita.game.battlers.AbstractBattler;
 import com.ararita.game.battlers.PC;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -16,7 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public class ClassCreationScreen implements Screen {
@@ -39,6 +40,10 @@ public class ClassCreationScreen implements Screen {
     Sprite backgroundSprite;
 
     List<Integer> statsList = List.of(0, 0, 0, 0, 0, 0);
+    Map<String, Integer> proficiencies;
+    Set<String> spellTypes;
+    double increaseEXP = 1.5;
+    double exponentEXP = 1.5;
 
     public ClassCreationScreen(final Ararita game){
         /*
@@ -52,6 +57,8 @@ public class ClassCreationScreen implements Screen {
         this.skin = new Skin(Gdx.files.internal(game.stylesPath));
         this.camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
+        proficiencies = new HashMap<>();
+        spellTypes = new HashSet<>();
 
         /*
             Setting the background texture.
@@ -174,6 +181,9 @@ public class ClassCreationScreen implements Screen {
         return Global.INITIAL_ATTRIBUTES_POINT - statsList.stream().flatMapToInt(IntStream::of).sum();
     }
 
+    /**
+     * The stats label is updated.
+     */
     public void updateStats(){
         StringBuilder text = new StringBuilder();
         text.append("Attributes Points: ").append(getRemainingPoints()).append("\n\n");
@@ -184,6 +194,22 @@ public class ClassCreationScreen implements Screen {
         text.append(" Spirit: ").append(statsList.get(4)).append("\n");
         text.append(" Arcane: ").append(statsList.get(5)).append("\n");
         stats.setText(text);
+    }
+
+    /**
+     * Creates a character from the screen data and calculates its cost.
+     *
+     * @return The class' cost.
+     */
+    public int getClassCost(){
+        try {
+            PC toBuy = new PC(statsList.get(0), statsList.get(1), statsList.get(2), statsList.get(3), statsList.get(4),
+                    statsList.get(5), "", "", 0, 0, 0, 0, game.baseEXP, increaseEXP, exponentEXP, proficiencies,
+                    spellTypes, new ArrayList<>(), new ArrayList<>());
+            return toBuy.classCost();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
