@@ -19,7 +19,6 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.nio.file.Path;
 
 public class CharacterCreationScreen implements Screen {
 
@@ -199,12 +198,12 @@ public class CharacterCreationScreen implements Screen {
                     if (Global.isPresentInJSONList(Global.globalSets, charNameField.getText(), "party") || Global.isPresentInJSONList(Global.globalSets, charNameField.getText(), "otherCharacters")) {
                         nameExistsDialog.show(stage);
                     } else if (!charClassSelectBox.getSelected().equals("Create new...")) {
-                        Global.addCharacter(new PC(charNameField.getText(), charClassSelectBox.getSelected()));
+                        PC toAdd = new PC(charNameField.getText(), charClassSelectBox.getSelected());
+                        toAdd.setImage(charImageSelectBox.getSelected());
+                        Global.addCharacter(toAdd);
                         if(newPlayer) {
-                            JSONObject jsonSettings = Global.getJSON(Path.of(game.settingsPath));
-                            jsonSettings.put("New", false);
                             game.newPlayer = false;
-                            Global.writeJSON(Path.of(game.settingsPath), jsonSettings);
+                            game.settingsUpdate();
                         }
                         dispose();
                         game.setScreen(new CityScreen(game));

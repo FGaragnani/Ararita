@@ -82,10 +82,8 @@ public class SettingsScreen implements Screen {
                         Global.emptyCharacters();
                         Global.emptyInventory();
                         Global.emptySpell();
-                        JSONObject jsonSettings = Global.getJSON(Gdx.files.local(game.settingsPath).file().toPath());
-                        jsonSettings.put("New", true);
                         game.newPlayer = true;
-                        Global.writeJSON(Gdx.files.local(game.settingsPath).file().toPath(), jsonSettings);
+                        game.settingsUpdate();
                     } catch (IOException e) {
                         throw new RuntimeException("Deleting files is impossible!");
                     }
@@ -104,16 +102,9 @@ public class SettingsScreen implements Screen {
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                try {
-                    JSONObject jsonSettings = Global.getJSON(Gdx.files.local(game.settingsPath).file().toPath());
-                    jsonSettings.put("Volume", volumeSlider.getValue());
-                    jsonSettings.put("Sound Effects", volumeSlider.getValue());
-                    Global.writeJSON(Gdx.files.local(game.settingsPath).file().toPath(), jsonSettings);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
                 game.volume = (int) volumeSlider.getValue();
                 game.soundEffects = (int) soundEffectsSlider.getValue();
+                game.settingsUpdate();
                 dispose();
                 game.setScreen(new MainMenuScreen(game));
             }

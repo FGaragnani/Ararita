@@ -7,7 +7,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+import org.json.JSONObject;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -88,6 +90,18 @@ public class Ararita extends Game {
 
     public void render() {
         super.render();
+    }
+
+    public void settingsUpdate(){
+        try {
+            JSONObject jsonSettings = Global.getJSON(Path.of(settingsPath));
+            jsonSettings.put("Volume", volume);
+            jsonSettings.put("Sound Effects", soundEffects);
+            jsonSettings.put("New", newPlayer);
+            Global.writeJSON(Path.of(settingsPath), jsonSettings);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void dispose() {

@@ -32,7 +32,7 @@ public class PC extends AbstractBattler implements Battler {
     int currMP;
 
     String name;
-    Path image;
+    String image;
 
     /**
      * Initializes a new Playing Character.
@@ -468,11 +468,11 @@ public class PC extends AbstractBattler implements Battler {
         return getStrength() + getWeapons().stream().flatMapToInt((weapon) -> IntStream.of(weapon.getAttributesAffection().getOrDefault(stat, 0))).sum();
     }
 
-    public Path getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Path image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
