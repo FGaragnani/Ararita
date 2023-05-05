@@ -1,5 +1,6 @@
 package com.ararita.game;
 
+import com.ararita.game.battlers.PC;
 import com.ararita.game.spells.Spell;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -20,6 +21,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
 public class SpellCreationScreen implements Screen {
@@ -63,6 +65,15 @@ public class SpellCreationScreen implements Screen {
     Array<String> spellPowerList;
     Map<String, Double> statusEffects;
     Array<String> statusEffectsList;
+    int cost;
+
+    SelectBox<String> characterSelectBox;
+
+    Dialog nameLengthDialog;
+    Dialog nameExistsDialog;
+    Dialog noCharDialog;
+    Dialog spellCreationDialog;
+    Dialog moneyDialog;
 
     public SpellCreationScreen(final Ararita game) {
         /*
@@ -124,7 +135,21 @@ public class SpellCreationScreen implements Screen {
         confirmButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                // TODO
+                try {
+                    if (characterSelectBox.getSelected().equals("No character...")) {
+                        noCharDialog.show(stage);
+                    } else if (Global.getMoney() < cost) {
+                        moneyDialog.show(stage);
+                    } else if (Global.isPresentInJSONList(Global.globalSets, spellNameField.getText(), "spellNamesSet")) {
+                        nameExistsDialog.show(stage);
+                    } else if (spellNameField.getText().length() < 1 || spellNameField.getText().length() > 12) {
+                        nameLengthDialog.show(stage);
+                    } else {
+                        spellCreationDialog.show(stage);
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -174,6 +199,7 @@ public class SpellCreationScreen implements Screen {
                     probabilitySlider.setValue(BigDecimal.valueOf(statusEffects.get(spellTypeSelectBox.getSelected())).setScale(2, RoundingMode.HALF_UP).toBigInteger().floatValue());
                 }
                 updateStats();
+                updateCharacters();
             }
         });
         spellTypeLabel = new Label("Spell Type: ", game.labelStyle);
@@ -281,7 +307,7 @@ public class SpellCreationScreen implements Screen {
         statusPlus = new TextButton("+", plusMinusStyle);
         statusPlus.setSize(80, 90);
         statusPlus.setPosition(Gdx.graphics.getWidth() - 150, Gdx.graphics.getHeight() - 310);
-        statusMinus = new TextButton("-", skin.get("default", TextButton.TextButtonStyle.class));
+        statusMinus = new TextButton("-", plusMinusStyle);
         statusMinus.setPosition(Gdx.graphics.getWidth() - 600, Gdx.graphics.getHeight() - 310);
         statusMinus.setSize(80, 90);
 
@@ -302,6 +328,81 @@ public class SpellCreationScreen implements Screen {
                 updateCost();
             }
         });
+
+        /*
+            Creating the Character Select Box.
+         */
+
+        characterSelectBox = new SelectBox<>(game.selectBoxStyle);
+        characterSelectBox.setWidth(250);
+        characterSelectBox.setPosition(Gdx.graphics.getWidth() - 460, Gdx.graphics.getHeight() - 300);
+        characterSelectBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (characterSelectBox.getSelected().equals("No character...")) {
+                    noCharDialog.show(stage);
+                }
+            }
+        });
+
+        /*
+            Creating the five dialogs.
+         */
+
+        spellCreationDialog = new Dialog("", skin) {
+            public void result(Object confirm) {
+                // TODO
+            }
+        };
+        spellCreationDialog.setResizable(false);
+        spellCreationDialog.text(" Do you want to create \n the new spell '" + spellNameField.getText() + "' ?\n", game.labelStyle);
+        spellCreationDialog.button("Yes", true, game.textButtonStyle);
+        spellCreationDialog.button("No", false, game.textButtonStyle);
+        spellCreationDialog.setPosition(0, 0);
+
+        nameExistsDialog = new Dialog("", skin) {
+
+            public void result(Object confirm) {
+                hide();
+            }
+        };
+        nameExistsDialog.setResizable(false);
+        nameExistsDialog.text(" The spell's name given is already used.\n Choose another!\n", game.labelStyle);
+        nameExistsDialog.button("Ok!", true, game.textButtonStyle);
+        nameExistsDialog.setPosition(0, 0);
+
+        noCharDialog = new Dialog("", skin) {
+
+            public void result(Object confirm) {
+                hide();
+            }
+        };
+        noCharDialog.setResizable(false);
+        noCharDialog.text(" There isn't a character that can\n learn spells of this type.\n", game.labelStyle);
+        noCharDialog.button("Ok!", true, game.textButtonStyle);
+        noCharDialog.setPosition(0, 0);
+
+        nameLengthDialog = new Dialog("", skin) {
+
+            public void result(Object confirm) {
+                hide();
+            }
+        };
+        nameLengthDialog.setResizable(false);
+        nameLengthDialog.text(" The name must be at least 1 and \n max 12 characters long. Choose another!\n", game.labelStyle);
+        nameLengthDialog.button("Ok!", true, game.textButtonStyle);
+        nameLengthDialog.setPosition(0, 0);
+
+        moneyDialog = new Dialog("", skin) {
+
+            public void result(Object confirm) {
+                hide();
+            }
+        };
+        moneyDialog.setResizable(false);
+        moneyDialog.text(" You don't have enough money\n to create this new spell\n", game.labelStyle);
+        moneyDialog.button("Ok!", true, game.textButtonStyle);
+        moneyDialog.setPosition(0, 0);
 
         /*
             Initializing the different values.
@@ -420,8 +521,33 @@ public class SpellCreationScreen implements Screen {
             costLabel.setText("Spell cost: " + toCreate.moneyCost());
             costLabel.setX((Gdx.graphics.getWidth() - confirmButton.getWidth()) / 2);
             coinImage.setPosition(((Gdx.graphics.getWidth() - confirmButton.getWidth()) / 2) + (costLabel.getText().length() * 5) + 200, confirmButton.getY() + 125);
+            cost = toCreate.moneyCost();
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void updateCharacters() {
+        String spellType = spellTypeSelectBox.getSelected();
+        java.util.List<PC> allCharacters;
+        try {
+            allCharacters = Global.getAllCharacters();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        java.util.List<String> charLearnable = allCharacters.stream().filter((pc) -> {
+            try {
+                return (pc.canLearn(new Spell("", MPCost(), spellType, spellBasePower, statusEffects, false)));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }).map((pc) -> (pc.getName() + ", " + pc.getCharClass())).collect(Collectors.toList());
+        if (!charLearnable.isEmpty()) {
+            Array<String> charLearnableNamesArray = new Array<>();
+            charLearnable.forEach(charLearnableNamesArray::add);
+            characterSelectBox.setItems(charLearnableNamesArray);
+        } else {
+            characterSelectBox.setItems("No character...");
         }
     }
 }

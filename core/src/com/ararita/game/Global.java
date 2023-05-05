@@ -422,6 +422,64 @@ public class Global {
     }
 
     /**
+     * A List of PC is returned, getting the names from a JSON file.
+     *
+     * @param filePath The path containing the JSON file.
+     * @param identifier The name of the names array.
+     *
+     * @return The List of PCs.
+     *
+     * @throws IOException If the files cannot be read.
+     */
+    public static List<PC> getListPCJSON(Path filePath, String identifier) throws IOException {
+        List<String> charNames = getListJSON(filePath, identifier);
+        List<PC> toRet = new ArrayList<>();
+        charNames.forEach((str) -> {
+            try {
+                toRet.add(getCharacter(str));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        return toRet;
+    }
+
+    /**
+     * The party - as a List of PCs - is determined.
+     *
+     * @return The party as a List of PCs.
+     *
+     * @throws IOException If the files cannot be read.
+     */
+    public static List<PC> getParty() throws IOException {
+        return getListPCJSON(globalSets, "party");
+    }
+
+    /**
+     * The other characters not in the party - as a List of PCs - are given.
+     *
+     * @return The List of PCs of the characters NOT in the party.
+     *
+     * @throws IOException If the files cannot be read.
+     */
+    public static List<PC> getOtherCharacters() throws IOException {
+        return getListPCJSON(globalSets, "otherCharacters");
+    }
+
+    /**
+     * A list containing all the created characters is returned.
+     *
+     * @return A PC List containing all the created characters.
+     *
+     * @throws IOException If the files cannot be read.
+     */
+    public static List<PC> getAllCharacters() throws IOException {
+        List<PC> allChars = getParty();
+        allChars.addAll(getOtherCharacters());
+        return allChars;
+    }
+
+    /**
      * Returns a List copied from a JSON Array of a class.
      *
      * @param className The name of the class.
