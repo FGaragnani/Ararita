@@ -63,6 +63,9 @@ public class Spell {
         int i = 1;
         for (Map.Entry<String, Double> statusEffect : statusEffects.entrySet()) {
             baseCost *= (1 + (statusEffect.getValue() * 10)) * i;
+            if(baseCost > 10000000){
+                return 10000000;
+            }
             i++;
         }
         return baseCost;

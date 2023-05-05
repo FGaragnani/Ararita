@@ -13,12 +13,12 @@
     "increaseEXP": 1.32,
     "intelligence": 0,
     "proficiencies": {"Sword": 3},
-    "name": "Character",
+    "name": "Characte",
     "spellTypes": [],
     "charClass": "Knight",
-    "EXP": 0,
-    "agility": 3,
     "spells": [],
-    "arcane": 1,
-    "weapons": []
+    "agility": 3,
+    "EXP": 0,
+    "weapons": [],
+    "arcane": 1
 }

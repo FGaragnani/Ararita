@@ -62,7 +62,7 @@ public class Global {
      */
     public static void deleteAllFolders(Path dirPath) {
         if (dirPath.toFile().isDirectory()) {
-            for (File f : dirPath.toFile().listFiles()) {
+            for (File f : Objects.requireNonNull(dirPath.toFile().listFiles())) {
                 f.delete();
             }
         }
@@ -808,9 +808,9 @@ public class Global {
         File specificEnemy = getJSONFilePath(enemySets, name).toFile();
         JSONObject jsonObject = getJSON(specificEnemy.toPath());
         Map<Item, Double> toDrop = new HashMap<>();
-        getDoubleMapJSON(specificEnemy.toPath(), "toDrop").entrySet().forEach(e -> {
+        getDoubleMapJSON(specificEnemy.toPath(), "toDrop").forEach((key, value) -> {
             try {
-                toDrop.put(Global.getItem(e.getKey()), e.getValue());
+                toDrop.put(Global.getItem(key), value);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }

@@ -16,6 +16,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.DoubleStream;
@@ -40,6 +42,12 @@ public class SpellCreationScreen implements Screen {
     Label spellPowerLabel;
     Label costLabel;
 
+    SelectBox<String> statusEffectSelectBox;
+    Slider probabilitySlider;
+    Label probabilityLabel;
+    TextButton statusPlus;
+    TextButton statusMinus;
+
     Texture coinTexture;
     Image coinImage;
     Label currentMoney;
@@ -54,6 +62,7 @@ public class SpellCreationScreen implements Screen {
     int spellBasePower;
     Array<String> spellPowerList;
     Map<String, Double> statusEffects;
+    Array<String> statusEffectsList;
 
     public SpellCreationScreen(final Ararita game) {
         /*
@@ -79,6 +88,13 @@ public class SpellCreationScreen implements Screen {
         spellPowerList.addAll("I", "II", "III", "IV", "V");
 
         statusEffects = new HashMap<>();
+
+        statusEffectsList = new Array<>();
+        try {
+            Global.getListJSON(Global.globalSets, "statusEffectsSet").forEach((str) -> statusEffectsList.add((String) str));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         /*
             Setting the background texture.
@@ -154,6 +170,9 @@ public class SpellCreationScreen implements Screen {
         spellTypeSelectBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                if (statusEffects.containsKey(spellTypeSelectBox.getSelected())) {
+                    probabilitySlider.setValue(BigDecimal.valueOf(statusEffects.get(spellTypeSelectBox.getSelected())).setScale(2, RoundingMode.HALF_UP).toBigInteger().floatValue());
+                }
                 updateStats();
             }
         });
@@ -196,6 +215,93 @@ public class SpellCreationScreen implements Screen {
         coinImage.setSize(coinTexture.getWidth(), coinTexture.getHeight());
         coinImage.setPosition(((Gdx.graphics.getWidth() - confirmButton.getWidth()) / 2) + costLabel.getText().length() + 250, confirmButton.getY() + 125);
 
+        /*
+            Adding the current money label and image.
+         */
+
+        try {
+            currentMoney = new Label("Money: " + Global.getMoney(), stats.getStyle());
+        } catch (IOException e) {
+            currentMoney = new Label("Money: ?", stats.getStyle());
+        }
+        currentMoney.setColor(Color.BLACK);
+        currentMoney.setPosition(1450, 950);
+        currentMoneyImage = new Image(new TextureRegionDrawable(coinTexture));
+        currentMoneyImage.setSize(coinTexture.getWidth(), coinTexture.getHeight());
+        currentMoneyImage.setPosition(1400 + (currentMoney.getText().length() * 10) + 160, 935);
+
+        /*
+            Creating the Status Effect Select Box.
+         */
+
+        statusEffectSelectBox = new SelectBox<>(game.selectBoxStyle);
+        statusEffectSelectBox.setItems(statusEffectsList);
+        statusEffectSelectBox.setWidth(250);
+        statusEffectSelectBox.setPosition(Gdx.graphics.getWidth() - 460, Gdx.graphics.getHeight() - 300);
+        statusEffectSelectBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (statusEffects.containsKey(statusEffectSelectBox.getSelected())) {
+                    probabilitySlider.setValue(BigDecimal.valueOf(statusEffects.get(statusEffectSelectBox.getSelected())).setScale(2, RoundingMode.HALF_UP).floatValue());
+                }
+            }
+        });
+
+        /*
+            Creating the slider's label and the slider.
+         */
+
+        probabilityLabel = new Label("Probability: 0.25 %", stats.getStyle());
+        probabilityLabel.setFontScale(2.9f, 4);
+        probabilityLabel.setColor(Color.BLACK);
+        probabilityLabel.setPosition(Gdx.graphics.getWidth() - 460, Gdx.graphics.getHeight() - 460);
+        probabilitySlider = new Slider(0.01f, 0.5f, 0.01f, false, game.sliderStyle);
+        probabilitySlider.setWidth(300);
+        probabilitySlider.setValue(0.25f);
+        probabilitySlider.setPosition(Gdx.graphics.getWidth() - 485, Gdx.graphics.getHeight() - 400);
+        probabilitySlider.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                probabilityLabel.setText("Probability: " + BigDecimal.valueOf(probabilitySlider.getValue()).setScale(2, RoundingMode.HALF_UP) + " %");
+                if (statusEffects.containsKey(statusEffectSelectBox.getSelected())) {
+                    statusEffects.put(statusEffectSelectBox.getSelected(), (double) probabilitySlider.getValue());
+                    updateStats();
+                    updateCost();
+                }
+            }
+        });
+
+        /*
+            Adding the plus and minus buttons, and their listeners.
+         */
+
+        TextButton.TextButtonStyle plusMinusStyle = skin.get("default", TextButton.TextButtonStyle.class);
+        plusMinusStyle.font = game.normalFont;
+
+        statusPlus = new TextButton("+", plusMinusStyle);
+        statusPlus.setSize(80, 90);
+        statusPlus.setPosition(Gdx.graphics.getWidth() - 150, Gdx.graphics.getHeight() - 310);
+        statusMinus = new TextButton("-", skin.get("default", TextButton.TextButtonStyle.class));
+        statusMinus.setPosition(Gdx.graphics.getWidth() - 600, Gdx.graphics.getHeight() - 310);
+        statusMinus.setSize(80, 90);
+
+        statusPlus.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                statusEffects.put(statusEffectSelectBox.getSelected(), (double) probabilitySlider.getValue());
+                updateStats();
+                updateCost();
+            }
+        });
+
+        statusMinus.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                statusEffects.remove(statusEffectSelectBox.getSelected());
+                updateStats();
+                updateCost();
+            }
+        });
 
         /*
             Initializing the different values.
@@ -219,6 +325,13 @@ public class SpellCreationScreen implements Screen {
         stage.addActor(stats);
         stage.addActor(costLabel);
         stage.addActor(coinImage);
+        stage.addActor(currentMoney);
+        stage.addActor(currentMoneyImage);
+        stage.addActor(statusEffectSelectBox);
+        stage.addActor(probabilitySlider);
+        stage.addActor(probabilityLabel);
+        stage.addActor(statusPlus);
+        stage.addActor(statusMinus);
     }
 
     @Override
@@ -277,7 +390,7 @@ public class SpellCreationScreen implements Screen {
     public int MPCost() {
         int baseCost = (int) Math.pow(10, spellBasePower);
         int statusEffectsSize = statusEffects.size();
-        baseCost += statusEffects.entrySet().stream().flatMapToDouble((entry) -> DoubleStream.of(entry.getValue() * 200000 * Math.pow(10, statusEffectsSize))).sum();
+        baseCost += statusEffects.entrySet().stream().flatMapToDouble((entry) -> DoubleStream.of(entry.getValue() * 200 * Math.pow(10, statusEffectsSize - 1))).sum();
         return baseCost;
     }
 
@@ -293,7 +406,7 @@ public class SpellCreationScreen implements Screen {
         text.append("MP Cost: ").append(MPCost()).append("\n");
         if (!statusEffects.isEmpty()) {
             text.append("Status Effects:\n");
-            statusEffects.forEach((key, value) -> text.append(" ").append(key).append(": ").append(value).append("\n"));
+            statusEffects.forEach((key, value) -> text.append("\t").append(key).append(": ").append(BigDecimal.valueOf(value).setScale(2, RoundingMode.HALF_UP)).append(" %\n"));
             otherLines += statusEffects.size();
         }
         stats.setText(text);

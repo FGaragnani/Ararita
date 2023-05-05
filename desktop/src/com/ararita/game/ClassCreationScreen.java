@@ -340,7 +340,7 @@ public class ClassCreationScreen implements Screen {
             public void result(Object confirm) {
                 if (confirm.equals(true)) {
                     try {
-                        AbstractBattler classToCreate = new AbstractBattler(statsList.get(0), statsList.get(1), statsList.get(2), statsList.get(3), statsList.get(4), statsList.get(5), classNameField.getText(), game.baseEXP, increaseEXP, exponentEXP, proficiencies, spellTypes, true) {
+                        new AbstractBattler(statsList.get(0), statsList.get(1), statsList.get(2), statsList.get(3), statsList.get(4), statsList.get(5), classNameField.getText(), game.baseEXP, increaseEXP, exponentEXP, proficiencies, spellTypes, true) {
                             @Override
                             public int maxMP() {
                                 return 0;
@@ -429,8 +429,7 @@ public class ClassCreationScreen implements Screen {
         currentMoney.setPosition(1450, 950);
         currentMoneyImage = new Image(new TextureRegionDrawable(coinTexture));
         currentMoneyImage.setSize(coinTexture.getWidth(), coinTexture.getHeight());
-        currentMoneyImage.setPosition(1400 + (costLabel.getText().length() * 10) + 160, 935);
-
+        currentMoneyImage.setPosition(1400 + (currentMoney.getText().length() * 10) + 160, 935);
 
         /*
             Adding all actors.
