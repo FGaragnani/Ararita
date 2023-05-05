@@ -68,6 +68,7 @@ public class SpellCreationScreen implements Screen {
     int cost;
 
     SelectBox<String> characterSelectBox;
+    java.util.List<PC> currentBattlers;
 
     Dialog nameLengthDialog;
     Dialog nameExistsDialog;
@@ -343,15 +344,23 @@ public class SpellCreationScreen implements Screen {
 
         spellCreationDialog = new Dialog("", skin) {
             public void result(Object confirm) {
-                if((boolean) confirm){
-                    System.out.println("ok");
+                if ((boolean) confirm) {
+                    try {
+                        Global.setMoney(Global.getMoney() - cost);
+                        PC toLearn = Global.getCharacter(currentBattlers.get(characterSelectBox.getSelectedIndex()).getName());
+                        toLearn.learnSpell(new Spell(spellNameField.getText(), MPCost(), spellTypeSelectBox.getSelected(), spellBasePower, statusEffects, true));
+                        dispose();
+                        game.setScreen(new CityScreen(game));
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else {
-                    hide();
+                    remove();
                 }
             }
         };
         spellCreationDialog.setResizable(false);
-        spellCreationDialog.text(" Do you want to create \n the new spell '" + spellNameField.getText() + "' ?\n", game.labelStyle);
+        spellCreationDialog.text(" Do you want to create \n the new spell?\n", game.labelStyle);
         spellCreationDialog.button("Yes", true, game.textButtonStyle);
         spellCreationDialog.button("No", false, game.textButtonStyle);
         spellCreationDialog.setPosition(0, 0);
@@ -534,6 +543,7 @@ public class SpellCreationScreen implements Screen {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        currentBattlers = allCharacters;
         java.util.List<String> charLearnable = allCharacters.stream().filter((pc) -> {
             try {
                 return (pc.canLearn(new Spell("", MPCost(), spellType, spellBasePower, statusEffects, false)));
