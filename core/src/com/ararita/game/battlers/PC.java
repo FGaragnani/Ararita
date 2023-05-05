@@ -84,7 +84,7 @@ public class PC extends AbstractBattler implements Battler {
      * A fourth constructor.
      */
 
-    public PC(String charName, String charClass, boolean toSave) throws IOException {
+    public PC(String name, String charClass, boolean toSave) throws IOException {
         super(Global.getFromJSONClass(charClass, "strength"), Global.getFromJSONClass(charClass, "intelligence"), Global.getFromJSONClass(charClass, "vigor"), Global.getFromJSONClass(charClass, "agility"), Global.getFromJSONClass(charClass, "spirit"), Global.getFromJSONClass(charClass, "arcane"), charClass, Global.getFromJSONClass(charClass, "baseEXP"), Global.getDoubleFromJSONClass(charClass, "increaseEXP"), Global.getDoubleFromJSONClass(charClass, "exponentEXP"), Global.getMapJSONClass(charClass, "proficiencies"), new HashSet<>(Global.getArrayJSONClass(charClass, "spellTypes")), toSave);
         this.name = name;
         this.HP = maxHP();

@@ -17,14 +17,15 @@
         "Dagger": 1,
         "Staff": 3
     },
+    "name": "Ruggero",
     "spellTypes": [
         "Chaos",
         "Fire"
     ],
     "charClass": "Black Mage",
     "EXP": 0,
-    "agility": 1,
     "spells": [],
-    "arcane": 4,
-    "weapons": []
+    "agility": 1,
+    "weapons": [],
+    "arcane": 4
 }

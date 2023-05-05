@@ -334,8 +334,8 @@ public class SpellCreationScreen implements Screen {
          */
 
         characterSelectBox = new SelectBox<>(game.selectBoxStyle);
-        characterSelectBox.setWidth(250);
-        characterSelectBox.setPosition(Gdx.graphics.getWidth() - 460, Gdx.graphics.getHeight() - 300);
+        characterSelectBox.setWidth(500);
+        characterSelectBox.setPosition(Gdx.graphics.getWidth() - 590, Gdx.graphics.getHeight() - 600);
         characterSelectBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -437,6 +437,9 @@ public class SpellCreationScreen implements Screen {
         stage.addActor(probabilityLabel);
         stage.addActor(statusPlus);
         stage.addActor(statusMinus);
+        stage.addActor(characterSelectBox);
+
+        updateCharacters();
     }
 
     @Override
