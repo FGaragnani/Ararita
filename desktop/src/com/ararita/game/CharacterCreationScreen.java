@@ -211,7 +211,7 @@ public class CharacterCreationScreen implements Screen {
                     } else if (charNameField.getText().length() < 1 || charNameField.getText().length() > 12) {
                         nameLengthDialog.show(stage);
                     } else if (!charClassSelectBox.getSelected().equals("Create new...")) {
-                        PC toAdd = new PC(charNameField.getText(), charClassSelectBox.getSelected());
+                        PC toAdd = new PC(charNameField.getText(), charClassSelectBox.getSelected(), false);
                         toAdd.setImage(charImageSelectBox.getSelected());
                         Global.addCharacter(toAdd);
                         if (newPlayer) {

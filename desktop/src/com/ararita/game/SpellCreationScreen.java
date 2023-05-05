@@ -351,7 +351,11 @@ public class SpellCreationScreen implements Screen {
 
         spellCreationDialog = new Dialog("", skin) {
             public void result(Object confirm) {
-                // TODO
+                if((boolean) confirm){
+                    System.out.println("ok");
+                } else {
+                    hide();
+                }
             }
         };
         spellCreationDialog.setResizable(false);

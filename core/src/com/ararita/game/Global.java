@@ -186,7 +186,9 @@ public class Global {
     public static void addCharacter(PC battler) throws IOException {
         File charFile = getJSONFilePath(characterSets, battler.getName()).toFile();
         if (charFile.createNewFile()) {
-            writeJSON(charFile.toPath(), new JSONObject(battler));
+            JSONObject toWrite = new JSONObject(battler);
+            toWrite.put("image", battler.getImage());
+            writeJSON(charFile.toPath(), toWrite);
             if (getArrayLengthJSON(globalSets, "party") >= MAX_PARTY_MEMBERS) {
                 addToOtherCharacters(battler.getName());
             } else {

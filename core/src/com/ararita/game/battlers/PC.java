@@ -80,6 +80,22 @@ public class PC extends AbstractBattler implements Battler {
         this.MP = maxMP();
     }
 
+    /**
+     * A fourth constructor.
+     */
+
+    public PC(String charName, String charClass, boolean toSave) throws IOException {
+        super(Global.getFromJSONClass(charClass, "strength"), Global.getFromJSONClass(charClass, "intelligence"), Global.getFromJSONClass(charClass, "vigor"), Global.getFromJSONClass(charClass, "agility"), Global.getFromJSONClass(charClass, "spirit"), Global.getFromJSONClass(charClass, "arcane"), charClass, Global.getFromJSONClass(charClass, "baseEXP"), Global.getDoubleFromJSONClass(charClass, "increaseEXP"), Global.getDoubleFromJSONClass(charClass, "exponentEXP"), Global.getMapJSONClass(charClass, "proficiencies"), new HashSet<>(Global.getArrayJSONClass(charClass, "spellTypes")), toSave);
+        this.name = name;
+        this.HP = maxHP();
+        this.currHP = this.HP;
+        this.MP = maxMP();
+        this.currMP = this.MP;
+        if (toSave) {
+            Global.addCharacter(this);
+        }
+    }
+
     public String getName() {
         return name;
     }
@@ -470,7 +486,7 @@ public class PC extends AbstractBattler implements Battler {
         int i = 1;
         for (int proficiencyValue : proficiencies.values()) {
             initialCost += (1 / ((Math.pow(getIncreaseEXP(), 2) * Math.pow(getExponentEXP(), 2)))) * Math.pow(10, proficiencyValue) * Math.pow(i, 1.2);
-            if(initialCost > 10000000){
+            if (initialCost > 10000000) {
                 return 10000000;
             }
             i++;
@@ -478,7 +494,7 @@ public class PC extends AbstractBattler implements Battler {
         i = 1;
         for (String spellType : spellTypes) {
             initialCost += (1 / ((Math.pow(getIncreaseEXP(), 2) * Math.pow(getExponentEXP(), 2)))) * Math.pow(5, i) * Math.pow(i, 1.2);
-            if(initialCost > 10000000){
+            if (initialCost > 10000000) {
                 return 10000000;
             }
             i++;
