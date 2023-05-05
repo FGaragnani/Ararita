@@ -29,9 +29,9 @@ More todo.
   * Equip them with weapons
   * Manage your inventory
 
-* Venture in dangerous dungeons:
+* Battle against enemies to gain loot:
   * Turn-based combat system
-  * Final dungeon boss battles
+  * Make your way towards the final boss
  
 ## Installing
 To do.
