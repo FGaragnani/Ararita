@@ -580,9 +580,9 @@ public class ClassCreationScreen implements Screen {
         float expSum = expSlider.getValue();
         increaseEXP = expSum;
         exponentEXP = 1.5f - increaseEXP;
-        if (expSum >= 2.333) {
+        if (expSum >= 2.5) {
             expGrowthLabel.setText("EXP Growth: Slow");
-        } else if (expSum <= 1.666) {
+        } else if (expSum <= 2.05) {
             expGrowthLabel.setText("EXP Growth: Fast");
         } else {
             expGrowthLabel.setText("EXP Growth: Medium");

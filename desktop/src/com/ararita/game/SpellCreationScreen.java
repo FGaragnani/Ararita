@@ -8,11 +8,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.io.IOException;
@@ -32,6 +30,8 @@ public class SpellCreationScreen implements Screen {
     Label.LabelStyle titleStyle;
 
     TextField spellNameField;
+    SelectBox<String> spellTypeSelectBox;
+    Label spellTypeLabel;
 
     TextButton confirmButton;
     TextButton exitButton;
@@ -42,7 +42,7 @@ public class SpellCreationScreen implements Screen {
     int spellBasePower;
     Map<String, Double> statusEffects;
 
-    public SpellCreationScreen(final Ararita game){
+    public SpellCreationScreen(final Ararita game) {
         /*
             First initialization.
          */
@@ -54,6 +54,12 @@ public class SpellCreationScreen implements Screen {
         this.skin = new Skin(Gdx.files.internal(game.stylesPath));
         this.camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
+        Array<String> spellLists = new Array<>();
+        try {
+            Global.getListJSON(Global.globalSets, "spellTypesSet").forEach(spellType -> spellLists.add((String) spellType));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         statusEffects = new HashMap<>();
 
         /*
@@ -108,7 +114,23 @@ public class SpellCreationScreen implements Screen {
 
         spellNameField = new TextField("Spell Name", game.textFieldStyle);
         spellNameField.setWidth(400);
-        spellNameField.setPosition((Gdx.graphics.getWidth() - spellNameField.getWidth()) / 2, Gdx.graphics.getHeight() - 350);
+        spellNameField.setPosition((Gdx.graphics.getWidth() - spellNameField.getWidth()) / 2, Gdx.graphics.getHeight() - 300);
+
+        /*
+            Creating the SpellType Select Box and its label.
+         */
+
+        spellTypeSelectBox = new SelectBox<>(game.selectBoxStyle);
+        spellTypeSelectBox.setItems(spellLists);
+        spellTypeSelectBox.setWidth(200);
+        spellTypeSelectBox.setPosition((Gdx.graphics.getWidth() - spellTypeSelectBox.getWidth()) / 2 + 95,
+                Gdx.graphics.getHeight() - 450);
+        spellTypeLabel = new Label("Spell Type: ", game.labelStyle);
+        spellTypeLabel.setFontScale(3f, 4.2f);
+        spellTypeLabel.setColor(Color.BLACK);
+        spellTypeLabel.setPosition((Gdx.graphics.getWidth() - spellTypeSelectBox.getWidth()) / 2 - 92,
+                Gdx.graphics.getHeight() - 432);
+
 
         /*
             Adding all actors.
@@ -118,6 +140,8 @@ public class SpellCreationScreen implements Screen {
         stage.addActor(exitButton);
         stage.addActor(title);
         stage.addActor(spellNameField);
+        stage.addActor(spellTypeSelectBox);
+        stage.addActor(spellTypeLabel);
     }
 
     @Override
@@ -137,6 +161,7 @@ public class SpellCreationScreen implements Screen {
         game.batch.end();
 
         stage.draw();
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
     }
 
     @Override
@@ -171,10 +196,10 @@ public class SpellCreationScreen implements Screen {
      *
      * @return The MP Cost of the spell.
      */
-    public int MPCost(){
+    public int MPCost() {
         int baseCost = (int) Math.pow(10, spellBasePower);
         int statusEffectsSize = statusEffects.size();
-        baseCost += statusEffects.entrySet().stream().flatMapToDouble((entry) -> DoubleStream.of(entry.getValue() * 200000 * Math.pow(10,statusEffectsSize))).sum();
+        baseCost += statusEffects.entrySet().stream().flatMapToDouble((entry) -> DoubleStream.of(entry.getValue() * 200000 * Math.pow(10, statusEffectsSize))).sum();
         return baseCost;
     }
 }
