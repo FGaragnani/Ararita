@@ -336,14 +336,6 @@ public class SpellCreationScreen implements Screen {
         characterSelectBox = new SelectBox<>(game.selectBoxStyle);
         characterSelectBox.setWidth(500);
         characterSelectBox.setPosition(Gdx.graphics.getWidth() - 590, Gdx.graphics.getHeight() - 600);
-        characterSelectBox.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if (characterSelectBox.getSelected().equals("No character...")) {
-                    noCharDialog.show(stage);
-                }
-            }
-        });
 
         /*
             Creating the five dialogs.
