@@ -323,7 +323,7 @@ public class Global {
         Path spellFile = getJSONFilePath(spellSets, name);
         JSONObject jsonGlobal = getJSON(spellFile);
         Map<String, Double> statusEffects = getDoubleMapJSON(spellFile, "statusEffects");
-        return new Spell(jsonGlobal.getString("name"), jsonGlobal.getInt("MPCost"), jsonGlobal.getString("type"), jsonGlobal.getInt("basePower"), statusEffects);
+        return new Spell(jsonGlobal.getString("name"), jsonGlobal.getInt("MPCost"), jsonGlobal.getString("type"), jsonGlobal.getInt("basePower"), statusEffects, true);
     }
 
     /**

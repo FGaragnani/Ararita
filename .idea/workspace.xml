@@ -5,8 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5676402a-2187-4a8f-bfe0-ac646c9fd387" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/core/src/com/ararita/game/characters/Character.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/Ararita.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/Ararita.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/Global.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/Global.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/GlobalTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/GlobalTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/characters/Char1.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/characters/Char1.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/spells/Spell.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/spells/Spell.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/SpellCreationScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/SpellCreationScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -228,8 +233,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.DesktopLauncher" />
         <item itemvalue="JUnit.GlobalTest" />
+        <item itemvalue="Application.DesktopLauncher" />
         <item itemvalue="JUnit.GlobalTest.getInventory" />
         <item itemvalue="JUnit.GlobalTest.getFromJSONClass" />
         <item itemvalue="JUnit.GlobalTest.addCharacter" />

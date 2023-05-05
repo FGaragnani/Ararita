@@ -24,14 +24,17 @@ public class Spell {
      * @param type The spell type (see global.json spellTypesSet).
      * @param basePower The spell's base power; it will be an int from 1 to 5 (the actual damage will be calculated
      * in battle).
+     * @param statusEffects A map of the status effect inflicting and its probability.
      */
-    public Spell(String name, int MPCost, String type, int basePower, Map<String, Double> statusEffects) throws IOException {
+    public Spell(String name, int MPCost, String type, int basePower, Map<String, Double> statusEffects, boolean toSave) throws IOException {
         this.name = name;
         this.MPCost = MPCost;
         this.type = type;
         this.basePower = basePower;
         this.statusEffects = statusEffects;
-        Global.addSpell(this);
+        if (toSave) {
+            Global.addSpell(this);
+        }
     }
 
     public String getName() {
@@ -54,12 +57,12 @@ public class Spell {
         return statusEffects;
     }
 
-    public int moneyCost(){
+    public int moneyCost() {
         int baseCost = 10;
         baseCost += Math.floor(10 * Math.pow(this.basePower, 3));
         int i = 1;
-        for(Map.Entry<String, Double> statusEffect : statusEffects.entrySet()){
-            baseCost *= (1+(statusEffect.getValue()*10)) * i;
+        for (Map.Entry<String, Double> statusEffect : statusEffects.entrySet()) {
+            baseCost *= (1 + (statusEffect.getValue() * 10)) * i;
             i++;
         }
         return baseCost;

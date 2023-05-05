@@ -13,7 +13,7 @@
     "increaseEXP": 1.32,
     "intelligence": 0,
     "proficiencies": {"Sword": 3},
-    "name": "Char1",
+    "name": "Character",
     "spellTypes": [],
     "charClass": "Knight",
     "EXP": 0,

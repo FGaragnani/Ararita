@@ -25,7 +25,10 @@
         "Paralysis",
         "Blindness"
     ],
-    "party": ["Char1"],
+    "party": [
+        "Char1",
+        "Character"
+    ],
     "classNamesSet": [
         "Knight",
         "Black Mage",

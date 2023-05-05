@@ -152,7 +152,7 @@ class GlobalTest {
     void addSpell() {
         try {
             Path spellFile = Path.of(Global.spellSets + "/Void Arrow.json");
-            Spell voidArrow = new Spell("Void Arrow", 5, "Chaos", 1, new HashMap<>());
+            Spell voidArrow = new Spell("Void Arrow", 5, "Chaos", 1, new HashMap<>(), true);
             assertTrue(spellFile.toFile().exists());
             assertTrue(Global.getListJSON(Global.globalSets, "spellNamesSet").contains("Void Arrow"));
             assertEquals(Global.getJSON(spellFile).getInt("MPCost"), voidArrow.getMPCost());
@@ -164,10 +164,10 @@ class GlobalTest {
     @Test
     void getSpell() {
         try {
-            Spell voidArrow = new Spell("Void Arrow", 5, "Chaos", 1, new HashMap<>());
+            Spell voidArrow = new Spell("Void Arrow", 5, "Chaos", 1, new HashMap<>(), true);
             assertEquals(Global.getSpell("Void Arrow").getName(), voidArrow.getName());
             assertEquals(Global.getSpell(voidArrow.getName()).getBasePower(), 1);
-            Spell fireball = new Spell("Fireball", 25, "Fire", 2, Map.of("Burn", 0.2));
+            Spell fireball = new Spell("Fireball", 25, "Fire", 2, Map.of("Burn", 0.2), true);
             assertTrue(Global.getSpell(fireball.getName()).getStatusEffects().containsKey("Burn"));
             assertEquals(Global.getSpell("Fireball").getStatusEffects().get("Burn"), 0.2);
         } catch (IOException e) {
@@ -377,8 +377,8 @@ class GlobalTest {
     @Test
     void learnSpell() {
         try {
-            Spell fireball = new Spell("Fireball", 10, "Fire", 1, Map.of("Burn", 0.1));
-            Spell holyLight = new Spell("Holy Light", 10, "Light", 1, new HashMap<>());
+            Spell fireball = new Spell("Fireball", 10, "Fire", 1, Map.of("Burn", 0.1), true);
+            Spell holyLight = new Spell("Holy Light", 10, "Light", 1, new HashMap<>(), true);
             PC test = new PC("test", "Black Mage");
             test.learnSpell(fireball);
             test.update();
@@ -395,8 +395,8 @@ class GlobalTest {
     @Test
     void forgetSpell() {
         try {
-            Spell fireball = new Spell("Fireball", 10, "Fire", 1, Map.of("Burn", 0.1));
-            Spell voidArrow = new Spell("Void Arrow", 10, "Chaos", 1, new HashMap<>());
+            Spell fireball = new Spell("Fireball", 10, "Fire", 1, Map.of("Burn", 0.1), true);
+            Spell voidArrow = new Spell("Void Arrow", 10, "Chaos", 1, new HashMap<>(), true);
             PC test = new PC("test", "Black Mage");
             test.learnSpell(fireball);
             test.learnSpell(voidArrow);

@@ -1,19 +1,24 @@
 package com.ararita.game;
 
-import com.ararita.game.battlers.PC;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.DoubleStream;
 
 public class SpellCreationScreen implements Screen {
 
@@ -23,11 +28,19 @@ public class SpellCreationScreen implements Screen {
     OrthographicCamera camera;
     Skin skin;
 
+    Label title;
+    Label.LabelStyle titleStyle;
+
+    TextField spellNameField;
+
     TextButton confirmButton;
     TextButton exitButton;
 
     Texture backgroundTexture;
     Sprite backgroundSprite;
+
+    int spellBasePower;
+    Map<String, Double> statusEffects;
 
     public SpellCreationScreen(final Ararita game){
         /*
@@ -41,6 +54,7 @@ public class SpellCreationScreen implements Screen {
         this.skin = new Skin(Gdx.files.internal(game.stylesPath));
         this.camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
+        statusEffects = new HashMap<>();
 
         /*
             Setting the background texture.
@@ -49,6 +63,16 @@ public class SpellCreationScreen implements Screen {
         backgroundTexture = new Texture(Gdx.files.local("assets/Backgrounds/paperbg.png"));
         backgroundSprite = new Sprite(backgroundTexture);
         backgroundSprite.setSize((int) (Gdx.graphics.getWidth() * 1.1), (int) (Gdx.graphics.getHeight() * 1.1));
+
+        /*
+            Setting the title.
+         */
+
+        titleStyle = skin.get("default", Label.LabelStyle.class);
+        titleStyle.font = game.titleFont;
+        title = new Label("SPELL CREATION", titleStyle);
+        title.setColor(Color.BLACK);
+        title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() - 150);
 
          /*
             Creating the button for confirmation.
@@ -79,11 +103,21 @@ public class SpellCreationScreen implements Screen {
         });
 
         /*
+            Creating the TextField - for the spell's name.
+         */
+
+        spellNameField = new TextField("Spell Name", game.textFieldStyle);
+        spellNameField.setWidth(400);
+        spellNameField.setPosition((Gdx.graphics.getWidth() - spellNameField.getWidth()) / 2, Gdx.graphics.getHeight() - 350);
+
+        /*
             Adding all actors.
          */
 
         stage.addActor(confirmButton);
         stage.addActor(exitButton);
+        stage.addActor(title);
+        stage.addActor(spellNameField);
     }
 
     @Override
@@ -130,5 +164,17 @@ public class SpellCreationScreen implements Screen {
         stage.dispose();
         skin.dispose();
         backgroundTexture.dispose();
+    }
+
+    /**
+     * Determines the MP Cost of the creating spell.
+     *
+     * @return The MP Cost of the spell.
+     */
+    public int MPCost(){
+        int baseCost = (int) Math.pow(10, spellBasePower);
+        int statusEffectsSize = statusEffects.size();
+        baseCost += statusEffects.entrySet().stream().flatMapToDouble((entry) -> DoubleStream.of(entry.getValue() * 200000 * Math.pow(10,statusEffectsSize))).sum();
+        return baseCost;
     }
 }
