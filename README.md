@@ -46,6 +46,7 @@ To do.
 * Assets by:
   * Pixthulhu LibGDX's [Skins](https://github.com/czyzby/gdx-skins/tree/master/pixthulhu) by Raymond "Raeleus" Buckley
   * 16-bit [character sprites](https://opengameart.org/content/twelve-16x18-rpg-sprites-plus-base) by Antifarea, comissioned by OpenGameArt
+  * Icons by [Dycha](http://dycha.net)
   
 ## License
 
