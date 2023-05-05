@@ -477,7 +477,7 @@ public class PC extends AbstractBattler implements Battler {
         }
         i = 1;
         for (String spellType : spellTypes) {
-            initialCost += (1 / ((Math.pow(getIncreaseEXP(), 2) * Math.pow(getExponentEXP(), 2)))) * Math.pow(10, i);
+            initialCost += (1 / ((Math.pow(getIncreaseEXP(), 2) * Math.pow(getExponentEXP(), 2)))) * Math.pow(5, i) * Math.pow(i, 1.2);
             if(initialCost > 10000000){
                 return 10000000;
             }

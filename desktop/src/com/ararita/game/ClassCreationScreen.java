@@ -12,11 +12,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.*;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -50,6 +50,11 @@ public class ClassCreationScreen implements Screen {
 
     TextButton confirmButton;
     TextButton exitButton;
+
+    Texture coinTexture;
+    Image coinImage;
+    Label currentMoney;
+    Image currentMoneyImage;
 
     Texture backgroundTexture;
     Sprite backgroundSprite;
@@ -141,7 +146,7 @@ public class ClassCreationScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    if (Global.isPresentInJSONList(Global.globalSets, classNameField.getText(), "classNamesSet")){
+                    if (Global.isPresentInJSONList(Global.globalSets, classNameField.getText(), "classNamesSet")) {
                         nameExistsDialog.show(stage);
                     } else if (classNameField.getText().length() < 1 || classNameField.getText().length() > 12) {
                         nameLengthDialog.show(stage);
@@ -178,7 +183,6 @@ public class ClassCreationScreen implements Screen {
         costLabel.setFontScale(2.8f, 3.8f);
         costLabel.setColor(Color.BLACK);
         costLabel.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, confirmButton.getY() + 155);
-        updateCost();
 
         /*
             Creating the EXP Slider.
@@ -402,6 +406,33 @@ public class ClassCreationScreen implements Screen {
         moneyDialog.setPosition(0, 0);
 
         /*
+            Adding the coin icon.
+         */
+
+        coinTexture = new Texture(Gdx.files.local("Icons/coin.png"));
+        coinImage = new Image();
+        coinImage.setDrawable(new TextureRegionDrawable(coinTexture));
+        coinImage.setSize(coinTexture.getWidth(), coinTexture.getHeight());
+        coinImage.setPosition(((Gdx.graphics.getWidth() - confirmButton.getWidth()) / 2) + costLabel.getText().length() + 250, confirmButton.getY() + 125);
+        updateCost();
+
+        /*
+            Adding the current money label and image.
+         */
+
+        try {
+            currentMoney = new Label("Money: " + Global.getMoney(), stats.getStyle());
+        } catch (IOException e) {
+            currentMoney = new Label("Money: ?", stats.getStyle());
+        }
+        currentMoney.setColor(Color.BLACK);
+        currentMoney.setPosition(1400, 950);
+        currentMoneyImage = new Image(new TextureRegionDrawable(coinTexture));
+        currentMoneyImage.setSize(coinTexture.getWidth(), coinTexture.getHeight());
+        currentMoneyImage.setPosition(1400 + (costLabel.getText().length() * 10) + 160, 935);
+
+
+        /*
             Adding all actors.
          */
 
@@ -422,6 +453,9 @@ public class ClassCreationScreen implements Screen {
         stage.addActor(spellTypeSelectBox);
         stage.addActor(spellTypesPlus);
         stage.addActor(spellTypesMinus);
+        stage.addActor(coinImage);
+        stage.addActor(currentMoney);
+        stage.addActor(currentMoneyImage);
     }
 
     @Override
@@ -469,6 +503,7 @@ public class ClassCreationScreen implements Screen {
         stage.dispose();
         skin.dispose();
         backgroundTexture.dispose();
+        coinTexture.dispose();
     }
 
     /**
@@ -521,6 +556,7 @@ public class ClassCreationScreen implements Screen {
     public void updateCost() {
         costLabel.setText("Class cost: " + getClassCost());
         costLabel.setX((Gdx.graphics.getWidth() - confirmButton.getWidth()) / 2);
+        coinImage.setPosition(((Gdx.graphics.getWidth() - confirmButton.getWidth()) / 2) + (costLabel.getText().length() * 5) + 200, confirmButton.getY() + 125);
     }
 
     /**
