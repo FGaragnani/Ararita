@@ -426,7 +426,7 @@ public class ClassCreationScreen implements Screen {
             currentMoney = new Label("Money: ?", stats.getStyle());
         }
         currentMoney.setColor(Color.BLACK);
-        currentMoney.setPosition(1400, 950);
+        currentMoney.setPosition(1450, 950);
         currentMoneyImage = new Image(new TextureRegionDrawable(coinTexture));
         currentMoneyImage.setSize(coinTexture.getWidth(), coinTexture.getHeight());
         currentMoneyImage.setPosition(1400 + (costLabel.getText().length() * 10) + 160, 935);
@@ -573,6 +573,9 @@ public class ClassCreationScreen implements Screen {
         }
     }
 
+    /**
+     * The EXP label and the EXP values are updated.
+     */
     public void updateEXP() {
         float expSum = expSlider.getValue();
         increaseEXP = expSum;

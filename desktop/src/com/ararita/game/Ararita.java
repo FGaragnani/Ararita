@@ -116,6 +116,13 @@ public class Ararita extends Game {
         bigFont.dispose();
     }
 
+    /**
+     * Determines a random float number between min and max.
+     *
+     * @param min The lower bound.
+     * @param max The upper bound.
+     * @return The random float.
+     */
     public float getRandom(float min, float max){
         RandomGenerator rng = RandomGenerator.getDefault();
         return rng.nextFloat(min, max);
