@@ -1,6 +1,7 @@
 package com.ararita.game;
 
 import com.ararita.game.items.Inventory;
+import com.ararita.game.items.Item;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -10,9 +11,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.io.IOException;
@@ -31,10 +34,13 @@ public class ShopScreen implements Screen {
     Label.LabelStyle titleStyle;
     TextButton exitButton;
 
+    Array<String> allItemsArray;
+    SelectBox<String> buySelectBox;
+
     Texture backgroundTexture;
     Sprite backgroundSprite;
 
-    public ShopScreen(final Ararita game){
+    public ShopScreen(final Ararita game) {
         /*
             First initialization.
          */
@@ -48,6 +54,16 @@ public class ShopScreen implements Screen {
         camera.setToOrtho(false, 1920, 1080);
         try {
             inventory = new Inventory();
+            allItemsArray = new Array<>();
+            Global.getAllItems().stream().sorted((o1, o2) -> {
+                if(o1.getPrice() == o2.getPrice()) {
+                    return 0;
+                }
+                else if (o1.getPrice() > o2.getPrice()) {
+                    return 1;
+                }
+                return -1;
+            }).forEach((item) -> allItemsArray.add(item.getName()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -85,12 +101,28 @@ public class ShopScreen implements Screen {
         });
 
         /*
+            Adding the Select Box for the items to buy and its listener.
+         */
+
+        buySelectBox = new SelectBox<>(game.selectBoxStyle);
+        buySelectBox.setItems(allItemsArray);
+        buySelectBox.setWidth(300);
+        buySelectBox.setPosition((Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 4, Gdx.graphics.getHeight() - 350);
+        buySelectBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                // TODO
+            }
+        });
+
+
+        /*
             Adding all actors.
          */
 
         stage.addActor(title);
         stage.addActor(exitButton);
-
+        stage.addActor(buySelectBox);
     }
 
     @Override
@@ -110,6 +142,7 @@ public class ShopScreen implements Screen {
         game.batch.end();
 
         stage.draw();
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
     }
 
     @Override

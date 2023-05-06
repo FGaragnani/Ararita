@@ -8,6 +8,7 @@ import com.ararita.game.items.Item;
 import com.ararita.game.items.Weapon;
 import com.ararita.game.spells.Spell;
 import org.json.JSONObject;
+import org.junit.runner.manipulation.Sorter;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -641,6 +642,24 @@ public class Global {
         if (specificItemSet.createNewFile()) {
             writeJSON(specificItemSet.toPath(), new JSONObject(consumableItem));
         }
+    }
+
+    /**
+     * A list of all the items is determined from all the files in the item directory.
+     *
+     * @return The list of all the items.
+     *
+     * @throws IOException If the file cannot be read.
+     */
+    public static List<Item> getAllItems() throws IOException {
+        return Arrays.stream(itemSets.toFile().listFiles()).map((file -> file.getName().substring(0,
+                file.getName().length() - 5))).map((name) -> {
+            try {
+                return (getItem(name));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }).collect(Collectors.toList());
     }
 
     /**
