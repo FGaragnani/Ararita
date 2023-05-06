@@ -586,6 +586,20 @@ public class Global {
     }
 
     /**
+     * Determines if N items of the same the type can be bought.
+     *
+     * @param item The item to buy in batch.
+     * @param n The number of the items to buy.
+     *
+     * @return True, if the items can indeed be bought.
+     *
+     * @throws IOException If the file cannot be read.
+     */
+    public static boolean canBuy(Item item, int n) throws IOException {
+        return getMoney() >= (item.getPrice() * n) && (getInventory().entrySet().stream().flatMapToInt((entry) -> IntStream.of(entry.getValue())).sum() + n <= MAX_INVENTORY_SPACE);
+    }
+
+    /**
      * An item is sold. It is removed from the inventory and then adds its price to the money amount.
      * If the item is not present, nothing happens.
      *

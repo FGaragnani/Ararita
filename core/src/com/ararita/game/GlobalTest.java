@@ -457,4 +457,17 @@ class GlobalTest {
             throw new RuntimeException(e);
         }
     }
+
+    @Test
+    void testCanBuy() {
+        try{
+            Global.setMoney(3000);
+            assertTrue(Global.canBuy(Global.getItem("Angelic Staff"), 1));
+            assertTrue(Global.canBuy(Global.getItem("Angelic Staff"), 2));
+            assertTrue(Global.canBuy(Global.getItem("Angelic Staff"), 3));
+            assertFalse(Global.canBuy(Global.getItem("Angelic Staff"), 4));
+        } catch (IOException e){
+            throw new RuntimeException(e);
+        }
+    }
 }

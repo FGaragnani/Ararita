@@ -8,7 +8,7 @@
         "Chaos"
     ],
     "otherCharacters": [],
-    "money": 685,
+    "money": 0,
     "spellNamesSet": [],
     "weaponTypesSet": [
         "Sword",
@@ -25,7 +25,7 @@
         "Paralysis",
         "Blindness"
     ],
-    "party": ["Ruggero"],
+    "party": [],
     "classNamesSet": [
         "Knight",
         "Black Mage",
