@@ -522,6 +522,9 @@ public class SpellCreationScreen implements Screen {
         stats.setPosition(250, Gdx.graphics.getHeight() - 300 - (17 * otherLines));
     }
 
+    /**
+     * The cost label is updated.
+     */
     public void updateCost() {
         try {
             spellBasePower = spellPowerList.indexOf(spellPowerSelectBox.getSelected(), false) + 1;
@@ -535,6 +538,9 @@ public class SpellCreationScreen implements Screen {
         }
     }
 
+    /**
+     * The characters displayed in the select box are updated.
+     */
     public void updateCharacters() {
         String spellType = spellTypeSelectBox.getSelected();
         java.util.List<PC> allCharacters;

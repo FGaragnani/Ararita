@@ -1,11 +1,21 @@
 package com.ararita.game;
 
+import com.ararita.game.items.Inventory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
+
+import java.io.IOException;
 
 public class ShopScreen implements Screen {
 
@@ -14,6 +24,15 @@ public class ShopScreen implements Screen {
 
     OrthographicCamera camera;
     Skin skin;
+
+    Inventory inventory;
+
+    Label title;
+    Label.LabelStyle titleStyle;
+    TextButton exitButton;
+
+    Texture backgroundTexture;
+    Sprite backgroundSprite;
 
     public ShopScreen(final Ararita game){
         /*
@@ -27,6 +46,51 @@ public class ShopScreen implements Screen {
         this.skin = new Skin(Gdx.files.internal(game.stylesPath));
         this.camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
+        try {
+            inventory = new Inventory();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        /*
+            Setting the background texture.
+         */
+
+        backgroundTexture = new Texture(Gdx.files.local("assets/Backgrounds/city.png"));
+        backgroundSprite = new Sprite(backgroundTexture);
+        backgroundSprite.setSize((int) (Gdx.graphics.getWidth() * 1.1), (int) (Gdx.graphics.getHeight() * 1.1));
+
+        /*
+            Setting the title.
+         */
+
+        titleStyle = skin.get("default", Label.LabelStyle.class);
+        titleStyle.font = game.titleFont;
+        title = new Label("SHOP", titleStyle);
+        title.setColor(Color.BLACK);
+        title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() - 150);
+
+        /*
+            Creating the Exit Button.
+         */
+
+        exitButton = new TextButton("Exit", game.textButtonStyle);
+        exitButton.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, Gdx.graphics.getHeight() - 1000);
+        exitButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                dispose();
+                game.setScreen(new CityScreen(game));
+            }
+        });
+
+        /*
+            Adding all actors.
+         */
+
+        stage.addActor(title);
+        stage.addActor(exitButton);
+
     }
 
     @Override
@@ -42,7 +106,7 @@ public class ShopScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-
+        backgroundSprite.draw(game.batch);
         game.batch.end();
 
         stage.draw();
@@ -71,5 +135,6 @@ public class ShopScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+        backgroundTexture.dispose();
     }
 }
