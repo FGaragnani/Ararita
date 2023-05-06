@@ -175,6 +175,7 @@ public class CityScreen implements Screen {
         game.batch.end();
 
         stage.draw();
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
     }
 
     @Override

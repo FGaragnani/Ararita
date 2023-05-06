@@ -96,10 +96,10 @@ public class Inventory {
      */
     public void buy(Item item, int n) throws IOException {
         if (canBuy(item, n)) {
-            if (items.containsKey(item)) {
-                items.put(item, items.get(item) + n);
-            } else {
-                items.put(item, n);
+            int i = 0;
+            while (i < n) {
+                add(item);
+                i++;
             }
             setMoney(getMoney() - (item.getPrice() * n));
             updateItems();
@@ -128,12 +128,70 @@ public class Inventory {
      */
     public void sell(Item item, int n) throws IOException {
         if (canSell(item, n)) {
-            if (items.get(item) == n) {
-                items.remove(item);
-            } else {
-                items.put(item, items.get(item) - n);
+            int i = 0;
+            while (i < n) {
+                remove(item);
+                i++;
             }
             setMoney(getMoney() - (int) (item.getPrice() * n * RESELL_MULTIPLIER));
+            updateItems();
+        }
+    }
+
+    /**
+     * Determines if a certain item can be removed from the inventory.
+     *
+     * @param item The item to remove.
+     *
+     * @return True, if the item can indeed be removed.
+     */
+    public boolean canRemove(Item item) {
+        return items.containsKey(item);
+    }
+
+    /**
+     * Removes - if possible - an item from the inventory.
+     *
+     * @param item The item to remove.
+     *
+     * @throws IOException If the file cannot be written upon.
+     */
+    public void remove(Item item) throws IOException {
+        if (canRemove(item)) {
+            if (items.get(item) > 1) {
+                items.put(item, items.get(item) - 1);
+            } else {
+                items.remove(item);
+            }
+            updateItems();
+        }
+    }
+
+    /**
+     * Determines if an item can be added to the inventory.
+     *
+     * @param item The item to add.
+     *
+     * @return True, if the item can be added.
+     */
+    public boolean canAdd(Item item) {
+        return (inventorySize() + 1 <= MAX_INVENTORY_SPACE);
+    }
+
+    /**
+     * An item is added to the inventory, if possible.
+     *
+     * @param item The item to add.
+     *
+     * @throws IOException If the file cannot be written upon.
+     */
+    public void add(Item item) throws IOException {
+        if (canAdd(item)) {
+            if (items.containsKey(item)) {
+                items.put(item, items.get(item) + 1);
+            } else {
+                items.put(item, 1);
+            }
             updateItems();
         }
     }

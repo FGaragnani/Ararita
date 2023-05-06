@@ -1,7 +1,9 @@
 package com.ararita.game;
 
+import com.ararita.game.items.ConsumableItem;
 import com.ararita.game.items.Inventory;
 import com.ararita.game.items.Item;
+import com.ararita.game.items.Weapon;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -10,15 +12,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class ShopScreen implements Screen {
 
@@ -36,6 +37,14 @@ public class ShopScreen implements Screen {
 
     Array<String> allItemsArray;
     SelectBox<String> buySelectBox;
+
+    Label stats;
+    Label costLabel;
+
+    Texture coinTexture;
+    Image coinImage;
+    Label currentMoney;
+    Image currentMoneyImage;
 
     Texture backgroundTexture;
     Sprite backgroundSprite;
@@ -55,11 +64,10 @@ public class ShopScreen implements Screen {
         try {
             inventory = new Inventory();
             allItemsArray = new Array<>();
-            Global.getAllItems().stream().sorted((o1, o2) -> {
-                if(o1.getPrice() == o2.getPrice()) {
+            Global.getAllItems().stream().filter((item) -> item.getPrice() < 1000).sorted((o1, o2) -> {
+                if (o1.getPrice() == o2.getPrice()) {
                     return 0;
-                }
-                else if (o1.getPrice() > o2.getPrice()) {
+                } else if (o1.getPrice() > o2.getPrice()) {
                     return 1;
                 }
                 return -1;
@@ -106,14 +114,43 @@ public class ShopScreen implements Screen {
 
         buySelectBox = new SelectBox<>(game.selectBoxStyle);
         buySelectBox.setItems(allItemsArray);
-        buySelectBox.setWidth(300);
-        buySelectBox.setPosition((Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 4, Gdx.graphics.getHeight() - 350);
+        buySelectBox.setWidth(400);
+        buySelectBox.setPosition((Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 4 - 20, Gdx.graphics.getHeight() - 350);
         buySelectBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                // TODO
+                updateCost();
+                updateStats();
             }
         });
+
+        /*
+            Setting the stats Label.
+         */
+
+        stats = new Label("", game.labelStyle);
+        stats.setFontScale(3f, 4f);
+        stats.setColor(Color.BLACK);
+        stats.setPosition((Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 4 - 20, Gdx.graphics.getHeight() - 430);
+
+        /*
+            Creating the cost label.
+         */
+
+        costLabel = new Label("", stats.getStyle());
+        costLabel.setFontScale(2.8f, 3.8f);
+        costLabel.setColor(Color.BLACK);
+        costLabel.setPosition((Gdx.graphics.getWidth() - (buySelectBox.getWidth())) / 2 - 400, Gdx.graphics.getHeight() - 270);
+
+        /*
+            Adding the coin icon.
+         */
+
+        coinTexture = new Texture(Gdx.files.local("Icons/coin.png"));
+        coinImage = new Image();
+        coinImage.setDrawable(new TextureRegionDrawable(coinTexture));
+        coinImage.setSize(coinTexture.getWidth(), coinTexture.getHeight());
+        coinImage.setPosition(((Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 3) - 10, Gdx.graphics.getHeight() - 300);
 
 
         /*
@@ -123,6 +160,16 @@ public class ShopScreen implements Screen {
         stage.addActor(title);
         stage.addActor(exitButton);
         stage.addActor(buySelectBox);
+        stage.addActor(coinImage);
+        stage.addActor(costLabel);
+        stage.addActor(stats);
+
+        /*
+            Setting the default values.
+         */
+
+        updateCost();
+        updateStats();
     }
 
     @Override
@@ -169,5 +216,45 @@ public class ShopScreen implements Screen {
     public void dispose() {
         stage.dispose();
         backgroundTexture.dispose();
+        coinTexture.dispose();
     }
+
+    /**
+     * The cost label is updated.
+     */
+    public void updateCost() {
+        try {
+            costLabel.setText("Price: " + Global.getItem(buySelectBox.getSelected()).getPrice());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * The stats label is updated.
+     */
+    public void updateStats(){
+        int otherLines = 0;
+        StringBuilder text = new StringBuilder();
+        try {
+            Item toDescribe = Global.getItem(buySelectBox.getSelected());
+            text.append("Item type: ").append(toDescribe.getType()).append("\n");
+            if(toDescribe instanceof Weapon){
+                text.append("Weapon Type: ").append(((Weapon) toDescribe).getWeaponType()).append("\n");
+                text.append("Stats:\n");
+                otherLines += 2;
+                for(Map.Entry<String, Integer> entry : ((Weapon) toDescribe).getAttributesAffection().entrySet()){
+                    text.append(" ").append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+                    otherLines++;
+                }
+            }
+            text.append("Description:\n ").append(toDescribe.getDescription());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        stats.setText(text);
+        stats.setPosition((Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 4 - 20,
+                Gdx.graphics.getHeight() - 430 - (17 * otherLines));
+    }
+
 }
