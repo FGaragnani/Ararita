@@ -59,6 +59,7 @@ public class ShopScreen implements Screen {
 
     Dialog moneyDialog;
     Dialog noInventorySpaceDialog;
+    Dialog noItemDialog;
 
     Texture backgroundTexture;
     Sprite backgroundSprite;
@@ -244,7 +245,6 @@ public class ShopScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 updateSellLabels();
-                // TODO
             }
         });
 
@@ -296,7 +296,31 @@ public class ShopScreen implements Screen {
         sellButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                //TODO
+                if(sellSelectBox.getSelected().equals("No items...")){
+                    noItemDialog.show(stage);
+                    return;
+                }
+                int toSell = 0;
+                Item itemToSell;
+                try {
+                    itemToSell = Global.getItem(sellSelectBox.getSelected());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                try {
+                    toSell = Math.min(Integer.parseInt(numberSellTextField.getText()), inventory.getItems().get(itemToSell));
+                } catch (NumberFormatException ignored) {
+                }
+                if (toSell != 0) {
+                    try {
+                        inventory.sell(itemToSell, toSell);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    updateSellItems();
+                    updateSellLabels();
+                    updateBuy();
+                }
             }
         });
 
@@ -324,6 +348,15 @@ public class ShopScreen implements Screen {
         noInventorySpaceDialog.button("Ok!", true, game.textButtonStyle);
         noInventorySpaceDialog.setPosition(0, 0);
 
+        noItemDialog = new Dialog("", skin) {
+            public void result(Object confirm) {
+                hide();
+            }
+        };
+        noItemDialog.setResizable(false);
+        noItemDialog.text(" You don't have items\n in your inventory to sell!\n", game.labelStyle);
+        noItemDialog.button("Ok!", true, game.textButtonStyle);
+        noItemDialog.setPosition(0, 0);
 
         /*
             Adding all actors.
@@ -481,13 +514,13 @@ public class ShopScreen implements Screen {
      */
     public void updateSellLabels() {
         int howMany = 0;
-        try {
-            howMany = Math.min(Integer.parseInt(numberSellTextField.getText()), inventory.getItems().get(Global.getItem(sellSelectBox.getSelected())));
-        } catch (NumberFormatException ignored) {
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
         if (!sellSelectBox.getSelected().equals("No items...")) {
+            try {
+                howMany = Math.min(Integer.parseInt(numberSellTextField.getText()), inventory.getItems().get(Global.getItem(sellSelectBox.getSelected())));
+            } catch (NumberFormatException ignored) {
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             try {
                 sellLabel.setText("Gain: " + (int) (Global.getItem(sellSelectBox.getSelected()).getPrice() * howMany * inventory.RESELL_MULTIPLIER));
                 coinImageSell.setVisible(true);
@@ -510,6 +543,7 @@ public class ShopScreen implements Screen {
                 sellStats.setPosition((Gdx.graphics.getWidth() - sellSelectBox.getWidth()) * 3 / 4 - 20, Gdx.graphics.getHeight() - 430 - (17 * otherLines));
                 toSellLabel.setText("How many:\n\n\nYou have: " + (inventory.getItems().get(toDescribe)));
                 toSellLabel.setPosition((Gdx.graphics.getWidth() - sellSelectBox.getWidth()) * 3 / 4 + 400, Gdx.graphics.getHeight() - 370);
+                coinImageSell.setVisible(true);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

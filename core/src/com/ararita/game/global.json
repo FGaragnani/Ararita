@@ -8,7 +8,7 @@
         "Chaos"
     ],
     "otherCharacters": [],
-    "money": 0,
+    "money": 94,
     "spellNamesSet": [],
     "weaponTypesSet": [
         "Sword",
@@ -18,7 +18,7 @@
         "Bow",
         "Dagger"
     ],
-    "inventory": {"Ether": 2},
+    "inventory": {},
     "statusEffectsSet": [
         "Burn",
         "Poison",

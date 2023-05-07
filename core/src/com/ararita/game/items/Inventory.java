@@ -135,7 +135,7 @@ public class Inventory {
                 remove(item);
                 i++;
             }
-            setMoney(getMoney() - (int) (item.getPrice() * n * RESELL_MULTIPLIER));
+            setMoney(getMoney() + (int) (item.getPrice() * n * RESELL_MULTIPLIER));
             updateItems();
         }
     }
