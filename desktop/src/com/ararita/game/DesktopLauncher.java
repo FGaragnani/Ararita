@@ -14,7 +14,7 @@ public class DesktopLauncher {
         config.setTitle("Ararita");
         config.setWindowIcon("General/Ararita.jpg");
         config.setWindowedMode(1920, 1080);
-        config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
+        // config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
 
         new Lwjgl3Application(new Ararita(), config);
     }

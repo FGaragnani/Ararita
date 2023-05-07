@@ -37,6 +37,9 @@ public class ShopScreen implements Screen {
 
     Array<String> allItemsArray;
     SelectBox<String> buySelectBox;
+    TextButton buyButton;
+    TextField numberBuyTextField;
+    Label toBuyLabel;
 
     Label stats;
     Label costLabel;
@@ -45,6 +48,9 @@ public class ShopScreen implements Screen {
     Image coinImage;
     Label currentMoney;
     Image currentMoneyImage;
+
+    Dialog moneyDialog;
+    Dialog noInventorySpaceDialog;
 
     Texture backgroundTexture;
     Sprite backgroundSprite;
@@ -64,7 +70,7 @@ public class ShopScreen implements Screen {
         try {
             inventory = new Inventory();
             allItemsArray = new Array<>();
-            Global.getAllItems().stream().filter((item) -> item.getPrice() < 1000).sorted((o1, o2) -> {
+            Global.getAllItems().stream().filter((entry) -> entry.getPrice() < 1000).sorted((o1, o2) -> {
                 if (o1.getPrice() == o2.getPrice()) {
                     return 0;
                 } else if (o1.getPrice() > o2.getPrice()) {
@@ -80,7 +86,7 @@ public class ShopScreen implements Screen {
             Setting the background texture.
          */
 
-        backgroundTexture = new Texture(Gdx.files.local("assets/Backgrounds/city.png"));
+        backgroundTexture = new Texture(Gdx.files.local("assets/Backgrounds/paperbg.png"));
         backgroundSprite = new Sprite(backgroundTexture);
         backgroundSprite.setSize((int) (Gdx.graphics.getWidth() * 1.1), (int) (Gdx.graphics.getHeight() * 1.1));
 
@@ -121,6 +127,7 @@ public class ShopScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 updateCost();
                 updateStats();
+                updateBuy();
             }
         });
 
@@ -152,6 +159,95 @@ public class ShopScreen implements Screen {
         coinImage.setSize(coinTexture.getWidth(), coinTexture.getHeight());
         coinImage.setPosition(((Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 3) - 10, Gdx.graphics.getHeight() - 300);
 
+        /*
+            Setting the number to buy TextField, its label and its listener.
+         */
+
+        numberBuyTextField = new TextField("1", game.textFieldStyle);
+        numberBuyTextField.setWidth(100);
+        numberBuyTextField.setTextFieldFilter(new DigitFilter());
+        numberBuyTextField.setPosition((Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 4 - 155, Gdx.graphics.getHeight() - 450);
+        toBuyLabel = new Label("", costLabel.getStyle());
+        toBuyLabel.setPosition((Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 4 - 300,
+                Gdx.graphics.getHeight() - 470);
+        toBuyLabel.setColor(Color.BLACK);
+        numberBuyTextField.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                updateCost();
+            }
+        });
+
+        /*
+            Setting the Buy Button and its listener.
+         */
+
+        buyButton = new TextButton("Buy", skin.get("default", TextButton.TextButtonStyle.class));
+        buyButton.getLabel().setStyle(stats.getStyle());
+        buyButton.setPosition((Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 4 - 155, Gdx.graphics.getHeight() - 380);
+        buyButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                try {
+                    int howMany = 0;
+                    try {
+                        howMany = Integer.parseInt(numberBuyTextField.getText());
+                    } catch (NumberFormatException ignored) {
+                    }
+                    if (howMany == 0) {
+                        return;
+                    }
+                    Item toBuy = Global.getItem(buySelectBox.getSelected());
+                    if (inventory.canBuy(toBuy, howMany)) {
+                        inventory.buy(toBuy, howMany);
+                        updateBuy();
+                    } else if (howMany + inventory.inventorySize() > inventory.MAX_INVENTORY_SPACE) {
+                        noInventorySpaceDialog.show(stage);
+                    } else {
+                        moneyDialog.show(stage);
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+
+        /*
+            Adding the current money label and image.
+         */
+
+        currentMoney = new Label("Money: " + inventory.getMoney(), stats.getStyle());
+        currentMoney.setColor(Color.BLACK);
+        currentMoney.setPosition(1450, 950);
+        currentMoneyImage = new Image(new TextureRegionDrawable(coinTexture));
+        currentMoneyImage.setSize(coinTexture.getWidth(), coinTexture.getHeight());
+        currentMoneyImage.setPosition(1400 + (currentMoney.getText().length() * 10) + 160, 935);
+
+        /*
+            Creating all the dialogs.
+         */
+
+        moneyDialog = new Dialog("", skin) {
+            public void result(Object confirm) {
+                hide();
+            }
+        };
+        moneyDialog.setResizable(false);
+        moneyDialog.text(" You don't have enough money\n to buy the desired number of items\n", game.labelStyle);
+        moneyDialog.button("Ok!", true, game.textButtonStyle);
+        moneyDialog.setPosition(0, 0);
+
+        noInventorySpaceDialog = new Dialog("", skin) {
+            public void result(Object confirm) {
+                hide();
+            }
+        };
+        noInventorySpaceDialog.setResizable(false);
+        noInventorySpaceDialog.text(" You don't have enough space\n in your inventory!\n", game.labelStyle);
+        noInventorySpaceDialog.button("Ok!", true, game.textButtonStyle);
+        noInventorySpaceDialog.setPosition(0, 0);
+
 
         /*
             Adding all actors.
@@ -163,6 +259,11 @@ public class ShopScreen implements Screen {
         stage.addActor(coinImage);
         stage.addActor(costLabel);
         stage.addActor(stats);
+        stage.addActor(currentMoney);
+        stage.addActor(currentMoneyImage);
+        stage.addActor(buyButton);
+        stage.addActor(numberBuyTextField);
+        stage.addActor(toBuyLabel);
 
         /*
             Setting the default values.
@@ -170,6 +271,7 @@ public class ShopScreen implements Screen {
 
         updateCost();
         updateStats();
+        updateBuy();
     }
 
     @Override
@@ -223,8 +325,14 @@ public class ShopScreen implements Screen {
      * The cost label is updated.
      */
     public void updateCost() {
+        int howMany;
         try {
-            costLabel.setText("Price: " + Global.getItem(buySelectBox.getSelected()).getPrice());
+            howMany = Integer.parseInt(numberBuyTextField.getText());
+        } catch (NumberFormatException e) {
+            howMany = 0;
+        }
+        try {
+            costLabel.setText("Price: " + (Global.getItem(buySelectBox.getSelected()).getPrice() * howMany));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -233,17 +341,17 @@ public class ShopScreen implements Screen {
     /**
      * The stats label is updated.
      */
-    public void updateStats(){
+    public void updateStats() {
         int otherLines = 0;
         StringBuilder text = new StringBuilder();
         try {
             Item toDescribe = Global.getItem(buySelectBox.getSelected());
             text.append("Item type: ").append(toDescribe.getType()).append("\n");
-            if(toDescribe instanceof Weapon){
+            if (toDescribe instanceof Weapon) {
                 text.append("Weapon Type: ").append(((Weapon) toDescribe).getWeaponType()).append("\n");
                 text.append("Stats:\n");
                 otherLines += 2;
-                for(Map.Entry<String, Integer> entry : ((Weapon) toDescribe).getAttributesAffection().entrySet()){
+                for (Map.Entry<String, Integer> entry : ((Weapon) toDescribe).getAttributesAffection().entrySet()) {
                     text.append(" ").append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
                     otherLines++;
                 }
@@ -253,8 +361,17 @@ public class ShopScreen implements Screen {
             throw new RuntimeException(e);
         }
         stats.setText(text);
-        stats.setPosition((Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 4 - 20,
-                Gdx.graphics.getHeight() - 430 - (17 * otherLines));
+        stats.setPosition((Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 4 - 20, Gdx.graphics.getHeight() - 430 - (17 * otherLines));
     }
 
+    public void updateBuy() {
+        currentMoney.setText("Money: " + inventory.getMoney());
+        try {
+            Item toBuy = Global.getItem(buySelectBox.getSelected());
+            toBuyLabel.setText("How many:\n\n\nYou have: " + (inventory.getItems().containsKey(toBuy) ?
+                    inventory.getItems().get(toBuy) : "0"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -12,7 +12,7 @@ public class Inventory {
 
     Map<Item, Integer> items;
     int money;
-    final int MAX_INVENTORY_SPACE;
+    final public int MAX_INVENTORY_SPACE;
     final double RESELL_MULTIPLIER;
 
     /**
@@ -22,6 +22,7 @@ public class Inventory {
      */
 
     public Inventory() throws IOException {
+        items = new HashMap<>();
         Global.getInventory().forEach((key, value) -> {
             try {
                 items.put(Global.getItem(key), value);
@@ -54,6 +55,7 @@ public class Inventory {
         Map<String, Integer> toPut = new HashMap<>();
         items.forEach((key, value) -> toPut.put(key.getName(), value));
         jsonGlobal.put("inventory", toPut);
+        Global.writeJSON(Global.globalSets, jsonGlobal);
     }
 
     public int getMoney() {

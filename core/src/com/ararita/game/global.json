@@ -18,7 +18,7 @@
         "Bow",
         "Dagger"
     ],
-    "inventory": {},
+    "inventory": {"Ether": 5},
     "statusEffectsSet": [
         "Burn",
         "Poison",
