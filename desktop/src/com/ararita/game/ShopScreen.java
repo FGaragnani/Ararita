@@ -47,6 +47,10 @@ public class ShopScreen implements Screen {
     Label sellLabel;
     Image coinImageSell;
     Label sellStats;
+    TextField numberSellTextField;
+    TextButton sellButton;
+
+    Label toSellLabel;
 
     Texture coinTexture;
     Image coinImage;
@@ -205,6 +209,7 @@ public class ShopScreen implements Screen {
                         inventory.buy(toBuy, howMany);
                         updateBuy();
                         updateSellItems();
+                        updateSellLabels();
                     } else if (howMany + inventory.inventorySize() > inventory.MAX_INVENTORY_SPACE) {
                         noInventorySpaceDialog.show(stage);
                     } else {
@@ -257,17 +262,43 @@ public class ShopScreen implements Screen {
         coinImageSell.setPosition(((Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 3) + 750, Gdx.graphics.getHeight() - 300);
 
         /*
-            Setting the sell stats label.
-         */
-
-        /*
-            Setting the stats Label.
+            Setting the sell stats Label.
          */
 
         sellStats = new Label("", game.labelStyle);
         sellStats.setFontScale(3f, 4f);
         sellStats.setColor(Color.BLACK);
-        sellStats.setPosition((Gdx.graphics.getWidth() - sellSelectBox.getWidth()) / 4 - 20, Gdx.graphics.getHeight() - 430);
+
+        /*
+            Setting the "how many" and "you have" label for selling, and the sell text field.
+         */
+
+        toSellLabel = new Label("", game.labelStyle);
+        toSellLabel.setColor(Color.BLACK);
+        numberSellTextField = new TextField("1", game.textFieldStyle);
+        numberSellTextField.setWidth(100);
+        numberSellTextField.setTextFieldFilter(new DigitFilter());
+        numberSellTextField.setPosition(Gdx.graphics.getWidth() - 230, Gdx.graphics.getHeight() - 345);
+        numberSellTextField.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                updateSellLabels();
+            }
+        });
+
+        /*
+            Setting the Sell Button.
+         */
+
+        sellButton = new TextButton("Sell", skin.get("default", TextButton.TextButtonStyle.class));
+        sellButton.getLabel().setStyle(stats.getStyle());
+        sellButton.setPosition((Gdx.graphics.getWidth() - buySelectBox.getWidth()) * 3 / 4 - 155, Gdx.graphics.getHeight() - 380);
+        sellButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //TODO
+            }
+        });
 
         /*
             Creating all the dialogs.
@@ -313,6 +344,9 @@ public class ShopScreen implements Screen {
         stage.addActor(sellLabel);
         stage.addActor(coinImageSell);
         stage.addActor(sellStats);
+        stage.addActor(toSellLabel);
+        stage.addActor(numberSellTextField);
+        stage.addActor(sellButton);
 
         /*
             Setting the default values.
@@ -446,7 +480,13 @@ public class ShopScreen implements Screen {
      * Updating the sell Label, the coin image visibility and the sell stats label.
      */
     public void updateSellLabels() {
-        int howMany = 1;
+        int howMany = 0;
+        try {
+            howMany = Math.min(Integer.parseInt(numberSellTextField.getText()), inventory.getItems().get(Global.getItem(sellSelectBox.getSelected())));
+        } catch (NumberFormatException ignored) {
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         if (!sellSelectBox.getSelected().equals("No items...")) {
             try {
                 sellLabel.setText("Gain: " + (int) (Global.getItem(sellSelectBox.getSelected()).getPrice() * howMany * inventory.RESELL_MULTIPLIER));
@@ -467,8 +507,9 @@ public class ShopScreen implements Screen {
                 text.append("Description:\n ").append(toDescribe.getDescription());
                 otherLines += toDescribe.getDescription().codePoints().filter((ch) -> (ch == '\n')).count();
                 sellStats.setText(text);
-                sellStats.setPosition((Gdx.graphics.getWidth() - sellSelectBox.getWidth()) * 3 / 4 - 20,
-                        Gdx.graphics.getHeight() - 430 - (17 * otherLines));
+                sellStats.setPosition((Gdx.graphics.getWidth() - sellSelectBox.getWidth()) * 3 / 4 - 20, Gdx.graphics.getHeight() - 430 - (17 * otherLines));
+                toSellLabel.setText("How many:\n\n\nYou have: " + (inventory.getItems().get(toDescribe)));
+                toSellLabel.setPosition((Gdx.graphics.getWidth() - sellSelectBox.getWidth()) * 3 / 4 + 400, Gdx.graphics.getHeight() - 370);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -476,6 +517,8 @@ public class ShopScreen implements Screen {
             sellLabel.setText("");
             coinImageSell.setVisible(false);
             sellStats.setText("");
+            toSellLabel.setText("How many: ");
+            toSellLabel.setPosition((Gdx.graphics.getWidth() - sellSelectBox.getWidth()) * 3 / 4 + 400, Gdx.graphics.getHeight() - 320);
         }
     }
 }

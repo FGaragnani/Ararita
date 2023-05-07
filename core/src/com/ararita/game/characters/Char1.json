@@ -17,9 +17,9 @@
     "name": "Char1",
     "spellTypes": [],
     "charClass": "Knight",
-    "spells": [],
     "agility": 3,
     "EXP": 0,
-    "weapons": [],
-    "arcane": 1
+    "spells": [],
+    "arcane": 1,
+    "weapons": []
 }
