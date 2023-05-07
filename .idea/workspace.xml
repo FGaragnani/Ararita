@@ -8,7 +8,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/items/Inventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Apprentice Staff.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Apprentice Staff.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Bone Dagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Bone Dagger.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Golden Sword.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Golden Sword.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/ShopScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/ShopScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

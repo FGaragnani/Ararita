@@ -6,6 +6,6 @@
     "price": 600,
     "name": "Dueling Gloves",
     "weaponType": "Gloves",
-    "description": "Heavy gloves, difficult to use but easy to hit hard.",
+    "description": "Heavy gloves, difficult to use\n but easy to hit hard.",
     "type": "Weapon"
 }

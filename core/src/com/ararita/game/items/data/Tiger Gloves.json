@@ -6,6 +6,6 @@
     "price": 150,
     "name": "Tiger Gloves",
     "weaponType": "Gloves",
-    "description": "Four claws are on these gloves to resemble a tiger's paw.",
+    "description": "Four claws are on these gloves\n to resemble a tiger's paw.",
     "type": "Weapon"
 }

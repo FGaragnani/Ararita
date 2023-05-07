@@ -6,6 +6,6 @@
     "price": 150,
     "name": "Bone Dagger",
     "weaponType": "Dagger",
-    "description": "This dagger is carved out of some creatures' skulls.",
+    "description": "This dagger is carved out\n of some creatures' skulls.",
     "type": "Weapon"
 }

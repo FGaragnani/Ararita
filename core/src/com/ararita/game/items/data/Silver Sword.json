@@ -6,6 +6,6 @@
     "price": 270,
     "name": "Silver Sword",
     "weaponType": "Sword",
-    "description": "A sword that weighs onto the wielder; however, shines marvelously.",
+    "description": "A sword that weighs onto the wielder;\n however, shines marvelously.",
     "type": "Weapon"
 }

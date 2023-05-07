@@ -6,6 +6,6 @@
     "price": 600,
     "name": "Trident",
     "weaponType": "Spear",
-    "description": "A golden trident, causing piercing damage.",
+    "description": "A golden trident, that causes\n piercing damage.",
     "type": "Weapon"
 }

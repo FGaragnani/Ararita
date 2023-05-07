@@ -3,6 +3,6 @@
     "price": 20,
     "name": "Apprentice Staff",
     "weaponType": "Staff",
-    "description": "A simple staff imbued with a glimpse of magical power.",
+    "description": "A simple staff imbued with a glimpse\n of magical power.",
     "type": "Weapon"
 }

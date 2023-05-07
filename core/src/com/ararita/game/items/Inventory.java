@@ -13,7 +13,7 @@ public class Inventory {
     Map<Item, Integer> items;
     int money;
     final public int MAX_INVENTORY_SPACE;
-    final double RESELL_MULTIPLIER;
+    final public double RESELL_MULTIPLIER;
 
     /**
      * Inventory constructor. All data is fetched from the global manager.

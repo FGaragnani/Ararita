@@ -1,6 +1,5 @@
 package com.ararita.game;
 
-import com.ararita.game.items.ConsumableItem;
 import com.ararita.game.items.Inventory;
 import com.ararita.game.items.Item;
 import com.ararita.game.items.Weapon;
@@ -43,6 +42,11 @@ public class ShopScreen implements Screen {
 
     Label stats;
     Label costLabel;
+
+    SelectBox<String> sellSelectBox;
+    Label sellLabel;
+    Image coinImageSell;
+    Label sellStats;
 
     Texture coinTexture;
     Image coinImage;
@@ -168,8 +172,7 @@ public class ShopScreen implements Screen {
         numberBuyTextField.setTextFieldFilter(new DigitFilter());
         numberBuyTextField.setPosition((Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 4 - 155, Gdx.graphics.getHeight() - 450);
         toBuyLabel = new Label("", costLabel.getStyle());
-        toBuyLabel.setPosition((Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 4 - 300,
-                Gdx.graphics.getHeight() - 470);
+        toBuyLabel.setPosition((Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 4 - 300, Gdx.graphics.getHeight() - 470);
         toBuyLabel.setColor(Color.BLACK);
         numberBuyTextField.addListener(new ChangeListener() {
             @Override
@@ -201,6 +204,7 @@ public class ShopScreen implements Screen {
                     if (inventory.canBuy(toBuy, howMany)) {
                         inventory.buy(toBuy, howMany);
                         updateBuy();
+                        updateSellItems();
                     } else if (howMany + inventory.inventorySize() > inventory.MAX_INVENTORY_SPACE) {
                         noInventorySpaceDialog.show(stage);
                     } else {
@@ -223,6 +227,47 @@ public class ShopScreen implements Screen {
         currentMoneyImage = new Image(new TextureRegionDrawable(coinTexture));
         currentMoneyImage.setSize(coinTexture.getWidth(), coinTexture.getHeight());
         currentMoneyImage.setPosition(1400 + (currentMoney.getText().length() * 10) + 160, 935);
+
+        /*
+            Creating the Sell Select Box and its listener.
+         */
+
+        sellSelectBox = new SelectBox<>(game.selectBoxStyle);
+        sellSelectBox.setWidth(400);
+        sellSelectBox.setPosition((Gdx.graphics.getWidth() - buySelectBox.getWidth()) * 3 / 4 - 20, Gdx.graphics.getHeight() - 350);
+        sellSelectBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                updateSellLabels();
+                // TODO
+            }
+        });
+
+        /*
+            Creating the sell label and its coin image.
+         */
+
+        sellLabel = new Label("", stats.getStyle());
+        sellLabel.setFontScale(2.8f, 3.8f);
+        sellLabel.setColor(Color.BLACK);
+        sellLabel.setPosition((Gdx.graphics.getWidth() - (buySelectBox.getWidth())) / 2 + 360, Gdx.graphics.getHeight() - 270);
+        coinImageSell = new Image();
+        coinImageSell.setDrawable(new TextureRegionDrawable(coinTexture));
+        coinImageSell.setSize(coinTexture.getWidth(), coinTexture.getHeight());
+        coinImageSell.setPosition(((Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 3) + 750, Gdx.graphics.getHeight() - 300);
+
+        /*
+            Setting the sell stats label.
+         */
+
+        /*
+            Setting the stats Label.
+         */
+
+        sellStats = new Label("", game.labelStyle);
+        sellStats.setFontScale(3f, 4f);
+        sellStats.setColor(Color.BLACK);
+        sellStats.setPosition((Gdx.graphics.getWidth() - sellSelectBox.getWidth()) / 4 - 20, Gdx.graphics.getHeight() - 430);
 
         /*
             Creating all the dialogs.
@@ -264,6 +309,10 @@ public class ShopScreen implements Screen {
         stage.addActor(buyButton);
         stage.addActor(numberBuyTextField);
         stage.addActor(toBuyLabel);
+        stage.addActor(sellSelectBox);
+        stage.addActor(sellLabel);
+        stage.addActor(coinImageSell);
+        stage.addActor(sellStats);
 
         /*
             Setting the default values.
@@ -272,6 +321,8 @@ public class ShopScreen implements Screen {
         updateCost();
         updateStats();
         updateBuy();
+        updateSellItems();
+        updateSellLabels();
     }
 
     @Override
@@ -357,6 +408,7 @@ public class ShopScreen implements Screen {
                 }
             }
             text.append("Description:\n ").append(toDescribe.getDescription());
+            otherLines += toDescribe.getDescription().codePoints().filter((ch) -> (ch == '\n')).count();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -364,14 +416,66 @@ public class ShopScreen implements Screen {
         stats.setPosition((Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 4 - 20, Gdx.graphics.getHeight() - 430 - (17 * otherLines));
     }
 
+    /**
+     * Both the How Many label and the current money label are updated.
+     */
     public void updateBuy() {
         currentMoney.setText("Money: " + inventory.getMoney());
         try {
             Item toBuy = Global.getItem(buySelectBox.getSelected());
-            toBuyLabel.setText("How many:\n\n\nYou have: " + (inventory.getItems().containsKey(toBuy) ?
-                    inventory.getItems().get(toBuy) : "0"));
+            toBuyLabel.setText("How many:\n\n\nYou have: " + (inventory.getItems().containsKey(toBuy) ? inventory.getItems().get(toBuy) : "0"));
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * The sell Select Box items are updated.
+     */
+    public void updateSellItems() {
+        if (!inventory.getItems().isEmpty()) {
+            Array<String> itemsInInventory = new Array<>();
+            inventory.getItems().forEach((key, value) -> itemsInInventory.add(key.getName()));
+            sellSelectBox.setItems(itemsInInventory);
+        } else {
+            sellSelectBox.setItems("No items...");
+        }
+    }
+
+    /**
+     * Updating the sell Label, the coin image visibility and the sell stats label.
+     */
+    public void updateSellLabels() {
+        int howMany = 1;
+        if (!sellSelectBox.getSelected().equals("No items...")) {
+            try {
+                sellLabel.setText("Gain: " + (int) (Global.getItem(sellSelectBox.getSelected()).getPrice() * howMany * inventory.RESELL_MULTIPLIER));
+                coinImageSell.setVisible(true);
+                int otherLines = 0;
+                StringBuilder text = new StringBuilder();
+                Item toDescribe = Global.getItem(sellSelectBox.getSelected());
+                text.append("Item type: ").append(toDescribe.getType()).append("\n");
+                if (toDescribe instanceof Weapon) {
+                    text.append("Weapon Type: ").append(((Weapon) toDescribe).getWeaponType()).append("\n");
+                    text.append("Stats:\n");
+                    otherLines += 2;
+                    for (Map.Entry<String, Integer> entry : ((Weapon) toDescribe).getAttributesAffection().entrySet()) {
+                        text.append(" ").append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+                        otherLines++;
+                    }
+                }
+                text.append("Description:\n ").append(toDescribe.getDescription());
+                otherLines += toDescribe.getDescription().codePoints().filter((ch) -> (ch == '\n')).count();
+                sellStats.setText(text);
+                sellStats.setPosition((Gdx.graphics.getWidth() - sellSelectBox.getWidth()) * 3 / 4 - 20,
+                        Gdx.graphics.getHeight() - 430 - (17 * otherLines));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            sellLabel.setText("");
+            coinImageSell.setVisible(false);
+            sellStats.setText("");
         }
     }
 }
