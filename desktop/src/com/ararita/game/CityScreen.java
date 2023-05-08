@@ -60,7 +60,8 @@ public class CityScreen implements Screen {
          */
 
         audio = Gdx.audio.newMusic(Gdx.files.local("Music/CityTheme.mp3"));
-        audio.setVolume(game.volume);
+        audio.setVolume(game.volume / 1000f);
+        audio.setLooping(true);
         audio.play();
 
         /*
