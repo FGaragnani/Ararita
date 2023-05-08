@@ -1,7 +1,10 @@
 package com.ararita.game;
 
+import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.backends.lwjgl3.audio.Mp3;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -21,6 +24,8 @@ public class CityScreen implements Screen {
 
     OrthographicCamera camera;
     Skin skin;
+
+    Music audio;
 
     TextButton.TextButtonStyle textButtonStyle;
     TextButton charCreateButton;
@@ -49,6 +54,14 @@ public class CityScreen implements Screen {
 
         textButtonStyle = skin.get("default", TextButton.TextButtonStyle.class);
         textButtonStyle.font = game.normalFont;
+
+        /*
+            Audio initialization.
+         */
+
+        audio = Gdx.audio.newMusic(Gdx.files.local("Music/CityTheme.mp3"));
+        audio.setVolume(game.volume);
+        audio.play();
 
         /*
             Setting the background texture.
@@ -203,5 +216,6 @@ public class CityScreen implements Screen {
         stage.dispose();
         backgroundTexture.dispose();
         skin.dispose();
+        audio.dispose();
     }
 }
