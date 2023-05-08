@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.random.RandomGenerator;
 
@@ -33,7 +34,7 @@ public class Ararita extends Game {
     public SelectBox.SelectBoxStyle selectBoxStyle;
     public ImageButton.ImageButtonStyle imageButtonStyle;
 
-    public final java.util.List<String> spriteNames = List.of("Fighter", "Magician", "Healer", "Ninja", "Archer", "Monk");
+    public java.util.List<String> spriteNames;
     public final int spriteFrameCols = 3;
     public final int baseEXP = 100;
 
@@ -87,6 +88,9 @@ public class Ararita extends Game {
         selectBoxStyle.listStyle.font = this.normalFont;
         selectBoxStyle.listStyle.selection.setTopHeight(10);
 
+        spriteNames = new ArrayList<>();
+        spriteNames.addAll(List.of("Fighter", "Magician", "Healer", "Ninja", "Archer", "Monk"));
+
         this.setScreen(new MainMenuScreen(this));
     }
 
@@ -97,7 +101,7 @@ public class Ararita extends Game {
     /**
      * Saves the local values into the JSON settings file.
      */
-    public void settingsUpdate(){
+    public void settingsUpdate() {
         try {
             JSONObject jsonSettings = Global.getJSON(Path.of(settingsPath));
             jsonSettings.put("Volume", volume);
@@ -121,9 +125,10 @@ public class Ararita extends Game {
      *
      * @param min The lower bound.
      * @param max The upper bound.
+     *
      * @return The random float.
      */
-    public float getRandom(float min, float max){
+    public float getRandom(float min, float max) {
         RandomGenerator rng = RandomGenerator.getDefault();
         return rng.nextFloat(min, max);
     }

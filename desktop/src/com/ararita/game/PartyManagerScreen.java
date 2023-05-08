@@ -5,11 +5,14 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 
@@ -33,6 +36,17 @@ public class PartyManagerScreen implements Screen {
     TextButton partyToReserveButton;
     TextButton reserveToPartyButton;
 
+    Image spriteImageParty;
+    Image spriteImageReserve;
+    Animation<TextureRegion> partyAnimation;
+    Animation<TextureRegion> reserveAnimation;
+    Texture charSheet;
+    TextureRegion[][] tmpParty;
+    TextureRegion[][] tmpReserve;
+    TextureRegion currentFrame;
+    float statePartyTime;
+    float stateReserveTime;
+
     TextButton exitButton;
 
     Dialog oneCharacterInParty;
@@ -54,6 +68,21 @@ public class PartyManagerScreen implements Screen {
         this.skin = new Skin(Gdx.files.internal(game.stylesPath));
         this.camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
+
+        /*
+            Initializing the animation textures.
+         */
+
+        charSheet = new Texture(Gdx.files.internal("General/msprites.png"));
+        tmpParty = TextureRegion.split(charSheet, charSheet.getWidth() / (game.spriteFrameCols * 6), charSheet.getHeight());
+        tmpReserve = TextureRegion.split(charSheet, charSheet.getWidth() / (game.spriteFrameCols * 6), charSheet.getHeight());
+        spriteImageParty = new Image();
+        spriteImageParty.setPosition(20, Gdx.graphics.getHeight() - 550);
+        spriteImageParty.setScale(7);
+        spriteImageReserve = new Image();
+        spriteImageReserve.setPosition(Gdx.graphics.getWidth() - 120, Gdx.graphics.getHeight() - 550);
+        spriteImageReserve.setScale(7);
+
 
         /*
             Setting the background texture.
@@ -208,6 +237,8 @@ public class PartyManagerScreen implements Screen {
         stage.addActor(otherCharactersLabel);
         stage.addActor(partyToReserveButton);
         stage.addActor(reserveToPartyButton);
+        stage.addActor(spriteImageParty);
+        stage.addActor(spriteImageReserve);
 
         /*
             Setting the initial values.
@@ -224,9 +255,18 @@ public class PartyManagerScreen implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
+        statePartyTime += Gdx.graphics.getDeltaTime();
+        stateReserveTime += Gdx.graphics.getDeltaTime();
 
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
+
+        currentFrame = partyAnimation.getKeyFrame(statePartyTime, true);
+        spriteImageParty.setDrawable(new TextureRegionDrawable(currentFrame));
+        spriteImageParty.setSize(currentFrame.getRegionWidth(), currentFrame.getRegionHeight());
+        currentFrame = reserveAnimation.getKeyFrame(stateReserveTime, true);
+        spriteImageReserve.setDrawable(new TextureRegionDrawable(currentFrame));
+        spriteImageReserve.setSize(currentFrame.getRegionWidth(), currentFrame.getRegionHeight());
 
         game.batch.begin();
         backgroundSprite.draw(game.batch);
@@ -261,6 +301,7 @@ public class PartyManagerScreen implements Screen {
         stage.dispose();
         skin.dispose();
         backgroundTexture.dispose();
+        charSheet.dispose();
     }
 
     public void updateCharacters() {
@@ -273,10 +314,41 @@ public class PartyManagerScreen implements Screen {
             throw new RuntimeException(e);
         }
         partyCharactersSelectBox.setItems(party);
+        try {
+            changeSprite(Global.getParty().get(0).getImage(), true);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         if (!otherCharacters.isEmpty()) {
             otherCharactersSelectBox.setItems(otherCharacters);
+            try {
+                changeSprite(Global.getOtherCharacters().get(0).getImage(), false);
+                spriteImageReserve.setVisible(true);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         } else {
             otherCharactersSelectBox.setItems("No characters...");
+            spriteImageReserve.setVisible(false);
+        }
+    }
+
+    public void changeSprite(String spriteName, boolean inParty) {
+        int listPosition = game.spriteNames.indexOf(spriteName) * 3;
+        TextureRegion[] walkFrames = new TextureRegion[game.spriteFrameCols];
+        int index = 0;
+        if (inParty) {
+            for (int i = listPosition; i < game.spriteFrameCols + listPosition; i++) {
+                walkFrames[index++] = tmpParty[0][i];
+            }
+            partyAnimation = new Animation<>(0.200f, walkFrames);
+            statePartyTime = 0f;
+        } else {
+            for (int i = listPosition; i < game.spriteFrameCols + listPosition; i++) {
+                walkFrames[index++] = tmpReserve[0][i];
+            }
+            reserveAnimation = new Animation<>(0.200f, walkFrames);
+            stateReserveTime = 0f;
         }
     }
 }

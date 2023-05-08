@@ -279,7 +279,9 @@ public class Global {
             JSONObject jsonGlobal = getJSON(charFile);
             List<String> weapons = getListJSON(charFile, "weapons");
             List<String> spells = getListJSON(charFile, "spells");
-            return new PC(jsonGlobal.getInt("strength"), jsonGlobal.getInt("intelligence"), jsonGlobal.getInt("vigor"), jsonGlobal.getInt("agility"), jsonGlobal.getInt("spirit"), jsonGlobal.getInt("arcane"), jsonGlobal.getString("charClass"), charName, jsonGlobal.getInt("currHP"), jsonGlobal.getInt("currMP"), jsonGlobal.getInt("level"), jsonGlobal.getInt("EXP"), weapons.stream().map((name) -> {
+            PC toRet = new PC(jsonGlobal.getInt("strength"), jsonGlobal.getInt("intelligence"), jsonGlobal.getInt(
+                    "vigor"),
+                jsonGlobal.getInt("agility"), jsonGlobal.getInt("spirit"), jsonGlobal.getInt("arcane"), jsonGlobal.getString("charClass"), charName, jsonGlobal.getInt("currHP"), jsonGlobal.getInt("currMP"), jsonGlobal.getInt("level"), jsonGlobal.getInt("EXP"), weapons.stream().map((name) -> {
                 try {
                     return Global.getWeapon(name);
                 } catch (IOException e) {
@@ -292,6 +294,8 @@ public class Global {
                     throw new RuntimeException(e);
                 }
             }).collect(Collectors.toList()));
+            toRet.setImage(jsonGlobal.getString("image"));
+            return toRet;
         } else {
             throw new IOException("The character is non-existent in the global manager.");
         }

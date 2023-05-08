@@ -79,7 +79,7 @@ public class CharacterCreationScreen implements Screen {
         backgroundSprite.setSize((int) (Gdx.graphics.getWidth() * 1.1), (int) (Gdx.graphics.getHeight() * 1.1));
 
         /*
-            Creating the ImageButton and the texture.
+            Creating the Image and the texture.
          */
 
         charSheet = new Texture(Gdx.files.internal("General/msprites.png"));
