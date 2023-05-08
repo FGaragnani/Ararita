@@ -437,6 +437,7 @@ public class ShopScreen implements Screen {
         stage.dispose();
         backgroundTexture.dispose();
         coinTexture.dispose();
+        skin.dispose();
     }
 
     /**
