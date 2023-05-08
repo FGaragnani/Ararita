@@ -8,10 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -31,11 +28,16 @@ public class PartyManagerScreen implements Screen {
 
     SelectBox<String> partyCharactersSelectBox;
     Label partyLabel;
-
     SelectBox<String> otherCharactersSelectBox;
     Label otherCharactersLabel;
+    TextButton partyToReserveButton;
+    TextButton reserveToPartyButton;
 
     TextButton exitButton;
+
+    Dialog oneCharacterInParty;
+    Dialog noCharactersInReserve;
+    Dialog maxPartyCharacters;
 
     Texture backgroundTexture;
     Sprite backgroundSprite;
@@ -91,11 +93,11 @@ public class PartyManagerScreen implements Screen {
 
         partyCharactersSelectBox = new SelectBox<>(game.selectBoxStyle);
         partyCharactersSelectBox.setWidth(500);
-        partyCharactersSelectBox.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6, Gdx.graphics.getHeight() - 300);
+        partyCharactersSelectBox.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 - 40, Gdx.graphics.getHeight() - 380);
         partyLabel = new Label("Party:", skin.get("default", Label.LabelStyle.class));
         partyLabel.setFontScale(2.8f, 3.8f);
         partyLabel.setColor(Color.BLACK);
-        partyLabel.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 - 100, Gdx.graphics.getHeight() - 320);
+        partyLabel.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 - 140, Gdx.graphics.getHeight() - 400);
 
         /*
             Adding the other characters Select Box and its label.
@@ -103,12 +105,96 @@ public class PartyManagerScreen implements Screen {
 
         otherCharactersSelectBox = new SelectBox<>(game.selectBoxStyle);
         otherCharactersSelectBox.setWidth(500);
-        otherCharactersSelectBox.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) * 5 / 6, Gdx.graphics.getHeight() - 300);
+        otherCharactersSelectBox.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) * 5 / 6 + 80, Gdx.graphics.getHeight() - 380);
         otherCharactersLabel = new Label("Reserve:", skin.get("default", Label.LabelStyle.class));
         otherCharactersLabel.setFontScale(2.8f, 3.8f);
         otherCharactersLabel.setColor(Color.BLACK);
-        otherCharactersLabel.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) * 5 / 6 - 140, Gdx.graphics.getHeight() - 320);
+        otherCharactersLabel.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) * 5 / 6 - 50, Gdx.graphics.getHeight() - 400);
 
+        /*
+            Creating the two transfer buttons.
+         */
+
+        partyToReserveButton = new TextButton("Party -> Reserve", skin.get("default", TextButton.TextButtonStyle.class));
+        partyToReserveButton.getLabel().setStyle(partyLabel.getStyle());
+        partyToReserveButton.getLabel().setFontScale(2.2f, 3.2f);
+        partyToReserveButton.setWidth(250);
+        partyToReserveButton.setPosition((Gdx.graphics.getWidth() - partyToReserveButton.getWidth()) / 2.0f, Gdx.graphics.getHeight() - 325);
+        reserveToPartyButton = new TextButton("Party <- Reserve", skin.get("default", TextButton.TextButtonStyle.class));
+        reserveToPartyButton.getLabel().setStyle(partyLabel.getStyle());
+        reserveToPartyButton.getLabel().setFontScale(2.2f, 3.2f);
+        reserveToPartyButton.setWidth(250);
+        reserveToPartyButton.setPosition((Gdx.graphics.getWidth() - partyToReserveButton.getWidth()) / 2.0f, Gdx.graphics.getHeight() - 375 - partyToReserveButton.getHeight());
+
+        partyToReserveButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (partyCharactersSelectBox.getItems().size <= 1) {
+                    oneCharacterInParty.show(stage);
+                } else {
+                    int index = partyCharactersSelectBox.getSelectedIndex();
+                    try {
+                        Global.addToOtherCharacters(Global.getParty().get(index).getName());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    updateCharacters();
+                }
+            }
+        });
+
+        reserveToPartyButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (otherCharactersSelectBox.getSelected().equals("No characters...")) {
+                    noCharactersInReserve.show(stage);
+                } else if (partyCharactersSelectBox.getItems().size >= Global.MAX_PARTY_MEMBERS) {
+                    maxPartyCharacters.show(stage);
+                } else {
+                    int index = otherCharactersSelectBox.getSelectedIndex();
+                    try {
+                        Global.addToParty(Global.getOtherCharacters().get(index).getName());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    updateCharacters();
+                }
+            }
+        });
+
+        /*
+            Setting all dialogs.
+         */
+
+        oneCharacterInParty = new Dialog("", skin) {
+            public void result(Object confirm) {
+                hide();
+            }
+        };
+        oneCharacterInParty.setResizable(false);
+        oneCharacterInParty.text(" You cannot leave \n your party empty! \n", game.labelStyle);
+        oneCharacterInParty.button("Ok!", true, game.textButtonStyle);
+        oneCharacterInParty.setPosition(0, 0);
+
+        noCharactersInReserve = new Dialog("", skin) {
+            public void result(Object confirm) {
+                hide();
+            }
+        };
+        noCharactersInReserve.setResizable(false);
+        noCharactersInReserve.text(" You don't have any \n character in reserve! \n", game.labelStyle);
+        noCharactersInReserve.button("Ok!", true, game.textButtonStyle);
+        noCharactersInReserve.setPosition(0, 0);
+
+        maxPartyCharacters = new Dialog("", skin) {
+            public void result(Object confirm) {
+                hide();
+            }
+        };
+        maxPartyCharacters.setResizable(false);
+        maxPartyCharacters.text(" You have reached the max \n number of characters in party! \n", game.labelStyle);
+        maxPartyCharacters.button("Ok!", true, game.textButtonStyle);
+        maxPartyCharacters.setPosition(0, 0);
 
         /*
             Adding all stage actors.
@@ -120,6 +206,8 @@ public class PartyManagerScreen implements Screen {
         stage.addActor(partyLabel);
         stage.addActor(otherCharactersSelectBox);
         stage.addActor(otherCharactersLabel);
+        stage.addActor(partyToReserveButton);
+        stage.addActor(reserveToPartyButton);
 
         /*
             Setting the initial values.
