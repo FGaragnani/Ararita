@@ -7,8 +7,8 @@
         "Water",
         "Chaos"
     ],
-    "otherCharacters": ["Char1"],
-    "money": 94,
+    "otherCharacters": [],
+    "money": 74,
     "spellNamesSet": [],
     "weaponTypesSet": [
         "Sword",
@@ -18,14 +18,17 @@
         "Bow",
         "Dagger"
     ],
-    "inventory": {},
+    "inventory": {"Apprentice Staff": 1},
     "statusEffectsSet": [
         "Burn",
         "Poison",
         "Paralysis",
         "Blindness"
     ],
-    "party": ["Char2"],
+    "party": [
+        "Char1",
+        "Char2"
+    ],
     "classNamesSet": [
         "Knight",
         "Black Mage",

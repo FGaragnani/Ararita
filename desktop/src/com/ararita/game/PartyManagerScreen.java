@@ -1,5 +1,7 @@
 package com.ararita.game;
 
+import com.ararita.game.items.Inventory;
+import com.ararita.game.items.Weapon;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -15,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -26,6 +29,8 @@ public class PartyManagerScreen implements Screen {
     OrthographicCamera camera;
     Skin skin;
 
+    Inventory inventory;
+
     Label title;
     Label.LabelStyle titleStyle;
 
@@ -35,6 +40,12 @@ public class PartyManagerScreen implements Screen {
     Label otherCharactersLabel;
     TextButton partyToReserveButton;
     TextButton reserveToPartyButton;
+
+    Label partyStats;
+    Label reserveStats;
+
+    SelectBox<String> weaponsInInventorySelectBox;
+    TextButton equipButton;
 
     Image spriteImageParty;
     Image spriteImageReserve;
@@ -69,6 +80,12 @@ public class PartyManagerScreen implements Screen {
         this.camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
 
+        try {
+            inventory = new Inventory();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         /*
             Initializing the animation textures.
          */
@@ -77,10 +94,9 @@ public class PartyManagerScreen implements Screen {
         tmpParty = TextureRegion.split(charSheet, charSheet.getWidth() / (game.spriteFrameCols * 6), charSheet.getHeight());
         tmpReserve = TextureRegion.split(charSheet, charSheet.getWidth() / (game.spriteFrameCols * 6), charSheet.getHeight());
         spriteImageParty = new Image();
-        spriteImageParty.setPosition(20, Gdx.graphics.getHeight() - 550);
         spriteImageParty.setScale(7);
         spriteImageReserve = new Image();
-        spriteImageReserve.setPosition(Gdx.graphics.getWidth() - 120, Gdx.graphics.getHeight() - 550);
+        spriteImageReserve.setPosition(Gdx.graphics.getWidth() - 120, Gdx.graphics.getHeight() - 200);
         spriteImageReserve.setScale(7);
 
 
@@ -107,7 +123,7 @@ public class PartyManagerScreen implements Screen {
          */
 
         exitButton = new TextButton("Exit", game.textButtonStyle);
-        exitButton.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, Gdx.graphics.getHeight() - 1000);
+        exitButton.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, Gdx.graphics.getHeight() - 1100);
         exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -123,10 +139,18 @@ public class PartyManagerScreen implements Screen {
         partyCharactersSelectBox = new SelectBox<>(game.selectBoxStyle);
         partyCharactersSelectBox.setWidth(500);
         partyCharactersSelectBox.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 - 40, Gdx.graphics.getHeight() - 380);
+        partyCharactersSelectBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                updateCharacters();
+                updatePartyStats();
+            }
+        });
         partyLabel = new Label("Party:", skin.get("default", Label.LabelStyle.class));
         partyLabel.setFontScale(2.8f, 3.8f);
         partyLabel.setColor(Color.BLACK);
         partyLabel.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 - 140, Gdx.graphics.getHeight() - 400);
+        spriteImageParty.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6, Gdx.graphics.getHeight() - 310);
 
         /*
             Adding the other characters Select Box and its label.
@@ -139,6 +163,7 @@ public class PartyManagerScreen implements Screen {
         otherCharactersLabel.setFontScale(2.8f, 3.8f);
         otherCharactersLabel.setColor(Color.BLACK);
         otherCharactersLabel.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) * 5 / 6 - 50, Gdx.graphics.getHeight() - 400);
+        spriteImageReserve.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) * 5 / 6 + 110, Gdx.graphics.getHeight() - 310);
 
         /*
             Creating the two transfer buttons.
@@ -168,6 +193,7 @@ public class PartyManagerScreen implements Screen {
                         throw new RuntimeException(e);
                     }
                     updateCharacters();
+                    updatePartyStats();
                 }
             }
         });
@@ -187,9 +213,29 @@ public class PartyManagerScreen implements Screen {
                         throw new RuntimeException(e);
                     }
                     updateCharacters();
+                    updatePartyStats();
                 }
             }
         });
+
+        /*
+            Setting the two stats labels.
+         */
+
+        partyStats = new Label("", game.labelStyle);
+        partyStats.setFontScale(2.5f, 3.4f);
+        partyStats.setColor(Color.BLACK);
+        reserveStats = new Label("", game.labelStyle);
+        reserveStats.setFontScale(2.5f, 3.4f);
+        reserveStats.setColor(Color.BLACK);
+
+        /*
+            Setting the inventory select box.
+         */
+
+        weaponsInInventorySelectBox = new SelectBox<>(game.selectBoxStyle);
+        weaponsInInventorySelectBox.setWidth(400);
+        weaponsInInventorySelectBox.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6, Gdx.graphics.getHeight() - 700);
 
         /*
             Setting all dialogs.
@@ -239,12 +285,17 @@ public class PartyManagerScreen implements Screen {
         stage.addActor(reserveToPartyButton);
         stage.addActor(spriteImageParty);
         stage.addActor(spriteImageReserve);
+        stage.addActor(partyStats);
+        stage.addActor(reserveStats);
+        stage.addActor(weaponsInInventorySelectBox);
 
         /*
             Setting the initial values.
          */
 
         updateCharacters();
+        updatePartyStats();
+        updateWeapons();
     }
 
     @Override
@@ -264,9 +315,11 @@ public class PartyManagerScreen implements Screen {
         currentFrame = partyAnimation.getKeyFrame(statePartyTime, true);
         spriteImageParty.setDrawable(new TextureRegionDrawable(currentFrame));
         spriteImageParty.setSize(currentFrame.getRegionWidth(), currentFrame.getRegionHeight());
-        currentFrame = reserveAnimation.getKeyFrame(stateReserveTime, true);
-        spriteImageReserve.setDrawable(new TextureRegionDrawable(currentFrame));
-        spriteImageReserve.setSize(currentFrame.getRegionWidth(), currentFrame.getRegionHeight());
+        if (spriteImageReserve.isVisible()) {
+            currentFrame = reserveAnimation.getKeyFrame(stateReserveTime, true);
+            spriteImageReserve.setDrawable(new TextureRegionDrawable(currentFrame));
+            spriteImageReserve.setSize(currentFrame.getRegionWidth(), currentFrame.getRegionHeight());
+        }
 
         game.batch.begin();
         backgroundSprite.draw(game.batch);
@@ -315,14 +368,14 @@ public class PartyManagerScreen implements Screen {
         }
         partyCharactersSelectBox.setItems(party);
         try {
-            changeSprite(Global.getParty().get(0).getImage(), true);
+            changeSprite(Global.getParty().get(partyCharactersSelectBox.getSelectedIndex()).getImage(), true);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         if (!otherCharacters.isEmpty()) {
             otherCharactersSelectBox.setItems(otherCharacters);
             try {
-                changeSprite(Global.getOtherCharacters().get(0).getImage(), false);
+                changeSprite(Global.getOtherCharacters().get(otherCharactersSelectBox.getSelectedIndex()).getImage(), false);
                 spriteImageReserve.setVisible(true);
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -349,6 +402,86 @@ public class PartyManagerScreen implements Screen {
             }
             reserveAnimation = new Animation<>(0.200f, walkFrames);
             stateReserveTime = 0f;
+        }
+    }
+
+    public void updatePartyStats() {
+        int otherLines = 0;
+        StringBuilder partyText = new StringBuilder();
+        try {
+            int partyIndex = partyCharactersSelectBox.getSelectedIndex();
+            JSONObject jsonChar = Global.getJSON(Global.getJSONFilePath(Global.characterSets, Global.getParty().get(partyIndex).getName()));
+            partyText.append("LVL: ").append(jsonChar.getInt("level")).append("\n");
+            partyText.append("STR: ").append(jsonChar.getInt("strength")).append("\n");
+            partyText.append("INT: ").append(jsonChar.getInt("intelligence")).append("\n");
+            partyText.append("AGI: ").append(jsonChar.getInt("agility")).append("\n");
+            partyText.append("VIG: ").append(jsonChar.getInt("vigor")).append("\n");
+            partyText.append("SPI: ").append(jsonChar.getInt("spirit")).append("\n");
+            partyText.append("ARC: ").append(jsonChar.getInt("arcane")).append("\n");
+            partyText.append("Proficiencies: \n");
+            jsonChar.getJSONObject("proficiencies").toMap().forEach((s, o) -> {
+                partyText.append(" ").append(s).append(":");
+                if ((int) o >= 0) {
+                    partyText.append(" +".repeat((int) o));
+                } else {
+                    partyText.append(" -".repeat((int) o));
+                }
+                partyText.append("\n");
+            });
+            otherLines += jsonChar.getJSONObject("proficiencies").toMap().size();
+            partyText.append("Learnable spell types:\n");
+            jsonChar.getJSONArray("spellTypes").toList().forEach((str) -> partyText.append(" - ").append(str.toString()).append("\n"));
+            otherLines += jsonChar.getJSONArray("spellTypes").toList().size();
+            partyStats.setText(partyText.toString());
+            partyStats.setPosition(705, Gdx.graphics.getHeight() - 580 - (18 * (otherLines - 1)));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        otherLines = 0;
+        StringBuilder reserveText = new StringBuilder();
+        if (otherCharactersSelectBox.getSelected().equals("No characters...")) {
+            reserveStats.setText("");
+            return;
+        }
+        try {
+            int reserveIndex = otherCharactersSelectBox.getSelectedIndex();
+            JSONObject jsonChar = Global.getJSON(Global.getJSONFilePath(Global.characterSets, Global.getOtherCharacters().get(reserveIndex).getName()));
+            reserveText.append("LVL: ").append(jsonChar.getInt("level")).append("\n");
+            reserveText.append("STR: ").append(jsonChar.getInt("strength")).append("\n");
+            reserveText.append("INT: ").append(jsonChar.getInt("intelligence")).append("\n");
+            reserveText.append("AGI: ").append(jsonChar.getInt("agility")).append("\n");
+            reserveText.append("VIG: ").append(jsonChar.getInt("vigor")).append("\n");
+            reserveText.append("SPI: ").append(jsonChar.getInt("spirit")).append("\n");
+            reserveText.append("ARC: ").append(jsonChar.getInt("arcane")).append("\n");
+            reserveText.append("Proficiencies: \n");
+            jsonChar.getJSONObject("proficiencies").toMap().forEach((s, o) -> {
+                reserveText.append(" ").append(s).append(":");
+                if ((int) o >= 0) {
+                    reserveText.append(" +".repeat((int) o));
+                } else {
+                    reserveText.append(" -".repeat((int) o));
+                }
+                reserveText.append("\n");
+            });
+            otherLines += jsonChar.getJSONObject("proficiencies").toMap().size();
+            reserveText.append("Learnable spell types:\n");
+            jsonChar.getJSONArray("spellTypes").toList().forEach((str) -> reserveText.append(" - ").append(str.toString()).append("\n"));
+            otherLines += jsonChar.getJSONArray("spellTypes").toList().size();
+            reserveStats.setText(reserveText.toString());
+            reserveStats.setPosition(1600, Gdx.graphics.getHeight() - 580 - (18 * (otherLines - 1)));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateWeapons(){
+        Array<String> inventoryWeapons = new Array<>();
+        inventory.getItems().entrySet().stream().filter((entry) -> (entry.getKey() instanceof Weapon)).forEach((entry) -> inventoryWeapons.add(entry.getValue() + " " + entry.getKey().getName()));
+        if(inventoryWeapons.isEmpty()){
+            weaponsInInventorySelectBox.setItems("No weapons...");
+        } else {
+            weaponsInInventorySelectBox.setItems(inventoryWeapons);
         }
     }
 }
