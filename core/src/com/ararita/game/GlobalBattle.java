@@ -11,7 +11,7 @@ import java.util.*;
 
 public class GlobalBattle {
 
-    public List<Battler> battlers;
+    public final List<Battler> battlers;
 
     /**
      * A GlobalBattle constructor.

@@ -5,7 +5,6 @@ import com.ararita.game.items.Weapon;
 import com.ararita.game.spells.Spell;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.IntStream;
 

@@ -4,13 +4,11 @@ import com.ararita.game.Global;
 
 import javax.naming.InvalidNameException;
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class Weapon extends Item {
 
-    Map<String, Integer> attributesAffection;
+    final Map<String, Integer> attributesAffection;
     String weaponType;
 
     /**

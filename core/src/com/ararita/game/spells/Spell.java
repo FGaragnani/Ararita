@@ -8,12 +8,12 @@ import java.util.Objects;
 
 public class Spell {
 
-    String name;
-    int MPCost;
-    String type;
-    int basePower;
+    final String name;
+    final int MPCost;
+    final String type;
+    final int basePower;
 
-    Map<String, Double> statusEffects;
+    final Map<String, Double> statusEffects;
 
     /**
      * Spell's constructor; note that when the constructor will be called, the uniqueness of the name must already be

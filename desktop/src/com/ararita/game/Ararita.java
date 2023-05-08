@@ -37,8 +37,8 @@ public class Ararita extends Game {
     public final int spriteFrameCols = 3;
     public final int baseEXP = 100;
 
-    public String settingsPath = "assets/Settings/settings.json";
-    public String stylesPath = "Pixthulhu/pixthulhu-ui.json";
+    public final String settingsPath = "assets/Settings/settings.json";
+    public final String stylesPath = "Pixthulhu/pixthulhu-ui.json";
 
     Skin skin;
 

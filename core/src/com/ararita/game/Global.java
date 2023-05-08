@@ -8,7 +8,6 @@ import com.ararita.game.items.Item;
 import com.ararita.game.items.Weapon;
 import com.ararita.game.spells.Spell;
 import org.json.JSONObject;
-import org.junit.runner.manipulation.Sorter;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -649,10 +648,9 @@ public class Global {
      *
      * @return The list of all the items.
      *
-     * @throws IOException If the file cannot be read.
      */
-    public static List<Item> getAllItems() throws IOException {
-        return Arrays.stream(itemSets.toFile().listFiles()).map((file -> file.getName().substring(0,
+    public static List<Item> getAllItems() {
+        return Arrays.stream(Objects.requireNonNull(itemSets.toFile().listFiles())).map((file -> file.getName().substring(0,
                 file.getName().length() - 5))).map((name) -> {
             try {
                 return (getItem(name));

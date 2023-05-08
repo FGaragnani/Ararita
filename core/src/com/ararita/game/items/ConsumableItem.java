@@ -5,11 +5,10 @@ import com.ararita.game.battlers.PC;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class ConsumableItem extends Item implements Consumable {
 
-    Map<String, Integer> effect;
+    final Map<String, Integer> effect;
 
     /**
      * ConsumableItem's constructor. Creates a new consumable item giving what the item will do.

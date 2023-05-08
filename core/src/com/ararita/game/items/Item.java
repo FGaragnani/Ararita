@@ -1,7 +1,6 @@
 package com.ararita.game.items;
 
 import java.util.Objects;
-import java.util.function.Function;
 
 public abstract class Item {
 
