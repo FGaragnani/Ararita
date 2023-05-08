@@ -32,6 +32,9 @@ public class PartyManagerScreen implements Screen {
     SelectBox<String> partyCharactersSelectBox;
     Label partyLabel;
 
+    SelectBox<String> otherCharactersSelectBox;
+    Label otherCharactersLabel;
+
     TextButton exitButton;
 
     Texture backgroundTexture;
@@ -86,13 +89,26 @@ public class PartyManagerScreen implements Screen {
             Setting the party SelectBox and Label.
          */
 
-        partyCharactersSelectBox = new SelectBox<String>(game.selectBoxStyle);
-        partyCharactersSelectBox.setWidth(400);
+        partyCharactersSelectBox = new SelectBox<>(game.selectBoxStyle);
+        partyCharactersSelectBox.setWidth(500);
         partyCharactersSelectBox.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6, Gdx.graphics.getHeight() - 300);
         partyLabel = new Label("Party:", skin.get("default", Label.LabelStyle.class));
         partyLabel.setFontScale(2.8f, 3.8f);
         partyLabel.setColor(Color.BLACK);
         partyLabel.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 - 100, Gdx.graphics.getHeight() - 320);
+
+        /*
+            Adding the other characters Select Box and its label.
+         */
+
+        otherCharactersSelectBox = new SelectBox<>(game.selectBoxStyle);
+        otherCharactersSelectBox.setWidth(500);
+        otherCharactersSelectBox.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) * 5 / 6, Gdx.graphics.getHeight() - 300);
+        otherCharactersLabel = new Label("Reserve:", skin.get("default", Label.LabelStyle.class));
+        otherCharactersLabel.setFontScale(2.8f, 3.8f);
+        otherCharactersLabel.setColor(Color.BLACK);
+        otherCharactersLabel.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) * 5 / 6 - 140, Gdx.graphics.getHeight() - 320);
+
 
         /*
             Adding all stage actors.
@@ -102,12 +118,14 @@ public class PartyManagerScreen implements Screen {
         stage.addActor(title);
         stage.addActor(partyCharactersSelectBox);
         stage.addActor(partyLabel);
+        stage.addActor(otherCharactersSelectBox);
+        stage.addActor(otherCharactersLabel);
 
         /*
             Setting the initial values.
          */
 
-        updatePartyCharacters();
+        updateCharacters();
     }
 
     @Override
@@ -157,13 +175,20 @@ public class PartyManagerScreen implements Screen {
         backgroundTexture.dispose();
     }
 
-    public void updatePartyCharacters() {
+    public void updateCharacters() {
         Array<String> party = new Array<>();
+        Array<String> otherCharacters = new Array<>();
         try {
             Global.getParty().forEach((PC) -> party.add(PC.getName() + ", " + PC.getCharClass()));
+            Global.getOtherCharacters().forEach((PC) -> otherCharacters.add(PC.getName() + ", " + PC.getCharClass()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         partyCharactersSelectBox.setItems(party);
+        if (!otherCharacters.isEmpty()) {
+            otherCharactersSelectBox.setItems(otherCharacters);
+        } else {
+            otherCharactersSelectBox.setItems("No characters...");
+        }
     }
 }
