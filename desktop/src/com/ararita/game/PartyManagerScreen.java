@@ -493,7 +493,7 @@ public class PartyManagerScreen implements Screen {
     }
 
     /**
-     *
+     * The characters present in the Select Boxes are updated.
      */
     public void updateCharacters() {
         Array<String> party = new Array<>();
@@ -524,6 +524,12 @@ public class PartyManagerScreen implements Screen {
         }
     }
 
+    /**
+     * The sprites are updated.
+     *
+     * @param spriteName The string stating the name of the sprite - stored under 'Image' in the JSON.
+     * @param inParty Tells if the sprite is representing the selected character inside the party or not.
+     */
     public void changeSprite(String spriteName, boolean inParty) {
         int listPosition = game.spriteNames.indexOf(spriteName) * 3;
         TextureRegion[] walkFrames = new TextureRegion[game.spriteFrameCols];
@@ -543,6 +549,9 @@ public class PartyManagerScreen implements Screen {
         }
     }
 
+    /**
+     * The stats of the characters are updated.
+     */
     public void updatePartyStats() {
         int otherLines = 0;
         StringBuilder partyText = new StringBuilder();
@@ -613,6 +622,9 @@ public class PartyManagerScreen implements Screen {
         }
     }
 
+    /**
+     * The weapons inside the Select Boxes are updated.
+     */
     public void updateWeapons() {
         Array<String> inventoryWeapons = new Array<>();
         inventory.getItems().entrySet().stream().filter((entry) -> (entry.getKey() instanceof Weapon)).forEach((entry) -> inventoryWeapons.add(entry.getValue() + " " + entry.getKey().getName()));
@@ -635,6 +647,9 @@ public class PartyManagerScreen implements Screen {
         }
     }
 
+    /**
+     * The stats of the items are updated.
+     */
     public void updateStatsInventory() {
         if (weaponsEquippedSelectBox.getItems().get(0).equals("No equipped weapons...")) {
             statsEquippedWeapon.setText("");
