@@ -492,6 +492,9 @@ public class PartyManagerScreen implements Screen {
         charSheet.dispose();
     }
 
+    /**
+     *
+     */
     public void updateCharacters() {
         Array<String> party = new Array<>();
         Array<String> otherCharacters = new Array<>();
@@ -640,25 +643,24 @@ public class PartyManagerScreen implements Screen {
             StringBuilder equipText = new StringBuilder();
             Weapon toDescribe;
             try {
-                List<Weapon> weaponList =
-                        Global.getParty().get(partyCharactersSelectBox.getSelectedIndex()).getWeapons();
+                List<Weapon> weaponList = Global.getParty().get(partyCharactersSelectBox.getSelectedIndex()).getWeapons();
                 if (!weaponList.isEmpty()) {
                     toDescribe = Global.getWeapon(weaponList.get(weaponsEquippedSelectBox.getSelectedIndex()).getName());
-                    equipText.append("Name: ").append(toDescribe.getName()).append("\n");
-                    equipText.append("Weapon Type: ").append(toDescribe.getWeaponType()).append("\n");
+                    equipText.append(toDescribe.getName()).append("\n");
+                    equipText.append("Type: ").append(toDescribe.getWeaponType()).append("\n");
                     equipText.append("Stats:\n");
                     for (Map.Entry<String, Integer> entry : (toDescribe).getAttributesAffection().entrySet()) {
                         equipText.append(" ").append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
                         otherLines++;
                     }
                     statsEquippedWeapon.setText(equipText);
-                    statsEquippedWeapon.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 - 100, Gdx.graphics.getHeight() - 700 - (otherLines * 17));
-
+                    statsEquippedWeapon.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 - 50, Gdx.graphics.getHeight() - 870 - (otherLines * 17));
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        } if (weaponsInInventorySelectBox.getItems().get(0).equals("No weapons...")) {
+        }
+        if (weaponsInInventorySelectBox.getItems().get(0).equals("No weapons...")) {
             statsInventoryWeapon.setText("");
         } else {
             int otherLines = 0;
@@ -676,8 +678,8 @@ public class PartyManagerScreen implements Screen {
                 equipText.append(" ").append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
                 otherLines++;
             }
-            statsEquippedWeapon.setText(equipText);
-            statsEquippedWeapon.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 + 220, Gdx.graphics.getHeight() - 870 - (otherLines * 17));
+            statsInventoryWeapon.setText(equipText);
+            statsInventoryWeapon.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 + 220, Gdx.graphics.getHeight() - 870 - (otherLines * 17));
         }
     }
 }

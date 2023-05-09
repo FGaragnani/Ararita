@@ -20,7 +20,7 @@
     ],
     "inventory": {
         "Guard Spear": 1,
-        "Small Dagger": 2
+        "Small Dagger": 1
     },
     "statusEffectsSet": [
         "Burn",

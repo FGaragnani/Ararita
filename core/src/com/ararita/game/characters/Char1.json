@@ -20,6 +20,6 @@
     "spells": [],
     "agility": 3,
     "EXP": 0,
-    "weapons": [],
+    "weapons": ["Small Dagger"],
     "arcane": 1
 }
