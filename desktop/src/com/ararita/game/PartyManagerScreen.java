@@ -46,6 +46,9 @@ public class PartyManagerScreen implements Screen {
 
     SelectBox<String> weaponsInInventorySelectBox;
     TextButton equipButton;
+    SelectBox<String> weaponsEquippedSelectBox;
+    TextButton unEquipButton;
+    Label inventoryLabel;
 
     Image spriteImageParty;
     Image spriteImageReserve;
@@ -98,7 +101,6 @@ public class PartyManagerScreen implements Screen {
         spriteImageReserve = new Image();
         spriteImageReserve.setPosition(Gdx.graphics.getWidth() - 120, Gdx.graphics.getHeight() - 200);
         spriteImageReserve.setScale(7);
-
 
         /*
             Setting the background texture.
@@ -235,7 +237,29 @@ public class PartyManagerScreen implements Screen {
 
         weaponsInInventorySelectBox = new SelectBox<>(game.selectBoxStyle);
         weaponsInInventorySelectBox.setWidth(400);
-        weaponsInInventorySelectBox.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6, Gdx.graphics.getHeight() - 700);
+        weaponsInInventorySelectBox.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6, Gdx.graphics.getHeight() - 800);
+        equipButton = new TextButton("Equip", skin.get("default", TextButton.TextButtonStyle.class));
+        equipButton.getLabel().setStyle(partyLabel.getStyle());
+        equipButton.getLabel().setFontScale(2.2f, 3f);
+        equipButton.setWidth(140);
+        equipButton.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6, Gdx.graphics.getHeight() - 700);
+        inventoryLabel = new Label("Inventory:", skin.get("default", Label.LabelStyle.class));
+        inventoryLabel.setFontScale(2.6f, 3.7f);
+        inventoryLabel.setColor(Color.BLACK);
+        inventoryLabel.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 - 150, Gdx.graphics.getHeight() - 565);
+
+        /*
+            Setting the weapons SelectBox.
+         */
+
+        weaponsEquippedSelectBox = new SelectBox<>(game.selectBoxStyle);
+        weaponsEquippedSelectBox.setWidth(400);
+        weaponsEquippedSelectBox.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6, Gdx.graphics.getHeight() - 550);
+        unEquipButton = new TextButton("Unequip", skin.get("default", TextButton.TextButtonStyle.class));
+        unEquipButton.getLabel().setStyle(partyLabel.getStyle());
+        unEquipButton.getLabel().setFontScale(2.2f, 3f);
+        unEquipButton.setWidth(140);
+        unEquipButton.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 + 255, Gdx.graphics.getHeight() - 700);
 
         /*
             Setting all dialogs.
@@ -288,6 +312,10 @@ public class PartyManagerScreen implements Screen {
         stage.addActor(partyStats);
         stage.addActor(reserveStats);
         stage.addActor(weaponsInInventorySelectBox);
+        stage.addActor(equipButton);
+        stage.addActor(weaponsEquippedSelectBox);
+        stage.addActor(unEquipButton);
+        stage.addActor(inventoryLabel);
 
         /*
             Setting the initial values.
@@ -433,7 +461,7 @@ public class PartyManagerScreen implements Screen {
             jsonChar.getJSONArray("spellTypes").toList().forEach((str) -> partyText.append(" - ").append(str.toString()).append("\n"));
             otherLines += jsonChar.getJSONArray("spellTypes").toList().size();
             partyStats.setText(partyText.toString());
-            partyStats.setPosition(705, Gdx.graphics.getHeight() - 580 - (18 * (otherLines - 1)));
+            partyStats.setPosition(660, Gdx.graphics.getHeight() - 580 - (18 * (otherLines - 1)));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -475,13 +503,25 @@ public class PartyManagerScreen implements Screen {
         }
     }
 
-    public void updateWeapons(){
+    public void updateWeapons() {
         Array<String> inventoryWeapons = new Array<>();
         inventory.getItems().entrySet().stream().filter((entry) -> (entry.getKey() instanceof Weapon)).forEach((entry) -> inventoryWeapons.add(entry.getValue() + " " + entry.getKey().getName()));
-        if(inventoryWeapons.isEmpty()){
+        if (inventoryWeapons.isEmpty()) {
             weaponsInInventorySelectBox.setItems("No weapons...");
         } else {
             weaponsInInventorySelectBox.setItems(inventoryWeapons);
+        }
+
+        Array<String> equippedWeapons = new Array<>();
+        try {
+            Global.getParty().get(partyCharactersSelectBox.getSelectedIndex()).getWeapons().forEach((weapon) -> equippedWeapons.add(weapon.getName()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        if (equippedWeapons.isEmpty()) {
+            weaponsEquippedSelectBox.setItems("No equipped weapons...");
+        } else {
+            weaponsEquippedSelectBox.setItems(equippedWeapons);
         }
     }
 }

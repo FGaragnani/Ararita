@@ -7,7 +7,7 @@
         "Water",
         "Chaos"
     ],
-    "otherCharacters": [],
+    "otherCharacters": ["Char1"],
     "money": 74,
     "spellNamesSet": [],
     "weaponTypesSet": [
@@ -25,10 +25,7 @@
         "Paralysis",
         "Blindness"
     ],
-    "party": [
-        "Char1",
-        "Char2"
-    ],
+    "party": ["Char2"],
     "classNamesSet": [
         "Knight",
         "Black Mage",
