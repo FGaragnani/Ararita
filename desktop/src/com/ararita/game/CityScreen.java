@@ -25,8 +25,6 @@ public class CityScreen implements Screen {
     OrthographicCamera camera;
     Skin skin;
 
-    Music audio;
-
     TextButton.TextButtonStyle textButtonStyle;
     TextButton charCreateButton;
     TextButton classCreateButton;
@@ -59,10 +57,12 @@ public class CityScreen implements Screen {
             Audio initialization.
          */
 
-        audio = Gdx.audio.newMusic(Gdx.files.local("Music/CityTheme.mp3"));
-        audio.setVolume(game.volume / 1000f);
-        audio.setLooping(true);
-        audio.play();
+        if (game.audio == null) {
+            game.audio = Gdx.audio.newMusic(Gdx.files.local("Music/CityTheme.mp3"));
+            game.audio.setVolume(game.volume / 1000f);
+            game.audio.setLooping(true);
+            game.audio.play();
+        }
 
         /*
             Setting the background texture.
@@ -155,6 +155,8 @@ public class CityScreen implements Screen {
         mainMenuButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                game.audio.dispose();
+                game.audio = null;
                 dispose();
                 game.setScreen(new MainMenuScreen(game));
             }
@@ -217,6 +219,5 @@ public class CityScreen implements Screen {
         stage.dispose();
         backgroundTexture.dispose();
         skin.dispose();
-        audio.dispose();
     }
 }
