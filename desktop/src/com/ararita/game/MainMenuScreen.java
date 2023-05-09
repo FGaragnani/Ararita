@@ -64,11 +64,7 @@ public class MainMenuScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(game.newPlayer){
-                    try {
-                        game.setScreen(new CharacterCreationScreen(game, true));
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    game.setScreen(new TutorialScreen(game));
                 }
                 else {
                     game.setScreen(new CityScreen(game));
