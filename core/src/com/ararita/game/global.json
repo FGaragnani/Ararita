@@ -8,7 +8,7 @@
         "Chaos"
     ],
     "otherCharacters": [],
-    "money": 29,
+    "money": 0,
     "spellNamesSet": [],
     "weaponTypesSet": [
         "Sword",
@@ -18,20 +18,14 @@
         "Bow",
         "Dagger"
     ],
-    "inventory": {
-        "Guard Spear": 1,
-        "Small Dagger": 1
-    },
+    "inventory": {},
     "statusEffectsSet": [
         "Burn",
         "Poison",
         "Paralysis",
         "Blindness"
     ],
-    "party": [
-        "Char1",
-        "Char2"
-    ],
+    "party": [],
     "classNamesSet": [
         "Knight",
         "Black Mage",

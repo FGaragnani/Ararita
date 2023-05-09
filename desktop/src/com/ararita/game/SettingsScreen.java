@@ -82,6 +82,7 @@ public class SettingsScreen implements Screen {
                         Global.emptyInventory();
                         Global.emptySpell();
                         Global.setMoney(0);
+                        Global.emptyClass();
                         game.newPlayer = true;
                         game.settingsUpdate();
                     } catch (IOException e) {

@@ -279,9 +279,7 @@ public class Global {
             JSONObject jsonGlobal = getJSON(charFile);
             List<String> weapons = getListJSON(charFile, "weapons");
             List<String> spells = getListJSON(charFile, "spells");
-            PC toRet = new PC(jsonGlobal.getInt("strength"), jsonGlobal.getInt("intelligence"), jsonGlobal.getInt(
-                    "vigor"),
-                jsonGlobal.getInt("agility"), jsonGlobal.getInt("spirit"), jsonGlobal.getInt("arcane"), jsonGlobal.getString("charClass"), charName, jsonGlobal.getInt("currHP"), jsonGlobal.getInt("currMP"), jsonGlobal.getInt("level"), jsonGlobal.getInt("EXP"), weapons.stream().map((name) -> {
+            PC toRet = new PC(jsonGlobal.getInt("strength"), jsonGlobal.getInt("intelligence"), jsonGlobal.getInt("vigor"), jsonGlobal.getInt("agility"), jsonGlobal.getInt("spirit"), jsonGlobal.getInt("arcane"), jsonGlobal.getString("charClass"), charName, jsonGlobal.getInt("currHP"), jsonGlobal.getInt("currMP"), jsonGlobal.getInt("level"), jsonGlobal.getInt("EXP"), weapons.stream().map((name) -> {
                 try {
                     return Global.getWeapon(name);
                 } catch (IOException e) {
@@ -651,11 +649,9 @@ public class Global {
      * A list of all the items is determined from all the files in the item directory.
      *
      * @return The list of all the items.
-     *
      */
     public static List<Item> getAllItems() {
-        return Arrays.stream(Objects.requireNonNull(itemSets.toFile().listFiles())).map((file -> file.getName().substring(0,
-                file.getName().length() - 5))).map((name) -> {
+        return Arrays.stream(Objects.requireNonNull(itemSets.toFile().listFiles())).map((file -> file.getName().substring(0, file.getName().length() - 5))).map((name) -> {
             try {
                 return (getItem(name));
             } catch (IOException e) {
@@ -912,5 +908,22 @@ public class Global {
         });
         List<String> weakTo = getListJSON(specificEnemy.toPath(), "weakTo");
         return new Enemy(jsonObject.getString("name"), jsonObject.getInt("attack"), jsonObject.getInt("defense"), jsonObject.getInt("magicDefense"), jsonObject.getInt("speed"), jsonObject.getInt("currHP"), jsonObject.getInt("money"), toDrop, weakTo);
+    }
+
+    /**
+     * Classes - a part from the standard ones - are deleted.
+     */
+    public static void emptyClass() throws IOException {
+        JSONObject jsonGlobal = getJSON(globalSets);
+        jsonGlobal.remove("classNamesSet");
+        jsonGlobal.put("classNamesSet", List.of("Knight", "Black Mage", "White Mage", "Ranger"));
+        writeJSON(globalSets, jsonGlobal);
+        if (classSets.toFile().isDirectory()) {
+            for (File f : Objects.requireNonNull(classSets.toFile().listFiles())) {
+                if (jsonGlobal.getJSONArray("classNamesSet").toList().contains(f.getName())) {
+                    f.delete();
+                }
+            }
+        }
     }
 }
