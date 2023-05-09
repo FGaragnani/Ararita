@@ -1,5 +1,6 @@
 package com.ararita.game;
 
+import com.ararita.game.battlers.PC;
 import com.ararita.game.items.Inventory;
 import com.ararita.game.items.Weapon;
 import com.badlogic.gdx.Gdx;
@@ -20,6 +21,10 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class PartyManagerScreen implements Screen {
 
@@ -49,6 +54,8 @@ public class PartyManagerScreen implements Screen {
     SelectBox<String> weaponsEquippedSelectBox;
     TextButton unEquipButton;
     Label inventoryLabel;
+    Label statsInventoryWeapon;
+    Label statsEquippedWeapon;
 
     Image spriteImageParty;
     Image spriteImageReserve;
@@ -66,6 +73,8 @@ public class PartyManagerScreen implements Screen {
     Dialog oneCharacterInParty;
     Dialog noCharactersInReserve;
     Dialog maxPartyCharacters;
+    Dialog maxWeaponDialog;
+    Dialog maxItemsDialog;
 
     Texture backgroundTexture;
     Sprite backgroundSprite;
@@ -146,6 +155,7 @@ public class PartyManagerScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 updateCharacters();
                 updatePartyStats();
+                updateWeapons();
             }
         });
         partyLabel = new Label("Party:", skin.get("default", Label.LabelStyle.class));
@@ -196,6 +206,7 @@ public class PartyManagerScreen implements Screen {
                     }
                     updateCharacters();
                     updatePartyStats();
+                    updateWeapons();
                 }
             }
         });
@@ -216,6 +227,7 @@ public class PartyManagerScreen implements Screen {
                     }
                     updateCharacters();
                     updatePartyStats();
+                    updateWeapons();
                 }
             }
         });
@@ -262,6 +274,17 @@ public class PartyManagerScreen implements Screen {
         unEquipButton.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 + 255, Gdx.graphics.getHeight() - 700);
 
         /*
+            Setting the equipment labels.
+         */
+
+        statsEquippedWeapon = new Label("", game.labelStyle);
+        statsEquippedWeapon.setFontScale(2.5f, 3.4f);
+        statsEquippedWeapon.setColor(Color.BLACK);
+        statsInventoryWeapon = new Label("", game.labelStyle);
+        statsInventoryWeapon.setFontScale(2.5f, 3.4f);
+        statsInventoryWeapon.setColor(Color.BLACK);
+
+        /*
             Setting all dialogs.
          */
 
@@ -295,6 +318,26 @@ public class PartyManagerScreen implements Screen {
         maxPartyCharacters.button("Ok!", true, game.textButtonStyle);
         maxPartyCharacters.setPosition(0, 0);
 
+        maxWeaponDialog = new Dialog("", skin) {
+            public void result(Object confirm) {
+                hide();
+            }
+        };
+        maxWeaponDialog.setResizable(false);
+        maxWeaponDialog.text(" You have reached the max \n number of equipable weapons! \n", game.labelStyle);
+        maxWeaponDialog.button("Ok!", true, game.textButtonStyle);
+        maxWeaponDialog.setPosition(0, 0);
+
+        maxItemsDialog = new Dialog("", skin) {
+            public void result(Object confirm) {
+                hide();
+            }
+        };
+        maxItemsDialog.setResizable(false);
+        maxItemsDialog.text(" You have reached the max number \n of items in your inventory! \n", game.labelStyle);
+        maxItemsDialog.button("Ok!", true, game.textButtonStyle);
+        maxItemsDialog.setPosition(0, 0);
+
         /*
             Adding all stage actors.
          */
@@ -316,6 +359,8 @@ public class PartyManagerScreen implements Screen {
         stage.addActor(weaponsEquippedSelectBox);
         stage.addActor(unEquipButton);
         stage.addActor(inventoryLabel);
+        stage.addActor(statsInventoryWeapon);
+        stage.addActor(statsEquippedWeapon);
 
         /*
             Setting the initial values.
@@ -324,6 +369,68 @@ public class PartyManagerScreen implements Screen {
         updateCharacters();
         updatePartyStats();
         updateWeapons();
+        updateStatsInventory();
+
+        /*
+            Adding every missing listener.
+         */
+
+        weaponsInInventorySelectBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                updateStatsInventory();
+            }
+        });
+
+        weaponsEquippedSelectBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                updateStatsInventory();
+            }
+        });
+
+        equipButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                try {
+                    PC pcToEquip = Global.getParty().get(partyCharactersSelectBox.getSelectedIndex());
+                    if (pcToEquip.getWeapons().size() >= Global.MAX_WEAPON_EQUIPPED) {
+                        maxWeaponDialog.show(stage);
+                    }
+                    if (weaponsInInventorySelectBox.getSelected().equals("No weapons...")) {
+                        return;
+                    }
+                    Weapon weaponToEquip = (Weapon) inventory.getItems().entrySet().stream().filter((entry -> entry.getKey() instanceof Weapon)).collect(Collectors.toList()).get(weaponsInInventorySelectBox.getSelectedIndex()).getKey();
+                    inventory.equip(pcToEquip, weaponToEquip);
+                    updateWeapons();
+                    updateStatsInventory();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        unEquipButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                try {
+                    PC pcToEquip = Global.getParty().get(partyCharactersSelectBox.getSelectedIndex());
+                    if (inventory.getItems().size() >= inventory.MAX_INVENTORY_SPACE) {
+                        maxItemsDialog.show(stage);
+                        return;
+                    }
+                    if (weaponsEquippedSelectBox.getSelected().equals("No equipped weapons...")) {
+                        return;
+                    }
+                    Weapon weaponToEquip = pcToEquip.getWeapons().get(weaponsEquippedSelectBox.getSelectedIndex());
+                    inventory.unEquip(pcToEquip, weaponToEquip);
+                    updateWeapons();
+                    updateStatsInventory();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 
     @Override
@@ -522,6 +629,55 @@ public class PartyManagerScreen implements Screen {
             weaponsEquippedSelectBox.setItems("No equipped weapons...");
         } else {
             weaponsEquippedSelectBox.setItems(equippedWeapons);
+        }
+    }
+
+    public void updateStatsInventory() {
+        if (weaponsEquippedSelectBox.getItems().get(0).equals("No equipped weapons...")) {
+            statsEquippedWeapon.setText("");
+        } else {
+            int otherLines = 0;
+            StringBuilder equipText = new StringBuilder();
+            Weapon toDescribe;
+            try {
+                List<Weapon> weaponList =
+                        Global.getParty().get(partyCharactersSelectBox.getSelectedIndex()).getWeapons();
+                if (!weaponList.isEmpty()) {
+                    toDescribe = Global.getWeapon(weaponList.get(weaponsEquippedSelectBox.getSelectedIndex()).getName());
+                    equipText.append("Name: ").append(toDescribe.getName()).append("\n");
+                    equipText.append("Weapon Type: ").append(toDescribe.getWeaponType()).append("\n");
+                    equipText.append("Stats:\n");
+                    for (Map.Entry<String, Integer> entry : (toDescribe).getAttributesAffection().entrySet()) {
+                        equipText.append(" ").append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+                        otherLines++;
+                    }
+                    statsEquippedWeapon.setText(equipText);
+                    statsEquippedWeapon.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 - 100, Gdx.graphics.getHeight() - 700 - (otherLines * 17));
+
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } if (weaponsInInventorySelectBox.getItems().get(0).equals("No weapons...")) {
+            statsInventoryWeapon.setText("");
+        } else {
+            int otherLines = 0;
+            StringBuilder equipText = new StringBuilder();
+            Weapon toDescribe;
+            try {
+                toDescribe = Global.getWeapon(new ArrayList<>(inventory.getItems().entrySet().stream().filter((entry) -> entry.getKey() instanceof Weapon).collect(Collectors.toList())).get(weaponsInInventorySelectBox.getSelectedIndex()).getKey().getName());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            equipText.append(toDescribe.getName()).append("\n");
+            equipText.append("Type: ").append(toDescribe.getWeaponType()).append("\n");
+            equipText.append("Stats:\n");
+            for (Map.Entry<String, Integer> entry : (toDescribe).getAttributesAffection().entrySet()) {
+                equipText.append(" ").append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+                otherLines++;
+            }
+            statsEquippedWeapon.setText(equipText);
+            statsEquippedWeapon.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 + 220, Gdx.graphics.getHeight() - 870 - (otherLines * 17));
         }
     }
 }

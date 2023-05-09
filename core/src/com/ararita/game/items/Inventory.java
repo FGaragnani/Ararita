@@ -1,6 +1,7 @@
 package com.ararita.game.items;
 
 import com.ararita.game.Global;
+import com.ararita.game.battlers.PC;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -195,6 +196,37 @@ public class Inventory {
                 items.put(item, 1);
             }
             updateItems();
+        }
+    }
+
+    /**
+     * A character is equipped with a weapon from the inventory.
+     * If the item is not present - or if the weapon cannot be equipped, nothing is done.
+     *
+     * @param character The character to equip with the weapon.
+     * @param weapon The weapon to equip.
+     *
+     * @throws IOException If the files cannot be read or written upon.
+     */
+    public void equip(PC character, Weapon weapon) throws IOException {
+        if (character.getWeapons().size() < Global.MAX_WEAPON_EQUIPPED && items.containsKey(weapon)) {
+            character.equip(weapon);
+            remove(weapon);
+        }
+    }
+
+    /**
+     * A character is unequipped from a certain weapon.
+     *
+     * @param character The character to unequip the weapon from.
+     * @param weapon The weapon to unequip.
+     *
+     * @throws IOException If the files cannot be read or written.
+     */
+    public void unEquip(PC character, Weapon weapon) throws IOException {
+        if (inventorySize() < MAX_INVENTORY_SPACE) {
+            character.unequip(weapon);
+            add(weapon);
         }
     }
 }
