@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5676402a-2187-4a8f-bfe0-ac646c9fd387" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/assets/Settings/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Settings/settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/characters/Char1.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/README/classcs.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/PC.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/PC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/ClassCreationScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/ClassCreationScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,9 +93,9 @@
       <recent name="" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets\README" />
       <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets\Icons" />
       <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets\Backgrounds" />
-      <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets\README" />
       <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets\General" />
       <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets\Settings" />
     </key>

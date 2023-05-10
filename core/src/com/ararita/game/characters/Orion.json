@@ -1,0 +1,31 @@
+{
+    "baseEXP": 100,
+    "image": "Magician",
+    "currMP": 45,
+    "MP": 45,
+    "strength": 1,
+    "level": 1,
+    "vigor": 2,
+    "spirit": 1,
+    "HP": 19,
+    "dead": false,
+    "exponentEXP": 1.28,
+    "currHP": 19,
+    "increaseEXP": 1.29,
+    "intelligence": 6,
+    "proficiencies": {
+        "Dagger": 1,
+        "Staff": 2
+    },
+    "name": "Orion",
+    "spellTypes": [
+        "Chaos",
+        "Fire"
+    ],
+    "charClass": "Black Mage",
+    "spells": [],
+    "agility": 1,
+    "EXP": 0,
+    "weapons": [],
+    "arcane": 4
+}

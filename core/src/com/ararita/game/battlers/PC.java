@@ -118,7 +118,6 @@ public class PC extends AbstractBattler implements Battler {
      * @param loss How much HP the character loses.
      */
     public void loseHP(int loss) {
-        int oldHP = getCurrHP();
         setCurrHP(Math.max(0, getCurrHP() - loss));
     }
 
@@ -128,7 +127,6 @@ public class PC extends AbstractBattler implements Battler {
      * @param loss How much MP the character loses.
      */
     public void loseMP(int loss) {
-        int oldMP = getCurrMP();
         setCurrMP(Math.max(0, getCurrMP() - loss));
     }
 
@@ -482,21 +480,26 @@ public class PC extends AbstractBattler implements Battler {
      */
     public int classCost() {
         int initialCost = 10;
+        int proficienciesAndSpells = 1;
         int i = 1;
         for (int proficiencyValue : proficiencies.values()) {
-            initialCost += (1 / ((Math.pow(getIncreaseEXP(), 2) * Math.pow(getExponentEXP(), 2)))) * Math.pow(10, proficiencyValue) * Math.pow(i, 1.2);
+            initialCost += (1 / ((Math.pow(getIncreaseEXP(), 1.5) * Math.pow(getExponentEXP(), 1.5)))) * Math.pow(10,
+                    proficiencyValue) * Math.pow(i, 3) * proficienciesAndSpells;
             if (initialCost > 10000000) {
                 return 10000000;
             }
             i++;
+            proficienciesAndSpells++;
         }
         i = 1;
         for (String spellType : spellTypes) {
-            initialCost += (1 / ((Math.pow(getIncreaseEXP(), 2) * Math.pow(getExponentEXP(), 2)))) * Math.pow(5, i) * Math.pow(i, 1.2);
+            initialCost += (1 / ((Math.pow(getIncreaseEXP(), 1.5) * Math.pow(getExponentEXP(), 1.5)))) * Math.pow(10,
+                    i) * Math.pow(i, 3) * proficienciesAndSpells;
             if (initialCost > 10000000) {
                 return 10000000;
             }
             i++;
+            proficienciesAndSpells++;
         }
         return initialCost;
     }

@@ -188,7 +188,7 @@ public class ClassCreationScreen implements Screen {
             Creating the EXP Slider.
          */
 
-        expSlider = new Slider(1.6f, 2.95f, 0.01f, false, game.sliderStyle);
+        expSlider = new Slider(1.6f, 2.8f, 0.01f, false, game.sliderStyle);
         expSlider.setWidth(300);
         expSlider.setValue(3);
         expSlider.setPosition((Gdx.graphics.getWidth() - expSlider.getWidth()) / 2, Gdx.graphics.getHeight() - 450);
@@ -577,7 +577,7 @@ public class ClassCreationScreen implements Screen {
      */
     public void updateEXP() {
         float expSum = expSlider.getValue();
-        increaseEXP = expSum;
+        increaseEXP = expSum / 2;
         exponentEXP = 3 - increaseEXP;
         if (expSum >= 2.5) {
             expGrowthLabel.setText("EXP Growth: Slow");
