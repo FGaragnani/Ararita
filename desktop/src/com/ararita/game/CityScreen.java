@@ -165,7 +165,7 @@ public class CityScreen implements Screen {
          */
 
         battleButton = new TextButton("Battle!", game.textButtonStyle);
-        battleButton.setPosition((Gdx.graphics.getWidth() - battleButton.getWidth()) / 2, (Gdx.graphics.getHeight() - battleButton.getHeight()) / 2);
+        battleButton.setPosition((Gdx.graphics.getWidth() - battleButton.getWidth()) / 2 + 10, (Gdx.graphics.getHeight() - battleButton.getHeight()) / 2 + 10);
         battleButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
