@@ -1,10 +1,7 @@
 package com.ararita.game;
 
-import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.backends.lwjgl3.audio.Mp3;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -32,6 +29,7 @@ public class CityScreen implements Screen {
     TextButton shopButton;
     TextButton partyManageButton;
     TextButton mainMenuButton;
+    TextButton battleButton;
 
     Texture backgroundTexture;
     Sprite backgroundSprite;
@@ -163,6 +161,14 @@ public class CityScreen implements Screen {
         });
 
         /*
+            Creating the Battle Button.
+         */
+
+        battleButton = new TextButton("Battle!", game.textButtonStyle);
+        battleButton.setPosition((Gdx.graphics.getWidth() - battleButton.getWidth()) / 2, (Gdx.graphics.getHeight() - battleButton.getHeight()) / 2);
+
+
+        /*
             Add all actors to the stage.
          */
 
@@ -172,6 +178,7 @@ public class CityScreen implements Screen {
         stage.addActor(shopButton);
         stage.addActor(partyManageButton);
         stage.addActor(mainMenuButton);
+        stage.addActor(battleButton);
     }
 
     @Override
