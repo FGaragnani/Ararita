@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;
-import com.sun.tools.javac.util.StringUtils;
 
 import java.io.IOException;
 import java.util.List;

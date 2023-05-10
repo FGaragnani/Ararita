@@ -10,8 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-import java.io.IOException;
-
 public class MainMenuScreen implements Screen {
 
     final Ararita game;
