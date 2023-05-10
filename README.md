@@ -17,11 +17,15 @@ This project was done for the 'Programmazione ad Oggetti e Lab.' course at UniMO
 **Ararita** mix the traditional turn-based RPG with some unique features.
 | ![charcs](https://github.com/FGaragnani/Ararita/assets/101595335/3461dac1-1e39-49da-8f1c-5c6ecf821e6c) |
 | :--: |
-| **Create your own party of adventurers!** |
+| **Recruit your own party of adventurers!** |
 
 | ![classcs](https://github.com/FGaragnani/Ararita/assets/101595335/154876c0-96b3-4af9-8a26-b86fd3b0ffd7) |
 | :--: |
-| **Create classes, choosing everything - from stats to proficiencies.** |
+| **Create characters' classes, customizing every setting.** |
+
+| ![spellcs](https://github.com/FGaragnani/Ararita/assets/101595335/be72acaf-279e-4861-b0a6-c3b0a5e17ab4) |
+| :--: |
+| **Craft spells to strengthen your combat strategy.** |
 
 More todo.
 
