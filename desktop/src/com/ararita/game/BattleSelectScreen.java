@@ -9,10 +9,15 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+
+import java.io.File;
+import java.util.Objects;
 
 public class BattleSelectScreen implements Screen {
 
@@ -25,13 +30,16 @@ public class BattleSelectScreen implements Screen {
     TextButton confirmButton;
     TextButton exitButton;
 
+    SelectBox<String> enemySelectBox;
+    Array<String> enemies;
+
     Label title;
     Label.LabelStyle titleStyle;
 
     Texture backgroundTexture;
     Sprite backgroundSprite;
 
-    public BattleSelectScreen(final Ararita game){
+    public BattleSelectScreen(final Ararita game) {
 
         /*
             First initialization.
@@ -44,6 +52,11 @@ public class BattleSelectScreen implements Screen {
         this.skin = new Skin(Gdx.files.internal(game.stylesPath));
         this.camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
+        enemies = new Array<>();
+        for(File f : Objects.requireNonNull(Global.enemySets.toFile().listFiles())){
+            enemies.add(f.getName().substring(0, f.getName().length() - 5));
+        }
+
 
         /*
             Setting the background texture.
@@ -86,13 +99,22 @@ public class BattleSelectScreen implements Screen {
         });
 
         /*
+            Creating the Select Box.
+         */
+
+        enemySelectBox = new SelectBox<>(game.selectBoxStyle);
+        enemySelectBox.setItems(enemies);
+        enemySelectBox.setWidth(400);
+        enemySelectBox.setPosition((Gdx.graphics.getWidth() - enemySelectBox.getWidth()) / 2, Gdx.graphics.getHeight() - 500);
+
+        /*
             Adding all actors.
          */
 
         stage.addActor(title);
         stage.addActor(confirmButton);
         stage.addActor(exitButton);
-
+        stage.addActor(enemySelectBox);
     }
 
     @Override
