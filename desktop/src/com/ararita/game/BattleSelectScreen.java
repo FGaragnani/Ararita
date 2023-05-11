@@ -17,7 +17,6 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Objects;
@@ -103,7 +102,13 @@ public class BattleSelectScreen implements Screen {
         confirmButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                // TODO
+                try {
+                    dispose();
+                    GlobalBattle battle = new GlobalBattle(Global.getEnemy(enemySelectBox.getSelected()));
+                    game.setScreen(new BattleScreen(game, battle));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         exitButton.addListener(new ChangeListener() {
