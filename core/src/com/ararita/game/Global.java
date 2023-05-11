@@ -907,7 +907,7 @@ public class Global {
             }
         });
         List<String> weakTo = getListJSON(specificEnemy.toPath(), "weakTo");
-        return new Enemy(jsonObject.getString("name"), jsonObject.getInt("attack"), jsonObject.getInt("defense"), jsonObject.getInt("magicDefense"), jsonObject.getInt("speed"), jsonObject.getInt("currHP"), jsonObject.getInt("money"), toDrop, weakTo);
+        return new Enemy(jsonObject.getString("name"), jsonObject.getInt("attack"), jsonObject.getInt("defense"), jsonObject.getInt("magicDefense"), jsonObject.getInt("speed"), jsonObject.getInt("level"), jsonObject.getInt("currHP"), jsonObject.getInt("money"), toDrop, weakTo);
     }
 
     /**

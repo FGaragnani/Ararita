@@ -18,6 +18,7 @@ public class Enemy implements Battler {
     int speed;
     int currHP;
     int money;
+    int level;
     Map<Item, Double> toDrop;
     Optional<String> statusEffect;
     List<String> weakTo;
@@ -32,6 +33,7 @@ public class Enemy implements Battler {
      * @param defense The enemy's defense value.
      * @param magicDefense The enemy's magical defense value.
      * @param speed The enemy's speed value.
+     * @param level The enemy's level (this is only descriptive).
      * @param currHP The enemy's HP.
      * @param money The enemy's drop money.
      * @param toDrop The enemy's drop items.
@@ -39,12 +41,13 @@ public class Enemy implements Battler {
      *
      * @throws IOException If the file can't be read or written to.
      */
-    public Enemy(String name, int attack, int defense, int magicDefense, int speed, int currHP, int money, Map<Item, Double> toDrop, List<String> weakTo) throws IOException {
+    public Enemy(String name, int attack, int defense, int magicDefense, int speed, int level, int currHP, int money, Map<Item, Double> toDrop, List<String> weakTo) throws IOException {
         this.name = name;
         this.attack = attack;
         this.defense = defense;
         this.magicDefense = magicDefense;
         this.speed = speed;
+        this.level = level;
         this.currHP = currHP;
         this.money = money;
         this.toDrop = toDrop;
@@ -262,6 +265,14 @@ public class Enemy implements Battler {
 
     public void setWeakTo(List<String> weakTo) {
         this.weakTo = weakTo;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     public Path getImage() {

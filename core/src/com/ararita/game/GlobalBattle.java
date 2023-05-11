@@ -96,8 +96,7 @@ public class GlobalBattle {
             }
             attacked.getPhysicalDamage((int) (attacker.hasPhysicalAttackPower() * multiplier));
         }
-        if (attacker instanceof Enemy) {
-            Enemy enemy = (Enemy) attacker;
+        if (attacker instanceof Enemy enemy) {
 
             if (enemy.getStatusEffect().equals(Optional.of("Burn"))) {
                 if (Global.getRandomZeroOne() < Global.BURN_CURE) {

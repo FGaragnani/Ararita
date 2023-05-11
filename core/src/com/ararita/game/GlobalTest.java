@@ -414,9 +414,9 @@ class GlobalTest {
     @Test
     void addEnemy() {
         try {
-            Enemy goblin = new Enemy("Goblin", 5, 3, 1, 6, 30, 10, Map.of(Global.getItem("Potion"), 0.1), List.of("Sword", "Fire"));
+            Enemy goblin = new Enemy("Goblin", 5, 3, 1, 6, 1, 30, 10, Map.of(Global.getItem("Potion"), 0.1), List.of("Sword", "Fire"));
             assertTrue(Global.getJSONFilePath(Global.enemySets, goblin.getName()).toFile().exists());
-            Enemy thief = new Enemy("Thief", 2, 2, 5, 10, 25, 20, Map.of(Global.getItem("Potion"), 0.07, Global.getItem("Ether"), 0.04), List.of("Wind", "Spear", "Gloves"));
+            Enemy thief = new Enemy("Thief", 2, 2, 5, 10, 3, 25, 20, Map.of(Global.getItem("Potion"), 0.07, Global.getItem("Ether"), 0.04), List.of("Wind", "Spear", "Gloves"));
             assertTrue(Global.getJSONFilePath(Global.enemySets, thief.getName()).toFile().exists());
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -460,13 +460,13 @@ class GlobalTest {
 
     @Test
     void testCanBuy() {
-        try{
+        try {
             Global.setMoney(3000);
             assertTrue(Global.canBuy(Global.getItem("Angelic Staff"), 1));
             assertTrue(Global.canBuy(Global.getItem("Angelic Staff"), 2));
             assertTrue(Global.canBuy(Global.getItem("Angelic Staff"), 3));
             assertFalse(Global.canBuy(Global.getItem("Angelic Staff"), 4));
-        } catch (IOException e){
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
