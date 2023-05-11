@@ -400,7 +400,7 @@ public class PartyManagerScreen implements Screen {
                     if (weaponsInInventorySelectBox.getSelected().equals("No weapons...")) {
                         return;
                     }
-                    Weapon weaponToEquip = (Weapon) inventory.getItems().entrySet().stream().filter((entry -> entry.getKey() instanceof Weapon)).collect(Collectors.toList()).get(weaponsInInventorySelectBox.getSelectedIndex()).getKey();
+                    Weapon weaponToEquip = (Weapon) inventory.getItems().entrySet().stream().filter((entry -> entry.getKey() instanceof Weapon)).toList().get(weaponsInInventorySelectBox.getSelectedIndex()).getKey();
                     inventory.equip(pcToEquip, weaponToEquip);
                     updateWeapons();
                     updateStatsInventory();
@@ -568,11 +568,7 @@ public class PartyManagerScreen implements Screen {
             partyText.append("Proficiencies: \n");
             jsonChar.getJSONObject("proficiencies").toMap().forEach((s, o) -> {
                 partyText.append(" ").append(s).append(":");
-                if ((int) o >= 0) {
-                    partyText.append(" +".repeat((int) o));
-                } else {
-                    partyText.append(" -".repeat((int) o));
-                }
+                partyText.append(" +".repeat((int) o));
                 partyText.append("\n");
             });
             otherLines += jsonChar.getJSONObject("proficiencies").toMap().size();
@@ -604,11 +600,7 @@ public class PartyManagerScreen implements Screen {
             reserveText.append("Proficiencies: \n");
             jsonChar.getJSONObject("proficiencies").toMap().forEach((s, o) -> {
                 reserveText.append(" ").append(s).append(":");
-                if ((int) o >= 0) {
-                    reserveText.append(" +".repeat((int) o));
-                } else {
-                    reserveText.append(" -".repeat((int) o));
-                }
+                reserveText.append(" +".repeat((int) o));
                 reserveText.append("\n");
             });
             otherLines += jsonChar.getJSONObject("proficiencies").toMap().size();

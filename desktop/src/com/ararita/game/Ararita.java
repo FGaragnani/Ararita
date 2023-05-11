@@ -33,7 +33,6 @@ public class Ararita extends Game {
     public Slider.SliderStyle sliderStyle;
     public TextField.TextFieldStyle textFieldStyle;
     public SelectBox.SelectBoxStyle selectBoxStyle;
-    public ImageButton.ImageButtonStyle imageButtonStyle;
 
     public java.util.List<String> spriteNames;
     public final int spriteFrameCols = 3;
@@ -105,11 +104,12 @@ public class Ararita extends Game {
      */
     public void settingsUpdate() {
         try {
-            JSONObject jsonSettings = Global.getJSON(Path.of(settingsPath));
+            Path settingsAbsolutePath = Path.of(settingsPath);
+            JSONObject jsonSettings = Global.getJSON(settingsAbsolutePath);
             jsonSettings.put("Volume", volume);
             jsonSettings.put("Sound Effects", soundEffects);
             jsonSettings.put("New", newPlayer);
-            Global.writeJSON(Path.of(settingsPath), jsonSettings);
+            Global.writeJSON(settingsAbsolutePath, jsonSettings);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

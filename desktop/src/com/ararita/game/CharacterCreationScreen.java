@@ -334,11 +334,7 @@ public class CharacterCreationScreen implements Screen {
             text.append("Proficiencies: \n");
             jsonClass.getJSONObject("proficiencies").toMap().forEach((s, o) -> {
                 text.append("\t").append(s).append(":");
-                if ((int) o >= 0) {
-                    text.append(" +".repeat((int) o));
-                } else {
-                    text.append(" -".repeat((int) o));
-                }
+                text.append(" +".repeat((int) o));
                 text.append("\n");
             });
             otherLines += jsonClass.getJSONObject("proficiencies").toMap().size();

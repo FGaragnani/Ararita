@@ -531,11 +531,7 @@ public class ClassCreationScreen implements Screen {
             text.append("Proficiencies:\n");
             proficiencies.forEach((s, o) -> {
                 text.append(" ").append(s).append(":");
-                if (o >= 0) {
-                    text.append(" +".repeat(o));
-                } else {
-                    text.append(" -".repeat(o));
-                }
+                text.append(" +".repeat(o));
                 text.append("\n");
             });
             otherLines += proficiencies.size();

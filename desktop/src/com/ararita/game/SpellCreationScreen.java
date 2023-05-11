@@ -21,7 +21,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
 public class SpellCreationScreen implements Screen {
@@ -556,7 +555,7 @@ public class SpellCreationScreen implements Screen {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }).map((pc) -> (pc.getName() + ", " + pc.getCharClass())).collect(Collectors.toList());
+        }).map((pc) -> (pc.getName() + ", " + pc.getCharClass())).toList();
         if (!charLearnable.isEmpty()) {
             Array<String> charLearnableNamesArray = new Array<>();
             charLearnable.forEach(charLearnableNamesArray::add);
