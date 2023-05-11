@@ -9,7 +9,11 @@
     "currHP": 30,
     "weakTo": [
         "Sword",
-        "Fire"
+        "Fire",
+        "Dagger",
+        "Spear",
+        "Light"
     ],
-    "speed": 6
+    "speed": 6,
+    "level": 1
 }
