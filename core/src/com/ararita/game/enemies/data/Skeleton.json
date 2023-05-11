@@ -6,7 +6,7 @@
     },
     "defense": 2,
     "attack": 2,
-    "name": "Thief",
+    "name": "Skeleton",
     "magicDefense": 5,
     "dead": false,
     "currHP": 25,
