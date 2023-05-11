@@ -2,11 +2,13 @@ package com.ararita.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -22,6 +24,9 @@ public class BattleSelectScreen implements Screen {
 
     TextButton confirmButton;
     TextButton exitButton;
+
+    Label title;
+    Label.LabelStyle titleStyle;
 
     Texture backgroundTexture;
     Sprite backgroundSprite;
@@ -49,10 +54,20 @@ public class BattleSelectScreen implements Screen {
         backgroundSprite.setSize((int) (Gdx.graphics.getWidth() * 1.1), (int) (Gdx.graphics.getHeight() * 1.1));
 
         /*
+            Setting the title.
+         */
+
+        titleStyle = skin.get("default", Label.LabelStyle.class);
+        titleStyle.font = game.titleFont;
+        title = new Label("ENEMY SELECTION", titleStyle);
+        title.setColor(Color.BLACK);
+        title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() - 150);
+
+        /*
             Creating the two main buttons.
          */
 
-        confirmButton = new TextButton("Confirm", game.textButtonStyle);
+        confirmButton = new TextButton("Battle!", game.textButtonStyle);
         confirmButton.setPosition((Gdx.graphics.getWidth() - (confirmButton.getWidth())) / 2, Gdx.graphics.getHeight() - 850);
         exitButton = new TextButton("Exit", game.textButtonStyle);
         exitButton.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, Gdx.graphics.getHeight() - 1000);
@@ -74,6 +89,7 @@ public class BattleSelectScreen implements Screen {
             Adding all actors.
          */
 
+        stage.addActor(title);
         stage.addActor(confirmButton);
         stage.addActor(exitButton);
 

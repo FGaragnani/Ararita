@@ -93,10 +93,7 @@ public class SettingsScreen implements Screen {
             }
         };
         confirmDeleteDialog.setResizable(false);
-        confirmDeleteDialog.text("""
-                 Do you want to delete all your save files?
-                 These include classes, spells and characters!
-                """, game.labelStyle);
+        confirmDeleteDialog.text(" Do you want to delete all your save files?\n These include classes, spells and " + "characters!\n", game.labelStyle);
         confirmDeleteDialog.button("Yes", true, game.textButtonStyle).button("No", false, game.textButtonStyle);
 
         /*

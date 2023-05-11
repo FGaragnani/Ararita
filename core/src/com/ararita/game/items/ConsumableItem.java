@@ -37,22 +37,34 @@ public class ConsumableItem extends Item implements Consumable {
     public void use(PC characterUsing) {
         for (Map.Entry<String, Integer> entry : effect.entrySet()) {
             switch (entry.getKey()) {
-                case "HP" ->
-                        characterUsing.setCurrHP(Math.min(characterUsing.maxHP(), characterUsing.getCurrHP() + entry.getValue()));
-                case "MP" ->
-                        characterUsing.setCurrMP(Math.min(characterUsing.maxMP(), characterUsing.getCurrMP() + entry.getValue()));
-                case "Strength" -> characterUsing.setStrength(characterUsing.getStrength() + entry.getValue());
-                case "Intelligence" ->
-                        characterUsing.setIntelligence(characterUsing.getIntelligence() + entry.getValue());
-                case "Vigor" -> characterUsing.setVigor(characterUsing.getVigor() + entry.getValue());
-                case "Agility" -> characterUsing.setAgility(characterUsing.getAgility() + entry.getValue());
-                case "Spirit" -> characterUsing.setSpirit(characterUsing.getSpirit() + entry.getValue());
-                case "Arcane" -> characterUsing.setArcane(characterUsing.getArcane() + entry.getValue());
-                case "Life" -> {
+                case "HP":
+                    characterUsing.setCurrHP(Math.min(characterUsing.maxHP(), characterUsing.getCurrHP() + entry.getValue()));
+                    break;
+                case "MP":
+                    characterUsing.setCurrMP(Math.min(characterUsing.maxMP(), characterUsing.getCurrMP() + entry.getValue()));
+                    break;
+                case "Strength":
+                    characterUsing.setStrength(characterUsing.getStrength() + entry.getValue());
+                    break;
+                case "Intelligence":
+                    characterUsing.setIntelligence(characterUsing.getIntelligence() + entry.getValue());
+                    break;
+                case "Vigor":
+                    characterUsing.setVigor(characterUsing.getVigor() + entry.getValue());
+                    break;
+                case "Agility":
+                    characterUsing.setAgility(characterUsing.getAgility() + entry.getValue());
+                    break;
+                case "Spirit":
+                    characterUsing.setSpirit(characterUsing.getSpirit() + entry.getValue());
+                    break;
+                case "Arcane":
+                    characterUsing.setArcane(characterUsing.getArcane() + entry.getValue());
+                    break;
+                case "Life":
                     if (characterUsing.isDead()) {
                         characterUsing.setHP(Math.min(characterUsing.maxHP(), entry.getValue()));
                     }
-                }
             }
             characterUsing.check();
         }
