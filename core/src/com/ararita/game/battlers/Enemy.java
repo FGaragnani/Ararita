@@ -23,8 +23,6 @@ public class Enemy implements Battler {
     Optional<String> statusEffect;
     List<String> weakTo;
 
-    Path image;
-
     /**
      * A new Enemy is created from scratch.
      *
@@ -69,6 +67,7 @@ public class Enemy implements Battler {
         this.defense = toCopy.getDefense();
         this.magicDefense = toCopy.getMagicDefense();
         this.speed = toCopy.getSpeed();
+        this.level = toCopy.getLevel();
         this.currHP = toCopy.getCurrHP();
         this.money = toCopy.getMoney();
         this.toDrop = toCopy.getToDrop();
@@ -273,13 +272,5 @@ public class Enemy implements Battler {
 
     public void setLevel(int level) {
         this.level = level;
-    }
-
-    public Path getImage() {
-        return image;
-    }
-
-    public void setImage(Path image) {
-        this.image = image;
     }
 }
