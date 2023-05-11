@@ -1,7 +1,6 @@
 package com.ararita.game;
 
 import com.ararita.game.battlers.Enemy;
-import com.ararita.game.items.Item;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -10,16 +9,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Objects;
@@ -38,6 +36,9 @@ public class BattleSelectScreen implements Screen {
     SelectBox<String> enemySelectBox;
     Array<String> enemies;
     Label statsLabel;
+
+    Texture enemyTexture;
+    Image enemyImage;
 
     Label title;
     Label.LabelStyle titleStyle;
@@ -125,8 +126,19 @@ public class BattleSelectScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 updateStats();
+                updateTexture();
             }
         });
+
+        /*
+            Setting the enemy texture and image.
+         */
+
+        enemyTexture = new Texture(Gdx.files.local("Enemies/" + enemySelectBox.getSelected() + ".png"));
+        enemyImage = new Image(new TextureRegionDrawable(enemyTexture));
+        enemyImage.setScale(10);
+        enemyImage.setPosition((Gdx.graphics.getWidth() - enemyImage.getWidth()) * 3 / 4 - 20,
+                Gdx.graphics.getHeight() - 650);
 
         /*
             Adding all actors.
@@ -137,6 +149,7 @@ public class BattleSelectScreen implements Screen {
         stage.addActor(exitButton);
         stage.addActor(enemySelectBox);
         stage.addActor(statsLabel);
+        stage.addActor(enemyImage);
 
         /*
             Initializing values.
@@ -189,6 +202,7 @@ public class BattleSelectScreen implements Screen {
     public void dispose() {
         stage.dispose();
         backgroundTexture.dispose();
+        enemyTexture.dispose();
     }
 
     public void updateStats() {
@@ -206,4 +220,10 @@ public class BattleSelectScreen implements Screen {
         enemy.getToDrop().entrySet().stream().sorted(Comparator.comparingDouble(Map.Entry::getValue)).forEach((entry) -> text.append(" - ").append(entry.getKey().getName()).append("\n"));
         statsLabel.setText(text);
     }
+
+    public void updateTexture(){
+        enemyTexture = new Texture(Gdx.files.local("Enemies/" + enemySelectBox.getSelected() + ".png"));
+        enemyImage.setDrawable(new TextureRegionDrawable(enemyTexture));
+    }
+
 }

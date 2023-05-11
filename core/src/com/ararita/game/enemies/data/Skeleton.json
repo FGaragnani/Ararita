@@ -2,7 +2,7 @@
     "money": 20,
     "toDrop": {
         "Ether": 0.04,
-        "Potion": 0.07
+        "Potion": 0.1
     },
     "defense": 2,
     "attack": 2,
@@ -14,7 +14,8 @@
     "weakTo": [
         "Wind",
         "Spear",
-        "Gloves"
+        "Gloves",
+        "Earth"
     ],
     "level": 3
 }
