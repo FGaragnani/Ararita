@@ -1,5 +1,7 @@
 package com.ararita.game;
 
+import com.ararita.game.battlers.Enemy;
+import com.ararita.game.items.Item;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -17,6 +19,9 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.Comparator;
+import java.util.Map;
 import java.util.Objects;
 
 public class BattleSelectScreen implements Screen {
@@ -32,6 +37,7 @@ public class BattleSelectScreen implements Screen {
 
     SelectBox<String> enemySelectBox;
     Array<String> enemies;
+    Label statsLabel;
 
     Label title;
     Label.LabelStyle titleStyle;
@@ -53,7 +59,7 @@ public class BattleSelectScreen implements Screen {
         this.camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
         enemies = new Array<>();
-        for(File f : Objects.requireNonNull(Global.enemySets.toFile().listFiles())){
+        for (File f : Objects.requireNonNull(Global.enemySets.toFile().listFiles())) {
             enemies.add(f.getName().substring(0, f.getName().length() - 5));
         }
 
@@ -75,6 +81,15 @@ public class BattleSelectScreen implements Screen {
         title = new Label("ENEMY SELECTION", titleStyle);
         title.setColor(Color.BLACK);
         title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() - 150);
+
+        /*
+            Creating the statistics label.
+         */
+
+        statsLabel = new Label("", skin.get("default", Label.LabelStyle.class));
+        statsLabel.setFontScale(2.8f, 3.8f);
+        statsLabel.setColor(Color.BLACK);
+        statsLabel.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 6, Gdx.graphics.getHeight() - 500);
 
         /*
             Creating the two main buttons.
@@ -106,6 +121,12 @@ public class BattleSelectScreen implements Screen {
         enemySelectBox.setItems(enemies);
         enemySelectBox.setWidth(400);
         enemySelectBox.setPosition((Gdx.graphics.getWidth() - enemySelectBox.getWidth()) / 2, Gdx.graphics.getHeight() - 500);
+        enemySelectBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                updateStats();
+            }
+        });
 
         /*
             Adding all actors.
@@ -115,6 +136,13 @@ public class BattleSelectScreen implements Screen {
         stage.addActor(confirmButton);
         stage.addActor(exitButton);
         stage.addActor(enemySelectBox);
+        stage.addActor(statsLabel);
+
+        /*
+            Initializing values.
+         */
+
+        updateStats();
     }
 
     @Override
@@ -161,5 +189,21 @@ public class BattleSelectScreen implements Screen {
     public void dispose() {
         stage.dispose();
         backgroundTexture.dispose();
+    }
+
+    public void updateStats() {
+        StringBuilder text = new StringBuilder();
+        Enemy enemy;
+        try {
+            enemy = new Enemy(enemySelectBox.getSelected());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        text.append("Level: ").append(enemy.getLevel()).append("\n");
+        text.append("Weak to: \n");
+        enemy.getWeakTo().forEach((string) -> text.append(" - ").append(string).append("\n"));
+        text.append("\nMay drop: \n");
+        enemy.getToDrop().entrySet().stream().sorted(Comparator.comparingDouble(Map.Entry::getValue)).forEach((entry) -> text.append(" - ").append(entry.getKey().getName()).append("\n"));
+        statsLabel.setText(text);
     }
 }
