@@ -103,6 +103,7 @@ public class BattleSelectScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
+                    game.audio.stop();
                     dispose();
                     GlobalBattle battle = new GlobalBattle(Global.getEnemy(enemySelectBox.getSelected()));
                     game.setScreen(new BattleScreen(game, battle));
@@ -142,8 +143,7 @@ public class BattleSelectScreen implements Screen {
         enemyTexture = new Texture(Gdx.files.local("Enemies/" + enemySelectBox.getSelected() + ".png"));
         enemyImage = new Image(new TextureRegionDrawable(enemyTexture));
         enemyImage.setScale(10);
-        enemyImage.setPosition((Gdx.graphics.getWidth() - enemyImage.getWidth()) * 3 / 4 - 20,
-                Gdx.graphics.getHeight() - 650);
+        enemyImage.setPosition((Gdx.graphics.getWidth() - enemyImage.getWidth()) * 3 / 4 - 20, Gdx.graphics.getHeight() - 650);
 
         /*
             Adding all actors.
