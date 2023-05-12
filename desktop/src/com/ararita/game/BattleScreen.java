@@ -4,16 +4,18 @@ import com.ararita.game.battlers.Enemy;
 import com.ararita.game.battlers.PC;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 
 import java.util.List;
 import java.util.Random;
@@ -36,6 +38,9 @@ public class BattleScreen implements Screen {
     Image secondCharImage;
     Image thirdCharImage;
     Image fourthCharImage;
+
+    Pixmap labelColor;
+    TypingLabel labelMain;
 
     Texture backgroundTexture;
     Sprite backgroundSprite;
@@ -101,6 +106,17 @@ public class BattleScreen implements Screen {
         fourthCharImage.setPosition((Gdx.graphics.getWidth() - fourthCharImage.getWidth()) * 3 / 4 + 200, Gdx.graphics.getHeight() - 900);
 
         /*
+            Setting the main label.
+         */
+
+        labelMain = new TypingLabel("", game.skin);
+        labelColor = new Pixmap(Gdx.graphics.getWidth() / 2, 200, Pixmap.Format.RGB888);
+        labelColor.setColor(Color.BLACK);
+        labelColor.fill();
+        labelMain.getStyle().background = new Image(new Texture(labelColor)).getDrawable();
+        labelMain.setPosition(Gdx.graphics.getWidth() / 2.0f, Gdx.graphics.getHeight() - 100);
+
+        /*
             Adding all actors to the stage.
          */
 
@@ -109,6 +125,7 @@ public class BattleScreen implements Screen {
         stage.addActor(secondCharImage);
         stage.addActor(thirdCharImage);
         stage.addActor(fourthCharImage);
+        stage.addActor(labelMain);
 
         /*
             Setting everything else.
@@ -163,6 +180,7 @@ public class BattleScreen implements Screen {
         backgroundTexture.dispose();
         enemyTexture.dispose();
         charSheet.dispose();
+        labelColor.dispose();
     }
 
     public void updateImages() {
