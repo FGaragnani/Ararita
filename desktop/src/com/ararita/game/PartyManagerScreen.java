@@ -62,8 +62,7 @@ public class PartyManagerScreen implements Screen {
     Animation<TextureRegion> partyAnimation;
     Animation<TextureRegion> reserveAnimation;
     Texture charSheet;
-    TextureRegion[][] tmpParty;
-    TextureRegion[][] tmpReserve;
+    TextureRegion[][] tmp;
     TextureRegion currentFrame;
     float statePartyTime;
     float stateReserveTime;
@@ -103,12 +102,10 @@ public class PartyManagerScreen implements Screen {
          */
 
         charSheet = new Texture(Gdx.files.internal("General/msprites.png"));
-        tmpParty = TextureRegion.split(charSheet, charSheet.getWidth() / (game.spriteFrameCols * 6), charSheet.getHeight());
-        tmpReserve = TextureRegion.split(charSheet, charSheet.getWidth() / (game.spriteFrameCols * 6), charSheet.getHeight());
+        tmp = TextureRegion.split(charSheet, charSheet.getWidth() / (game.spriteFrameCols * 6), charSheet.getHeight());
         spriteImageParty = new Image();
         spriteImageParty.setScale(7);
         spriteImageReserve = new Image();
-        spriteImageReserve.setPosition(Gdx.graphics.getWidth() - 120, Gdx.graphics.getHeight() - 200);
         spriteImageReserve.setScale(7);
 
         /*
@@ -536,13 +533,13 @@ public class PartyManagerScreen implements Screen {
         int index = 0;
         if (inParty) {
             for (int i = listPosition; i < game.spriteFrameCols + listPosition; i++) {
-                walkFrames[index++] = tmpParty[0][i];
+                walkFrames[index++] = tmp[0][i];
             }
             partyAnimation = new Animation<>(0.200f, walkFrames);
             statePartyTime = 0f;
         } else {
             for (int i = listPosition; i < game.spriteFrameCols + listPosition; i++) {
-                walkFrames[index++] = tmpReserve[0][i];
+                walkFrames[index++] = tmp[0][i];
             }
             reserveAnimation = new Animation<>(0.200f, walkFrames);
             stateReserveTime = 0f;
