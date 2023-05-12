@@ -17,7 +17,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.random.RandomGenerator;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -74,8 +73,7 @@ public class Global {
      * @return The random double.
      */
     public static double getRandomZeroOne() {
-        RandomGenerator rng = RandomGenerator.getDefault();
-        return rng.nextDouble(0, 1);
+        return new Random().nextDouble();
     }
 
     /**

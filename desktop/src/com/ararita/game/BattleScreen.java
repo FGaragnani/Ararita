@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.Random;
-import java.util.random.RandomGenerator;
 
 public class BattleScreen implements Screen {
 
@@ -43,9 +42,7 @@ public class BattleScreen implements Screen {
             Setting the background texture.
          */
 
-        backgroundTexture =
-                new Texture(Gdx.files.local("assets/Backgrounds/" + (new Random().nextInt(4) + 1) +
-                        ".png"));
+        backgroundTexture = new Texture(Gdx.files.local("assets/Backgrounds/" + (new Random().nextInt(4) + 1) + ".png"));
         backgroundSprite = new Sprite(backgroundTexture);
         backgroundSprite.setSize((int) (Gdx.graphics.getWidth() * 1.1), (int) (Gdx.graphics.getHeight() * 1.1));
     }
