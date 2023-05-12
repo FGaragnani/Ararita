@@ -8,15 +8,14 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;
@@ -46,6 +45,7 @@ public class BattleScreen implements Screen {
 
     Pixmap labelColor;
     TypingLabel labelMain;
+    Label.LabelStyle labelStyle;
 
     ProgressBar firstBar;
     ProgressBar secondBar;
@@ -63,6 +63,8 @@ public class BattleScreen implements Screen {
 
     Texture handTexture;
     Image handImage;
+
+    Dialog runDialog;
 
     Enemy enemy;
     List<PC> party;
@@ -109,6 +111,16 @@ public class BattleScreen implements Screen {
         enemyImage.setPosition((Gdx.graphics.getWidth() - enemyImage.getWidth()) / 4 - 100, Gdx.graphics.getHeight() - 750);
 
         /*
+            Setting the label style.
+         */
+
+        labelStyle = new Skin(Gdx.files.internal(game.stylesPath)).get("default", Label.LabelStyle.class);
+        labelColor = new Pixmap(Gdx.graphics.getWidth(), 100, Pixmap.Format.RGB888);
+        labelColor.setColor(Color.BLACK);
+        labelColor.fill();
+        labelStyle.background = new TextureRegionDrawable(new TextureRegion(new Texture(labelColor)));
+
+        /*
             Setting the characters' images.
          */
 
@@ -129,17 +141,6 @@ public class BattleScreen implements Screen {
         secondCharImage.setPosition((Gdx.graphics.getWidth() - secondCharImage.getWidth()) * 3 / 4, Gdx.graphics.getHeight() - 700);
         thirdCharImage.setPosition((Gdx.graphics.getWidth() - thirdCharImage.getWidth()) * 3 / 4 + 100, Gdx.graphics.getHeight() - 800);
         fourthCharImage.setPosition((Gdx.graphics.getWidth() - fourthCharImage.getWidth()) * 3 / 4 + 200, Gdx.graphics.getHeight() - 900);
-
-        /*
-            Setting the main label.
-         */
-
-        labelMain = new TypingLabel("", game.skin);
-        labelColor = new Pixmap(Gdx.graphics.getWidth() / 2, 200, Pixmap.Format.RGB888);
-        labelColor.setColor(Color.BLACK);
-        labelColor.fill();
-        labelMain.getStyle().background = new Image(new Texture(labelColor)).getDrawable();
-        labelMain.setPosition(Gdx.graphics.getWidth() / 2.0f, Gdx.graphics.getHeight() - 100);
 
         /*
             Adding the hand cursor.
@@ -181,11 +182,36 @@ public class BattleScreen implements Screen {
         runButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                dispose();
-                game.playAudio(game.cityTheme);
-                game.setScreen(new CityScreen(game));
+                runDialog.show(stage);
             }
         });
+
+        attackButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //battle.attack();
+            }
+        });
+
+        /*
+            Creating all the dialogs.
+         */
+
+        runDialog = new Dialog("", game.skin) {
+            public void result(Object confirm) {
+                if (confirm.equals(true)) {
+                    dispose();
+                    game.playAudio(game.cityTheme);
+                    game.setScreen(new CityScreen(game));
+                }
+                hide();
+            }
+        };
+        runDialog.setResizable(false);
+        runDialog.text(" Do you want to run away?\n All used items will remain lost! \n ", game.labelStyle);
+        runDialog.button("Yes", true, game.textButtonStyle);
+        runDialog.button("No", false, game.textButtonStyle);
+        runDialog.setPosition(0, 0);
 
         /*
             Adding all actors to the stage.
@@ -196,7 +222,6 @@ public class BattleScreen implements Screen {
         stage.addActor(secondCharImage);
         stage.addActor(thirdCharImage);
         stage.addActor(fourthCharImage);
-        stage.addActor(labelMain);
         stage.addActor(handImage);
         stage.addActor(attackButton);
         stage.addActor(castButton);
@@ -209,6 +234,7 @@ public class BattleScreen implements Screen {
 
         setProgressBars();
         updateHandImage();
+        updateLabel("turn");
     }
 
     @Override
@@ -321,4 +347,27 @@ public class BattleScreen implements Screen {
         int toUse = battle.getBattlers().stream().filter((battler) -> (battler instanceof PC)).collect(Collectors.toList()).indexOf(battle.getBattlers().get(currentBattler));
         handImage.setPosition((Gdx.graphics.getWidth() - firstCharImage.getWidth()) * 3 / 4 + (100 * (toUse - 1)) - 50, Gdx.graphics.getHeight() - 550 - (100 * toUse));
     }
+
+    public void updateLabel(String type){
+        if (labelMain != null) {
+            labelMain.setText("");
+        }
+        switch(type) {
+            case "turn": labelMain = new TypingLabel("It's " + battle.getBattlers().get(currentBattler).getName() + "'s turn.", labelStyle);
+        }
+        labelMain.setPosition((Gdx.graphics.getWidth() - labelMain.getWidth()) / 2.0f, Gdx.graphics.getHeight() - 100);
+        labelMain.setFontScale(4.8f, 6);
+        stage.addActor(labelMain);
+    }
+
+    public void updateCurrentBattler(){
+        if(battle.isBattleFinished()){
+            return;
+        }
+        currentBattler++;
+        while(battle.getBattlers().get(currentBattler).isDead()){
+            currentBattler++;
+        }
+    }
+
 }
