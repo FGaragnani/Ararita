@@ -7,7 +7,7 @@
         "Water",
         "Chaos"
     ],
-    "otherCharacters": ["Robin"],
+    "otherCharacters": [],
     "money": 0,
     "spellNamesSet": [],
     "weaponTypesSet": [
@@ -25,7 +25,10 @@
         "Paralysis",
         "Blindness"
     ],
-    "party": ["Orion"],
+    "party": [
+        "Orion",
+        "Robin"
+    ],
     "classNamesSet": [
         "Knight",
         "Black Mage",

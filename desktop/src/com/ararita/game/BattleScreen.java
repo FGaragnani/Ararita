@@ -7,9 +7,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 
@@ -28,6 +30,13 @@ public class BattleScreen implements Screen {
     Texture enemyTexture;
     Image enemyImage;
 
+    Texture charSheet;
+    TextureRegion[][] tmp;
+    Image firstCharImage;
+    Image secondCharImage;
+    Image thirdCharImage;
+    Image fourthCharImage;
+
     Texture backgroundTexture;
     Sprite backgroundSprite;
 
@@ -42,7 +51,6 @@ public class BattleScreen implements Screen {
 
         this.game = game;
         this.battle = battle;
-        battle.sortBattleOrder();
         this.stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
@@ -68,14 +76,45 @@ public class BattleScreen implements Screen {
         enemyTexture = new Texture(Gdx.files.local("Enemies/" + enemy.getName() + ".png"));
         enemyImage = new Image(new TextureRegionDrawable(enemyTexture));
         enemyImage.setScale(7);
-        enemyImage.setPosition((Gdx.graphics.getWidth() - enemyImage.getWidth()) / 4 - 100,
-                Gdx.graphics.getHeight() - 750);
+        enemyImage.setPosition((Gdx.graphics.getWidth() - enemyImage.getWidth()) / 4 - 100, Gdx.graphics.getHeight() - 750);
+
+        /*
+            Setting the characters' images.
+         */
+
+        charSheet = new Texture(Gdx.files.internal("General/msprites.png"));
+        tmp = TextureRegion.split(charSheet, charSheet.getWidth() / (game.spriteFrameCols * 6), charSheet.getHeight());
+        firstCharImage = new Image();
+        secondCharImage = new Image();
+        thirdCharImage = new Image();
+        fourthCharImage = new Image();
+        firstCharImage.setScale(8.5f);
+        secondCharImage.setScale(8.5f);
+        thirdCharImage.setScale(8.5f);
+        fourthCharImage.setScale(8.5f);
+
+        updateImages();
+
+        firstCharImage.setPosition((Gdx.graphics.getWidth() - firstCharImage.getWidth()) * 3 / 4 - 100, Gdx.graphics.getHeight() - 600);
+        secondCharImage.setPosition((Gdx.graphics.getWidth() - secondCharImage.getWidth()) * 3 / 4, Gdx.graphics.getHeight() - 700);
+        thirdCharImage.setPosition((Gdx.graphics.getWidth() - thirdCharImage.getWidth()) * 3 / 4 + 100, Gdx.graphics.getHeight() - 800);
+        fourthCharImage.setPosition((Gdx.graphics.getWidth() - fourthCharImage.getWidth()) * 3 / 4 + 200, Gdx.graphics.getHeight() - 900);
 
         /*
             Adding all actors to the stage.
          */
 
         stage.addActor(enemyImage);
+        stage.addActor(firstCharImage);
+        stage.addActor(secondCharImage);
+        stage.addActor(thirdCharImage);
+        stage.addActor(fourthCharImage);
+
+        /*
+            Setting everything else.
+         */
+
+        battle.sortBattleOrder();
     }
 
     @Override
@@ -123,5 +162,23 @@ public class BattleScreen implements Screen {
         stage.dispose();
         backgroundTexture.dispose();
         enemyTexture.dispose();
+        charSheet.dispose();
+    }
+
+    public void updateImages() {
+        firstCharImage.setDrawable(new TextureRegionDrawable(tmp[0][game.spriteNames.indexOf(party.get(0).getImage()) * 3]));
+        firstCharImage.setSize(tmp[0][0].getRegionWidth(), tmp[0][0].getRegionHeight());
+        if (party.size() >= 2) {
+            secondCharImage.setDrawable(new TextureRegionDrawable(tmp[0][game.spriteNames.indexOf(party.get(1).getImage()) * 3]));
+            secondCharImage.setSize(tmp[0][0].getRegionWidth(), tmp[0][0].getRegionHeight());
+        }
+        if (party.size() >= 3) {
+            thirdCharImage.setDrawable(new TextureRegionDrawable(tmp[0][game.spriteNames.indexOf(party.get(2).getImage()) * 3]));
+            thirdCharImage.setSize(tmp[0][0].getRegionWidth(), tmp[0][0].getRegionHeight());
+        }
+        if (party.size() >= 4) {
+            fourthCharImage.setDrawable(new TextureRegionDrawable(tmp[0][game.spriteNames.indexOf(party.get(3).getImage()) * 3]));
+            fourthCharImage.setSize(tmp[0][0].getRegionWidth(), tmp[0][0].getRegionHeight());
+        }
     }
 }
