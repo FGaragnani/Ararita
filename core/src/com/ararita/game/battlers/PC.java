@@ -95,6 +95,7 @@ public class PC extends AbstractBattler implements Battler {
         }
     }
 
+    @Override
     public String getName() {
         return name;
     }

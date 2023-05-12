@@ -174,6 +174,7 @@ public class Enemy implements Battler {
         setCurrHP(damage);
     }
 
+    @Override
     public String getName() {
         return name;
     }

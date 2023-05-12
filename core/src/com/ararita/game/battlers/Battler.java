@@ -11,4 +11,5 @@ public interface Battler {
     int hasMagicalDefense();
     int hasAttackSpeed();
     boolean canAttack();
+    String getName();
 }

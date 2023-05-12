@@ -7,7 +7,7 @@
         "Water",
         "Chaos"
     ],
-    "otherCharacters": [],
+    "otherCharacters": ["Luna"],
     "money": 0,
     "spellNamesSet": [],
     "weaponTypesSet": [
@@ -28,8 +28,7 @@
     "party": [
         "Orion",
         "Robin",
-        "Arthur",
-        "Luna"
+        "Arthur"
     ],
     "classNamesSet": [
         "Knight",
