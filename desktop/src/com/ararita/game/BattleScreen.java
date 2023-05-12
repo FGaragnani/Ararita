@@ -10,10 +10,13 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;
@@ -49,6 +52,12 @@ public class BattleScreen implements Screen {
     ProgressBar thirdBar;
     ProgressBar fourthBar;
 
+    TextButton.TextButtonStyle textButtonStyle;
+    TextButton attackButton;
+    TextButton castButton;
+    TextButton itemButton;
+    TextButton runButton;
+
     Texture backgroundTexture;
     Sprite backgroundSprite;
 
@@ -67,6 +76,7 @@ public class BattleScreen implements Screen {
 
         this.game = game;
         this.battle = battle;
+        battle.sortBattleOrder();
         this.stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
@@ -77,6 +87,9 @@ public class BattleScreen implements Screen {
         enemy = battle.getEnemy();
         party = battle.getCharacters();
         currentBattler = 0;
+
+        textButtonStyle = skin.get("default", TextButton.TextButtonStyle.class);
+        textButtonStyle.font = game.normalFont;
 
         /*
             Setting the background texture.
@@ -138,6 +151,43 @@ public class BattleScreen implements Screen {
         handImage.setSize(handTexture.getWidth(), handTexture.getHeight());
 
         /*
+            Setting the four main buttons.
+         */
+
+        attackButton = new TextButton("Attack", textButtonStyle);
+        castButton = new TextButton("Cast", textButtonStyle);
+        itemButton = new TextButton("Items", textButtonStyle);
+        runButton = new TextButton("Run", textButtonStyle);
+
+        attackButton.setWidth(Gdx.graphics.getWidth() / 4f);
+        castButton.setWidth(Gdx.graphics.getWidth() / 4f);
+        itemButton.setWidth(Gdx.graphics.getWidth() / 4f);
+        runButton.setWidth(Gdx.graphics.getWidth() / 4f);
+
+        attackButton.setHeight(100);
+        castButton.setHeight(100);
+        itemButton.setHeight(100);
+        runButton.setHeight(100);
+
+        attackButton.setPosition(0, 0);
+        castButton.setPosition(Gdx.graphics.getWidth() / 4f, 0);
+        itemButton.setPosition(Gdx.graphics.getWidth() / 2f, 0);
+        runButton.setPosition(Gdx.graphics.getWidth() * 3 / 4f, 0);
+
+        /*
+            Adding all listeners.
+         */
+
+        runButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                dispose();
+                game.playAudio(game.cityTheme);
+                game.setScreen(new CityScreen(game));
+            }
+        });
+
+        /*
             Adding all actors to the stage.
          */
 
@@ -148,13 +198,16 @@ public class BattleScreen implements Screen {
         stage.addActor(fourthCharImage);
         stage.addActor(labelMain);
         stage.addActor(handImage);
+        stage.addActor(attackButton);
+        stage.addActor(castButton);
+        stage.addActor(itemButton);
+        stage.addActor(runButton);
 
         /*
             Setting everything else.
          */
 
         setProgressBars();
-        battle.sortBattleOrder();
         updateHandImage();
     }
 
@@ -266,7 +319,6 @@ public class BattleScreen implements Screen {
             handImage.setVisible(true);
         }
         int toUse = battle.getBattlers().stream().filter((battler) -> (battler instanceof PC)).collect(Collectors.toList()).indexOf(battle.getBattlers().get(currentBattler));
-        handImage.setPosition((Gdx.graphics.getWidth() - firstCharImage.getWidth()) * 3 / 4 + (100 * (toUse - 1)) - 50
-                , Gdx.graphics.getHeight() - 550 - (100 * toUse));
+        handImage.setPosition((Gdx.graphics.getWidth() - firstCharImage.getWidth()) * 3 / 4 + (100 * (toUse - 1)) - 50, Gdx.graphics.getHeight() - 550 - (100 * toUse));
     }
 }
