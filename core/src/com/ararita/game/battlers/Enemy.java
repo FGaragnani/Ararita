@@ -4,10 +4,8 @@ import com.ararita.game.Global;
 import com.ararita.game.items.Item;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public class Enemy implements Battler {
 
@@ -20,7 +18,7 @@ public class Enemy implements Battler {
     int money;
     int level;
     Map<Item, Double> toDrop;
-    Optional<String> statusEffect;
+    String statusEffect;
     List<String> weakTo;
 
     /**
@@ -50,6 +48,7 @@ public class Enemy implements Battler {
         this.money = money;
         this.toDrop = toDrop;
         this.weakTo = weakTo;
+        this.statusEffect = "no";
         Global.addEnemy(this);
     }
 
@@ -72,6 +71,7 @@ public class Enemy implements Battler {
         this.money = toCopy.getMoney();
         this.toDrop = toCopy.getToDrop();
         this.weakTo = toCopy.getWeakTo();
+        this.statusEffect = "no";
     }
 
     /**
@@ -158,11 +158,11 @@ public class Enemy implements Battler {
     @Override
     public boolean canAttack() {
 
-        if (getStatusEffect().equals(Optional.of("Blindness"))) {
+        if (getStatusEffect().equals("Blindness")) {
             return Global.getRandomZeroOne() < Global.BLINDNESS_INEFFICIENCY;
         }
 
-        return !isDead() && !getStatusEffect().equals(Optional.of("Paralysis"));
+        return !isDead() && !getStatusEffect().equals("Paralysis");
     }
 
     /**
@@ -245,17 +245,17 @@ public class Enemy implements Battler {
     }
 
     public void setStatusEffect(String statusEffect) {
-        this.statusEffect = Optional.of(statusEffect);
+        this.statusEffect = statusEffect;
     }
 
     /**
      * The enemy's status effect is removed.
      */
     public void removeStatusEffect() {
-        this.statusEffect = Optional.empty();
+        this.statusEffect = "no";
     }
 
-    public Optional<String> getStatusEffect() {
+    public String getStatusEffect() {
         return statusEffect;
     }
 
