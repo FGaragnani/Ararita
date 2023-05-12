@@ -443,7 +443,6 @@ public class PartyManagerScreen implements Screen {
 
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
-
         currentFrame = partyAnimation.getKeyFrame(statePartyTime, true);
         spriteImageParty.setDrawable(new TextureRegionDrawable(currentFrame));
         spriteImageParty.setSize(currentFrame.getRegionWidth(), currentFrame.getRegionHeight());

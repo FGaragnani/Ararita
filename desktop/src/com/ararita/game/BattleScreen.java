@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -42,11 +43,17 @@ public class BattleScreen implements Screen {
     Pixmap labelColor;
     TypingLabel labelMain;
 
+    ProgressBar firstBar;
+    ProgressBar secondBar;
+    ProgressBar thirdBar;
+    ProgressBar fourthBar;
+
     Texture backgroundTexture;
     Sprite backgroundSprite;
 
     Enemy enemy;
     List<PC> party;
+    int currentBattler;
 
     public BattleScreen(final Ararita game, final GlobalBattle battle) {
 
@@ -65,6 +72,7 @@ public class BattleScreen implements Screen {
 
         enemy = battle.getEnemy();
         party = battle.getCharacters();
+        currentBattler = 0;
 
         /*
             Setting the background texture.
@@ -131,6 +139,7 @@ public class BattleScreen implements Screen {
             Setting everything else.
          */
 
+        setProgressBars();
         battle.sortBattleOrder();
     }
 
@@ -197,6 +206,33 @@ public class BattleScreen implements Screen {
         if (party.size() >= 4) {
             fourthCharImage.setDrawable(new TextureRegionDrawable(tmp[0][game.spriteNames.indexOf(party.get(3).getImage()) * 3]));
             fourthCharImage.setSize(tmp[0][0].getRegionWidth(), tmp[0][0].getRegionHeight());
+        }
+    }
+
+    public void setProgressBars() {
+        ProgressBar.ProgressBarStyle progressBarStyle = skin.get("default-horizontal", ProgressBar.ProgressBarStyle.class);
+        progressBarStyle.background.setMinHeight(20);
+        firstBar = new ProgressBar(0, party.get(0).maxHP(), 1, false, progressBarStyle);
+        firstBar.setWidth(100);
+        firstBar.setPosition(firstCharImage.getX() + 20, firstCharImage.getY() + firstCharImage.getHeight() + 135);
+        stage.addActor(firstBar);
+        if (party.size() >= 2) {
+            secondBar = new ProgressBar(0, party.get(1).maxHP(), 1, false, progressBarStyle);
+            secondBar.setWidth(100);
+            secondBar.setPosition(secondCharImage.getX() + 20, secondCharImage.getY() + secondCharImage.getHeight() + 135);
+            stage.addActor(secondBar);
+        }
+        if (party.size() >= 3) {
+            thirdBar = new ProgressBar(0, party.get(2).maxHP(), 1, false, progressBarStyle);
+            thirdBar.setWidth(100);
+            thirdBar.setPosition(thirdCharImage.getX() + 20, thirdCharImage.getY() + thirdCharImage.getHeight() + 135);
+            stage.addActor(thirdBar);
+        }
+        if (party.size() >= 4) {
+            fourthBar = new ProgressBar(0, party.get(3).maxHP(), 1, false, progressBarStyle);
+            fourthBar.setWidth(100);
+            fourthBar.setPosition(fourthCharImage.getX() + 20, fourthCharImage.getY() + fourthCharImage.getHeight() + 135);
+            stage.addActor(fourthBar);
         }
     }
 }
