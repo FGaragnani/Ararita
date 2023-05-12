@@ -20,6 +20,7 @@ import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class BattleScreen implements Screen {
 
@@ -50,6 +51,9 @@ public class BattleScreen implements Screen {
 
     Texture backgroundTexture;
     Sprite backgroundSprite;
+
+    Texture handTexture;
+    Image handImage;
 
     Enemy enemy;
     List<PC> party;
@@ -125,6 +129,15 @@ public class BattleScreen implements Screen {
         labelMain.setPosition(Gdx.graphics.getWidth() / 2.0f, Gdx.graphics.getHeight() - 100);
 
         /*
+            Adding the hand cursor.
+         */
+
+        handTexture = new Texture(Gdx.files.local("General/hand.png"));
+        handImage = new Image(new TextureRegionDrawable(handTexture));
+        handImage.setScale(2);
+        handImage.setSize(handTexture.getWidth(), handTexture.getHeight());
+
+        /*
             Adding all actors to the stage.
          */
 
@@ -134,13 +147,15 @@ public class BattleScreen implements Screen {
         stage.addActor(thirdCharImage);
         stage.addActor(fourthCharImage);
         stage.addActor(labelMain);
+        stage.addActor(handImage);
 
         /*
             Setting everything else.
          */
 
-        battle.sortBattleOrder();
         setProgressBars();
+        battle.sortBattleOrder();
+        updateHandImage();
     }
 
     @Override
@@ -190,6 +205,7 @@ public class BattleScreen implements Screen {
         enemyTexture.dispose();
         charSheet.dispose();
         labelColor.dispose();
+        handTexture.dispose();
     }
 
     /**
@@ -240,5 +256,17 @@ public class BattleScreen implements Screen {
             fourthBar.setPosition(fourthCharImage.getX() + 20, fourthCharImage.getY() + fourthCharImage.getHeight() + 135);
             stage.addActor(fourthBar);
         }
+    }
+
+    public void updateHandImage() {
+        if (battle.getBattlers().get(currentBattler) instanceof Enemy) {
+            handImage.setVisible(false);
+            return;
+        } else {
+            handImage.setVisible(true);
+        }
+        int toUse = battle.getBattlers().stream().filter((battler) -> (battler instanceof PC)).collect(Collectors.toList()).indexOf(battle.getBattlers().get(currentBattler));
+        handImage.setPosition((Gdx.graphics.getWidth() - firstCharImage.getWidth()) * 3 / 4 + (100 * (toUse - 1)) - 50
+                , Gdx.graphics.getHeight() - 550 - (100 * toUse));
     }
 }

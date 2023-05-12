@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5676402a-2187-4a8f-bfe0-ac646c9fd387" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/assets/General/hand.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/BattleScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/BattleScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/BattleSelectScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/BattleSelectScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,10 +93,10 @@
       <recent name="" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets\General" />
       <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets\Backgrounds" />
       <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets\README" />
       <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets\Icons" />
-      <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets\General" />
       <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets\Settings" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
