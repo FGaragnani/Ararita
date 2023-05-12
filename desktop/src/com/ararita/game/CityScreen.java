@@ -55,12 +55,7 @@ public class CityScreen implements Screen {
             Audio initialization.
          */
 
-        if (game.audio == null) {
-            game.audio = Gdx.audio.newMusic(Gdx.files.local("Music/CityTheme.mp3"));
-            game.audio.setVolume(game.volume / 1000f);
-            game.audio.setLooping(true);
-            game.audio.play();
-        }
+        game.playAudio(game.cityTheme);
 
         /*
             Setting the background texture.
@@ -153,8 +148,7 @@ public class CityScreen implements Screen {
         mainMenuButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.audio.dispose();
-                game.audio = null;
+                game.stopAudio();
                 dispose();
                 game.setScreen(new MainMenuScreen(game));
             }
@@ -233,4 +227,5 @@ public class CityScreen implements Screen {
         backgroundTexture.dispose();
         skin.dispose();
     }
+
 }

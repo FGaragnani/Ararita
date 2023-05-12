@@ -40,6 +40,8 @@ public class Ararita extends Game {
     public final String settingsPath = "assets/Settings/settings.json";
     public final String stylesPath = "Pixthulhu/pixthulhu-ui.json";
 
+    public final String cityTheme = "Music/CityTheme.mp3";
+
     Skin skin;
     Music audio;
 
@@ -119,6 +121,30 @@ public class Ararita extends Game {
         normalFont.dispose();
         titleFont.dispose();
         bigFont.dispose();
+        audio.dispose();
     }
 
+    /**
+     * If the audio is not playing, the audio is set playing the specified music.
+     *
+     * @param music The String containing a path to the music file.
+     */
+    public void playAudio(String music) {
+        if (audio == null) {
+            audio = Gdx.audio.newMusic(Gdx.files.local(music));
+            audio.setVolume(volume / 1000f);
+            audio.setLooping(true);
+            audio.play();
+        }
+    }
+
+    /**
+     * If the music is playing, it is stopped.
+     */
+    public void stopAudio() {
+        if (audio != null) {
+            audio.dispose();
+            audio = null;
+        }
+    }
 }

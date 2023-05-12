@@ -103,7 +103,7 @@ public class BattleSelectScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    game.audio.stop();
+                    game.stopAudio();
                     dispose();
                     GlobalBattle battle = new GlobalBattle(Global.getEnemy(enemySelectBox.getSelected()));
                     game.setScreen(new BattleScreen(game, battle));
