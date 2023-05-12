@@ -139,8 +139,8 @@ public class BattleScreen implements Screen {
             Setting everything else.
          */
 
-        setProgressBars();
         battle.sortBattleOrder();
+        setProgressBars();
     }
 
     @Override
@@ -192,6 +192,9 @@ public class BattleScreen implements Screen {
         labelColor.dispose();
     }
 
+    /**
+     * The character images are set.
+     */
     public void updateImages() {
         firstCharImage.setDrawable(new TextureRegionDrawable(tmp[0][game.spriteNames.indexOf(party.get(0).getImage()) * 3]));
         firstCharImage.setSize(tmp[0][0].getRegionWidth(), tmp[0][0].getRegionHeight());
@@ -209,6 +212,9 @@ public class BattleScreen implements Screen {
         }
     }
 
+    /**
+     * The health progress bars are set.
+     */
     public void setProgressBars() {
         ProgressBar.ProgressBarStyle progressBarStyle = skin.get("default-horizontal", ProgressBar.ProgressBarStyle.class);
         progressBarStyle.background.setMinHeight(20);

@@ -210,6 +210,9 @@ public class BattleSelectScreen implements Screen {
         enemyTexture.dispose();
     }
 
+    /**
+     * The enemy stats label is updated.
+     */
     public void updateStats() {
         StringBuilder text = new StringBuilder();
         Enemy enemy;
@@ -226,6 +229,9 @@ public class BattleSelectScreen implements Screen {
         statsLabel.setText(text);
     }
 
+    /**
+     * The enemy image is updated.
+     */
     public void updateTexture(){
         enemyTexture = new Texture(Gdx.files.local("Enemies/" + enemySelectBox.getSelected() + ".png"));
         enemyImage.setDrawable(new TextureRegionDrawable(enemyTexture));
