@@ -8,6 +8,8 @@ import com.ararita.game.spells.Spell;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class GlobalBattle {
 
@@ -178,5 +180,17 @@ public class GlobalBattle {
 
     public List<Battler> getBattlers() {
         return battlers;
+    }
+
+    public Enemy getEnemy(){
+        try {
+            return (Enemy) getBattlers().stream().filter((battler -> battler instanceof Enemy)).findFirst().orElseThrow((Supplier<Throwable>) () -> null);
+        } catch (Throwable e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<PC> getCharacters(){
+        return getBattlers().stream().filter((battler) -> battler instanceof PC).map((battler) -> (PC) battler).collect(Collectors.toList());
     }
 }
