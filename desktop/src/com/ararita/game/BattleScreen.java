@@ -22,6 +22,7 @@ import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 
 import java.util.List;
 import java.util.Random;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class BattleScreen implements Screen {
@@ -189,7 +190,8 @@ public class BattleScreen implements Screen {
         attackButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                //battle.attack();
+                battle.attack(battle.getBattlers().get(currentBattler), battle.getEnemy());
+                updateAttack();
             }
         });
 
@@ -287,6 +289,38 @@ public class BattleScreen implements Screen {
         handTexture.dispose();
     }
 
+    public void updateAttack() {
+        updateLabel("attack");
+        updateProgressBars();
+        updateTurn();
+    }
+
+    public void updateTurn(){
+        updateCurrentBattler();
+        updateHandImage();
+        if (battle.getBattlers().get(currentBattler) instanceof Enemy) {
+            try {
+                battle.attack(enemy, battle.getBattlers().stream().filter((battler) -> (battler instanceof PC) && !battler.isDead()).findFirst().orElseThrow((Supplier<Throwable>) () -> null));
+            } catch (Throwable e) {
+                throw new RuntimeException(e);
+            }
+            updateAttack();
+        }
+    }
+
+    public void updateProgressBars() {
+        firstBar.setValue(battle.getCharacters().get(0).getCurrHP());
+        if (party.size() >= 2) {
+            secondBar.setValue(battle.getCharacters().get(1).getCurrHP());
+        }
+        if (party.size() >= 3) {
+            thirdBar.setValue(battle.getCharacters().get(2).getCurrHP());
+        }
+        if (party.size() >= 4) {
+            fourthBar.setValue(battle.getCharacters().get(3).getCurrHP());
+        }
+    }
+
     /**
      * The character images are set.
      */
@@ -313,26 +347,31 @@ public class BattleScreen implements Screen {
     public void setProgressBars() {
         ProgressBar.ProgressBarStyle progressBarStyle = skin.get("default-horizontal", ProgressBar.ProgressBarStyle.class);
         progressBarStyle.background.setMinHeight(20);
+        progressBarStyle.knobBefore.setMinHeight(19);
         firstBar = new ProgressBar(0, party.get(0).maxHP(), 1, false, progressBarStyle);
         firstBar.setWidth(100);
         firstBar.setPosition(firstCharImage.getX() + 20, firstCharImage.getY() + firstCharImage.getHeight() + 135);
+        firstBar.setValue(firstBar.getMaxValue());
         stage.addActor(firstBar);
         if (party.size() >= 2) {
             secondBar = new ProgressBar(0, party.get(1).maxHP(), 1, false, progressBarStyle);
             secondBar.setWidth(100);
             secondBar.setPosition(secondCharImage.getX() + 20, secondCharImage.getY() + secondCharImage.getHeight() + 135);
+            secondBar.setValue(secondBar.getMaxValue());
             stage.addActor(secondBar);
         }
         if (party.size() >= 3) {
             thirdBar = new ProgressBar(0, party.get(2).maxHP(), 1, false, progressBarStyle);
             thirdBar.setWidth(100);
             thirdBar.setPosition(thirdCharImage.getX() + 20, thirdCharImage.getY() + thirdCharImage.getHeight() + 135);
+            thirdBar.setValue(thirdBar.getMaxValue());
             stage.addActor(thirdBar);
         }
         if (party.size() >= 4) {
             fourthBar = new ProgressBar(0, party.get(3).maxHP(), 1, false, progressBarStyle);
             fourthBar.setWidth(100);
             fourthBar.setPosition(fourthCharImage.getX() + 20, fourthCharImage.getY() + fourthCharImage.getHeight() + 135);
+            fourthBar.setValue(fourthBar.getMaxValue());
             stage.addActor(fourthBar);
         }
     }
@@ -348,26 +387,37 @@ public class BattleScreen implements Screen {
         handImage.setPosition((Gdx.graphics.getWidth() - firstCharImage.getWidth()) * 3 / 4 + (100 * (toUse - 1)) - 50, Gdx.graphics.getHeight() - 550 - (100 * toUse));
     }
 
-    public void updateLabel(String type){
+    public void updateLabel(String type) {
         if (labelMain != null) {
             labelMain.setText("");
         }
-        switch(type) {
-            case "turn": labelMain = new TypingLabel("It's " + battle.getBattlers().get(currentBattler).getName() + "'s turn.", labelStyle);
+        switch (type) {
+            case "turn":
+                labelMain = new TypingLabel("It's " + battle.getBattlers().get(currentBattler).getName() + "'s turn.", labelStyle);
+                break;
+            case "attack": {
+                if (battle.getBattlers().get(currentBattler) instanceof Enemy) {
+                    labelMain = new TypingLabel("The enemy attacks " + battle.getBattlers().stream().filter((battler) -> (battler instanceof PC) && !(battler.isDead())).findFirst().get().getName() + "!", labelStyle);
+                } else {
+                    labelMain = new TypingLabel(battle.getBattlers().get(currentBattler).getName() + " attacks the enemy!", labelStyle);
+                }
+                break;
+            }
         }
         labelMain.setPosition((Gdx.graphics.getWidth() - labelMain.getWidth()) / 2.0f, Gdx.graphics.getHeight() - 100);
         labelMain.setFontScale(4.8f, 6);
         stage.addActor(labelMain);
     }
 
-    public void updateCurrentBattler(){
-        if(battle.isBattleFinished()){
+    public void updateCurrentBattler() {
+        if (battle.isBattleFinished()) {
             return;
         }
         currentBattler++;
-        while(battle.getBattlers().get(currentBattler).isDead()){
+        currentBattler %= battle.getBattlers().size();
+        while (battle.getBattlers().get(currentBattler).isDead()) {
             currentBattler++;
+            currentBattler %= battle.getBattlers().size();
         }
     }
-
 }
