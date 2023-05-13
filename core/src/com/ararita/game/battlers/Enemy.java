@@ -281,6 +281,6 @@ public class Enemy implements Battler {
      * @return The total amount of EXP given.
      */
     public int givenEXP() {
-        return (getMoney() * getAttack() * ((getMagicDefense() + getDefense()) / 2) * getSpeed()) / (10 * getLevel());
+        return (int) ((getMoney() * getAttack() * ((getMagicDefense() + getDefense()) / 2) * getSpeed()) / (10 * Math.pow(getLevel(), 1.5)));
     }
 }

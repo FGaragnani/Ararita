@@ -551,6 +551,39 @@ public class BattleScreen implements Screen {
                     }
                 });
                 break;
+
+            case "lose":
+                labelMain = new TypingLabel("You lost...", labelStyle);
+                labelMain.setTypingListener(new TypingListener() {
+                    @Override
+                    public void event(String event) {
+
+                    }
+
+                    @Override
+                    public void end() {
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        game.stopAudio();
+                        dispose();
+                        game.playAudio("Music/CityTheme.mp3");
+                        game.setScreen(new CityScreen(game));
+                    }
+
+                    @Override
+                    public String replaceVariable(String variable) {
+                        return null;
+                    }
+
+                    @Override
+                    public void onChar(Character ch) {
+
+                    }
+                });
+
         }
         assert labelMain != null;
         labelMain.setPosition((Gdx.graphics.getWidth() - labelMain.getWidth()) / 2.0f, Gdx.graphics.getHeight() - 100);

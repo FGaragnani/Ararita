@@ -8,7 +8,7 @@
         "Chaos"
     ],
     "otherCharacters": [],
-    "money": 110,
+    "money": 0,
     "spellNamesSet": [],
     "weaponTypesSet": [
         "Sword",
@@ -18,22 +18,14 @@
         "Bow",
         "Dagger"
     ],
-    "inventory": {
-        "Ether": 3,
-        "Potion": 9
-    },
+    "inventory": {},
     "statusEffectsSet": [
         "Burn",
         "Poison",
         "Paralysis",
         "Blindness"
     ],
-    "party": [
-        "Arthur",
-        "Orion",
-        "Robin",
-        "Luna"
-    ],
+    "party": [],
     "classNamesSet": [
         "Knight",
         "Black Mage",
