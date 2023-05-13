@@ -364,8 +364,7 @@ public class PC extends AbstractBattler implements Battler {
      */
     public int hasPhysicalAttackPower() {
         double multiplier = getWeapons().stream().filter((weapon) -> this.getProficiencies().containsKey(weapon.getWeaponType())).count() / 2.0;
-        return (int) ((getEquippedStat("Strength") + Math.floor((getEquippedStat("Vigor") + getEquippedStat(
-                "Agility")) / 2.0)) * (multiplier + 0.5));
+        return (int) ((getEquippedStat("Strength") + Math.floor((getEquippedStat("Vigor") + getEquippedStat("Agility")) / 2.0)) * (multiplier + 0.5));
     }
 
     /**
@@ -504,11 +503,21 @@ public class PC extends AbstractBattler implements Battler {
         return initialCost;
     }
 
+    /**
+     * The character is completely healed.
+     */
     public void healAll() {
         setCurrHP(maxHP());
         setCurrMP(maxMP());
     }
 
+    /**
+     * A certain stat is calculated, keeping track of eventual equipped weapons.
+     *
+     * @param stat The stat to calculate, with the first capital letter.
+     *
+     * @return The total stat value.
+     */
     public int getEquippedStat(String stat) {
         int toRet = 0;
         switch (stat) {

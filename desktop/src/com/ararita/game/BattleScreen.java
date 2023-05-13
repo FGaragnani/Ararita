@@ -301,10 +301,19 @@ public class BattleScreen implements Screen {
         handTexture.dispose();
     }
 
+    /**
+     * This method is called when an attack is being made.
+     *
+     * @param damageDone The damage inflicted during the attack.
+     * @param attacked The index in battlers of the attacked.
+     */
     public void updateAttack(int damageDone, int attacked) {
         updateLabel("attack", damageDone, attacked);
     }
 
+    /**
+     * This method is called when a certain battler ends its turn.
+     */
     public void updateTurn() {
         updateCurrentBattler();
         updateHandImage();
@@ -326,6 +335,9 @@ public class BattleScreen implements Screen {
         }
     }
 
+    /**
+     * Every character's progress bar is updated.
+     */
     public void updateProgressBars() {
         firstBar.setValue(battle.getCharacters().get(0).getCurrHP());
         if (party.size() >= 2) {
@@ -394,6 +406,9 @@ public class BattleScreen implements Screen {
         }
     }
 
+    /**
+     * The hand icon is moved to point to the current battler.
+     */
     public void updateHandImage() {
         if (battle.getBattlers().get(currentBattler) instanceof Enemy) {
             handImage.setVisible(false);
@@ -405,6 +420,39 @@ public class BattleScreen implements Screen {
         handImage.setPosition((Gdx.graphics.getWidth() - firstCharImage.getWidth()) * 3 / 4 + (100 * (toUse - 1)) - 50, Gdx.graphics.getHeight() - 550 - (100 * toUse));
     }
 
+    /**
+     * The typing label is updated.
+     *
+     * @param type What is being done; can be:
+     * <p>
+     * - turn, while waiting for a character to act;
+     * <p>
+     * - attack, for an attack done;
+     * <p>
+     * - win, for when the battle is won;
+     * <p>
+     * - lost, for when the battle is lost.
+     * @param info A parameter used by some events. It's:
+     * <p>
+     * - for turn, unused;
+     * <p>
+     * - for attack, the damage done;
+     * <p>
+     * - for win, how much EXP every character gets;
+     * <p>
+     * - for lost, unused.
+     *
+     * @param attacked A parameter used by some events. It's:
+     * <p>
+     * - for turn, unused;
+     * <p>
+     * - for attack, the index of the attacked character;
+     * <p>
+     * - for win, unused;
+     *
+     * - for lost, unused.
+     *
+     */
     public void updateLabel(String type, int info, int attacked) {
         if (labelMain != null) {
             labelMain.setText("");
@@ -418,7 +466,7 @@ public class BattleScreen implements Screen {
                 if (battle.getBattlers().get(currentBattler) instanceof Enemy) {
                     labelMain = new TypingLabel("The enemy attacks " + party.get(attacked).getName() + ", dealing " + info + " damage!", labelStyle);
                 } else {
-                    labelMain = new TypingLabel(battle.getBattlers().get(currentBattler).getName() + " attacks the " + "enemy, dealing it " + info + " damage!", labelStyle);
+                    labelMain = new TypingLabel(battle.getBattlers().get(currentBattler).getName() + " attacks the enemy, dealing it " + info + " damage!", labelStyle);
                 }
                 labelMain.setTypingListener(new TypingListener() {
                     @Override

@@ -60,7 +60,7 @@ public class GlobalBattle {
      * @return True, if the battle has ended.
      */
     public boolean isBattleFinished() {
-        if(getEnemy().isDead()){
+        if (getEnemy().isDead()) {
             return true;
         } else {
             return getCharacters().stream().allMatch(PC::isDead);
@@ -88,7 +88,7 @@ public class GlobalBattle {
             return;
         }
         if (attacked instanceof PC) {
-            if(Global.getRandomZeroOne() <= attacker.critChance()){
+            if (Global.getRandomZeroOne() <= attacker.critChance()) {
                 multiplier *= 1.5;
             }
             attacked.getPhysicalDamage((int) (attacker.hasPhysicalAttackPower() * multiplier));
@@ -113,7 +113,7 @@ public class GlobalBattle {
             if (count > 0) {
                 multiplier *= Math.pow(Global.WEAKNESS_MULTIPLIER, count);
             }
-            if(Global.getRandomZeroOne() <= attacker.critChance()){
+            if (Global.getRandomZeroOne() <= attacker.critChance()) {
                 multiplier *= 1.5;
             }
             attacked.getPhysicalDamage((int) (attacker.hasPhysicalAttackPower() * multiplier));
@@ -177,7 +177,12 @@ public class GlobalBattle {
         return battlers;
     }
 
-    public Enemy getEnemy(){
+    /**
+     * From battlers, only the enemy is returned.
+     *
+     * @return The enemy in battle.
+     */
+    public Enemy getEnemy() {
         try {
             return (Enemy) getBattlers().stream().filter((battler -> battler instanceof Enemy)).findFirst().orElseThrow((Supplier<Throwable>) () -> null);
         } catch (Throwable e) {
@@ -185,7 +190,12 @@ public class GlobalBattle {
         }
     }
 
-    public List<PC> getCharacters(){
+    /**
+     * From battlers, the party is returned.
+     *
+     * @return The list of playing characters.
+     */
+    public List<PC> getCharacters() {
         return getBattlers().stream().filter((battler) -> battler instanceof PC).map((battler) -> (PC) battler).collect(Collectors.toList());
     }
 }
