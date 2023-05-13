@@ -468,6 +468,8 @@ public class BattleScreen implements Screen {
                             }
                             for (PC character : party) {
                                 character.gainEXP(info);
+                                character.healAll();
+                                character.update();
                             }
                         } catch (IOException e) {
                             throw new RuntimeException(e);

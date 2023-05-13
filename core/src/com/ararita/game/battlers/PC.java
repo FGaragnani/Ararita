@@ -504,6 +504,11 @@ public class PC extends AbstractBattler implements Battler {
         return initialCost;
     }
 
+    public void healAll(){
+        setCurrHP(maxHP());
+        setCurrMP(maxMP());
+    }
+
     public int getEquippedStat(String stat) {
         return getStrength() + getWeapons().stream().flatMapToInt((weapon) -> IntStream.of(weapon.getAttributesAffection().getOrDefault(stat, 0))).sum();
     }
