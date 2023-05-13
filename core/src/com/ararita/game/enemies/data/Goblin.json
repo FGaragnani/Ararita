@@ -2,7 +2,7 @@
     "money": 10,
     "toDrop": {"Potion": 0.1},
     "defense": 2,
-    "attack": 5,
+    "attack": 6,
     "name": "Goblin",
     "magicDefense": 1,
     "dead": false,

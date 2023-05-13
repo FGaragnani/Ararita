@@ -23,9 +23,9 @@
         "Fire"
     ],
     "charClass": "Black Mage",
-    "EXP": 0,
-    "spells": [],
     "agility": 1,
-    "weapons": [],
-    "arcane": 4
+    "EXP": 18,
+    "spells": [],
+    "arcane": 4,
+    "weapons": []
 }

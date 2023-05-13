@@ -18,7 +18,7 @@
         "Bow",
         "Dagger"
     ],
-    "inventory": {},
+    "inventory": {"Potion": 2},
     "statusEffectsSet": [
         "Burn",
         "Poison",
@@ -26,10 +26,10 @@
         "Blindness"
     ],
     "party": [
-        "Arthur",
         "Orion",
         "Robin",
-        "Luna"
+        "Luna",
+        "Arthur"
     ],
     "classNamesSet": [
         "Knight",

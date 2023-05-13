@@ -23,9 +23,9 @@
         "Light"
     ],
     "charClass": "White Mage",
-    "EXP": 0,
-    "spells": [],
     "agility": 1,
-    "weapons": [],
-    "arcane": 1
+    "EXP": 18,
+    "spells": [],
+    "arcane": 1,
+    "weapons": []
 }
