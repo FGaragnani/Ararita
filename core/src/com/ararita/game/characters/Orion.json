@@ -1,18 +1,18 @@
 {
     "baseEXP": 100,
     "image": "Magician",
-    "currMP": 45,
-    "MP": 45,
-    "strength": 1,
-    "level": 1,
+    "currMP": 85,
+    "MP": 85,
+    "strength": 2,
+    "level": 5,
     "vigor": 2,
     "spirit": 1,
-    "HP": 19,
+    "HP": 32,
     "dead": false,
     "exponentEXP": 1.28,
-    "currHP": 19,
+    "currHP": 32,
     "increaseEXP": 1.29,
-    "intelligence": 6,
+    "intelligence": 10,
     "proficiencies": {
         "Dagger": 1,
         "Staff": 2
@@ -24,8 +24,8 @@
     ],
     "charClass": "Black Mage",
     "agility": 1,
-    "EXP": 18,
+    "EXP": 284,
     "spells": [],
-    "arcane": 4,
+    "arcane": 9,
     "weapons": []
 }

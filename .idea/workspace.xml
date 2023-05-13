@@ -11,7 +11,6 @@
       <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/characters/Luna.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/characters/Luna.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/characters/Orion.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/characters/Orion.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/characters/Robin.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/characters/Robin.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Goblin.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Goblin.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/PartyManagerScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/PartyManagerScreen.java" afterDir="false" />
     </list>

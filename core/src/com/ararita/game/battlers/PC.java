@@ -364,8 +364,8 @@ public class PC extends AbstractBattler implements Battler {
      */
     public int hasPhysicalAttackPower() {
         double multiplier = getWeapons().stream().filter((weapon) -> this.getProficiencies().containsKey(weapon.getWeaponType())).count() / 2.0;
-        return (int) ((getEquippedStat("Strength") * 2 + Math.floor((getEquippedStat("Vigor") + getEquippedStat(
-                "Agility")) / 3.0)) * (multiplier + 0.5));
+        return (int) ((getEquippedStat("Strength") + Math.floor((getEquippedStat("Vigor") + getEquippedStat(
+                "Agility")) / 2.0)) * (multiplier + 0.5));
     }
 
     /**
