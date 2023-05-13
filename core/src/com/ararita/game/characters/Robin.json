@@ -20,9 +20,9 @@
     "name": "Robin",
     "spellTypes": ["Wind"],
     "charClass": "Ranger",
+    "EXP": 0,
     "spells": [],
     "agility": 6,
-    "EXP": 0,
     "weapons": [],
     "arcane": 1
 }

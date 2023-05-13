@@ -130,7 +130,7 @@ public abstract class AbstractBattler {
     public void charLevel() {
         for (int i = 1; ; i++) {
             if (this.getEXP() < EXPForLevel(i)) {
-                this.setLevel(i);
+                this.setLevel(i - 1);
                 break;
             }
         }
@@ -144,11 +144,11 @@ public abstract class AbstractBattler {
      * @return The EXP needed to reach it.
      */
     public int EXPForLevel(int level) {
-        if (level == 0) {
+        if (level == 1) {
             return 0;
         }
         int toRet;
-        toRet = (int) ceil(increaseEXP * (baseEXP * level + (Math.pow(level, exponentEXP))));
+        toRet = (int) ceil(increaseEXP * (baseEXP * level + (Math.pow(level, exponentEXP))) / 8);
         return toRet + EXPForLevel(level - 1);
     }
 

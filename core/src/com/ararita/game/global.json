@@ -7,8 +7,8 @@
         "Water",
         "Chaos"
     ],
-    "otherCharacters": ["Luna"],
-    "money": 10,
+    "otherCharacters": [],
+    "money": 0,
     "spellNamesSet": [],
     "weaponTypesSet": [
         "Sword",
@@ -18,7 +18,7 @@
         "Bow",
         "Dagger"
     ],
-    "inventory": {"Potion": 1},
+    "inventory": {},
     "statusEffectsSet": [
         "Burn",
         "Poison",
@@ -26,9 +26,10 @@
         "Blindness"
     ],
     "party": [
+        "Arthur",
         "Orion",
         "Robin",
-        "Arthur"
+        "Luna"
     ],
     "classNamesSet": [
         "Knight",

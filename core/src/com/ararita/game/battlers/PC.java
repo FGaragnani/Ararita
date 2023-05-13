@@ -364,8 +364,7 @@ public class PC extends AbstractBattler implements Battler {
      */
     public int hasPhysicalAttackPower() {
         double multiplier = getWeapons().stream().filter((weapon) -> this.getProficiencies().containsKey(weapon.getWeaponType())).count() / 2.0;
-        return (int) ((getEquippedStat("Strength") + (int) Math.floor((getEquippedStat("Vigor") + getEquippedStat(
-                "Agility")) / 6.0)) * (multiplier + 0.5));
+        return (int) ((getEquippedStat("Strength") + (int) Math.floor((getEquippedStat("Vigor") + getEquippedStat("Agility")) / 2.0)) * (multiplier + 0.5));
     }
 
     /**
@@ -504,13 +503,34 @@ public class PC extends AbstractBattler implements Battler {
         return initialCost;
     }
 
-    public void healAll(){
+    public void healAll() {
         setCurrHP(maxHP());
         setCurrMP(maxMP());
     }
 
     public int getEquippedStat(String stat) {
-        return getStrength() + getWeapons().stream().flatMapToInt((weapon) -> IntStream.of(weapon.getAttributesAffection().getOrDefault(stat, 0))).sum();
+        int toRet = 0;
+        switch (stat) {
+            case "strength":
+                toRet = getStrength() + getWeapons().stream().flatMapToInt((weapon) -> IntStream.of(weapon.getAttributesAffection().getOrDefault(stat, 0))).sum();
+                break;
+            case "intelligence":
+                toRet = getIntelligence() + getWeapons().stream().flatMapToInt((weapon) -> IntStream.of(weapon.getAttributesAffection().getOrDefault(stat, 0))).sum();
+                break;
+            case "vigor":
+                toRet = getVigor() + getWeapons().stream().flatMapToInt((weapon) -> IntStream.of(weapon.getAttributesAffection().getOrDefault(stat, 0))).sum();
+                break;
+            case "agility":
+                toRet = getAgility() + getWeapons().stream().flatMapToInt((weapon) -> IntStream.of(weapon.getAttributesAffection().getOrDefault(stat, 0))).sum();
+                break;
+            case "spirit":
+                toRet = getSpirit() + getWeapons().stream().flatMapToInt((weapon) -> IntStream.of(weapon.getAttributesAffection().getOrDefault(stat, 0))).sum();
+                break;
+            case "arcane":
+                toRet = getArcane() + getWeapons().stream().flatMapToInt((weapon) -> IntStream.of(weapon.getAttributesAffection().getOrDefault(stat, 0))).sum();
+                break;
+        }
+        return toRet;
     }
 
     public String getImage() {

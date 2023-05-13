@@ -553,14 +553,16 @@ public class PartyManagerScreen implements Screen {
         StringBuilder partyText = new StringBuilder();
         try {
             int partyIndex = partyCharactersSelectBox.getSelectedIndex();
+            PC partyChar = Global.getCharacter(Global.getParty().get(partyIndex).getName());
             JSONObject jsonChar = Global.getJSON(Global.getJSONFilePath(Global.characterSets, Global.getParty().get(partyIndex).getName()));
-            partyText.append("LVL: ").append(jsonChar.getInt("level")).append("\n");
-            partyText.append("STR: ").append(jsonChar.getInt("strength")).append("\n");
-            partyText.append("INT: ").append(jsonChar.getInt("intelligence")).append("\n");
-            partyText.append("AGI: ").append(jsonChar.getInt("agility")).append("\n");
-            partyText.append("VIG: ").append(jsonChar.getInt("vigor")).append("\n");
-            partyText.append("SPI: ").append(jsonChar.getInt("spirit")).append("\n");
-            partyText.append("ARC: ").append(jsonChar.getInt("arcane")).append("\n");
+            partyText.append("LVL: ").append(partyChar.getLevel()).append("\n");
+            partyText.append("NXT: ").append((double) partyChar.getEXP() / partyChar.EXPForLevel(partyChar.getLevel() + 1)).append("%\n");
+            partyText.append("STR: ").append(partyChar.getEquippedStat("strength")).append("\n");
+            partyText.append("INT: ").append(partyChar.getEquippedStat("intelligence")).append("\n");
+            partyText.append("AGI: ").append(partyChar.getEquippedStat("agility")).append("\n");
+            partyText.append("VIG: ").append(partyChar.getEquippedStat("vigor")).append("\n");
+            partyText.append("SPI: ").append(partyChar.getEquippedStat("spirit")).append("\n");
+            partyText.append("ARC: ").append(partyChar.getEquippedStat("arcane")).append("\n");
             partyText.append("Proficiencies: \n");
             jsonChar.getJSONObject("proficiencies").toMap().forEach((s, o) -> {
                 partyText.append(" ").append(s).append(":");

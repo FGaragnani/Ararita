@@ -17,9 +17,9 @@
     "name": "Arthur",
     "spellTypes": [],
     "charClass": "Knight",
+    "EXP": 0,
     "spells": [],
     "agility": 3,
-    "EXP": 0,
     "weapons": [],
     "arcane": 1
 }
