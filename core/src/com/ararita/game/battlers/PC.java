@@ -364,7 +364,8 @@ public class PC extends AbstractBattler implements Battler {
      */
     public int hasPhysicalAttackPower() {
         double multiplier = getWeapons().stream().filter((weapon) -> this.getProficiencies().containsKey(weapon.getWeaponType())).count() / 2.0;
-        return (int) ((getEquippedStat("Strength") + (int) Math.floor((getEquippedStat("Vigor") + getEquippedStat("Agility")) / 6.0)) * (multiplier + 0.5));
+        return (int) ((getEquippedStat("Strength") + (int) Math.floor((getEquippedStat("Vigor") + getEquippedStat(
+                "Agility")) / 6.0)) * (multiplier + 0.5));
     }
 
     /**
@@ -484,8 +485,7 @@ public class PC extends AbstractBattler implements Battler {
         int proficienciesAndSpells = 1;
         int i = 1;
         for (int proficiencyValue : proficiencies.values()) {
-            initialCost += (1 / ((Math.pow(getIncreaseEXP(), 1.5) * Math.pow(getExponentEXP(), 1.5)))) * Math.pow(10,
-                    proficiencyValue) * Math.pow(i, 3) * proficienciesAndSpells;
+            initialCost += (1 / ((Math.pow(getIncreaseEXP(), 1.5) * Math.pow(getExponentEXP(), 1.5)))) * Math.pow(10, proficiencyValue) * Math.pow(i, 3) * proficienciesAndSpells;
             if (initialCost > 10000000) {
                 return 10000000;
             }
@@ -494,8 +494,7 @@ public class PC extends AbstractBattler implements Battler {
         }
         i = 1;
         for (String spellType : spellTypes) {
-            initialCost += (1 / ((Math.pow(getIncreaseEXP(), 1.5) * Math.pow(getExponentEXP(), 1.5)))) * Math.pow(10,
-                    i) * Math.pow(i, 3) * proficienciesAndSpells;
+            initialCost += (1 / ((Math.pow(getIncreaseEXP(), 1.5) * Math.pow(getExponentEXP(), 1.5)))) * Math.pow(10, i) * Math.pow(i, 3) * proficienciesAndSpells;
             if (initialCost > 10000000) {
                 return 10000000;
             }
