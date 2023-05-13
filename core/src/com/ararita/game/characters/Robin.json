@@ -1,18 +1,18 @@
 {
     "baseEXP": 100,
     "image": "Archer",
-    "currMP": 62,
-    "MP": 62,
-    "strength": 6,
-    "level": 5,
-    "vigor": 6,
-    "spirit": 8,
-    "HP": 90,
+    "currMP": 71,
+    "MP": 71,
+    "strength": 7,
+    "level": 6,
+    "vigor": 7,
+    "HP": 104,
+    "spirit": 9,
     "dead": false,
     "exponentEXP": 1.19,
-    "currHP": 90,
+    "currHP": 104,
     "increaseEXP": 1.38,
-    "intelligence": 6,
+    "intelligence": 7,
     "proficiencies": {
         "Bow": 3,
         "Spear": 1
@@ -20,9 +20,9 @@
     "name": "Robin",
     "spellTypes": ["Wind"],
     "charClass": "Ranger",
-    "agility": 11,
-    "EXP": 284,
+    "EXP": 393,
+    "agility": 12,
     "spells": [],
     "arcane": 1,
-    "weapons": []
+    "weapons": ["Bone Bow"]
 }

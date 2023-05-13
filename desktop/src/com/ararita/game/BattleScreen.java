@@ -103,6 +103,12 @@ public class BattleScreen implements Screen {
         textButtonStyle.font = game.normalFont;
 
         /*
+            Initalizing the audio.
+         */
+
+        game.playAudio("Music/BattleTheme.mp3");
+
+        /*
             Setting the background texture.
          */
 
@@ -214,6 +220,7 @@ public class BattleScreen implements Screen {
         runDialog = new Dialog("", game.skin) {
             public void result(Object confirm) {
                 if (confirm.equals(true)) {
+                    game.stopAudio();
                     dispose();
                     game.playAudio(game.cityTheme);
                     game.setScreen(new CityScreen(game));
@@ -527,6 +534,9 @@ public class BattleScreen implements Screen {
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
+                        game.stopAudio();
+                        dispose();
+                        game.playAudio("Music/CityTheme.mp3");
                         game.setScreen(new CityScreen(game));
                     }
 

@@ -1,18 +1,18 @@
 {
     "baseEXP": 100,
     "image": "Healer",
-    "currMP": 89,
-    "MP": 89,
+    "currMP": 98,
+    "MP": 98,
     "strength": 1,
-    "level": 5,
+    "level": 6,
     "vigor": 3,
-    "spirit": 8,
-    "HP": 39,
+    "HP": 42,
+    "spirit": 9,
     "dead": false,
     "exponentEXP": 1.25,
-    "currHP": 39,
+    "currHP": 42,
     "increaseEXP": 1.32,
-    "intelligence": 11,
+    "intelligence": 12,
     "proficiencies": {
         "Staff": 2,
         "Bow": 1
@@ -23,8 +23,8 @@
         "Light"
     ],
     "charClass": "White Mage",
+    "EXP": 393,
     "agility": 2,
-    "EXP": 284,
     "spells": [],
     "arcane": 2,
     "weapons": []
