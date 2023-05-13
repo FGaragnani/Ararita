@@ -21,6 +21,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -401,6 +403,7 @@ public class PartyManagerScreen implements Screen {
                     inventory.equip(pcToEquip, weaponToEquip);
                     updateWeapons();
                     updateStatsInventory();
+                    updatePartyStats();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -423,6 +426,7 @@ public class PartyManagerScreen implements Screen {
                     inventory.unEquip(pcToEquip, weaponToEquip);
                     updateWeapons();
                     updateStatsInventory();
+                    updatePartyStats();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -554,25 +558,24 @@ public class PartyManagerScreen implements Screen {
         try {
             int partyIndex = partyCharactersSelectBox.getSelectedIndex();
             PC partyChar = Global.getCharacter(Global.getParty().get(partyIndex).getName());
-            JSONObject jsonChar = Global.getJSON(Global.getJSONFilePath(Global.characterSets, Global.getParty().get(partyIndex).getName()));
             partyText.append("LVL: ").append(partyChar.getLevel()).append("\n");
-            partyText.append("NXT: ").append((double) partyChar.getEXP() / partyChar.EXPForLevel(partyChar.getLevel() + 1)).append("%\n");
-            partyText.append("STR: ").append(partyChar.getEquippedStat("strength")).append("\n");
-            partyText.append("INT: ").append(partyChar.getEquippedStat("intelligence")).append("\n");
-            partyText.append("AGI: ").append(partyChar.getEquippedStat("agility")).append("\n");
-            partyText.append("VIG: ").append(partyChar.getEquippedStat("vigor")).append("\n");
-            partyText.append("SPI: ").append(partyChar.getEquippedStat("spirit")).append("\n");
-            partyText.append("ARC: ").append(partyChar.getEquippedStat("arcane")).append("\n");
+            partyText.append("NXT: ").append(BigDecimal.valueOf((double) partyChar.getEXP() / partyChar.EXPForLevel(partyChar.getLevel() + 1)).setScale(2, RoundingMode.HALF_UP).doubleValue()).append("%\n");
+            partyText.append("STR: ").append(partyChar.getEquippedStat("Strength")).append("\n");
+            partyText.append("INT: ").append(partyChar.getEquippedStat("Intelligence")).append("\n");
+            partyText.append("AGI: ").append(partyChar.getEquippedStat("Agility")).append("\n");
+            partyText.append("VIG: ").append(partyChar.getEquippedStat("Vigor")).append("\n");
+            partyText.append("SPI: ").append(partyChar.getEquippedStat("Spirit")).append("\n");
+            partyText.append("ARC: ").append(partyChar.getEquippedStat("Arcane")).append("\n");
             partyText.append("Proficiencies: \n");
-            jsonChar.getJSONObject("proficiencies").toMap().forEach((s, o) -> {
+            partyChar.getProficiencies().forEach((s, o) -> {
                 partyText.append(" ").append(s).append(":");
-                partyText.append(" +".repeat((int) o));
+                partyText.append(" +".repeat(o));
                 partyText.append("\n");
             });
-            otherLines += jsonChar.getJSONObject("proficiencies").toMap().size();
+            otherLines += partyChar.getProficiencies().size();
             partyText.append("Learnable spell types:\n");
-            jsonChar.getJSONArray("spellTypes").toList().forEach((str) -> partyText.append(" - ").append(str.toString()).append("\n"));
-            otherLines += jsonChar.getJSONArray("spellTypes").toList().size();
+            partyChar.getSpells().forEach((str) -> partyText.append(" - ").append(str.toString()).append("\n"));
+            otherLines += partyChar.getSpells().size();
             partyStats.setText(partyText.toString());
             partyStats.setPosition(660, Gdx.graphics.getHeight() - 580 - (18 * (otherLines - 1)));
         } catch (IOException e) {
@@ -587,24 +590,25 @@ public class PartyManagerScreen implements Screen {
         }
         try {
             int reserveIndex = otherCharactersSelectBox.getSelectedIndex();
-            JSONObject jsonChar = Global.getJSON(Global.getJSONFilePath(Global.characterSets, Global.getOtherCharacters().get(reserveIndex).getName()));
-            reserveText.append("LVL: ").append(jsonChar.getInt("level")).append("\n");
-            reserveText.append("STR: ").append(jsonChar.getInt("strength")).append("\n");
-            reserveText.append("INT: ").append(jsonChar.getInt("intelligence")).append("\n");
-            reserveText.append("AGI: ").append(jsonChar.getInt("agility")).append("\n");
-            reserveText.append("VIG: ").append(jsonChar.getInt("vigor")).append("\n");
-            reserveText.append("SPI: ").append(jsonChar.getInt("spirit")).append("\n");
-            reserveText.append("ARC: ").append(jsonChar.getInt("arcane")).append("\n");
+            PC reserveChar = Global.getCharacter(Global.getOtherCharacters().get(reserveIndex).getName());
+            reserveText.append("LVL: ").append(reserveChar.getLevel()).append("\n");
+            reserveText.append("NXT: ").append(BigDecimal.valueOf((double) reserveChar.getEXP() / reserveChar.EXPForLevel(reserveChar.getLevel() + 1)).setScale(2, RoundingMode.HALF_UP).doubleValue()).append("%\n");
+            reserveText.append("STR: ").append(reserveChar.getEquippedStat("Strength")).append("\n");
+            reserveText.append("INT: ").append(reserveChar.getEquippedStat("Intelligence")).append("\n");
+            reserveText.append("AGI: ").append(reserveChar.getEquippedStat("Agility")).append("\n");
+            reserveText.append("VIG: ").append(reserveChar.getEquippedStat("Vigor")).append("\n");
+            reserveText.append("SPI: ").append(reserveChar.getEquippedStat("Spirit")).append("\n");
+            reserveText.append("ARC: ").append(reserveChar.getEquippedStat("Arcane")).append("\n");
             reserveText.append("Proficiencies: \n");
-            jsonChar.getJSONObject("proficiencies").toMap().forEach((s, o) -> {
+            reserveChar.getProficiencies().forEach((s, o) -> {
                 reserveText.append(" ").append(s).append(":");
-                reserveText.append(" +".repeat((int) o));
+                reserveText.append(" +".repeat(o));
                 reserveText.append("\n");
             });
-            otherLines += jsonChar.getJSONObject("proficiencies").toMap().size();
+            otherLines += reserveChar.getProficiencies().size();
             reserveText.append("Learnable spell types:\n");
-            jsonChar.getJSONArray("spellTypes").toList().forEach((str) -> reserveText.append(" - ").append(str.toString()).append("\n"));
-            otherLines += jsonChar.getJSONArray("spellTypes").toList().size();
+            reserveChar.getSpells().forEach((str) -> reserveText.append(" - ").append(str.toString()).append("\n"));
+            otherLines += reserveChar.getSpells().size();
             reserveStats.setText(reserveText.toString());
             reserveStats.setPosition(1600, Gdx.graphics.getHeight() - 580 - (18 * (otherLines - 1)));
         } catch (IOException e) {
