@@ -274,4 +274,14 @@ public class Enemy implements Battler {
     public void setLevel(int level) {
         this.level = level;
     }
+
+    /**
+     * The amount of EXP given on defeat is calculated.
+     *
+     * @return The total amount of EXP given.
+     */
+    public int givenEXP(){
+        return (getMoney() * getAttack() * ((getMagicDefense() + getDefense()) / 2) + getSpeed()) / 10;
+    }
+
 }

@@ -68,6 +68,10 @@ public class Inventory {
         Global.setMoney(money);
     }
 
+    public void addMoney(int toAdd) throws IOException{
+        setMoney(getMoney() + toAdd);
+    }
+
     /**
      * Returns the size of the inventory, as a sum of its integer values.
      *
@@ -229,4 +233,5 @@ public class Inventory {
             add(weapon);
         }
     }
+
 }
