@@ -2,27 +2,29 @@ package com.ararita.game;
 
 import com.ararita.game.battlers.Enemy;
 import com.ararita.game.battlers.PC;
+import com.ararita.game.items.Inventory;
+import com.ararita.game.items.Item;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;
+import com.rafaskoberg.gdx.typinglabel.TypingListener;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class BattleScreen implements Screen {
@@ -70,6 +72,7 @@ public class BattleScreen implements Screen {
     Enemy enemy;
     List<PC> party;
     int currentBattler;
+    Inventory inventory;
 
     public BattleScreen(final Ararita game, final GlobalBattle battle) {
 
@@ -90,6 +93,11 @@ public class BattleScreen implements Screen {
         enemy = battle.getEnemy();
         party = battle.getCharacters();
         currentBattler = 0;
+        try {
+            inventory = new Inventory();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         textButtonStyle = skin.get("default", TextButton.TextButtonStyle.class);
         textButtonStyle.font = game.normalFont;
@@ -120,6 +128,7 @@ public class BattleScreen implements Screen {
         labelColor.setColor(Color.BLACK);
         labelColor.fill();
         labelStyle.background = new TextureRegionDrawable(new TextureRegion(new Texture(labelColor)));
+        labelMain = new TypingLabel("", labelStyle);
 
         /*
             Setting the characters' images.
@@ -190,8 +199,11 @@ public class BattleScreen implements Screen {
         attackButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                battle.attack(battle.getBattlers().get(currentBattler), battle.getEnemy());
-                updateAttack();
+                if (labelMain.hasEnded()) {
+                    int currHPEnemy = battle.getEnemy().getCurrHP();
+                    battle.attack(battle.getBattlers().get(currentBattler), battle.getEnemy());
+                    updateAttack(currHPEnemy - battle.getEnemy().getCurrHP(), 0);
+                }
             }
         });
 
@@ -236,7 +248,7 @@ public class BattleScreen implements Screen {
 
         setProgressBars();
         updateHandImage();
-        updateLabel("turn");
+        updateLabel("turn", 0, 0);
     }
 
     @Override
@@ -289,22 +301,28 @@ public class BattleScreen implements Screen {
         handTexture.dispose();
     }
 
-    public void updateAttack() {
-        updateLabel("attack");
-        updateProgressBars();
-        updateTurn();
+    public void updateAttack(int damageDone, int attacked) {
+        updateLabel("attack", damageDone, attacked);
     }
 
-    public void updateTurn(){
+    public void updateTurn() {
         updateCurrentBattler();
         updateHandImage();
+        if (battle.isLost()) {
+            battleLost();
+            return;
+        } else if (battle.isWon()) {
+            battleWon();
+            return;
+        }
         if (battle.getBattlers().get(currentBattler) instanceof Enemy) {
-            try {
-                battle.attack(enemy, battle.getBattlers().stream().filter((battler) -> (battler instanceof PC) && !battler.isDead()).findFirst().orElseThrow((Supplier<Throwable>) () -> null));
-            } catch (Throwable e) {
-                throw new RuntimeException(e);
-            }
-            updateAttack();
+            int alivePCs = (int) battle.getBattlers().stream().filter((battler) -> (battler instanceof PC) && (!battler.isDead())).count();
+            int attacked = (int) Math.round(Global.getRandomZeroOne() * (alivePCs - 1));
+            int attackedCurrHP = battle.getCharacters().get(attacked).getCurrHP();
+            battle.attack(enemy, battle.getCharacters().get(attacked));
+            updateAttack(attackedCurrHP - battle.getCharacters().get(attacked).getCurrHP(), attacked);
+        } else {
+            updateLabel("turn", 0, 0);
         }
     }
 
@@ -387,9 +405,10 @@ public class BattleScreen implements Screen {
         handImage.setPosition((Gdx.graphics.getWidth() - firstCharImage.getWidth()) * 3 / 4 + (100 * (toUse - 1)) - 50, Gdx.graphics.getHeight() - 550 - (100 * toUse));
     }
 
-    public void updateLabel(String type) {
+    public void updateLabel(String type, int info, int attacked) {
         if (labelMain != null) {
             labelMain.setText("");
+            stage.getActors().removeValue(labelMain, true);
         }
         switch (type) {
             case "turn":
@@ -397,13 +416,83 @@ public class BattleScreen implements Screen {
                 break;
             case "attack": {
                 if (battle.getBattlers().get(currentBattler) instanceof Enemy) {
-                    labelMain = new TypingLabel("The enemy attacks " + battle.getBattlers().stream().filter((battler) -> (battler instanceof PC) && !(battler.isDead())).findFirst().get().getName() + "!", labelStyle);
+                    labelMain = new TypingLabel("The enemy attacks " + party.get(attacked).getName() + ", dealing " + info + " damage!", labelStyle);
                 } else {
-                    labelMain = new TypingLabel(battle.getBattlers().get(currentBattler).getName() + " attacks the enemy!", labelStyle);
+                    labelMain = new TypingLabel(battle.getBattlers().get(currentBattler).getName() + " attacks the " + "enemy, dealing it " + info + " damage!", labelStyle);
                 }
+                labelMain.setTypingListener(new TypingListener() {
+                    @Override
+                    public void event(String event) {
+
+                    }
+
+                    @Override
+                    public void end() {
+                        try {
+                            Thread.sleep(400);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        updateProgressBars();
+                        updateTurn();
+                    }
+
+                    @Override
+                    public String replaceVariable(String variable) {
+                        return null;
+                    }
+
+                    @Override
+                    public void onChar(Character ch) {
+
+                    }
+                });
                 break;
             }
+            case "win":
+                labelMain = new TypingLabel("You win! You gain " + enemy.getMoney() + "G and each character gains " + info + " " + "EXP!", labelStyle);
+                labelMain.setTypingListener(new TypingListener() {
+                    @Override
+                    public void event(String event) {
+
+                    }
+
+                    @Override
+                    public void end() {
+                        try {
+                            inventory.addMoney(enemy.getMoney());
+                            for (Map.Entry<Item, Double> toDrop : enemy.getToDrop().entrySet()) {
+                                if (Global.getRandomZeroOne() >= toDrop.getValue()) {
+                                    inventory.add(toDrop.getKey());
+                                }
+                            }
+                            for (PC character : party) {
+                                character.gainEXP(info);
+                            }
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        game.setScreen(new CityScreen(game));
+                    }
+
+                    @Override
+                    public String replaceVariable(String variable) {
+                        return null;
+                    }
+
+                    @Override
+                    public void onChar(Character ch) {
+
+                    }
+                });
+                break;
         }
+        assert labelMain != null;
         labelMain.setPosition((Gdx.graphics.getWidth() - labelMain.getWidth()) / 2.0f, Gdx.graphics.getHeight() - 100);
         labelMain.setFontScale(4.8f, 6);
         stage.addActor(labelMain);
@@ -419,5 +508,20 @@ public class BattleScreen implements Screen {
             currentBattler++;
             currentBattler %= battle.getBattlers().size();
         }
+    }
+
+    public void battleLost() {
+        updateLabel("lose", 0, 0);
+        try {
+            Thread.sleep(800);
+        } catch (InterruptedException ignored) {
+        }
+        dispose();
+        game.setScreen(new CityScreen(game));
+    }
+
+    public void battleWon() {
+        int EXP = enemy.givenEXP();
+        updateLabel("win", EXP / party.size(), 0);
     }
 }

@@ -60,16 +60,11 @@ public class GlobalBattle {
      * @return True, if the battle has ended.
      */
     public boolean isBattleFinished() {
-        for (Battler battler : battlers) {
-            if (battler instanceof Enemy) {
-                if (battler.isDead()) {
-                    return true;
-                }
-            } else {
-                return battlers.stream().filter((b) -> b instanceof PC).allMatch(Battler::isDead);
-            }
+        if(getEnemy().isDead()){
+            return true;
+        } else {
+            return getCharacters().stream().allMatch(PC::isDead);
         }
-        return battlers.stream().allMatch(Battler::isDead);
     }
 
     /**
@@ -102,14 +97,14 @@ public class GlobalBattle {
 
             Enemy enemy = (Enemy) attacker;
 
-            if (enemy.getStatusEffect().equals(Optional.of("Burn"))) {
+            if (enemy.getStatusEffect().equals("Burn")) {
                 if (Global.getRandomZeroOne() < Global.BURN_CURE) {
                     enemy.removeStatusEffect();
                     return;
                 } else {
                     enemy.sufferDamage(Math.max(1, (int) ((enemy).getCurrHP() * Global.BURN_DAMAGE)));
                 }
-            } else if (enemy.getStatusEffect().equals(Optional.of("Poison"))) {
+            } else if (enemy.getStatusEffect().equals("Poison")) {
                 enemy.sufferDamage(Math.max(1, (int) ((enemy).getCurrHP() * Global.POISON_DAMAGE)));
             }
         }
@@ -166,7 +161,7 @@ public class GlobalBattle {
      * @return True, if the battle has ended and was won.
      */
     public boolean isWon() {
-        return isBattleFinished() && battlers.stream().filter((b) -> b instanceof PC).anyMatch((pc) -> !pc.isDead());
+        return isBattleFinished() && getEnemy().isDead();
     }
 
     /**

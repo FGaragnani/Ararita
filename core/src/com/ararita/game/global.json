@@ -8,7 +8,7 @@
         "Chaos"
     ],
     "otherCharacters": ["Luna"],
-    "money": 0,
+    "money": 10,
     "spellNamesSet": [],
     "weaponTypesSet": [
         "Sword",
@@ -18,7 +18,7 @@
         "Bow",
         "Dagger"
     ],
-    "inventory": {},
+    "inventory": {"Potion": 1},
     "statusEffectsSet": [
         "Burn",
         "Poison",

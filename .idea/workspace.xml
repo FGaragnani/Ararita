@@ -6,8 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="5676402a-2187-4a8f-bfe0-ac646c9fd387" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/PC.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/PC.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Goblin.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Goblin.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/GlobalBattle.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/GlobalBattle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/Enemy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/characters/Arthur.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/characters/Arthur.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/BattleScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/BattleScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -269,8 +271,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/desktop/src/com/ararita/game/BattleScreen.java</url>
-          <line>203</line>
-          <option name="timeStamp" value="12" />
+          <line>462</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/desktop/src/com/ararita/game/BattleScreen.java</url>
+          <line>523</line>
+          <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
