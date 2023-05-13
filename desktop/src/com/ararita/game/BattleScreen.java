@@ -219,7 +219,7 @@ public class BattleScreen implements Screen {
 
         runDialog = new Dialog("", game.skin) {
             public void result(Object confirm) {
-                if (confirm.equals(true)) {
+                if (confirm.equals(true) && labelMain.hasEnded()) {
                     game.stopAudio();
                     dispose();
                     game.playAudio(game.cityTheme);
@@ -255,7 +255,11 @@ public class BattleScreen implements Screen {
 
         setProgressBars();
         updateHandImage();
-        updateLabel("turn", 0, 0);
+        if (battle.getBattlers().get(0) instanceof Enemy) {
+            updateLabel("turn", 1, 0);
+        } else {
+            updateLabel("turn", 0, 0);
+        }
     }
 
     @Override
@@ -441,14 +445,13 @@ public class BattleScreen implements Screen {
      * - lost, for when the battle is lost.
      * @param info A parameter used by some events. It's:
      * <p>
-     * - for turn, unused;
+     * - for turn, 1 if it's the first turn of the battle is an enemy's, not 1 elsewhere;
      * <p>
      * - for attack, the damage done;
      * <p>
      * - for win, how much EXP every character gets;
      * <p>
      * - for lost, unused.
-     *
      * @param attacked A parameter used by some events. It's:
      * <p>
      * - for turn, unused;
@@ -456,9 +459,7 @@ public class BattleScreen implements Screen {
      * - for attack, the index of the attacked character;
      * <p>
      * - for win, unused;
-     *
      * - for lost, unused.
-     *
      */
     public void updateLabel(String type, int info, int attacked) {
         if (labelMain != null) {
@@ -467,7 +468,37 @@ public class BattleScreen implements Screen {
         }
         switch (type) {
             case "turn":
-                labelMain = new TypingLabel("It's " + battle.getBattlers().get(currentBattler).getName() + "'s turn.", labelStyle);
+                if (info == 0) {
+                    labelMain = new TypingLabel("It's " + battle.getBattlers().get(currentBattler).getName() + "'s turn.", labelStyle);
+                }
+                if (info == 1) {
+                    labelMain = new TypingLabel("It is the enemy's turn.", labelStyle);
+                    labelMain.setTypingListener(new TypingListener() {
+                        @Override
+                        public void event(String event) {
+
+                        }
+
+                        @Override
+                        public void end() {
+                            int alivePCs = (int) battle.getBattlers().stream().filter((battler) -> (battler instanceof PC) && (!battler.isDead())).count();
+                            int attacked = (int) Math.round(Global.getRandomZeroOne() * (alivePCs - 1));
+                            int attackedCurrHP = battle.getCharacters().get(attacked).getCurrHP();
+                            battle.attack(enemy, battle.getCharacters().get(attacked));
+                            updateAttack(attackedCurrHP - battle.getCharacters().get(attacked).getCurrHP(), attacked);
+                        }
+
+                        @Override
+                        public String replaceVariable(String variable) {
+                            return null;
+                        }
+
+                        @Override
+                        public void onChar(Character ch) {
+
+                        }
+                    });
+                }
                 break;
             case "attack": {
                 if (battle.getBattlers().get(currentBattler) instanceof Enemy) {
@@ -517,7 +548,7 @@ public class BattleScreen implements Screen {
                         try {
                             inventory.addMoney(enemy.getMoney());
                             for (Map.Entry<Item, Double> toDrop : enemy.getToDrop().entrySet()) {
-                                if (Global.getRandomZeroOne() >= toDrop.getValue()) {
+                                if (Global.getRandomZeroOne() <= toDrop.getValue()) {
                                     inventory.add(toDrop.getKey());
                                 }
                             }
@@ -530,7 +561,7 @@ public class BattleScreen implements Screen {
                             throw new RuntimeException(e);
                         }
                         try {
-                            Thread.sleep(500);
+                            Thread.sleep(1000);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
@@ -563,7 +594,7 @@ public class BattleScreen implements Screen {
                     @Override
                     public void end() {
                         try {
-                            Thread.sleep(500);
+                            Thread.sleep(1000);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
@@ -583,7 +614,6 @@ public class BattleScreen implements Screen {
 
                     }
                 });
-
         }
         assert labelMain != null;
         labelMain.setPosition((Gdx.graphics.getWidth() - labelMain.getWidth()) / 2.0f, Gdx.graphics.getHeight() - 100);
@@ -605,12 +635,6 @@ public class BattleScreen implements Screen {
 
     public void battleLost() {
         updateLabel("lose", 0, 0);
-        try {
-            Thread.sleep(800);
-        } catch (InterruptedException ignored) {
-        }
-        dispose();
-        game.setScreen(new CityScreen(game));
     }
 
     public void battleWon() {
