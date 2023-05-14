@@ -546,22 +546,7 @@ public class BattleScreen implements Screen {
                     @Override
                     public void end() {
                         try {
-                            inventory.addMoney(enemy.getMoney());
-                            for (Map.Entry<Item, Double> toDrop : enemy.getToDrop().entrySet()) {
-                                if (Global.getRandomZeroOne() <= toDrop.getValue()) {
-                                    inventory.add(toDrop.getKey());
-                                }
-                            }
-                            for (PC character : party) {
-                                character.gainEXP(info);
-                                character.healAll();
-                                character.update();
-                            }
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                        try {
-                            Thread.sleep(1000);
+                            Thread.sleep(500);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
@@ -621,6 +606,9 @@ public class BattleScreen implements Screen {
         stage.addActor(labelMain);
     }
 
+    /**
+     * The current battler's index is updated.
+     */
     public void updateCurrentBattler() {
         if (battle.isBattleFinished()) {
             return;
@@ -633,12 +621,33 @@ public class BattleScreen implements Screen {
         }
     }
 
+    /**
+     * Manages the case in which the battle is lost.
+     */
     public void battleLost() {
         updateLabel("lose", 0, 0);
     }
 
+    /**
+     * Manages the case in which the battle is won.
+     */
     public void battleWon() {
         int EXP = enemy.givenEXP();
+        try {
+            inventory.addMoney(enemy.getMoney());
+            for (Map.Entry<Item, Double> toDrop : enemy.getToDrop().entrySet()) {
+                if (Global.getRandomZeroOne() <= toDrop.getValue()) {
+                    inventory.add(toDrop.getKey());
+                }
+            }
+            for (PC character : party) {
+                character.gainEXP(EXP / party.size());
+                character.healAll();
+                character.update();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         updateLabel("win", EXP / party.size(), 0);
     }
 }
