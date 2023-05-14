@@ -21,7 +21,7 @@
         "Bow",
         "Dagger"
     ],
-    "inventory": {"Potion": 2},
+    "inventory": {},
     "statusEffectsSet": [
         "Burn",
         "Poison",

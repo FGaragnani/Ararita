@@ -78,6 +78,7 @@ public class BattleScreen implements Screen {
     List<PC> party;
     int currentBattler;
     Inventory inventory;
+    Array<String> itemsSelectBox;
 
     public BattleScreen(final Ararita game, final GlobalBattle battle) {
 
@@ -229,6 +230,7 @@ public class BattleScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if (labelMain.hasEnded()) {
+                    updateItemsDialog();
                     itemDialog.show(stage);
                 }
             }
@@ -257,7 +259,7 @@ public class BattleScreen implements Screen {
 
         itemDialogSelectBox = new SelectBox<>(game.selectBoxStyle);
         itemDialogSelectBox.setWidth(400);
-        Array<String> itemsSelectBox = new Array<>();
+        itemsSelectBox = new Array<>();
         inventory.getItems().entrySet().stream().filter((entry) -> (entry.getKey() instanceof ConsumableItem)).forEach((entry) -> itemsSelectBox.add(entry.getValue().toString() + " " + entry.getKey().getName()));
         if (itemsSelectBox.isEmpty()) {
             itemsSelectBox.add("No consumables...");
@@ -270,20 +272,24 @@ public class BattleScreen implements Screen {
                     if (!itemDialogSelectBox.getSelected().equals("No consumables...")) {
                         int index = itemDialogSelectBox.getSelectedIndex();
                         ConsumableItem toUse = (ConsumableItem) new ArrayList<>(inventory.getItems().entrySet()).get(index).getKey();
-                        toUse.use(party.get(currentBattler));
+                        try {
+                            inventory.use((PC) battle.getBattlers().get(currentBattler), toUse);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                         updateItem(toUse);
                     }
                 }
                 hide();
             }
         };
-        itemDialog.setResizable(false);
-        itemDialog.text(" Use which item? ", game.labelStyle);
-        itemDialog.button("Use", true, game.textButtonStyle);
-        itemDialog.button("Back", false, game.textButtonStyle);
-        itemDialog.addActor(itemDialogSelectBox);
+        itemDialog.text("\t   Use which item?\t  ", game.labelStyle);
+        itemDialog.getContentTable().addActor(itemDialogSelectBox);
+        itemDialog.getContentTable().padBottom(100);
+        itemDialog.button("Use", true, textButtonStyle);
+        itemDialog.button("Back", false, textButtonStyle);
+        itemDialog.getButtonTable().padTop(30);
         itemDialog.setPosition(0, 0);
-
 
         /*
             Adding all actors to the stage.
@@ -548,6 +554,11 @@ public class BattleScreen implements Screen {
 
                         @Override
                         public void end() {
+                            try {
+                                Thread.sleep(400);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
                             int alivePCs = (int) battle.getBattlers().stream().filter((battler) -> (battler instanceof PC) && (!battler.isDead())).count();
                             int attacked = (int) Math.round(Global.getRandomZeroOne() * (alivePCs - 1));
                             int attackedCurrHP = battle.getCharacters().get(attacked).getCurrHP();
@@ -604,7 +615,7 @@ public class BattleScreen implements Screen {
             }
             case "item": {
                 String usedName = Global.getAllItems().get(info).getName();
-                labelMain = new TypingLabel(party.get(currentBattler) + " uses a " + usedName + "!", labelStyle);
+                labelMain = new TypingLabel(battle.getBattlers().get(currentBattler).getName() + " uses a " + usedName + "!", labelStyle);
                 labelMain.setTypingListener(new TypingListener() {
                     @Override
                     public void event(String event) {
@@ -632,6 +643,7 @@ public class BattleScreen implements Screen {
 
                     }
                 });
+                break;
             }
             case "win":
                 labelMain = new TypingLabel("You win! You gain " + enemy.getMoney() + "G and each character gains " + info + " " + "EXP!", labelStyle);
@@ -665,7 +677,6 @@ public class BattleScreen implements Screen {
                     }
                 });
                 break;
-
             case "lose":
                 labelMain = new TypingLabel("You lost...", labelStyle);
                 labelMain.setTypingListener(new TypingListener() {
@@ -748,4 +759,17 @@ public class BattleScreen implements Screen {
         }
         updateLabel("win", EXP / party.size(), 0);
     }
+
+    /**
+     * The SelectBox inside the Item Dialog is updated.
+     */
+    public void updateItemsDialog(){
+        itemsSelectBox = new Array<>();
+        inventory.getItems().entrySet().stream().filter((entry) -> (entry.getKey() instanceof ConsumableItem)).forEach((entry) -> itemsSelectBox.add(entry.getValue().toString() + " " + entry.getKey().getName()));
+        if (itemsSelectBox.isEmpty()) {
+            itemsSelectBox.add("No consumables...");
+        }
+        itemDialogSelectBox.setItems(itemsSelectBox);
+    }
+
 }
