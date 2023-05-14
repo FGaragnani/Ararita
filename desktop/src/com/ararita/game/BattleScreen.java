@@ -542,10 +542,10 @@ public class BattleScreen implements Screen {
         switch (type) {
             case "turn":
                 if (info == 0) {
-                    labelMain = new TypingLabel("It's " + battle.getBattlers().get(currentBattler).getName() + "'s turn.", labelStyle);
+                    labelMain = new TypingLabel(" It's " + battle.getBattlers().get(currentBattler).getName() + "'s " + "turn.", labelStyle);
                 }
                 if (info == 1) {
-                    labelMain = new TypingLabel("It is the enemy's turn.", labelStyle);
+                    labelMain = new TypingLabel(" It is the enemy's turn.", labelStyle);
                     labelMain.setTypingListener(new TypingListener() {
                         @Override
                         public void event(String event) {
@@ -580,9 +580,9 @@ public class BattleScreen implements Screen {
                 break;
             case "attack": {
                 if (battle.getBattlers().get(currentBattler) instanceof Enemy) {
-                    labelMain = new TypingLabel("The enemy attacks " + party.get(attacked).getName() + ", dealing " + info + " damage!", labelStyle);
+                    labelMain = new TypingLabel(" The enemy attacks " + party.get(attacked).getName() + ", dealing " + info + " damage!", labelStyle);
                 } else {
-                    labelMain = new TypingLabel(battle.getBattlers().get(currentBattler).getName() + " attacks the enemy, dealing it " + info + " damage!", labelStyle);
+                    labelMain = new TypingLabel(" " + battle.getBattlers().get(currentBattler).getName() + " attacks the " + "enemy, dealing it " + info + " damage!", labelStyle);
                 }
                 labelMain.setTypingListener(new TypingListener() {
                     @Override
@@ -615,7 +615,7 @@ public class BattleScreen implements Screen {
             }
             case "item": {
                 String usedName = Global.getAllItems().get(info).getName();
-                labelMain = new TypingLabel(battle.getBattlers().get(currentBattler).getName() + " uses a " + usedName + "!", labelStyle);
+                labelMain = new TypingLabel(" " + battle.getBattlers().get(currentBattler).getName() + " uses a " + usedName + " " + "!", labelStyle);
                 labelMain.setTypingListener(new TypingListener() {
                     @Override
                     public void event(String event) {
@@ -646,7 +646,8 @@ public class BattleScreen implements Screen {
                 break;
             }
             case "win":
-                labelMain = new TypingLabel("You win! You gain " + enemy.getMoney() + "G and each character gains " + info + " " + "EXP!", labelStyle);
+                labelMain =
+                        new TypingLabel(" You win! You gain " + enemy.getMoney() + "G and each character gains " + info + " " + "EXP!", labelStyle);
                 labelMain.setTypingListener(new TypingListener() {
                     @Override
                     public void event(String event) {
@@ -678,7 +679,7 @@ public class BattleScreen implements Screen {
                 });
                 break;
             case "lose":
-                labelMain = new TypingLabel("You lost...", labelStyle);
+                labelMain = new TypingLabel(" You lost...", labelStyle);
                 labelMain.setTypingListener(new TypingListener() {
                     @Override
                     public void event(String event) {
@@ -710,7 +711,7 @@ public class BattleScreen implements Screen {
                 });
         }
         assert labelMain != null;
-        labelMain.setPosition((Gdx.graphics.getWidth() - labelMain.getWidth()) / 2.0f, Gdx.graphics.getHeight() - 100);
+        labelMain.setPosition((Gdx.graphics.getWidth() - labelMain.getWidth()) / 2.0f, Gdx.graphics.getHeight() - 70);
         labelMain.setFontScale(4.8f, 6);
         stage.addActor(labelMain);
     }
@@ -763,7 +764,7 @@ public class BattleScreen implements Screen {
     /**
      * The SelectBox inside the Item Dialog is updated.
      */
-    public void updateItemsDialog(){
+    public void updateItemsDialog() {
         itemsSelectBox = new Array<>();
         inventory.getItems().entrySet().stream().filter((entry) -> (entry.getKey() instanceof ConsumableItem)).forEach((entry) -> itemsSelectBox.add(entry.getValue().toString() + " " + entry.getKey().getName()));
         if (itemsSelectBox.isEmpty()) {
@@ -771,5 +772,4 @@ public class BattleScreen implements Screen {
         }
         itemDialogSelectBox.setItems(itemsSelectBox);
     }
-
 }
