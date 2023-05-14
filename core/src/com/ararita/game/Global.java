@@ -203,12 +203,10 @@ public class Global {
      * @throws IOException If the file cannot be opened or written upon.
      */
     public static void addToOtherCharacters(String charName) throws IOException {
-        if (isPresentInJSONList(globalSets, charName, "party")) {
-            addInJSONArray(globalSets, charName, "otherCharacters");
-            JSONObject jsonGlobal = getJSON(globalSets);
-            jsonGlobal.getJSONArray("party").remove(getListJSON(globalSets, "party").indexOf(charName));
-            writeJSON(globalSets, jsonGlobal);
-        }
+        addInJSONArray(globalSets, charName, "otherCharacters");
+        JSONObject jsonGlobal = getJSON(globalSets);
+        jsonGlobal.getJSONArray("party").remove(getListJSON(globalSets, "party").indexOf(charName));
+        writeJSON(globalSets, jsonGlobal);
     }
 
     /**
