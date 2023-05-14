@@ -187,32 +187,16 @@ public class Enemy implements Battler {
         return attack;
     }
 
-    public void setAttack(int attack) {
-        this.attack = attack;
-    }
-
     public int getDefense() {
         return defense;
-    }
-
-    public void setDefense(int defense) {
-        this.defense = defense;
     }
 
     public int getMagicDefense() {
         return magicDefense;
     }
 
-    public void setMagicDefense(int magicDefense) {
-        this.magicDefense = magicDefense;
-    }
-
     public int getSpeed() {
         return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
     }
 
     public int getCurrHP() {
@@ -227,16 +211,8 @@ public class Enemy implements Battler {
         return toDrop;
     }
 
-    public void setToDrop(Map<Item, Double> toDrop) {
-        this.toDrop = toDrop;
-    }
-
     public int getMoney() {
         return money;
-    }
-
-    public void setMoney(int money) {
-        this.money = money;
     }
 
     @Override
@@ -261,10 +237,6 @@ public class Enemy implements Battler {
 
     public List<String> getWeakTo() {
         return weakTo;
-    }
-
-    public void setWeakTo(List<String> weakTo) {
-        this.weakTo = weakTo;
     }
 
     public int getLevel() {
