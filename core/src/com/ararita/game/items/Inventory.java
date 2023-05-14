@@ -68,7 +68,7 @@ public class Inventory {
         Global.setMoney(money);
     }
 
-    public void addMoney(int toAdd) throws IOException{
+    public void addMoney(int toAdd) throws IOException {
         setMoney(getMoney() + toAdd);
     }
 
@@ -234,4 +234,18 @@ public class Inventory {
         }
     }
 
+    /**
+     * A Consumable Item in the inventory is used.
+     *
+     * @param character The character which will use the item.
+     * @param item The item to consume.
+     *
+     * @throws IOException If the file cannot be written upon.
+     */
+    public void use(PC character, ConsumableItem item) throws IOException {
+        if (getItems().containsKey(item)) {
+            item.use(character);
+            remove(item);
+        }
+    }
 }

@@ -6,8 +6,8 @@
     "strength": 1,
     "level": 1,
     "vigor": 2,
-    "spirit": 1,
     "HP": 19,
+    "spirit": 1,
     "dead": false,
     "exponentEXP": 1.28,
     "currHP": 19,
@@ -23,9 +23,9 @@
         "Fire"
     ],
     "charClass": "Black Mage",
-    "spells": [],
+    "EXP": 30,
     "agility": 1,
-    "EXP": 0,
-    "weapons": [],
-    "arcane": 4
+    "spells": [],
+    "arcane": 4,
+    "weapons": []
 }

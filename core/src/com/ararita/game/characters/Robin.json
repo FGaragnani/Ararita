@@ -1,0 +1,28 @@
+{
+    "baseEXP": 100,
+    "image": "Archer",
+    "currMP": 19,
+    "MP": 19,
+    "strength": 2,
+    "level": 1,
+    "vigor": 2,
+    "HP": 34,
+    "spirit": 2,
+    "dead": false,
+    "exponentEXP": 1.19,
+    "currHP": 34,
+    "increaseEXP": 1.38,
+    "intelligence": 2,
+    "proficiencies": {
+        "Bow": 3,
+        "Spear": 1
+    },
+    "name": "Robin",
+    "spellTypes": ["Wind"],
+    "charClass": "Ranger",
+    "EXP": 12,
+    "agility": 6,
+    "spells": [],
+    "arcane": 1,
+    "weapons": []
+}
