@@ -2,6 +2,7 @@ package com.ararita.game;
 
 import com.ararita.game.battlers.Enemy;
 import com.ararita.game.battlers.PC;
+import com.ararita.game.items.ConsumableItem;
 import com.ararita.game.items.Inventory;
 import com.ararita.game.items.Item;
 import com.badlogic.gdx.Gdx;
@@ -17,11 +18,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 import com.rafaskoberg.gdx.typinglabel.TypingListener;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -68,6 +71,8 @@ public class BattleScreen implements Screen {
     Image handImage;
 
     Dialog runDialog;
+    Dialog itemDialog;
+    SelectBox<String> itemDialogSelectBox;
 
     Enemy enemy;
     List<PC> party;
@@ -213,6 +218,22 @@ public class BattleScreen implements Screen {
             }
         });
 
+        castButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                // TODO
+            }
+        });
+
+        itemButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (labelMain.hasEnded()) {
+                    itemDialog.show(stage);
+                }
+            }
+        });
+
         /*
             Creating all the dialogs.
          */
@@ -233,6 +254,36 @@ public class BattleScreen implements Screen {
         runDialog.button("Yes", true, game.textButtonStyle);
         runDialog.button("No", false, game.textButtonStyle);
         runDialog.setPosition(0, 0);
+
+        itemDialogSelectBox = new SelectBox<>(game.selectBoxStyle);
+        itemDialogSelectBox.setWidth(400);
+        Array<String> itemsSelectBox = new Array<>();
+        inventory.getItems().entrySet().stream().filter((entry) -> (entry.getKey() instanceof ConsumableItem)).forEach((entry) -> itemsSelectBox.add(entry.getValue().toString() + " " + entry.getKey().getName()));
+        if (itemsSelectBox.isEmpty()) {
+            itemsSelectBox.add("No consumables...");
+        }
+        itemDialogSelectBox.setItems(itemsSelectBox);
+
+        itemDialog = new Dialog("", game.skin) {
+            public void result(Object confirm) {
+                if ((boolean) confirm) {
+                    if (!itemDialogSelectBox.getSelected().equals("No consumables...")) {
+                        int index = itemDialogSelectBox.getSelectedIndex();
+                        ConsumableItem toUse = (ConsumableItem) new ArrayList<>(inventory.getItems().entrySet()).get(index).getKey();
+                        toUse.use(party.get(currentBattler));
+                        updateItem(toUse);
+                    }
+                }
+                hide();
+            }
+        };
+        itemDialog.setResizable(false);
+        itemDialog.text(" Use which item? ", game.labelStyle);
+        itemDialog.button("Use", true, game.textButtonStyle);
+        itemDialog.button("Back", false, game.textButtonStyle);
+        itemDialog.addActor(itemDialogSelectBox);
+        itemDialog.setPosition(0, 0);
+
 
         /*
             Adding all actors to the stage.
@@ -320,6 +371,15 @@ public class BattleScreen implements Screen {
      */
     public void updateAttack(int damageDone, int attacked) {
         updateLabel("attack", damageDone, attacked);
+    }
+
+    /**
+     * A turn is used to consume an item.
+     *
+     * @param itemUsed The item that has been used.
+     */
+    public void updateItem(ConsumableItem itemUsed) {
+        updateLabel("item", Global.getAllItems().indexOf(itemUsed), 0);
     }
 
     /**
@@ -440,6 +500,8 @@ public class BattleScreen implements Screen {
      * <p>
      * - attack, for an attack done;
      * <p>
+     * - item, for using an item;
+     * <p>
      * - win, for when the battle is won;
      * <p>
      * - lost, for when the battle is lost.
@@ -448,6 +510,8 @@ public class BattleScreen implements Screen {
      * - for turn, 1 if it's the first turn of the battle is an enemy's, not 1 elsewhere;
      * <p>
      * - for attack, the damage done;
+     * <p>
+     * - for item, the index in Global.getAllItems() of the used item;
      * <p>
      * - for win, how much EXP every character gets;
      * <p>
@@ -458,7 +522,10 @@ public class BattleScreen implements Screen {
      * <p>
      * - for attack, the index of the attacked character;
      * <p>
+     * - for item, unused;
+     * <p>
      * - for win, unused;
+     * <p>
      * - for lost, unused.
      */
     public void updateLabel(String type, int info, int attacked) {
@@ -534,6 +601,37 @@ public class BattleScreen implements Screen {
                     }
                 });
                 break;
+            }
+            case "item": {
+                String usedName = Global.getAllItems().get(info).getName();
+                labelMain = new TypingLabel(party.get(currentBattler) + " uses a " + usedName + "!", labelStyle);
+                labelMain.setTypingListener(new TypingListener() {
+                    @Override
+                    public void event(String event) {
+
+                    }
+
+                    @Override
+                    public void end() {
+                        try {
+                            Thread.sleep(400);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        updateProgressBars();
+                        updateTurn();
+                    }
+
+                    @Override
+                    public String replaceVariable(String variable) {
+                        return null;
+                    }
+
+                    @Override
+                    public void onChar(Character ch) {
+
+                    }
+                });
             }
             case "win":
                 labelMain = new TypingLabel("You win! You gain " + enemy.getMoney() + "G and each character gains " + info + " " + "EXP!", labelStyle);
