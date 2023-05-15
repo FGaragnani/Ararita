@@ -1,7 +1,7 @@
 {
     "attributesAffection": {
-        "Arcane": 13,
-        "Strength": 15
+        "Arcane": 10,
+        "Strength": 12
     },
     "price": 600,
     "name": "Grim Dagger",

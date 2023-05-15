@@ -1,7 +1,7 @@
 {
     "attributesAffection": {
-        "Intelligence": 30,
-        "Arcane": 10
+        "Intelligence": 27,
+        "Arcane": 7
     },
     "price": 1000,
     "name": "Elder Staff",

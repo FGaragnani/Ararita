@@ -1,7 +1,7 @@
 {
     "attributesAffection": {
-        "Strength": 3,
-        "Agility": 3
+        "Strength": 2,
+        "Agility": 1
     },
     "price": 20,
     "name": "Boxing Gloves",

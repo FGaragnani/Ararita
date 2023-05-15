@@ -1,5 +1,5 @@
 {
-    "attributesAffection": {"Strength": 5},
+    "attributesAffection": {"Strength": 2},
     "price": 20,
     "name": "Wooden Sword",
     "weaponType": "Sword",
