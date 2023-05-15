@@ -5,6 +5,7 @@ import com.ararita.game.battlers.PC;
 import com.ararita.game.items.ConsumableItem;
 import com.ararita.game.items.Inventory;
 import com.ararita.game.items.Item;
+import com.ararita.game.spells.Spell;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -227,7 +228,7 @@ public class BattleScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if (labelMain.hasEnded()) {
-                    updateCastDialog();
+                    updateCastDialog(false);
                     castDialog.show(stage);
                 }
             }
@@ -303,7 +304,7 @@ public class BattleScreen implements Screen {
         castDialogSelectBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                updateCastDialog();
+                updateCastDialog(true);
             }
         });
 
@@ -313,12 +314,21 @@ public class BattleScreen implements Screen {
 
             public void result(Object confirm) {
                 if ((boolean) confirm) {
-                    // TODO
+                    if (!castDialogSelectBox.getSelected().equals("No spells...")) {
+                        try {
+                            Spell toCast = Global.getSpell(castDialogSelectBox.getSelected());
+                            int oldEnemyHP = enemy.getCurrHP();
+                            battle.cast((PC) battle.getBattlers().get(currentBattler), enemy, toCast);
+                            updateCast(toCast, oldEnemyHP - enemy.getCurrHP());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
                 }
                 hide();
             }
         };
-        castDialog.text("\t   Use which cast?\t  ", game.labelStyle);
+        castDialog.text("\t   Use which spell?\t  ", game.labelStyle);
         castDialog.getContentTable().row();
         castDialog.getContentTable().add(castDialogSelectBox);
         castDialog.getContentTable().row();
@@ -745,6 +755,37 @@ public class BattleScreen implements Screen {
 
                     }
                 });
+            case "cast": {
+                labelMain = new TypingLabel(" " + battle.getBattlers().get(currentBattler).getName() + " cast " + ((PC) battle.getBattlers().get(currentBattler)).getSpells().get(attacked).getName() + " inflicting " + info + " damage!", labelStyle);
+                labelMain.setTypingListener(new TypingListener() {
+                    @Override
+                    public void event(String event) {
+
+                    }
+
+                    @Override
+                    public void end() {
+                        try {
+                            Thread.sleep(400);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        updateProgressBars();
+                        updateTurn();
+                    }
+
+                    @Override
+                    public String replaceVariable(String variable) {
+                        return null;
+                    }
+
+                    @Override
+                    public void onChar(Character ch) {
+
+                    }
+                });
+                break;
+            }
         }
         assert labelMain != null;
         labelMain.setPosition((Gdx.graphics.getWidth() - labelMain.getWidth()) / 2.0f, Gdx.graphics.getHeight() - 70);
@@ -812,13 +853,15 @@ public class BattleScreen implements Screen {
     /**
      * The SelectBox inside the Cast Dialog is updated.
      */
-    public void updateCastDialog() {
-        castsSelectBox = new Array<>();
-        ((PC) battle.getBattlers().get(currentBattler)).getSpells().forEach((spell) -> castsSelectBox.add(spell.getName()));
-        if (castsSelectBox.isEmpty()) {
-            castsSelectBox.add("No spells...");
+    public void updateCastDialog(boolean onlyLabel) {
+        if(!onlyLabel) {
+            castsSelectBox = new Array<>();
+            ((PC) battle.getBattlers().get(currentBattler)).getSpells().forEach((spell) -> castsSelectBox.add(spell.getName()));
+            if (castsSelectBox.isEmpty()) {
+                castsSelectBox.add("No spells...");
+            }
+            castDialogSelectBox.setItems(castsSelectBox);
         }
-        castDialogSelectBox.setItems(castsSelectBox);
         if (!castDialogSelectBox.getSelected().equals("No spells...")) {
             try {
                 castDialogLabel.setText("MP: " + ((PC) battle.getBattlers().get(currentBattler)).getCurrMP() + "/" + ((PC) battle.getBattlers().get(currentBattler)).getMP() + ". To cast: " + Global.getSpell(castDialogSelectBox.getSelected()).getMPCost());
@@ -828,5 +871,14 @@ public class BattleScreen implements Screen {
         } else {
             castDialogLabel.setText("");
         }
+    }
+
+    /**
+     * Manages the cast of a spell.
+     *
+     * @param spell The spell to cast.
+     */
+    public void updateCast(Spell spell, int damage) {
+        updateLabel("cast", damage, ((PC) battle.getBattlers().get(currentBattler)).getSpells().indexOf(spell));
     }
 }
