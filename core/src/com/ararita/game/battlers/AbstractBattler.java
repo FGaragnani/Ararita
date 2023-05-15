@@ -148,7 +148,7 @@ public abstract class AbstractBattler {
             return 0;
         }
         int toRet;
-        toRet = (int) ceil(increaseEXP * (baseEXP * level + (Math.pow(level, exponentEXP))) / 8);
+        toRet = (int) ceil(increaseEXP * (baseEXP * level + (Math.pow(level, exponentEXP))) / 5);
         return toRet + EXPForLevel(level - 1);
     }
 
