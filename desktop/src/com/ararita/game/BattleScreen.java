@@ -498,11 +498,7 @@ public class BattleScreen implements Screen {
             return;
         }
         if (battle.getBattlers().get(currentBattler) instanceof Enemy) {
-            int alivePCs = (int) battle.getBattlers().stream().filter((battler) -> (battler instanceof PC) && (!battler.isDead())).count();
-            int attacked = (int) Math.round(Global.getRandomZeroOne() * (alivePCs - 1));
-            int attackedCurrHP = battle.getCharacters().get(attacked).getCurrHP();
-            battle.attack(enemy, battle.getCharacters().get(attacked));
-            updateAttack(attackedCurrHP - battle.getCharacters().get(attacked).getCurrHP(), attacked);
+            updateLabel("turn", 1, 0);
         } else {
             updateLabel("turn", 0, 0);
         }
@@ -645,9 +641,23 @@ public class BattleScreen implements Screen {
             case "turn":
                 if (info == 0) {
                     labelMain = new TypingLabel(" It's " + battle.getBattlers().get(currentBattler).getName() + "'s " + "turn.", labelStyle);
-                }
-                if (info == 1) {
-                    labelMain = new TypingLabel(" It is the enemy's turn.", labelStyle);
+                } else if (info == 1) {
+                    StringBuilder text = new StringBuilder(" It is the enemy's turn.");
+                    switch (enemy.getStatusEffect()) {
+                        case "Paralysis":
+                            text.append(" The enemy is paralysed.");
+                            break;
+                        case "Blindness":
+                            text.append(" The enemy has been blinded.");
+                            break;
+                        case "Burn":
+                            text.append(" The enemy is burned.");
+                            break;
+                        case "Poison":
+                            text.append(" The enemy is poisoned.");
+                            break;
+                    }
+                    labelMain = new TypingLabel(text.toString(), labelStyle);
                     labelMain.setTypingListener(new TypingListener() {
                         @Override
                         public void event(String event) {
