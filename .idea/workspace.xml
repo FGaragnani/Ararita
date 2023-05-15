@@ -5,14 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5676402a-2187-4a8f-bfe0-ac646c9fd387" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/core/src/com/ararita/game/characters/Luna.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/com/ararita/game/spells/data/Holy Bolt.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/Enemy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/PC.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/PC.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/characters/Arthur.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/characters/Arthur.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/characters/Orion.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/characters/Orion.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/characters/Robin.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/characters/Robin.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/characters/Arthur.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/characters/Orion.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/characters/Robin.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/BattleScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/BattleScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/SpellCreationScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/SpellCreationScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -275,6 +276,11 @@
           <url>file://$PROJECT_DIR$/core/src/com/ararita/game/Global.java</url>
           <line>205</line>
           <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/core/src/com/ararita/game/Global.java</url>
+          <line>305</line>
+          <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

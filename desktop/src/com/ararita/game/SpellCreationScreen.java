@@ -346,7 +346,13 @@ public class SpellCreationScreen implements Screen {
                 if ((boolean) confirm) {
                     try {
                         Global.setMoney(Global.getMoney() - cost);
-                        PC toLearn = Global.getCharacter(currentBattlers.get(characterSelectBox.getSelectedIndex()).getName());
+                        PC toLearn = Global.getAllCharacters().stream().filter((pc) -> {
+                            try {
+                                return (pc.canLearn(new Spell("", MPCost(), spellTypeSelectBox.getSelected(), spellBasePower, statusEffects, false)));
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }).toList().get(characterSelectBox.getSelectedIndex());
                         toLearn.learnSpell(new Spell(spellNameField.getText(), MPCost(), spellTypeSelectBox.getSelected(), spellBasePower, statusEffects, true));
                         dispose();
                         game.setScreen(new CityScreen(game));
