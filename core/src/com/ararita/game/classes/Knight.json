@@ -12,7 +12,7 @@
     "currHP": 0,
     "increaseEXP": 1.32,
     "intelligence": 0,
-    "proficiencies": {"Sword": 3},
+    "proficiencies": {"Sword": 2},
     "spellTypes": [],
     "charClass": "Knight",
     "spells": [],

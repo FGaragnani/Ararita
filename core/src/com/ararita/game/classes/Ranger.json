@@ -11,7 +11,7 @@
     "intelligence": 2,
     "proficiencies": {
         "Spear": 1,
-        "Bow": 3
+        "Bow": 2
     },
     "spellTypes": ["Wind"],
     "charClass": "Ranger",

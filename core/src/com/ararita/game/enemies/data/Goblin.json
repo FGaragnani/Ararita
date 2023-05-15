@@ -8,7 +8,6 @@
     "dead": false,
     "currHP": 30,
     "weakTo": [
-        "Sword",
         "Fire",
         "Dagger",
         "Spear",
