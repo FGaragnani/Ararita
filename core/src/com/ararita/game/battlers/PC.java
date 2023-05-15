@@ -425,7 +425,7 @@ public class PC extends AbstractBattler implements Battler {
      * @return True, if it can cast the spell.
      */
     public boolean canCast(Spell spell) {
-        return (spells.contains(spell)) && (spell.getMPCost() >= getCurrMP());
+        return (spells.contains(spell)) && (spell.getMPCost() <= getCurrMP());
     }
 
     /**
@@ -438,7 +438,7 @@ public class PC extends AbstractBattler implements Battler {
     public int cast(Spell spell) {
         if (canCast(spell)) {
             this.setCurrMP(getCurrMP() - spell.getMPCost());
-            return (int) (hasMagicalAttackPower() * (spell.getBasePower() / 3.0));
+            return (int) (hasMagicalAttackPower() * (spell.getBasePower() / 1.5));
         }
         return 0;
     }
