@@ -319,9 +319,11 @@ public class BattleScreen implements Screen {
                     if (!castDialogSelectBox.getSelected().equals("No spells...")) {
                         try {
                             Spell toCast = Global.getSpell(castDialogSelectBox.getSelected());
-                            int oldEnemyHP = enemy.getCurrHP();
-                            battle.cast((PC) battle.getBattlers().get(currentBattler), enemy, toCast);
-                            updateCast(toCast, oldEnemyHP - enemy.getCurrHP());
+                            if (((PC) battle.getBattlers().get(currentBattler)).canCast(toCast)) {
+                                int oldEnemyHP = enemy.getCurrHP();
+                                battle.cast((PC) battle.getBattlers().get(currentBattler), enemy, toCast);
+                                updateCast(toCast, oldEnemyHP - enemy.getCurrHP());
+                            }
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -340,23 +342,22 @@ public class BattleScreen implements Screen {
         castDialog.getButtonTable().padTop(30);
         castDialog.setPosition(0, 0);
 
-        levelUpDialog = new Dialog("", game.skin){
+        levelUpDialog = new Dialog("", game.skin) {
 
-            public void result(Object confirm){
+            public void result(Object confirm) {
                 hide();
                 game.stopAudio();
                 dispose();
                 game.playAudio("Music/CityTheme.mp3");
                 game.setScreen(new CityScreen(game));
             }
-
         };
         levelUpDialog.button("OK", true, textButtonStyle);
         levelUpDialog.setPosition(0, 0);
 
-        dropDialog = new Dialog("", game.skin){
+        dropDialog = new Dialog("", game.skin) {
 
-            public void result(Object confirm){
+            public void result(Object confirm) {
                 StringBuilder text = new StringBuilder();
                 int level;
                 int EXP = enemy.givenEXP();
@@ -364,7 +365,7 @@ public class BattleScreen implements Screen {
                     try {
                         level = character.getLevel();
                         character.gainEXP(EXP / party.size());
-                        if(level != character.getLevel()){
+                        if (level != character.getLevel()) {
                             text.append(character.getName()).append(" levelled up!\n");
                         }
                         character.healAll();
@@ -373,7 +374,7 @@ public class BattleScreen implements Screen {
                         throw new RuntimeException(e);
                     }
                 }
-                if(text.isEmpty()){
+                if (text.isEmpty()) {
                     levelUpDialog.text(" No character \n levelled up. ");
                 } else {
                     levelUpDialog.text(text.toString());
@@ -381,7 +382,6 @@ public class BattleScreen implements Screen {
                 hide();
                 levelUpDialog.show(stage);
             }
-
         };
         dropDialog.button("OK", true, textButtonStyle);
         dropDialog.setPosition(0, 0);
@@ -910,7 +910,7 @@ public class BattleScreen implements Screen {
      * The SelectBox inside the Cast Dialog is updated.
      */
     public void updateCastDialog(boolean onlyLabel) {
-        if(!onlyLabel) {
+        if (!onlyLabel) {
             castsSelectBox = new Array<>();
             ((PC) battle.getBattlers().get(currentBattler)).getSpells().forEach((spell) -> castsSelectBox.add(spell.getName()));
             if (castsSelectBox.isEmpty()) {
@@ -941,19 +941,18 @@ public class BattleScreen implements Screen {
     /**
      * Hides the hand icon and the Progress Bars.
      */
-    public void hideGUI(){
+    public void hideGUI() {
         handImage.setVisible(false);
         firstBar.setVisible(false);
-        if(party.size() >= 2){
+        if (party.size() >= 2) {
             secondBar.setVisible(false);
         }
-        if(party.size() >= 3){
+        if (party.size() >= 3) {
             thirdBar.setVisible(false);
         }
-        if(party.size() >= 4){
+        if (party.size() >= 4) {
             fourthBar.setVisible(false);
         }
         enemyImage.setVisible(false);
     }
-
 }
