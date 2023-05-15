@@ -77,6 +77,8 @@ public class BattleScreen implements Screen {
     Dialog castDialog;
     SelectBox<String> castDialogSelectBox;
     Label castDialogLabel;
+    Dialog levelUpDialog;
+    Dialog dropDialog;
 
     Enemy enemy;
     List<PC> party;
@@ -338,6 +340,53 @@ public class BattleScreen implements Screen {
         castDialog.getButtonTable().padTop(30);
         castDialog.setPosition(0, 0);
 
+        levelUpDialog = new Dialog("", game.skin){
+
+            public void result(Object confirm){
+                hide();
+                game.stopAudio();
+                dispose();
+                game.playAudio("Music/CityTheme.mp3");
+                game.setScreen(new CityScreen(game));
+            }
+
+        };
+        levelUpDialog.button("OK", true, textButtonStyle);
+        levelUpDialog.setPosition(0, 0);
+
+        dropDialog = new Dialog("", game.skin){
+
+            public void result(Object confirm){
+                StringBuilder text = new StringBuilder();
+                int level;
+                int EXP = enemy.givenEXP();
+                for (PC character : party) {
+                    try {
+                        level = character.getLevel();
+                        character.gainEXP(EXP / party.size());
+                        if(level != character.getLevel()){
+                            text.append(character.getName()).append(" levelled up!\n");
+                        }
+                        character.healAll();
+                        character.update();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                if(text.isEmpty()){
+                    levelUpDialog.text(" No character \n levelled up. ");
+                } else {
+                    levelUpDialog.text(text.toString());
+                }
+                hide();
+                levelUpDialog.show(stage);
+            }
+
+        };
+        dropDialog.button("OK", true, textButtonStyle);
+        dropDialog.setPosition(0, 0);
+
+
         /*
             Adding all actors to the stage.
          */
@@ -555,6 +604,8 @@ public class BattleScreen implements Screen {
      * <p>
      * - item, for using an item;
      * <p>
+     * - cast, for casting a spell;
+     * <p>
      * - win, for when the battle is won;
      * <p>
      * - lost, for when the battle is lost.
@@ -566,6 +617,8 @@ public class BattleScreen implements Screen {
      * <p>
      * - for item, the index in Global.getAllItems() of the used item;
      * <p>
+     * - for cast, the index of the spell cast;
+     * <p>
      * - for win, how much EXP every character gets;
      * <p>
      * - for lost, unused.
@@ -576,6 +629,8 @@ public class BattleScreen implements Screen {
      * - for attack, the index of the attacked character;
      * <p>
      * - for item, unused;
+     * <p>
+     * - for cast, the damage done by the spell;
      * <p>
      * - for win, unused;
      * <p>
@@ -693,6 +748,7 @@ public class BattleScreen implements Screen {
                 break;
             }
             case "win":
+                game.playAudio("Music/Fanfare.mp3");
                 labelMain = new TypingLabel(" You win! You gain " + enemy.getMoney() + "G and each character gains " + info + " " + "EXP!", labelStyle);
                 labelMain.setTypingListener(new TypingListener() {
                     @Override
@@ -702,15 +758,23 @@ public class BattleScreen implements Screen {
 
                     @Override
                     public void end() {
-                        try {
-                            Thread.sleep(500);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
+                        StringBuilder text = new StringBuilder("You gained:\n");
+                        for (Map.Entry<Item, Double> toDrop : enemy.getToDrop().entrySet()) {
+                            if (Global.getRandomZeroOne() <= toDrop.getValue()) {
+                                try {
+                                    inventory.add(toDrop.getKey());
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                text.append("- ").append(toDrop.getKey().getName()).append("\n");
+                            }
                         }
-                        game.stopAudio();
-                        dispose();
-                        game.playAudio("Music/CityTheme.mp3");
-                        game.setScreen(new CityScreen(game));
+                        if (text.toString().equals("You gained:\n")) {
+                            dropDialog.text("The enemy didn't \n drop anything. ");
+                        } else {
+                            dropDialog.text(text.toString());
+                        }
+                        dropDialog.show(stage);
                     }
 
                     @Override
@@ -819,19 +883,11 @@ public class BattleScreen implements Screen {
      * Manages the case in which the battle is won.
      */
     public void battleWon() {
+        game.stopAudio();
+        hideGUI();
         int EXP = enemy.givenEXP();
         try {
             inventory.addMoney(enemy.getMoney());
-            for (Map.Entry<Item, Double> toDrop : enemy.getToDrop().entrySet()) {
-                if (Global.getRandomZeroOne() <= toDrop.getValue()) {
-                    inventory.add(toDrop.getKey());
-                }
-            }
-            for (PC character : party) {
-                character.gainEXP(EXP / party.size());
-                character.healAll();
-                character.update();
-            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -881,4 +937,23 @@ public class BattleScreen implements Screen {
     public void updateCast(Spell spell, int damage) {
         updateLabel("cast", damage, ((PC) battle.getBattlers().get(currentBattler)).getSpells().indexOf(spell));
     }
+
+    /**
+     * Hides the hand icon and the Progress Bars.
+     */
+    public void hideGUI(){
+        handImage.setVisible(false);
+        firstBar.setVisible(false);
+        if(party.size() >= 2){
+            secondBar.setVisible(false);
+        }
+        if(party.size() >= 3){
+            thirdBar.setVisible(false);
+        }
+        if(party.size() >= 4){
+            fourthBar.setVisible(false);
+        }
+        enemyImage.setVisible(false);
+    }
+
 }
