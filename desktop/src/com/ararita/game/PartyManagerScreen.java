@@ -574,8 +574,8 @@ public class PartyManagerScreen implements Screen {
             });
             otherLines += partyChar.getProficiencies().size();
             partyText.append("Learnable spell types:\n");
-            partyChar.getSpells().forEach((str) -> partyText.append(" - ").append(str.toString()).append("\n"));
-            otherLines += partyChar.getSpells().size();
+            partyChar.getSpellTypes().forEach((str) -> partyText.append(" - ").append(str).append("\n"));
+            otherLines += partyChar.getSpellTypes().size();
             partyStats.setText(partyText.toString());
             partyStats.setPosition(660, Gdx.graphics.getHeight() - 580 - (18 * (otherLines - 1)));
         } catch (IOException e) {
