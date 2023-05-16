@@ -62,6 +62,13 @@ public class BattleSelectScreen implements Screen {
         for (File f : Objects.requireNonNull(Global.enemySets.toFile().listFiles())) {
             enemies.add(f.getName().substring(0, f.getName().length() - 5));
         }
+        enemies.sort((o1, o2) -> {
+            try {
+                return Integer.compare(Global.getEnemy(o1).getLevel(), Global.getEnemy(o2).getLevel());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
 
         /*
@@ -234,7 +241,11 @@ public class BattleSelectScreen implements Screen {
      */
     public void updateTexture(){
         enemyTexture = new Texture(Gdx.files.local("Enemies/" + enemySelectBox.getSelected() + ".png"));
-        enemyImage.setDrawable(new TextureRegionDrawable(enemyTexture));
+        stage.getActors().removeValue(enemyImage, true);
+        enemyImage = new Image(new TextureRegionDrawable(enemyTexture));
+        enemyImage.setScale(10);
+        enemyImage.setPosition((Gdx.graphics.getWidth() - enemyImage.getWidth()) * 3 / 4 - 20, Gdx.graphics.getHeight() - 650);
+        stage.addActor(enemyImage);
     }
 
 }
