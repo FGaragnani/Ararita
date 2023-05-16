@@ -918,7 +918,7 @@ public class Global {
     public static void emptyClass() throws IOException {
         JSONObject jsonGlobal = getJSON(globalSets);
         jsonGlobal.remove("classNamesSet");
-        jsonGlobal.put("classNamesSet", Set.of("Knight", "Black Mage", "White Mage", "Ranger"));
+        jsonGlobal.put("classNamesSet", List.of("Knight", "Black Mage", "White Mage", "Ranger"));
         writeJSON(globalSets, jsonGlobal);
         if (classSets.toFile().isDirectory()) {
             for (File f : Objects.requireNonNull(classSets.toFile().listFiles())) {
