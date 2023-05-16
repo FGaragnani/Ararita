@@ -10,70 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5676402a-2187-4a8f-bfe0-ac646c9fd387" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/META-INF/MANIFEST.MF" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Ararita/assets/orig/images/white-pixel.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Ararita/assets/orig/pack/pack.atlas" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Ararita/assets/orig/pack/pack.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Ararita/project.dt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Ararita/project.h2d" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Ararita/scenes/MainScene.dt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Backgrounds/1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Backgrounds/2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Backgrounds/3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Backgrounds/4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Backgrounds/city.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Backgrounds/paperbg.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Enemies/Ararita.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Enemies/Eye.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Enemies/Goblin.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Enemies/Lizard-Man.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Enemies/Skeleton.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Enemies/Slime.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Enemies/Spider.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Enemies/Turtle.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Enemies/Wasp.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Enemies/Wyvern.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Font/mainFontWhite.fnt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Font/mainFontWhite.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/General/Ararita.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/General/hand.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/General/msprites-noalpha.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/General/msprites.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Icons/coin.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/META-INF/MANIFEST.MF" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Music/BattleTheme.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Music/CityTheme.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Music/Fanfare.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Pixthulhu/pixthulhu-ui.atlas" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Pixthulhu/pixthulhu-ui.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Pixthulhu/pixthulhu-ui.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/README/charcs.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/README/classcs.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/README/spellcs.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/README/title.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/README/title2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/Settings/settings.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/out/production/resources/badlogic.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/Ararita_jar/Ararita.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/Ararita_jar/launch4j.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/core/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/Global.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/Global.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/GlobalBattle.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/GlobalBattle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/GlobalTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/GlobalTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/Ararita.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/Ararita.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/BattleScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/BattleScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/BattleSelectScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/BattleSelectScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/CharacterCreationScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/CharacterCreationScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/ClassCreationScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/ClassCreationScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/PartyManagerScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/PartyManagerScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/ShopScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/ShopScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/SpellCreationScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/SpellCreationScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,12 +55,13 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectId" id="2OucksaoucjS1x8BiMh66uviL2D" />
   <component name="ProjectLevelVcsManager">
@@ -133,24 +71,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "create.test.in.the.same.root": "true",
-    "jdk.selected.JAVA_MODULE": "17",
-    "last_directory_selection": "C:/Users/filip/Desktop/Universita'/Anno II - Semestre II/Programmazione ad Oggetti/Progetti/Ararita/desktop/src",
-    "last_opened_file_path": "C:/Users/filip/Desktop/Universita/Anno II - Semestre II/Programmazione ad Oggetti/Progetti/Ararita/out/artifacts/Ararita_jar/Ararita.jar",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2505747",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;create.test.in.the.same.root&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
+    &quot;last_directory_selection&quot;: &quot;C:/Users/filip/Desktop/Universita'/Anno II - Semestre II/Programmazione ad Oggetti/Progetti/Ararita/desktop/src&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/filip/Desktop/Universita/Anno II - Semestre II/Programmazione ad Oggetti/Progetti/Ararita&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2505747&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\core\src\com\ararita\game\enemies\data" />
@@ -173,7 +111,7 @@
       <recent name="com.ararita.game" />
     </key>
   </component>
-  <component name="RunManager" selected="JAR Application.Ararita JAR">
+  <component name="RunManager" selected="Application.DesktopLauncher">
     <configuration name="android" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="Ararita.android.main" />
       <option name="DEPLOY" value="true" />
@@ -210,6 +148,8 @@
       </method>
     </configuration>
     <configuration name="DesktopLauncher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="17" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="com.ararita.game.DesktopLauncher" />
       <module name="Ararita.desktop.main" />
       <extension name="coverage">
@@ -308,8 +248,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.GlobalTest" />
         <item itemvalue="Application.DesktopLauncher" />
+        <item itemvalue="JUnit.GlobalTest" />
         <item itemvalue="JUnit.GlobalTest.getInventory" />
         <item itemvalue="JUnit.GlobalTest.getFromJSONClass" />
         <item itemvalue="JUnit.GlobalTest.addCharacter" />
