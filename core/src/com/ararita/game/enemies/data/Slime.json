@@ -1,0 +1,19 @@
+{
+    "money": 10,
+    "toDrop": {"Potion": 0.05},
+    "defense": 1,
+    "attack": 2,
+    "name": "Slime",
+    "magicDefense": 1,
+    "dead": false,
+    "currHP": 10,
+    "weakTo": [
+        "Fire",
+        "Dagger",
+        "Staff",
+        "Chaos",
+        "Water"
+    ],
+    "speed": 3,
+    "level": 1
+}

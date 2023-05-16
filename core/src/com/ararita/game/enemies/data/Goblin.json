@@ -1,6 +1,6 @@
 {
-    "money": 10,
-    "toDrop": {"Potion": 0.1},
+    "money": 25,
+    "toDrop": {"Potion": 0.15},
     "defense": 2,
     "attack": 6,
     "name": "Goblin",
@@ -14,5 +14,5 @@
         "Light"
     ],
     "speed": 6,
-    "level": 1
+    "level": 3
 }

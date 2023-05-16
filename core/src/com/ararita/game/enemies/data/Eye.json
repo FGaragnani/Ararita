@@ -1,0 +1,23 @@
+{
+    "money": 200,
+    "toDrop": {
+        "Maior Potion": 0.07,
+        "Cosmic Ether": 0.07,
+        "Revitalizing": 0.06
+    },
+    "defense": 18,
+    "attack": 20,
+    "name": "Eye",
+    "magicDefense": 20,
+    "dead": false,
+    "currHP": 400,
+    "speed": 35,
+    "weakTo": [
+        "Fire",
+        "Light",
+        "Wind",
+        "Bow",
+        "Staff"
+    ],
+    "level": 18
+}

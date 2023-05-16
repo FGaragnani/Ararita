@@ -1,0 +1,21 @@
+{
+    "money": 300,
+    "toDrop": {
+        "Supernal Ether": 0.1
+    },
+    "defense": 30,
+    "attack": 42,
+    "name": "Wyvern",
+    "magicDefense": 30,
+    "dead": false,
+    "currHP": 650,
+    "speed": 70,
+    "weakTo": [
+        "Bow",
+        "Light",
+        "Chaos",
+        "Sword",
+        "Staff"
+    ],
+    "level": 25
+}
