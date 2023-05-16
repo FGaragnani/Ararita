@@ -364,7 +364,7 @@ public class BattleScreen implements Screen {
                 for (PC character : party) {
                     try {
                         level = character.getLevel();
-                        character.gainEXP(EXP / party.size());
+                        character.gainEXP(Math.max(EXP / party.size(), 1));
                         if (level != character.getLevel()) {
                             text.append(character.getName()).append(" levelled up!\n");
                         }
@@ -829,6 +829,7 @@ public class BattleScreen implements Screen {
 
                     }
                 });
+                break;
             case "cast": {
                 labelMain = new TypingLabel(" " + battle.getBattlers().get(currentBattler).getName() + " cast " + ((PC) battle.getBattlers().get(currentBattler)).getSpells().get(attacked).getName() + " inflicting " + info + " damage!", labelStyle);
                 labelMain.setTypingListener(new TypingListener() {
@@ -901,7 +902,7 @@ public class BattleScreen implements Screen {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        updateLabel("win", EXP / party.size(), 0);
+        updateLabel("win", Math.max(EXP / party.size(), 1), 0);
     }
 
     /**
