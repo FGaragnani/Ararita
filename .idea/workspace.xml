@@ -10,21 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5676402a-2187-4a8f-bfe0-ac646c9fd387" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Ararita.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Eye.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Lizard-Man.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Slime.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Spider.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Turtle.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Wasp.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Wyvern.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/Enemies/Alien.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Enemies/Lizard-Man.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/Enemies/Bee.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Enemies/Wasp.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/Enemies/Lizard.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Enemies/Turtle.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Goblin.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Goblin.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Skeleton.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Skeleton.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Ararita.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Ararita.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
