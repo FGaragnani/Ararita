@@ -409,7 +409,7 @@ public class ClassCreationScreen implements Screen {
             Adding the coin icon.
          */
 
-        coinTexture = new Texture(Gdx.files.local("Icons/coin.png"));
+        coinTexture = new Texture(Gdx.files.local(game.coinPath));
         coinImage = new Image();
         coinImage.setDrawable(new TextureRegionDrawable(coinTexture));
         coinImage.setSize(coinTexture.getWidth(), coinTexture.getHeight());

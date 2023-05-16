@@ -18,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -103,7 +102,7 @@ public class PartyManagerScreen implements Screen {
             Initializing the animation textures.
          */
 
-        charSheet = new Texture(Gdx.files.internal("General/msprites.png"));
+        charSheet = new Texture(Gdx.files.internal(game.spritesPath));
         tmp = TextureRegion.split(charSheet, charSheet.getWidth() / (game.spriteFrameCols * 6), charSheet.getHeight());
         spriteImageParty = new Image();
         spriteImageParty.setScale(7);

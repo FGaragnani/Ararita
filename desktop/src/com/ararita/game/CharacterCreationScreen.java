@@ -82,7 +82,7 @@ public class CharacterCreationScreen implements Screen {
             Creating the Image and the texture.
          */
 
-        charSheet = new Texture(Gdx.files.internal("General/msprites.png"));
+        charSheet = new Texture(Gdx.files.internal(game.spritesPath));
         tmp = TextureRegion.split(charSheet, charSheet.getWidth() / (game.spriteFrameCols * 6), charSheet.getHeight());
         spriteImage = new Image();
         spriteImage.setPosition(Gdx.graphics.getWidth() - 500, Gdx.graphics.getHeight() - 550);

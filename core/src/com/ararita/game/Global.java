@@ -35,12 +35,18 @@ public class Global {
     final public static double BURN_DAMAGE = 0.06;
     final public static double POISON_DAMAGE = 0.02;
 
-    final public static Path globalSets = Path.of(Paths.get(".").normalize().toAbsolutePath().toString(), "core/src" + "/com/ararita/game" + "/global.json");
-    final public static Path classSets = Path.of(Paths.get(".").normalize().toAbsolutePath().toString(), "core/src" + "/com" + "/ararita/game/classes");
-    final public static Path characterSets = Path.of(Paths.get(".").normalize().toAbsolutePath().toString(), "core" + "/src/com/ararita/game/characters");
-    final public static Path spellSets = Path.of(Paths.get(".").normalize().toAbsolutePath().toString(), "core/src" + "/com/ararita/game/spells/data");
-    final public static Path itemSets = Path.of(Paths.get(".").normalize().toAbsolutePath().toString(), "core/src/com" + "/ararita/game/items/data");
-    final public static Path enemySets = Path.of(Paths.get(".").normalize().toAbsolutePath().toString(), "core/src" + "/com" + "/ararita/game/enemies/data");
+    final public static Path globalSets = Paths.get(Paths.get(".").normalize().toAbsolutePath().toString(), "core/src" +
+            "/com/ararita/game" + "/global.json");
+    final public static Path classSets = Paths.get(Paths.get(".").normalize().toAbsolutePath().toString(),
+            "core/src" + "/com" + "/ararita/game/classes");
+    final public static Path characterSets = Paths.get(Paths.get(".").normalize().toAbsolutePath().toString(), "core" +
+            "/src/com/ararita/game/characters");
+    final public static Path spellSets = Paths.get(Paths.get(".").normalize().toAbsolutePath().toString(),
+            "core/src" + "/com/ararita/game/spells/data");
+    final public static Path itemSets = Paths.get(Paths.get(".").normalize().toAbsolutePath().toString(), "core/src" +
+            "/com" + "/ararita/game/items/data");
+    final public static Path enemySets = Paths.get(Paths.get(".").normalize().toAbsolutePath().toString(),
+            "core/src" + "/com" + "/ararita/game/enemies/data");
 
     /**
      * A path to a JSON file is created from its root and its name.
@@ -51,7 +57,7 @@ public class Global {
      * @return The path of the JSON file.
      */
     public static Path getJSONFilePath(Path generalPath, String fileName) {
-        return Path.of(generalPath.toString() + "/" + fileName + ".json");
+        return Paths.get(generalPath.toString() + "/" + fileName + ".json");
     }
 
     /**
@@ -912,7 +918,7 @@ public class Global {
     public static void emptyClass() throws IOException {
         JSONObject jsonGlobal = getJSON(globalSets);
         jsonGlobal.remove("classNamesSet");
-        jsonGlobal.put("classNamesSet", List.of("Knight", "Black Mage", "White Mage", "Ranger"));
+        jsonGlobal.put("classNamesSet", Set.of("Knight", "Black Mage", "White Mage", "Ranger"));
         writeJSON(globalSets, jsonGlobal);
         if (classSets.toFile().isDirectory()) {
             for (File f : Objects.requireNonNull(classSets.toFile().listFiles())) {

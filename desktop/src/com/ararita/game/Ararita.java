@@ -38,9 +38,17 @@ public class Ararita extends Game {
     public final int baseEXP = 100;
 
     public final String settingsPath = "assets/Settings/settings.json";
-    public final String stylesPath = "Pixthulhu/pixthulhu-ui.json";
+    public final String stylesPath = "assets/Pixthulhu/pixthulhu-ui.json";
+    public final String fontPath = "assets/Font/mainFontWhite.fnt";
 
-    public final String cityTheme = "Music/CityTheme.mp3";
+    public final String spritesPath = "assets/General/msprites.png";
+    public final String coinPath = "assets/Icons/coin.png";
+    public final String enemyPath = "assets/Enemies/";
+    public final String handPath = "assets/General/hand.png";
+
+    public final String cityTheme = "assets/Music/CityTheme.mp3";
+    public final String battleTheme = "assets/Music/BattleTheme.mp3";
+    public final String fanfareTheme = "assets/Music/Fanfare.mp3";
 
     Skin skin;
     Music audio;
@@ -61,16 +69,16 @@ public class Ararita extends Game {
 
         batch = new SpriteBatch();
 
-        normalFont = new BitmapFont(Gdx.files.internal("Font/mainFontWhite.fnt"));
+        normalFont = new BitmapFont(Gdx.files.internal(fontPath));
         normalFont.getData().setScale(2.7f, 3.65f);
 
-        titleFont = new BitmapFont(Gdx.files.internal("Font/mainFontWhite.fnt"));
+        titleFont = new BitmapFont(Gdx.files.internal(fontPath));
         titleFont.getData().setScale(9f, 13f);
 
-        bigFont = new BitmapFont(Gdx.files.internal("Font/mainFontWhite.fnt"));
+        bigFont = new BitmapFont(Gdx.files.internal(fontPath));
         bigFont.getData().setScale(7f, 10f);
 
-        mediumFont = new BitmapFont(Gdx.files.internal("Font/mainFontWhite.fnt"));
+        mediumFont = new BitmapFont(Gdx.files.internal(fontPath));
         mediumFont.getData().setScale(4.8f, 6.75f);
 
         labelStyle = skin.get("default", Label.LabelStyle.class);
@@ -121,7 +129,9 @@ public class Ararita extends Game {
         normalFont.dispose();
         titleFont.dispose();
         bigFont.dispose();
-        audio.dispose();
+        if (audio != null) {
+            audio.dispose();
+        }
     }
 
     /**

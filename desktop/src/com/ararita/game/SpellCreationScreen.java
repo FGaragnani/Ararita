@@ -235,7 +235,7 @@ public class SpellCreationScreen implements Screen {
         costLabel.setFontScale(2.8f, 3.8f);
         costLabel.setColor(Color.BLACK);
         costLabel.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, confirmButton.getY() + 155);
-        coinTexture = new Texture(Gdx.files.local("Icons/coin.png"));
+        coinTexture = new Texture(Gdx.files.local(game.coinPath));
         coinImage = new Image();
         coinImage.setDrawable(new TextureRegionDrawable(coinTexture));
         coinImage.setSize(coinTexture.getWidth(), coinTexture.getHeight());

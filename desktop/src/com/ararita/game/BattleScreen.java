@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 public class BattleScreen implements Screen {
 
@@ -119,7 +118,7 @@ public class BattleScreen implements Screen {
             Initalizing the audio.
          */
 
-        game.playAudio("Music/BattleTheme.mp3");
+        game.playAudio(game.battleTheme);
 
         /*
             Setting the background texture.
@@ -133,7 +132,7 @@ public class BattleScreen implements Screen {
             Setting the enemy image.
          */
 
-        enemyTexture = new Texture(Gdx.files.local("Enemies/" + enemy.getName() + ".png"));
+        enemyTexture = new Texture(Gdx.files.local(game.enemyPath + enemy.getName() + ".png"));
         enemyImage = new Image(new TextureRegionDrawable(enemyTexture));
         enemyImage.setScale(7);
         enemyImage.setPosition((Gdx.graphics.getWidth() - enemyImage.getWidth()) / 4 - 100, Gdx.graphics.getHeight() - 750);
@@ -153,7 +152,7 @@ public class BattleScreen implements Screen {
             Setting the characters' images.
          */
 
-        charSheet = new Texture(Gdx.files.internal("General/msprites.png"));
+        charSheet = new Texture(Gdx.files.internal(game.spritesPath));
         tmp = TextureRegion.split(charSheet, charSheet.getWidth() / (game.spriteFrameCols * 6), charSheet.getHeight());
         firstCharImage = new Image();
         secondCharImage = new Image();
@@ -175,7 +174,7 @@ public class BattleScreen implements Screen {
             Adding the hand cursor.
          */
 
-        handTexture = new Texture(Gdx.files.local("General/hand.png"));
+        handTexture = new Texture(Gdx.files.local(game.handPath));
         handImage = new Image(new TextureRegionDrawable(handTexture));
         handImage.setScale(2);
         handImage.setSize(handTexture.getWidth(), handTexture.getHeight());
@@ -348,7 +347,7 @@ public class BattleScreen implements Screen {
                 hide();
                 game.stopAudio();
                 dispose();
-                game.playAudio("Music/CityTheme.mp3");
+                game.playAudio(game.cityTheme);
                 game.setScreen(new CityScreen(game));
             }
         };
@@ -585,7 +584,7 @@ public class BattleScreen implements Screen {
         } else {
             handImage.setVisible(true);
         }
-        int toUse = battle.getBattlers().stream().filter((battler) -> (battler instanceof PC)).collect(Collectors.toList()).indexOf(battle.getBattlers().get(currentBattler));
+        int toUse = battle.getBattlers().stream().filter((battler) -> (battler instanceof PC)).toList().indexOf(battle.getBattlers().get(currentBattler));
         handImage.setPosition((Gdx.graphics.getWidth() - firstCharImage.getWidth()) * 3 / 4 + (100 * (toUse - 1)) - 50, Gdx.graphics.getHeight() - 550 - (100 * toUse));
     }
 
@@ -638,24 +637,16 @@ public class BattleScreen implements Screen {
             stage.getActors().removeValue(labelMain, true);
         }
         switch (type) {
-            case "turn":
+            case "turn" -> {
                 if (info == 0) {
                     labelMain = new TypingLabel(" It's " + battle.getBattlers().get(currentBattler).getName() + "'s " + "turn.", labelStyle);
                 } else if (info == 1) {
                     StringBuilder text = new StringBuilder(" It is the enemy's turn.");
                     switch (enemy.getStatusEffect()) {
-                        case "Paralysis":
-                            text.append(" The enemy is paralysed.");
-                            break;
-                        case "Blindness":
-                            text.append(" The enemy has been blinded.");
-                            break;
-                        case "Burn":
-                            text.append(" The enemy is burned.");
-                            break;
-                        case "Poison":
-                            text.append(" The enemy is poisoned.");
-                            break;
+                        case "Paralysis" -> text.append(" The enemy is paralysed.");
+                        case "Blindness" -> text.append(" The enemy has been blinded.");
+                        case "Burn" -> text.append(" The enemy is burned.");
+                        case "Poison" -> text.append(" The enemy is poisoned.");
                     }
                     labelMain = new TypingLabel(text.toString(), labelStyle);
                     labelMain.setTypingListener(new TypingListener() {
@@ -689,8 +680,8 @@ public class BattleScreen implements Screen {
                         }
                     });
                 }
-                break;
-            case "attack": {
+            }
+            case "attack" -> {
                 if (battle.getBattlers().get(currentBattler) instanceof Enemy) {
                     labelMain = new TypingLabel(" The enemy attacks " + party.get(attacked).getName() + ", dealing " + info + " damage!", labelStyle);
                 } else {
@@ -723,9 +714,8 @@ public class BattleScreen implements Screen {
 
                     }
                 });
-                break;
             }
-            case "item": {
+            case "item" -> {
                 String usedName = Global.getAllItems().get(info).getName();
                 labelMain = new TypingLabel(" " + battle.getBattlers().get(currentBattler).getName() + " uses a " + usedName + " " + "!", labelStyle);
                 labelMain.setTypingListener(new TypingListener() {
@@ -755,10 +745,9 @@ public class BattleScreen implements Screen {
 
                     }
                 });
-                break;
             }
-            case "win":
-                game.playAudio("Music/Fanfare.mp3");
+            case "win" -> {
+                game.playAudio(game.fanfareTheme);
                 labelMain = new TypingLabel(" You win! You gain " + enemy.getMoney() + "G and each character gains " + info + " " + "EXP!", labelStyle);
                 labelMain.setTypingListener(new TypingListener() {
                     @Override
@@ -797,8 +786,8 @@ public class BattleScreen implements Screen {
 
                     }
                 });
-                break;
-            case "lose":
+            }
+            case "lose" -> {
                 labelMain = new TypingLabel(" You lost...", labelStyle);
                 labelMain.setTypingListener(new TypingListener() {
                     @Override
@@ -815,7 +804,7 @@ public class BattleScreen implements Screen {
                         }
                         game.stopAudio();
                         dispose();
-                        game.playAudio("Music/CityTheme.mp3");
+                        game.playAudio(game.cityTheme);
                         game.setScreen(new CityScreen(game));
                     }
 
@@ -829,8 +818,8 @@ public class BattleScreen implements Screen {
 
                     }
                 });
-                break;
-            case "cast": {
+            }
+            case "cast" -> {
                 labelMain = new TypingLabel(" " + battle.getBattlers().get(currentBattler).getName() + " cast " + ((PC) battle.getBattlers().get(currentBattler)).getSpells().get(attacked).getName() + " inflicting " + info + " damage!", labelStyle);
                 labelMain.setTypingListener(new TypingListener() {
                     @Override
@@ -859,7 +848,6 @@ public class BattleScreen implements Screen {
 
                     }
                 });
-                break;
             }
         }
         assert labelMain != null;

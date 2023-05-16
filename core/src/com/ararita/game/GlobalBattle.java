@@ -140,7 +140,7 @@ public class GlobalBattle {
         }
 
         double statEffect;
-        if (Set.of("Light", "Water", "Wind").contains(spell.getType())) {
+        if (Set.of("Water", "Light", "Wind").contains(spell.getType())) {
             statEffect = Math.sqrt(attacker.getSpirit() + attacker.getIntelligence()) / 5;
         } else {
             statEffect = Math.sqrt(attacker.getArcane() + attacker.getIntelligence()) / 5;

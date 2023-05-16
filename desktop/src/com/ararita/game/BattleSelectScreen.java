@@ -147,7 +147,7 @@ public class BattleSelectScreen implements Screen {
             Setting the enemy texture and image.
          */
 
-        enemyTexture = new Texture(Gdx.files.local("Enemies/" + enemySelectBox.getSelected() + ".png"));
+        enemyTexture = new Texture(Gdx.files.local(game.enemyPath + enemySelectBox.getSelected() + ".png"));
         enemyImage = new Image(new TextureRegionDrawable(enemyTexture));
         enemyImage.setScale(10);
         enemyImage.setPosition((Gdx.graphics.getWidth() - enemyImage.getWidth()) * 3 / 4 - 20, Gdx.graphics.getHeight() - 650);
@@ -240,7 +240,7 @@ public class BattleSelectScreen implements Screen {
      * The enemy image is updated.
      */
     public void updateTexture(){
-        enemyTexture = new Texture(Gdx.files.local("Enemies/" + enemySelectBox.getSelected() + ".png"));
+        enemyTexture = new Texture(Gdx.files.local(game.enemyPath + enemySelectBox.getSelected() + ".png"));
         stage.getActors().removeValue(enemyImage, true);
         enemyImage = new Image(new TextureRegionDrawable(enemyTexture));
         enemyImage.setScale(10);

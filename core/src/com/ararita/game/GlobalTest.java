@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,9 +75,9 @@ class GlobalTest {
     void addCharacter() {
         try {
             PC test = new PC("test", "Black Mage");
-            assertTrue(Path.of(Global.characterSets + "/test.json").toFile().exists());
+            assertTrue(Paths.get(Global.characterSets + "/test.json").toFile().exists());
             PC prova = new PC("prova", "Knight");
-            assertTrue(Path.of(Global.characterSets + "/prova.json").toFile().exists());
+            assertTrue(Paths.get(Global.characterSets + "/prova.json").toFile().exists());
             assertEquals(test.getExponentEXP(), Global.getCharacter("test").getExponentEXP());
             assertEquals(prova.getProficiencies(), Global.getCharacter("prova").getProficiencies());
         } catch (IOException e) {
