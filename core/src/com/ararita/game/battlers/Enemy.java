@@ -99,7 +99,7 @@ public class Enemy implements Battler {
      * @param attack The magical damage suffered.
      */
     public void getMagicalDamage(int attack) {
-        int damage = Math.max(1, attack - getMagicDefense());
+        int damage = Math.max(1, attack - hasMagicalDefense());
         setCurrHP(getCurrHP() - damage);
     }
 

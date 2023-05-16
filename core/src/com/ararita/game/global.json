@@ -27,9 +27,9 @@
     ],
     "party": [],
     "classNamesSet": [
-        "Knight",
-        "Black Mage",
         "White Mage",
-        "Ranger"
+        "Ranger",
+        "Knight",
+        "Black Mage"
     ]
 }

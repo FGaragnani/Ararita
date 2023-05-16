@@ -235,10 +235,6 @@ public abstract class AbstractBattler {
         return charClass;
     }
 
-    public void setCharClass(String charClass) {
-        this.charClass = charClass;
-    }
-
     public int getEXP() {
         return EXP;
     }
@@ -249,10 +245,6 @@ public abstract class AbstractBattler {
 
     public int getLevel() {
         return level;
-    }
-
-    public int getBaseEXP() {
-        return baseEXP;
     }
 
     public double getIncreaseEXP() {
@@ -279,24 +271,12 @@ public abstract class AbstractBattler {
         return weapons;
     }
 
-    public void setWeapons(List<Weapon> weapons) {
-        this.weapons = weapons;
-    }
-
     public Map<String, Integer> getProficiencies() {
         return proficiencies;
     }
 
-    public void setProficiencies(Map<String, Integer> proficiencies) {
-        this.proficiencies = proficiencies;
-    }
-
     public Set<String> getSpellTypes() {
         return spellTypes;
-    }
-
-    public void setSpellTypes(Set<String> spellTypes) {
-        this.spellTypes = spellTypes;
     }
 
     public abstract int maxMP();
