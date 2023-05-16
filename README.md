@@ -27,8 +27,9 @@ This project was done for the 'Programmazione ad Oggetti e Lab.' course at UniMO
 | :--: |
 | **Craft spells to strengthen your combat strategy.** |
 
-More todo.
-
+| ![battle](https://github.com/FGaragnani/Ararita/assets/101595335/ba986d61-57b6-4b92-98b6-97a8c7278b2f) |
+| :--: |
+| ** Engage battles against enemies.** |
 
 ## Features
 * Recruit heroes:
@@ -42,7 +43,9 @@ More todo.
   * Make your way towards the final boss
  
 ## Installing
-To do.
+
+You can play the game simply by cloning this repository and opening it in your IDE.
+There is only one main method - in DesktopLauncher.java - and if everything is set correctly, it should run the project.
   
 ## Credits
 
