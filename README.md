@@ -29,7 +29,7 @@ This project was done for the 'Programmazione ad Oggetti e Lab.' course at UniMO
 
 | ![battle](https://github.com/FGaragnani/Ararita/assets/101595335/ba986d61-57b6-4b92-98b6-97a8c7278b2f) |
 | :--: |
-| ** Engage battles against enemies.** |
+| **Engage battles against enemies.** |
 
 ## Features
 * Recruit heroes:
