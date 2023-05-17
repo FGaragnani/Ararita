@@ -281,6 +281,10 @@ public abstract class AbstractBattler {
 
     public abstract int maxMP();
 
+    public int getBaseEXP() {
+        return baseEXP;
+    }
+
     public abstract int maxHP();
 
     public abstract void levelUp();

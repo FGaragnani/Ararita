@@ -385,11 +385,11 @@ public class ShopScreen implements Screen {
             Setting the default values.
          */
 
+        updateSellItems();
+        updateSellLabels();
         updateCost();
         updateStats();
         updateBuy();
-        updateSellItems();
-        updateSellLabels();
     }
 
     @Override

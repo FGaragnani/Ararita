@@ -3,6 +3,7 @@ package com.ararita.game;
 import com.ararita.game.battlers.Enemy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -59,8 +60,8 @@ public class BattleSelectScreen implements Screen {
         this.camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
         enemies = new Array<>();
-        for (File f : Objects.requireNonNull(Global.enemySets.toFile().listFiles())) {
-            enemies.add(f.getName().substring(0, f.getName().length() - 5));
+        for (FileHandle f : Gdx.files.external(Global.enemySets.toString()).list()) {
+            enemies.add(f.name().substring(0, f.name().length() - 5));
         }
         enemies.sort((o1, o2) -> {
             try {

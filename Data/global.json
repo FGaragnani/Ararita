@@ -1,0 +1,35 @@
+{
+    "spellTypesSet": [
+        "Light",
+        "Fire",
+        "Earth",
+        "Wind",
+        "Water",
+        "Chaos"
+    ],
+    "otherCharacters": [],
+    "money": 0,
+    "spellNamesSet": [],
+    "weaponTypesSet": [
+        "Sword",
+        "Staff",
+        "Gloves",
+        "Spear",
+        "Bow",
+        "Dagger"
+    ],
+    "inventory": {},
+    "statusEffectsSet": [
+        "Burn",
+        "Poison",
+        "Paralysis",
+        "Blindness"
+    ],
+    "party": ["Character"],
+    "classNamesSet": [
+        "Knight",
+        "Black Mage",
+        "White Mage",
+        "Ranger"
+    ]
+}

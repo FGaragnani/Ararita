@@ -3,6 +3,7 @@ package com.ararita.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -116,7 +117,7 @@ public class Ararita extends Game {
      */
     public void settingsUpdate() {
         try {
-            Path settingsAbsolutePath = Path.of(settingsPath);
+            Path settingsAbsolutePath = Path.of(Gdx.files.internal(settingsPath).path());
             JSONObject jsonSettings = Global.getJSON(settingsAbsolutePath);
             jsonSettings.put("Volume", volume);
             jsonSettings.put("Sound Effects", soundEffects);

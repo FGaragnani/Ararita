@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
 public class CharacterCreationScreen implements Screen {
 
@@ -324,7 +325,7 @@ public class CharacterCreationScreen implements Screen {
         int otherLines = 0;
         StringBuilder text = new StringBuilder();
         try {
-            JSONObject jsonClass = Global.getJSON(Global.getJSONFilePath(Global.classSets, charClassSelectBox.getSelected()));
+            JSONObject jsonClass = Global.getJSON(Path.of(Global.getJSONFile(Global.classSets, charClassSelectBox.getSelected()).path()));
             text.append("Strength: ").append(jsonClass.getInt("strength")).append("\n");
             text.append("Intelligence: ").append(jsonClass.getInt("intelligence")).append("\n");
             text.append("Agility: ").append(jsonClass.getInt("agility")).append("\n");
