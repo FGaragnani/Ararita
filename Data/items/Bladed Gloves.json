@@ -1,0 +1,11 @@
+{
+    "attributesAffection": {
+        "Strength": 9,
+        "Agility": 5
+    },
+    "price": 270,
+    "name": "Bladed Gloves",
+    "weaponType": "Gloves",
+    "description": "Leather gloves covered in small blades.",
+    "type": "Weapon"
+}

@@ -1,0 +1,11 @@
+{
+    "attributesAffection": {
+        "Spirit": 14,
+        "Strength": 22
+    },
+    "price": 1000,
+    "name": "Eden Bow",
+    "weaponType": "Bow",
+    "description": "The origin of this pure white bow are still unknown.",
+    "type": "Weapon"
+}

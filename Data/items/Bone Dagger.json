@@ -1,0 +1,11 @@
+{
+    "attributesAffection": {
+        "Arcane": 4,
+        "Strength": 4
+    },
+    "price": 150,
+    "name": "Bone Dagger",
+    "weaponType": "Dagger",
+    "description": "This dagger is carved out\n of some creatures' skulls.",
+    "type": "Weapon"
+}

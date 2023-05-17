@@ -1,0 +1,7 @@
+{
+    "price": 1000,
+    "effect": {"Arcane": 1},
+    "name": "Grim Soul",
+    "description": "Permanently boost a character's arcane.",
+    "type": "Consumable"
+}

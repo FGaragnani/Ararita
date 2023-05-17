@@ -1,0 +1,22 @@
+{
+    "money": 40,
+    "toDrop": {
+        "Ether": 0.05,
+        "Potion": 0.1
+    },
+    "level": 5,
+    "defense": 6,
+    "statusEffect": "no",
+    "attack": 10,
+    "name": "Skeleton",
+    "magicDefense": 3,
+    "dead": false,
+    "currHP": 100,
+    "speed": 10,
+    "weakTo": [
+        "Wind",
+        "Spear",
+        "Gloves",
+        "Earth"
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "attributesAffection": {
+        "Arcane": 17,
+        "Strength": 17
+    },
+    "price": 1000,
+    "name": "Death Dirk",
+    "weaponType": "Dagger",
+    "description": "The power of this dagger comes from the sacrifices it was used for.",
+    "type": "Weapon"
+}

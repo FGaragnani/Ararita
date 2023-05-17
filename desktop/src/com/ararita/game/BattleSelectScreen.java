@@ -60,9 +60,7 @@ public class BattleSelectScreen implements Screen {
         this.camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
         enemies = new Array<>();
-        for (FileHandle f : Gdx.files.external(Global.enemySets.toString()).list()) {
-            enemies.add(f.name().substring(0, f.name().length() - 5));
-        }
+        enemies.addAll("Ararita", "Eye", "Goblin", "Lizard-Man", "Skeleton", "Slime", "Spider", "Turtle", "Wasp", "Wyvern");
         enemies.sort((o1, o2) -> {
             try {
                 return Integer.compare(Global.getEnemy(o1).getLevel(), Global.getEnemy(o2).getLevel());
@@ -240,7 +238,7 @@ public class BattleSelectScreen implements Screen {
     /**
      * The enemy image is updated.
      */
-    public void updateTexture(){
+    public void updateTexture() {
         enemyTexture = new Texture(Gdx.files.local(game.enemyPath + enemySelectBox.getSelected() + ".png"));
         stage.getActors().removeValue(enemyImage, true);
         enemyImage = new Image(new TextureRegionDrawable(enemyTexture));
@@ -248,5 +246,4 @@ public class BattleSelectScreen implements Screen {
         enemyImage.setPosition((Gdx.graphics.getWidth() - enemyImage.getWidth()) * 3 / 4 - 20, Gdx.graphics.getHeight() - 650);
         stage.addActor(enemyImage);
     }
-
 }

@@ -13,13 +13,13 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Writer;
 import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Global {
 
@@ -643,10 +643,9 @@ public class Global {
      * @return The list of all the items.
      */
     public static List<Item> getAllItems() {
-        return Arrays.stream(Gdx.files.internal(itemSets.toString()).list()).map((file -> file.name().substring(0,
-                file.name().length() - 5))).map((name) -> {
+        return Stream.of("Angelic Staff", "Apprentice Staff", "Bladed Gloves", "Bone Bow", "Bone Dagger", "Boxing " + "Gloves", "Bronze Sword", "Bulk Soul", "Cosmic Ether", "Curved Staff", "Death Dirk", "Dueling Gloves", "Eden Bow", "Elder Staff", "Ether", "Fist Soul", "Golden Sword", "Grim Dagger", "Grim Soul", "Guard" + " Spear", "Gust Soul", "Hunter Bow", "Iron Bow", "Iron Lance", "Iron Poniard", "Javelin", "Longbow", "Maior Potion", "Maxima Potion", "Midas' Spear", "Mind Soul", "Monk Gloves", "Phinia", "Potion", "Pure Soul", "Revitalizing", "Revitalizing Brew", "Revitalizing Leaf", "Silver Sword", "Small Dagger", "Supernal Ether", "Tiger Gloves", "Trident", "Willow Wand", "Wooden Sword").map((str) -> {
             try {
-                return (getItem(name));
+                return (Global.getItem(str));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

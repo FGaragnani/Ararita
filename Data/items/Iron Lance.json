@@ -1,0 +1,11 @@
+{
+    "attributesAffection": {
+        "Strength": 11,
+        "Agility": 2
+    },
+    "price": 270,
+    "name": "Iron Lance",
+    "weaponType": "Spear",
+    "description": "A long spear, useful for long-range combat.",
+    "type": "Weapon"
+}

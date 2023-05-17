@@ -1,0 +1,11 @@
+{
+    "attributesAffection": {
+        "Intelligence": 27,
+        "Spirit": 7
+    },
+    "price": 1000,
+    "name": "Angelic Staff",
+    "weaponType": "Staff",
+    "description": "Legends say that angels themselves brought this staff onto the world.",
+    "type": "Weapon"
+}

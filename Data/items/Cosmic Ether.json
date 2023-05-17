@@ -1,0 +1,7 @@
+{
+    "price": 50,
+    "effect": {"MP": 200},
+    "name": "Cosmic Ether",
+    "description": "Restores 200 MP.",
+    "type": "Consumable"
+}

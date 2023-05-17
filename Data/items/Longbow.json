@@ -1,0 +1,11 @@
+{
+    "attributesAffection": {
+        "Spirit": 4,
+        "Strength": 9
+    },
+    "price": 270,
+    "name": "Longbow",
+    "weaponType": "Bow",
+    "description": "An easy-to-use and fast bow.",
+    "type": "Weapon"
+}

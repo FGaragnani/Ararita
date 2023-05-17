@@ -1,0 +1,7 @@
+{
+    "price": 1000,
+    "effect": {"Strength": 1},
+    "name": "Fist Soul",
+    "description": "Permanently boost a character's strength.",
+    "type": "Consumable"
+}

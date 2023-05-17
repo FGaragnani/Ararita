@@ -1,0 +1,7 @@
+{
+    "price": 1000,
+    "effect": {"Intelligence": 1},
+    "name": "Mind Soul",
+    "description": "Permanently boost a character's intelligence.",
+    "type": "Consumable"
+}

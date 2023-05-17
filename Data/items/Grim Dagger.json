@@ -1,0 +1,11 @@
+{
+    "attributesAffection": {
+        "Arcane": 10,
+        "Strength": 12
+    },
+    "price": 600,
+    "name": "Grim Dagger",
+    "weaponType": "Dagger",
+    "description": "This dagger seems imbued with dark magic.",
+    "type": "Weapon"
+}

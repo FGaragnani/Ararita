@@ -10,75 +10,115 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5676402a-2187-4a8f-bfe0-ac646c9fd387" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Data/classes/Knight.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/enemies/Ararita.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/enemies/Eye.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/enemies/Goblin.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/enemies/Lizard-Man.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/enemies/Skeleton.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/enemies/Slime.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/enemies/Spider.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/enemies/Turtle.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/enemies/Wasp.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/enemies/Wyvern.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Angelic Staff.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Apprentice Staff.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Bladed Gloves.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Bone Bow.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Bone Dagger.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Boxing Gloves.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Bronze Sword.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Bulk Soul.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Cosmic Ether.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Curved Staff.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Death Dirk.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Dueling Gloves.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Eden Bow.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Elder Staff.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Ether.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Fist Soul.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Golden Sword.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Grim Dagger.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Grim Soul.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Guard Spear.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Gust Soul.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Hunter Bow.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Iron Bow.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Iron Lance.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Iron Poniard.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Javelin.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Longbow.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Maior Potion.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Maxima Potion.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Midas' Spear.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Mind Soul.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Monk Gloves.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Phinia.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Potion.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Pure Soul.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Revitalizing Brew.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Revitalizing Leaf.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Revitalizing.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Silver Sword.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Small Dagger.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Supernal Ether.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Tiger Gloves.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Trident.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Willow Wand.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/items/Wooden Sword.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/characters/Character.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/Data/global.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Settings/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Settings/settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Settings/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/Settings/settings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/Global.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/Global.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/GlobalTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/GlobalTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/AbstractBattler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/AbstractBattler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/classes/Black Mage.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/classes/Black Mage.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/classes/Knight.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/classes/Knight.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/classes/Ranger.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/classes/Ranger.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/classes/White Mage.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/classes/White Mage.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Ararita.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/enemies/Ararita.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Eye.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/enemies/Eye.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Goblin.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/enemies/Goblin.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Lizard-Man.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/enemies/Lizard-Man.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Skeleton.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/enemies/Skeleton.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Slime.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/enemies/Slime.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Spider.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/enemies/Spider.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Turtle.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/enemies/Turtle.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Wasp.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/enemies/Wasp.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/enemies/data/Wyvern.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/enemies/Wyvern.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/global.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Angelic Staff.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Angelic Staff.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Apprentice Staff.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Apprentice Staff.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Bladed Gloves.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Bladed Gloves.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Bone Bow.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Bone Bow.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Bone Dagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Bone Dagger.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Boxing Gloves.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Boxing Gloves.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Bronze Sword.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Bronze Sword.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Bulk Soul.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Bulk Soul.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Cosmic Ether.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Cosmic Ether.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Curved Staff.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Curved Staff.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Death Dirk.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Death Dirk.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Dueling Gloves.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Dueling Gloves.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Eden Bow.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Eden Bow.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Elder Staff.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Elder Staff.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Ether.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Ether.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Fist Soul.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Fist Soul.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Golden Sword.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Golden Sword.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Grim Dagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Grim Dagger.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Grim Soul.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Grim Soul.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Guard Spear.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Guard Spear.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Gust Soul.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Gust Soul.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Hunter Bow.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Hunter Bow.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Iron Bow.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Iron Bow.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Iron Lance.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Iron Lance.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Iron Poniard.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Iron Poniard.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Javelin.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Javelin.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Longbow.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Longbow.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Maior Potion.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Maior Potion.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Maxima Potion.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Maxima Potion.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Midas' Spear.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Midas' Spear.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Mind Soul.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Mind Soul.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Monk Gloves.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Monk Gloves.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Phinia.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Phinia.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Potion.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Potion.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Pure Soul.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Pure Soul.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Revitalizing Brew.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Revitalizing Brew.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Revitalizing Leaf.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Revitalizing Leaf.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Revitalizing.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Revitalizing.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Silver Sword.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Silver Sword.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Small Dagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Small Dagger.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Supernal Ether.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Supernal Ether.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Tiger Gloves.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Tiger Gloves.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Trident.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Trident.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Willow Wand.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Willow Wand.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/items/data/Wooden Sword.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Data/items/Wooden Sword.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Ararita/assets/orig/images/white-pixel.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Ararita/assets/orig/pack/pack.atlas" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Ararita/assets/orig/pack/pack.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Ararita/project.dt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Ararita/project.h2d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Ararita/scenes/MainScene.dt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Backgrounds/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Backgrounds/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Backgrounds/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Backgrounds/4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Backgrounds/city.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Backgrounds/paperbg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Enemies/Ararita.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Enemies/Eye.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Enemies/Goblin.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Enemies/Lizard-Man.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Enemies/Skeleton.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Enemies/Slime.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Enemies/Spider.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Enemies/Turtle.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Enemies/Wasp.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Enemies/Wyvern.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Font/mainFontWhite.fnt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Font/mainFontWhite.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/General/Ararita.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/General/hand.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/General/msprites-noalpha.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/General/msprites.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Icons/coin.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Music/BattleTheme.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Music/CityTheme.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Music/Fanfare.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Pixthulhu/pixthulhu-ui.atlas" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Pixthulhu/pixthulhu-ui.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Pixthulhu/pixthulhu-ui.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/README/charcs.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/README/classcs.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/README/spellcs.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/README/title.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/README/title2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Settings/settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/badlogic.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/Ararita.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/Ararita.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/BattleSelectScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/BattleSelectScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/CharacterCreationScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/CharacterCreationScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/ShopScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/ShopScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/Ararita_jar/Ararita.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/Ararita_jar/launch4j.log" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,11 +206,11 @@
       <recent name="" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets\Data\Settings" />
       <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets\Data" />
       <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita" />
       <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\core" />
       <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets\General" />
-      <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets\Backgrounds" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
@@ -356,6 +396,11 @@
           <url>file://$PROJECT_DIR$/core/src/com/ararita/game/Global.java</url>
           <line>202</line>
           <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/desktop/src/com/ararita/game/CharacterCreationScreen.java</url>
+          <line>156</line>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

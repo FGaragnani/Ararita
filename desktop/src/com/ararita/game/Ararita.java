@@ -3,7 +3,6 @@ package com.ararita.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -38,7 +37,7 @@ public class Ararita extends Game {
     public final int spriteFrameCols = 3;
     public final int baseEXP = 100;
 
-    public final String settingsPath = "Settings/settings.json";
+    public final String settingsPath = "Data/Settings/settings.json";
     public final String stylesPath = "Pixthulhu/pixthulhu-ui.json";
     public final String fontPath = "Font/mainFontWhite.fnt";
 

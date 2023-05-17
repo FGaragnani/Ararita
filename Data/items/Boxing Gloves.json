@@ -1,0 +1,11 @@
+{
+    "attributesAffection": {
+        "Strength": 2,
+        "Agility": 1
+    },
+    "price": 20,
+    "name": "Boxing Gloves",
+    "weaponType": "Gloves",
+    "description": "A simple pair of punching gloves.",
+    "type": "Weapon"
+}

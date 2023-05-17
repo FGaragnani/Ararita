@@ -1,0 +1,11 @@
+{
+    "attributesAffection": {
+        "Strength": 5,
+        "Agility": 3
+    },
+    "price": 150,
+    "name": "Javelin",
+    "weaponType": "Spear",
+    "description": "A light spear, easy to use in battle.",
+    "type": "Weapon"
+}

@@ -1,0 +1,7 @@
+{
+    "price": 1000,
+    "effect": {"Agility": 1},
+    "name": "Gust Soul",
+    "description": "Permanently boost a character's agility.",
+    "type": "Consumable"
+}

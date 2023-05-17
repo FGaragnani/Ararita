@@ -1,0 +1,11 @@
+{
+    "attributesAffection": {
+        "Spirit": 1,
+        "Strength": 1
+    },
+    "price": 20,
+    "name": "Bone Bow",
+    "weaponType": "Bow",
+    "description": "A simple bow made out of bone.",
+    "type": "Weapon"
+}

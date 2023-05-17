@@ -1,0 +1,7 @@
+{
+    "price": 1000,
+    "effect": {"Vigor": 1},
+    "name": "Bulk Soul",
+    "description": "Permanently boost a character's vigor.",
+    "type": "Consumable"
+}
