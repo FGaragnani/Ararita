@@ -44,8 +44,18 @@ This project was done for the 'Programmazione ad Oggetti e Lab.' course at UniMO
  
 ## Installing
 
+### IDE
 You can play the game simply by cloning this repository and opening it in your IDE.
 There is only one main method - in DesktopLauncher.java - and if everything is set correctly, it should run the project.
+You can use both the 'main' and the 'executable-jar' branches, and they should both work. I suggest using the 'main' one.
+
+### JAR
+In releases, you can find a .jar file. In order to use it, you should have a Java Runtime Environment with at least Version 17.
+Both double-clicking on the file and command-line execution will work; the latter can be done using:
+```console
+java -jar ararita.jar
+```
+**Note:** executing the .jar will generate a Data folder in the same directory, which is needed for the game to work.
   
 ## Credits
 
