@@ -52,6 +52,7 @@ public class Ararita extends Game {
 
     public final String backgroundPaper = "Backgrounds/paperbg.png";
     public final String backgroundCity = "Backgrounds/city.png";
+    public final String backgroundBattle = "Backgrounds";
 
     Skin skin;
     Music audio;

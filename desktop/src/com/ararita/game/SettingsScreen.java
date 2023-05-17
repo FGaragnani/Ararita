@@ -2,6 +2,7 @@ package com.ararita.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -20,6 +21,9 @@ public class SettingsScreen implements Screen {
     Skin skin;
 
     Dialog confirmDeleteDialog;
+
+    Label title;
+    Label.LabelStyle titleStyle;
 
     Slider volumeSlider;
     Slider soundEffectsSlider;
@@ -67,6 +71,17 @@ public class SettingsScreen implements Screen {
         backButton.setPosition((Gdx.graphics.getWidth() - backButton.getWidth()) / 2, Gdx.graphics.getHeight() - 950);
         deleteButton = new TextButton("Erase Data", game.textButtonStyle);
         deleteButton.setPosition((Gdx.graphics.getWidth() - deleteButton.getWidth()) / 2, Gdx.graphics.getHeight() - 720);
+
+        /*
+            Setting the title.
+         */
+
+        titleStyle = skin.get("default", Label.LabelStyle.class);
+        titleStyle.font = game.titleFont;
+        title = new Label("SETTINGS", titleStyle);
+        title.setColor(Color.BLACK);
+        title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() - 150);
+        title.setColor(Color.WHITE);
 
         /*
             Creating the dialog.
@@ -134,6 +149,7 @@ public class SettingsScreen implements Screen {
         stage.addActor(soundEffectsSlider);
         stage.addActor(backButton);
         stage.addActor(deleteButton);
+        stage.addActor(title);
     }
 
     @Override
@@ -150,7 +166,6 @@ public class SettingsScreen implements Screen {
 
         game.batch.begin();
 
-        game.titleFont.draw(game.batch, "SETTINGS", 730, Gdx.graphics.getHeight() - 50);
         game.normalFont.draw(game.batch, "Volume: " + volumeSlider.getValue(), volumeSlider.getX() + 325, volumeSlider.getY() + 39);
 
         game.batch.end();
