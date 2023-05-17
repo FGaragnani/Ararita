@@ -74,16 +74,16 @@ public class Ararita extends Game {
         batch = new SpriteBatch();
 
         normalFont = new BitmapFont(Gdx.files.internal(fontPath));
-        normalFont.getData().setScale(2.7f, 3.65f);
+        normalFont.getData().setScale(Gdx.graphics.getWidth() / 711f, Gdx.graphics.getHeight() / 296f);
 
         titleFont = new BitmapFont(Gdx.files.internal(fontPath));
-        titleFont.getData().setScale(9f, 13f);
+        titleFont.getData().setScale(Gdx.graphics.getWidth() / 213f, Gdx.graphics.getHeight() / 83f);
 
         bigFont = new BitmapFont(Gdx.files.internal(fontPath));
-        bigFont.getData().setScale(7f, 10f);
+        bigFont.getData().setScale(Gdx.graphics.getWidth() / 274f, Gdx.graphics.getHeight() / 108f);
 
         mediumFont = new BitmapFont(Gdx.files.internal(fontPath));
-        mediumFont.getData().setScale(4.8f, 6.75f);
+        mediumFont.getData().setScale(Gdx.graphics.getWidth() / 400f, Gdx.graphics.getHeight() / 160f);
 
         labelStyle = skin.get("default", Label.LabelStyle.class);
         labelStyle.font = this.normalFont;

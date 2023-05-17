@@ -2,9 +2,11 @@ package com.ararita.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -17,6 +19,9 @@ public class MainMenuScreen implements Screen {
 
     OrthographicCamera camera;
     Skin skin;
+
+    Label title;
+    Label.LabelStyle titleStyle;
 
     TextButton.TextButtonStyle textButtonStyle;
     TextButton mainButton;
@@ -55,6 +60,16 @@ public class MainMenuScreen implements Screen {
         exitButton.setPosition((Gdx.graphics.getWidth() - mainButton.getWidth()) / 2, Gdx.graphics.getHeight() - 800);
 
         /*
+            Adding the title.
+         */
+
+        titleStyle = skin.get("default", Label.LabelStyle.class);
+        titleStyle.font = game.titleFont;
+        title = new Label("ARARITA", titleStyle);
+        title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() - 150);
+        title.setColor(Color.WHITE);
+
+        /*
             Adding the buttons' listeners.
          */
 
@@ -88,6 +103,7 @@ public class MainMenuScreen implements Screen {
         stage.addActor(mainButton);
         stage.addActor(settingsButton);
         stage.addActor(exitButton);
+        stage.addActor(title);
     }
 
     @Override
@@ -103,9 +119,6 @@ public class MainMenuScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-
-        game.titleFont.draw(game.batch, "ARARITA", 730, Gdx.graphics.getHeight() - 50);
-
         game.batch.end();
 
         stage.draw();
