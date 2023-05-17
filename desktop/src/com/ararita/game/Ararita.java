@@ -37,18 +37,21 @@ public class Ararita extends Game {
     public final int spriteFrameCols = 3;
     public final int baseEXP = 100;
 
-    public final String settingsPath = "assets/Settings/settings.json";
-    public final String stylesPath = "assets/Pixthulhu/pixthulhu-ui.json";
-    public final String fontPath = "assets/Font/mainFontWhite.fnt";
+    public final String settingsPath = "Settings/settings.json";
+    public final String stylesPath = "Pixthulhu/pixthulhu-ui.json";
+    public final String fontPath = "Font/mainFontWhite.fnt";
 
-    public final String spritesPath = "assets/General/msprites.png";
-    public final String coinPath = "assets/Icons/coin.png";
-    public final String enemyPath = "assets/Enemies/";
-    public final String handPath = "assets/General/hand.png";
+    public final String spritesPath = "General/msprites.png";
+    public final String coinPath = "Icons/coin.png";
+    public final String enemyPath = "Enemies/";
+    public final String handPath = "General/hand.png";
 
-    public final String cityTheme = "assets/Music/CityTheme.mp3";
-    public final String battleTheme = "assets/Music/BattleTheme.mp3";
-    public final String fanfareTheme = "assets/Music/Fanfare.mp3";
+    public final String cityTheme = "Music/CityTheme.mp3";
+    public final String battleTheme = "Music/BattleTheme.mp3";
+    public final String fanfareTheme = "Music/Fanfare.mp3";
+
+    public final String backgroundPaper = "Backgrounds/paperbg.png";
+    public final String backgroundCity = "Backgrounds/city.png";
 
     Skin skin;
     Music audio;

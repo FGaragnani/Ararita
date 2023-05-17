@@ -95,7 +95,7 @@ public class ShopScreen implements Screen {
             Setting the background texture.
          */
 
-        backgroundTexture = new Texture(Gdx.files.local("assets/Backgrounds/paperbg.png"));
+        backgroundTexture = new Texture(Gdx.files.local(game.backgroundPaper));
         backgroundSprite = new Sprite(backgroundTexture);
         backgroundSprite.setSize((int) (Gdx.graphics.getWidth() * 1.1), (int) (Gdx.graphics.getHeight() * 1.1));
 
