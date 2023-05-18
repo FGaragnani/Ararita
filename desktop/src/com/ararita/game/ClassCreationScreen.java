@@ -556,6 +556,7 @@ public class ClassCreationScreen implements Screen {
     public void updateCost() {
         costLabel.setText("Class cost: " + getClassCost());
         costLabel.setX((Gdx.graphics.getWidth() - confirmButton.getWidth()) / 2);
+        costLabel.setY(confirmButton.getY() + (Gdx.graphics.getHeight() / 7f));
         coinImage.setPosition(((Gdx.graphics.getWidth() - confirmButton.getWidth()) / 2) + (costLabel.getText().length() * (Gdx.graphics.getWidth() / 350f)) + Gdx.graphics.getWidth() * 0.1f, confirmButton.getY() + (Gdx.graphics.getHeight() * 0.116f));
     }
 
