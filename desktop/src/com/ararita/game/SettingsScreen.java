@@ -52,8 +52,8 @@ public class SettingsScreen implements Screen {
 
         volumeSlider = new Slider(0, 100, 1, false, game.sliderStyle);
         soundEffectsSlider = new Slider(0, 100, 1, false, game.sliderStyle);
-        volumeSlider.setWidth(300);
-        soundEffectsSlider.setWidth(300);
+        volumeSlider.setWidth(game.width300);
+        soundEffectsSlider.setWidth(game.width300);
         volumeSlider.setValue(game.volume);
         soundEffectsSlider.setValue(game.soundEffects);
         volumeSlider.setPosition(((Gdx.graphics.getWidth() - volumeSlider.getWidth()) / 2) - 100, Gdx.graphics.getHeight() - 300);

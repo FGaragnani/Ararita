@@ -149,7 +149,7 @@ public class CharacterCreationScreen implements Screen {
 
         TextField.TextFieldStyle textFieldStyle = game.textFieldStyle;
         charNameField = new TextField("Character Name", textFieldStyle);
-        charNameField.setWidth(400);
+        charNameField.setWidth(game.width400);
         charNameField.setPosition((Gdx.graphics.getWidth() - charNameField.getWidth()) / 2, Gdx.graphics.getHeight() * 0.676f);
 
         /*
@@ -166,7 +166,7 @@ public class CharacterCreationScreen implements Screen {
             classArray.add("Create new...");
         }
         charClassSelectBox.setItems(classArray);
-        charClassSelectBox.setWidth(400);
+        charClassSelectBox.setWidth(game.width400);
         charClassSelectBox.setPosition((Gdx.graphics.getWidth() - charClassSelectBox.getWidth()) / 2, Gdx.graphics.getHeight() * 0.54f);
 
         charClassSelectBox.addListener(new ChangeListener() {

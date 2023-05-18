@@ -33,6 +33,8 @@ public class ClassCreationScreen implements Screen {
     Label.LabelStyle titleStyle;
 
     Label stats;
+    float statX;
+    float statY;
     Label costLabel;
     Label expGrowthLabel;
 
@@ -115,24 +117,26 @@ public class ClassCreationScreen implements Screen {
         titleStyle.font = game.titleFont;
         title = new Label("CLASS CREATION", titleStyle);
         title.setColor(Color.BLACK);
-        title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() - 150);
+        title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() * 0.86f);
 
         /*
             Creating the Class Name Field.
          */
 
         classNameField = new TextField("Class Name", game.textFieldStyle);
-        classNameField.setWidth(400);
-        classNameField.setPosition((Gdx.graphics.getWidth() - classNameField.getWidth()) / 2, Gdx.graphics.getHeight() - 320);
+        classNameField.setWidth(game.width400);
+        classNameField.setPosition((Gdx.graphics.getWidth() - classNameField.getWidth()) / 2, Gdx.graphics.getHeight() * 0.7f);
 
         /*
             Setting the stats Label.
          */
 
         stats = new Label("", game.labelStyle);
-        stats.setFontScale(2.8f, 3.8f);
+        stats.setFontScale(game.statScaleX, game.statScaleY);
         stats.setColor(Color.BLACK);
-        stats.setPosition(300, Gdx.graphics.getHeight() - 400);
+        statX = Gdx.graphics.getWidth() / 6.4f;
+        statY = Gdx.graphics.getHeight() * 0.63f;
+        stats.setPosition(statX, statY);
         updateStats();
 
         /*
@@ -141,7 +145,7 @@ public class ClassCreationScreen implements Screen {
          */
 
         confirmButton = new TextButton("Confirm", game.textButtonStyle);
-        confirmButton.setPosition((Gdx.graphics.getWidth() - (confirmButton.getWidth())) / 2, Gdx.graphics.getHeight() - 850);
+        confirmButton.setPosition((Gdx.graphics.getWidth() - (confirmButton.getWidth())) / 2, Gdx.graphics.getHeight() * 0.213f);
         confirmButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -166,7 +170,7 @@ public class ClassCreationScreen implements Screen {
          */
 
         exitButton = new TextButton("Exit", game.textButtonStyle);
-        exitButton.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, Gdx.graphics.getHeight() - 1000);
+        exitButton.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, Gdx.graphics.getHeight() * 0.074f);
         exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -180,18 +184,18 @@ public class ClassCreationScreen implements Screen {
          */
 
         costLabel = new Label("", stats.getStyle());
-        costLabel.setFontScale(2.8f, 3.8f);
+        costLabel.setFontScale(game.statScaleX, game.statScaleY);
         costLabel.setColor(Color.BLACK);
-        costLabel.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, confirmButton.getY() + 155);
+        costLabel.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, confirmButton.getY() + (Gdx.graphics.getHeight() / 7f));
 
         /*
             Creating the EXP Slider.
          */
 
         expSlider = new Slider(1.6f, 2.8f, 0.01f, false, game.sliderStyle);
-        expSlider.setWidth(300);
-        expSlider.setValue(3);
-        expSlider.setPosition((Gdx.graphics.getWidth() - expSlider.getWidth()) / 2, Gdx.graphics.getHeight() - 450);
+        expSlider.setWidth(game.width300);
+        expSlider.setValue(2.8f);
+        expSlider.setPosition((Gdx.graphics.getWidth() - expSlider.getWidth()) / 2, Gdx.graphics.getHeight() * 0.587f);
         expSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -205,9 +209,9 @@ public class ClassCreationScreen implements Screen {
          */
 
         expGrowthLabel = new Label("", stats.getStyle());
-        expGrowthLabel.setFontScale(2.8f, 3.8f);
+        expGrowthLabel.setFontScale(game.statScaleX, game.statScaleY);
         expGrowthLabel.setColor(Color.BLACK);
-        expGrowthLabel.setPosition((Gdx.graphics.getWidth() - (expGrowthLabel.getWidth())) / 2, Gdx.graphics.getHeight() - 500);
+        expGrowthLabel.setPosition((Gdx.graphics.getWidth() - (expGrowthLabel.getWidth())) / 2, Gdx.graphics.getHeight() * 0.54f);
         updateEXP();
 
         /*
@@ -223,14 +227,14 @@ public class ClassCreationScreen implements Screen {
 
         statSelectBox = new SelectBox<>(game.selectBoxStyle);
         statSelectBox.setItems("Strength", "Intelligence", "Vigor", "Agility", "Spirit", "Arcane");
-        statSelectBox.setWidth(300);
-        statSelectBox.setPosition(Gdx.graphics.getWidth() - 460, Gdx.graphics.getHeight() - 300);
+        statSelectBox.setWidth(game.width300);
+        statSelectBox.setPosition(Gdx.graphics.getWidth() * 0.76f, Gdx.graphics.getHeight() * 0.722f);
         statPlus = new TextButton("+", plusMinusStyle);
-        statPlus.setSize(80, 90);
-        statPlus.setPosition(Gdx.graphics.getWidth() - 100, Gdx.graphics.getHeight() - 310);
+        statPlus.setSize(Gdx.graphics.getWidth() / 24f, Gdx.graphics.getHeight() / 12f);
+        statPlus.setPosition(Gdx.graphics.getWidth() * 0.95f, Gdx.graphics.getHeight() * 0.713f);
         statMinus = new TextButton("-", skin.get("default", TextButton.TextButtonStyle.class));
-        statMinus.setPosition(Gdx.graphics.getWidth() - 600, Gdx.graphics.getHeight() - 310);
-        statMinus.setSize(80, 90);
+        statMinus.setPosition(Gdx.graphics.getWidth() * 0.6875f, Gdx.graphics.getHeight() * 0.713f);
+        statMinus.setSize(Gdx.graphics.getWidth() / 24f, Gdx.graphics.getHeight() / 12f);
         statPlus.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -260,14 +264,14 @@ public class ClassCreationScreen implements Screen {
 
         proficiencySelectBox = new SelectBox<>(game.selectBoxStyle);
         proficiencySelectBox.setItems(proficiencyList);
-        proficiencySelectBox.setWidth(300);
-        proficiencySelectBox.setPosition(Gdx.graphics.getWidth() - 460, Gdx.graphics.getHeight() - 460);
+        proficiencySelectBox.setWidth(game.width300);
+        proficiencySelectBox.setPosition(Gdx.graphics.getWidth() * 0.76f, Gdx.graphics.getHeight() * 0.574f);
         proficiencyPlus = new TextButton("+", plusMinusStyle);
-        proficiencyPlus.setSize(80, 90);
-        proficiencyPlus.setPosition(Gdx.graphics.getWidth() - 100, Gdx.graphics.getHeight() - 470);
+        proficiencyPlus.setSize(Gdx.graphics.getWidth() / 24f, Gdx.graphics.getHeight() / 12f);
+        proficiencyPlus.setPosition(Gdx.graphics.getWidth() * 0.95f, Gdx.graphics.getHeight() * 0.565f);
         proficiencyMinus = new TextButton("-", skin.get("default", TextButton.TextButtonStyle.class));
-        proficiencyMinus.setPosition(Gdx.graphics.getWidth() - 600, Gdx.graphics.getHeight() - 470);
-        proficiencyMinus.setSize(80, 90);
+        proficiencyMinus.setPosition(Gdx.graphics.getWidth() * 0.6875f, Gdx.graphics.getHeight() * 0.565f);
+        proficiencyMinus.setSize(Gdx.graphics.getWidth() / 24f, Gdx.graphics.getHeight() / 12f);
 
         proficiencyPlus.addListener(new ChangeListener() {
             @Override
@@ -305,14 +309,14 @@ public class ClassCreationScreen implements Screen {
 
         spellTypeSelectBox = new SelectBox<>(game.selectBoxStyle);
         spellTypeSelectBox.setItems(spellLists);
-        spellTypeSelectBox.setWidth(300);
-        spellTypeSelectBox.setPosition(Gdx.graphics.getWidth() - 460, Gdx.graphics.getHeight() - 620);
+        spellTypeSelectBox.setWidth(game.width300);
+        spellTypeSelectBox.setPosition(Gdx.graphics.getWidth() * 0.76f, Gdx.graphics.getHeight() * 0.426f);
         spellTypesPlus = new TextButton("+", plusMinusStyle);
-        spellTypesPlus.setSize(80, 90);
-        spellTypesPlus.setPosition(Gdx.graphics.getWidth() - 100, Gdx.graphics.getHeight() - 630);
+        spellTypesPlus.setSize(Gdx.graphics.getWidth() / 24f, Gdx.graphics.getHeight() / 12f);
+        spellTypesPlus.setPosition(Gdx.graphics.getWidth() * 0.95f, Gdx.graphics.getHeight() * 0.417f);
         spellTypesMinus = new TextButton("-", skin.get("default", TextButton.TextButtonStyle.class));
-        spellTypesMinus.setPosition(Gdx.graphics.getWidth() - 600, Gdx.graphics.getHeight() - 630);
-        spellTypesMinus.setSize(80, 90);
+        spellTypesMinus.setPosition(Gdx.graphics.getWidth() * 0.6875f, Gdx.graphics.getHeight() * 0.417f);
+        spellTypesMinus.setSize(Gdx.graphics.getWidth() / 24f, Gdx.graphics.getHeight() / 12f);
 
         spellTypesPlus.addListener(new ChangeListener() {
             @Override
@@ -413,7 +417,6 @@ public class ClassCreationScreen implements Screen {
         coinImage = new Image();
         coinImage.setDrawable(new TextureRegionDrawable(coinTexture));
         coinImage.setSize(coinTexture.getWidth(), coinTexture.getHeight());
-        coinImage.setPosition(((Gdx.graphics.getWidth() - confirmButton.getWidth()) / 2) + costLabel.getText().length() + 250, confirmButton.getY() + 125);
         updateCost();
 
         /*
@@ -426,10 +429,10 @@ public class ClassCreationScreen implements Screen {
             currentMoney = new Label("Money: ?", stats.getStyle());
         }
         currentMoney.setColor(Color.BLACK);
-        currentMoney.setPosition(1450, 950);
+        currentMoney.setPosition(Gdx.graphics.getWidth() * 0.755f, Gdx.graphics.getHeight() * 0.88f);
         currentMoneyImage = new Image(new TextureRegionDrawable(coinTexture));
         currentMoneyImage.setSize(coinTexture.getWidth(), coinTexture.getHeight());
-        currentMoneyImage.setPosition(1400 + (currentMoney.getText().length() * 10) + 160, 935);
+        currentMoneyImage.setPosition(Gdx.graphics.getWidth() * 0.8125f + (currentMoney.getText().length() * (Gdx.graphics.getWidth() / 192f)), Gdx.graphics.getHeight() * 0.866f);
 
         /*
             Adding all actors.
@@ -542,7 +545,7 @@ public class ClassCreationScreen implements Screen {
             otherLines += spellTypes.size();
         }
         stats.setText(text);
-        stats.setPosition(300, Gdx.graphics.getHeight() - 400 - (18 * otherLines));
+        stats.setPosition(statX, statY - (game.otherLinesFactor * otherLines));
     }
 
     /**
@@ -551,7 +554,7 @@ public class ClassCreationScreen implements Screen {
     public void updateCost() {
         costLabel.setText("Class cost: " + getClassCost());
         costLabel.setX((Gdx.graphics.getWidth() - confirmButton.getWidth()) / 2);
-        coinImage.setPosition(((Gdx.graphics.getWidth() - confirmButton.getWidth()) / 2) + (costLabel.getText().length() * 5) + 200, confirmButton.getY() + 125);
+        coinImage.setPosition(((Gdx.graphics.getWidth() - confirmButton.getWidth()) / 2) + (costLabel.getText().length() * (Gdx.graphics.getWidth() / 384f)) + Gdx.graphics.getWidth() * 0.1f, confirmButton.getY() + (Gdx.graphics.getHeight() * 0.116f));
     }
 
     /**
@@ -582,6 +585,6 @@ public class ClassCreationScreen implements Screen {
         } else {
             expGrowthLabel.setText("EXP Growth: Medium");
         }
-        expGrowthLabel.setPosition(expSlider.getX() + 20, Gdx.graphics.getHeight() - 500);
+        expGrowthLabel.setPosition(expSlider.getX() + (Gdx.graphics.getWidth() / 96f), Gdx.graphics.getHeight() * 0.537f);
     }
 }
