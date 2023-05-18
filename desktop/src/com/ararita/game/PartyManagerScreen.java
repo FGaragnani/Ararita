@@ -105,9 +105,9 @@ public class PartyManagerScreen implements Screen {
         charSheet = new Texture(Gdx.files.internal(game.spritesPath));
         tmp = TextureRegion.split(charSheet, charSheet.getWidth() / (game.spriteFrameCols * 6), charSheet.getHeight());
         spriteImageParty = new Image();
-        spriteImageParty.setScale(7);
+        spriteImageParty.setScale(Gdx.graphics.getWidth() / 274f);
         spriteImageReserve = new Image();
-        spriteImageReserve.setScale(7);
+        spriteImageReserve.setScale(Gdx.graphics.getWidth() / 274f);
 
         /*
             Setting the background texture.
@@ -125,14 +125,14 @@ public class PartyManagerScreen implements Screen {
         titleStyle.font = game.titleFont;
         title = new Label("PARTY MANAGER", titleStyle);
         title.setColor(Color.BLACK);
-        title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() - 150);
+        title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() * 0.861f);
 
         /*
             Creating the Exit Button.
          */
 
         exitButton = new TextButton("Exit", game.textButtonStyle);
-        exitButton.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, Gdx.graphics.getHeight() - 1100);
+        exitButton.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, 0);
         exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -146,8 +146,8 @@ public class PartyManagerScreen implements Screen {
          */
 
         partyCharactersSelectBox = new SelectBox<>(game.selectBoxStyle);
-        partyCharactersSelectBox.setWidth(500);
-        partyCharactersSelectBox.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 - 40, Gdx.graphics.getHeight() - 380);
+        partyCharactersSelectBox.setWidth(game.width200 + game.width300);
+        partyCharactersSelectBox.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 - (0.02f * Gdx.graphics.getWidth()), Gdx.graphics.getHeight() * 0.648f);
         partyCharactersSelectBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -157,23 +157,23 @@ public class PartyManagerScreen implements Screen {
             }
         });
         partyLabel = new Label("Party:", skin.get("default", Label.LabelStyle.class));
-        partyLabel.setFontScale(2.8f, 3.8f);
+        partyLabel.setFontScale(game.statScaleX, game.statScaleY);
         partyLabel.setColor(Color.BLACK);
-        partyLabel.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 - 140, Gdx.graphics.getHeight() - 400);
-        spriteImageParty.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6, Gdx.graphics.getHeight() - 310);
+        partyLabel.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 - (0.073f * Gdx.graphics.getWidth()), Gdx.graphics.getHeight() * 0.63f);
+        spriteImageParty.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6, Gdx.graphics.getHeight() * 0.71f);
 
         /*
             Adding the other characters Select Box and its label.
          */
 
         otherCharactersSelectBox = new SelectBox<>(game.selectBoxStyle);
-        otherCharactersSelectBox.setWidth(500);
-        otherCharactersSelectBox.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) * 5 / 6 + 80, Gdx.graphics.getHeight() - 380);
+        otherCharactersSelectBox.setWidth(game.width200 + game.width300);
+        otherCharactersSelectBox.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) * 5 / 6 + (0.042f * Gdx.graphics.getWidth()), Gdx.graphics.getHeight() * 0.648f);
         otherCharactersLabel = new Label("Reserve:", skin.get("default", Label.LabelStyle.class));
-        otherCharactersLabel.setFontScale(2.8f, 3.8f);
+        otherCharactersLabel.setFontScale(game.statScaleX, game.statScaleY);
         otherCharactersLabel.setColor(Color.BLACK);
-        otherCharactersLabel.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) * 5 / 6 - 50, Gdx.graphics.getHeight() - 400);
-        spriteImageReserve.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) * 5 / 6 + 110, Gdx.graphics.getHeight() - 310);
+        otherCharactersLabel.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) * 5 / 6 - (Gdx.graphics.getWidth() * 0.026f), Gdx.graphics.getHeight() * 0.63f);
+        spriteImageReserve.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) * 5 / 6 + (Gdx.graphics.getWidth() / 17.45f), Gdx.graphics.getHeight() * 0.713f);
 
         /*
             Creating the two transfer buttons.
@@ -181,14 +181,14 @@ public class PartyManagerScreen implements Screen {
 
         partyToReserveButton = new TextButton("Party -> Reserve", skin.get("default", TextButton.TextButtonStyle.class));
         partyToReserveButton.getLabel().setStyle(partyLabel.getStyle());
-        partyToReserveButton.getLabel().setFontScale(2.2f, 3.2f);
-        partyToReserveButton.setWidth(250);
-        partyToReserveButton.setPosition((Gdx.graphics.getWidth() - partyToReserveButton.getWidth()) / 2.0f, Gdx.graphics.getHeight() - 325);
+        partyToReserveButton.getLabel().setFontScale(game.statScaleX * 0.8f, game.statScaleY * 0.8f);
+        partyToReserveButton.setWidth(game.width200 * 5 / 4);
+        partyToReserveButton.setPosition((Gdx.graphics.getWidth() - partyToReserveButton.getWidth()) / 2.0f, Gdx.graphics.getHeight() * 0.7f);
         reserveToPartyButton = new TextButton("Party <- Reserve", skin.get("default", TextButton.TextButtonStyle.class));
         reserveToPartyButton.getLabel().setStyle(partyLabel.getStyle());
-        reserveToPartyButton.getLabel().setFontScale(2.2f, 3.2f);
-        reserveToPartyButton.setWidth(250);
-        reserveToPartyButton.setPosition((Gdx.graphics.getWidth() - partyToReserveButton.getWidth()) / 2.0f, Gdx.graphics.getHeight() - 375 - partyToReserveButton.getHeight());
+        reserveToPartyButton.getLabel().setFontScale(game.statScaleX * 0.8f, game.statScaleY * 0.8f);
+        reserveToPartyButton.setWidth(game.width200 * 5 / 4);
+        reserveToPartyButton.setPosition((Gdx.graphics.getWidth() - partyToReserveButton.getWidth()) / 2.0f, Gdx.graphics.getHeight() * 0.7f - partyToReserveButton.getHeight());
 
         partyToReserveButton.addListener(new ChangeListener() {
             @Override
@@ -235,10 +235,10 @@ public class PartyManagerScreen implements Screen {
          */
 
         partyStats = new Label("", game.labelStyle);
-        partyStats.setFontScale(2.5f, 3.4f);
+        partyStats.setFontScale(game.statScaleX * 0.88f, game.statScaleY * 0.88f);
         partyStats.setColor(Color.BLACK);
         reserveStats = new Label("", game.labelStyle);
-        reserveStats.setFontScale(2.5f, 3.4f);
+        reserveStats.setFontScale(game.statScaleX * 0.88f, game.statScaleY * 0.88f);
         reserveStats.setColor(Color.BLACK);
 
         /*
@@ -246,40 +246,40 @@ public class PartyManagerScreen implements Screen {
          */
 
         weaponsInInventorySelectBox = new SelectBox<>(game.selectBoxStyle);
-        weaponsInInventorySelectBox.setWidth(400);
-        weaponsInInventorySelectBox.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6, Gdx.graphics.getHeight() - 800);
+        weaponsInInventorySelectBox.setWidth(game.width400);
+        weaponsInInventorySelectBox.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6, Gdx.graphics.getHeight() * 0.26f);
         equipButton = new TextButton("Equip", skin.get("default", TextButton.TextButtonStyle.class));
         equipButton.getLabel().setStyle(partyLabel.getStyle());
-        equipButton.getLabel().setFontScale(2.2f, 3f);
-        equipButton.setWidth(140);
-        equipButton.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6, Gdx.graphics.getHeight() - 700);
+        equipButton.getLabel().setFontScale(game.statScaleX * 0.8f, game.statScaleY * 0.8f);
+        equipButton.setWidth(game.width200 / 1.43f);
+        equipButton.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6, Gdx.graphics.getHeight() * 0.35f);
         inventoryLabel = new Label("Inventory:", skin.get("default", Label.LabelStyle.class));
-        inventoryLabel.setFontScale(2.6f, 3.7f);
+        inventoryLabel.setFontScale(game.statScaleX, game.statScaleY);
         inventoryLabel.setColor(Color.BLACK);
-        inventoryLabel.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 - 150, Gdx.graphics.getHeight() - 565);
+        inventoryLabel.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 - (Gdx.graphics.getWidth() / 12.8f), Gdx.graphics.getHeight() * 0.477f);
 
         /*
             Setting the weapons SelectBox.
          */
 
         weaponsEquippedSelectBox = new SelectBox<>(game.selectBoxStyle);
-        weaponsEquippedSelectBox.setWidth(400);
-        weaponsEquippedSelectBox.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6, Gdx.graphics.getHeight() - 550);
+        weaponsEquippedSelectBox.setWidth(game.width400);
+        weaponsEquippedSelectBox.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6, Gdx.graphics.getHeight() * 0.49f);
         unEquipButton = new TextButton("Unequip", skin.get("default", TextButton.TextButtonStyle.class));
         unEquipButton.getLabel().setStyle(partyLabel.getStyle());
-        unEquipButton.getLabel().setFontScale(2.2f, 3f);
-        unEquipButton.setWidth(140);
-        unEquipButton.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 + 255, Gdx.graphics.getHeight() - 700);
+        unEquipButton.getLabel().setFontScale(game.statScaleX * 0.8f, game.statScaleY * 0.8f);
+        unEquipButton.setWidth(game.width200 / 1.43f);
+        unEquipButton.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 + (Gdx.graphics.getWidth() / 7.53f), Gdx.graphics.getHeight() * 0.35f);
 
         /*
             Setting the equipment labels.
          */
 
         statsEquippedWeapon = new Label("", game.labelStyle);
-        statsEquippedWeapon.setFontScale(2.5f, 3.4f);
+        statsEquippedWeapon.setFontScale(game.statScaleX, game.statScaleY);
         statsEquippedWeapon.setColor(Color.BLACK);
         statsInventoryWeapon = new Label("", game.labelStyle);
-        statsInventoryWeapon.setFontScale(2.5f, 3.4f);
+        statsInventoryWeapon.setFontScale(game.statScaleX, game.statScaleY);
         statsInventoryWeapon.setColor(Color.BLACK);
 
         /*
@@ -576,7 +576,7 @@ public class PartyManagerScreen implements Screen {
             partyChar.getSpellTypes().forEach((str) -> partyText.append(" - ").append(str).append("\n"));
             otherLines += partyChar.getSpellTypes().size();
             partyStats.setText(partyText.toString());
-            partyStats.setPosition(660, Gdx.graphics.getHeight() - 580 - (18 * (otherLines - 1)));
+            partyStats.setPosition(Gdx.graphics.getWidth() / 2.9f, Gdx.graphics.getHeight() * 0.463f - (game.otherLinesFactor * (otherLines - 1)));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -609,7 +609,7 @@ public class PartyManagerScreen implements Screen {
             reserveChar.getSpells().forEach((str) -> reserveText.append(" - ").append(str.toString()).append("\n"));
             otherLines += reserveChar.getSpells().size();
             reserveStats.setText(reserveText.toString());
-            reserveStats.setPosition(1600, Gdx.graphics.getHeight() - 580 - (18 * (otherLines - 1)));
+            reserveStats.setPosition(Gdx.graphics.getWidth() / 1.2f, Gdx.graphics.getHeight() * 0.463f - (game.otherLinesFactor * (otherLines - 1)));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -662,7 +662,7 @@ public class PartyManagerScreen implements Screen {
                         otherLines++;
                     }
                     statsEquippedWeapon.setText(equipText);
-                    statsEquippedWeapon.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 - 50, Gdx.graphics.getHeight() - 870 - (otherLines * 17));
+                    statsEquippedWeapon.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 - (Gdx.graphics.getWidth() / 38.4f), Gdx.graphics.getHeight() * 0.194f - (otherLines * game.otherLinesFactor));
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -687,7 +687,7 @@ public class PartyManagerScreen implements Screen {
                 otherLines++;
             }
             statsInventoryWeapon.setText(equipText);
-            statsInventoryWeapon.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 + 220, Gdx.graphics.getHeight() - 870 - (otherLines * 17));
+            statsInventoryWeapon.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 + (Gdx.graphics.getWidth() / 8.73f), Gdx.graphics.getHeight() * 0.194f - (otherLines * game.otherLinesFactor));
         }
     }
 }
