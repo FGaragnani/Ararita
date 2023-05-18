@@ -1,5 +1,5 @@
-sourceCompatibility = JavaVersion.VERSION_16
-targetCompatibility = JavaVersion.VERSION_16
+sourceCompatibility = '17'
+targetCompatibility = '17'
 dependencies {
     implementation 'org.json:json:20230227'
     implementation 'junit:junit:4.13.1'
