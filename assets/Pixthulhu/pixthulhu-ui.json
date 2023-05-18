@@ -1,13 +1,13 @@
 {
 BitmapFont: {
 	font: {
-		file: ../Font/mainFontWhite.fnt
+		file: Font/mainFontWhite.fnt
 	}
 	subtitle: {
-		file: ../Font/mainFontWhite.fnt
+		file: Font/mainFontWhite.fnt
 	}
 	title: {
-		file: ../Font/mainFontWhite.fnt
+		file: Font/mainFontWhite.fnt
 	}
 }
 Color: {

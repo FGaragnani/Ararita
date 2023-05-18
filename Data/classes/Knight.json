@@ -1,0 +1,23 @@
+{
+    "baseEXP": 100,
+    "currMP": 0,
+    "MP": 10,
+    "strength": 6,
+    "level": 1,
+    "vigor": 4,
+    "HP": 47,
+    "spirit": 1,
+    "dead": true,
+    "exponentEXP": 1.25,
+    "currHP": 0,
+    "increaseEXP": 1.32,
+    "intelligence": 0,
+    "proficiencies": {"Sword": 2},
+    "spellTypes": [],
+    "charClass": "Knight",
+    "EXP": 0,
+    "spells": [],
+    "agility": 3,
+    "weapons": [],
+    "arcane": 1
+}

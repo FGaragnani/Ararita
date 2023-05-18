@@ -1,0 +1,7 @@
+{
+    "price": 100,
+    "effect": {"MP": 750},
+    "name": "Supernal Ether",
+    "description": "Restores 750 MP.",
+    "type": "Consumable"
+}

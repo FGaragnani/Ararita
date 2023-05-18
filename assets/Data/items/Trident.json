@@ -1,0 +1,11 @@
+{
+    "attributesAffection": {
+        "Strength": 21,
+        "Agility": 4
+    },
+    "price": 600,
+    "name": "Trident",
+    "weaponType": "Spear",
+    "description": "A golden trident, that causes\n piercing damage.",
+    "type": "Weapon"
+}

@@ -25,6 +25,7 @@ import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 import com.rafaskoberg.gdx.typinglabel.TypingListener;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -124,9 +125,9 @@ public class BattleScreen implements Screen {
             Setting the background texture.
          */
 
-        backgroundTexture = new Texture(Gdx.files.local("assets/Backgrounds/" + (new Random().nextInt(4) + 1) + ".png"));
+        backgroundTexture = new Texture(Gdx.files.local(game.backgroundBattle + "/" + (new Random().nextInt(4) + 1) + ".png"));
         backgroundSprite = new Sprite(backgroundTexture);
-        backgroundSprite.setSize((int) (Gdx.graphics.getWidth() * 1.1), (int) (Gdx.graphics.getHeight() * 1.1));
+        backgroundSprite.setSize(1920, 1080);
 
         /*
             Setting the enemy image.

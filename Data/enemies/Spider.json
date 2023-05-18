@@ -1,0 +1,23 @@
+{
+    "money": 150,
+    "toDrop": {
+        "Cosmic Ether": 0.05,
+        "Revitalizing": 0.05,
+        "Maior Potion": 0.05
+    },
+    "level": 15,
+    "defense": 18,
+    "statusEffect": "no",
+    "attack": 21,
+    "name": "Spider",
+    "magicDefense": 5,
+    "dead": false,
+    "currHP": 350,
+    "speed": 35,
+    "weakTo": [
+        "Light",
+        "Sword",
+        "Fire",
+        "Spear"
+    ]
+}

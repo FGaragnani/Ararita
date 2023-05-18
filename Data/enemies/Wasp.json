@@ -1,0 +1,23 @@
+{
+    "money": 70,
+    "toDrop": {
+        "Ether": 0.1,
+        "Potion": 0.05,
+        "Maior Potion": 0.05
+    },
+    "level": 8,
+    "defense": 4,
+    "statusEffect": "no",
+    "attack": 17,
+    "name": "Wasp",
+    "magicDefense": 8,
+    "dead": false,
+    "currHP": 200,
+    "speed": 20,
+    "weakTo": [
+        "Bow",
+        "Fire",
+        "Wind",
+        "Earth"
+    ]
+}

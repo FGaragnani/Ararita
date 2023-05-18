@@ -61,16 +61,16 @@ public class CityScreen implements Screen {
             Setting the background texture.
          */
 
-        backgroundTexture = new Texture(Gdx.files.local("assets/Backgrounds/city.png"));
+        backgroundTexture = new Texture(Gdx.files.local(game.backgroundCity));
         backgroundSprite = new Sprite(backgroundTexture);
-        backgroundSprite.setSize((int) (Gdx.graphics.getWidth() * 1.1), (int) (Gdx.graphics.getHeight() * 1.1));
+        backgroundSprite.setSize(1920, 1080);
 
         /*
             Initialize the Character Creation Button and its listener.
          */
 
         charCreateButton = new TextButton(" Recruit new \n character ", textButtonStyle);
-        charCreateButton.setPosition((Gdx.graphics.getWidth() - charCreateButton.getWidth()) / 4, Gdx.graphics.getHeight() - 350);
+        charCreateButton.setPosition((Gdx.graphics.getWidth() - charCreateButton.getWidth()) / 4, Gdx.graphics.getHeight() * 0.676f);
         charCreateButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -88,7 +88,7 @@ public class CityScreen implements Screen {
          */
 
         classCreateButton = new TextButton(" Create new \n class ", textButtonStyle);
-        classCreateButton.setPosition((Gdx.graphics.getWidth() - classCreateButton.getWidth()) / 4, Gdx.graphics.getHeight() - 580);
+        classCreateButton.setPosition((Gdx.graphics.getWidth() - classCreateButton.getWidth()) / 4, Gdx.graphics.getHeight() * 0.463f);
         classCreateButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -102,7 +102,7 @@ public class CityScreen implements Screen {
          */
 
         spellCreateButton = new TextButton(" Create new \n spell ", textButtonStyle);
-        spellCreateButton.setPosition((Gdx.graphics.getWidth() - classCreateButton.getWidth()) / 4, Gdx.graphics.getHeight() - 810);
+        spellCreateButton.setPosition((Gdx.graphics.getWidth() - classCreateButton.getWidth()) / 4, Gdx.graphics.getHeight() * 0.25f);
         spellCreateButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -116,7 +116,7 @@ public class CityScreen implements Screen {
          */
 
         shopButton = new TextButton(" Enter the \n shop ", textButtonStyle);
-        shopButton.setPosition((Gdx.graphics.getWidth() - shopButton.getWidth()) * 3 / 4, Gdx.graphics.getHeight() - 350);
+        shopButton.setPosition((Gdx.graphics.getWidth() - shopButton.getWidth()) * 3 / 4, Gdx.graphics.getHeight() * 0.676f);
         shopButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -130,7 +130,7 @@ public class CityScreen implements Screen {
          */
 
         partyManageButton = new TextButton(" Manage \n the party ", textButtonStyle);
-        partyManageButton.setPosition((Gdx.graphics.getWidth() - partyManageButton.getWidth()) * 3 / 4, Gdx.graphics.getHeight() - 580);
+        partyManageButton.setPosition((Gdx.graphics.getWidth() - partyManageButton.getWidth()) * 3 / 4, Gdx.graphics.getHeight() * 0.463f);
         partyManageButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -144,7 +144,7 @@ public class CityScreen implements Screen {
          */
 
         mainMenuButton = new TextButton(" Back to \n Main Menu ", textButtonStyle);
-        mainMenuButton.setPosition((Gdx.graphics.getWidth() - mainMenuButton.getWidth()) * 3 / 4, Gdx.graphics.getHeight() - 810);
+        mainMenuButton.setPosition((Gdx.graphics.getWidth() - mainMenuButton.getWidth()) * 3 / 4, Gdx.graphics.getHeight() / 4f);
         mainMenuButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -159,7 +159,7 @@ public class CityScreen implements Screen {
          */
 
         battleButton = new TextButton("Battle!", game.textButtonStyle);
-        battleButton.setPosition((Gdx.graphics.getWidth() - battleButton.getWidth()) / 2 + 10, (Gdx.graphics.getHeight() - battleButton.getHeight()) / 2 + 10);
+        battleButton.setPosition((Gdx.graphics.getWidth() - battleButton.getWidth()) / 2 + (Gdx.graphics.getWidth() / 192f), (Gdx.graphics.getHeight() - battleButton.getHeight()) / 2 + (Gdx.graphics.getHeight() / 108f));
         battleButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -227,5 +227,4 @@ public class CityScreen implements Screen {
         backgroundTexture.dispose();
         skin.dispose();
     }
-
 }

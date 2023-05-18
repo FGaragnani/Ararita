@@ -1,0 +1,11 @@
+{
+    "attributesAffection": {
+        "Spirit": 4,
+        "Strength": 4
+    },
+    "price": 150,
+    "name": "Hunter Bow",
+    "weaponType": "Bow",
+    "description": "A bow specifically made for deer hunting.",
+    "type": "Weapon"
+}

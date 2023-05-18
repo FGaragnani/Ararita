@@ -3,6 +3,7 @@ package com.ararita.game;
 import com.ararita.game.battlers.Enemy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -59,9 +60,7 @@ public class BattleSelectScreen implements Screen {
         this.camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
         enemies = new Array<>();
-        for (File f : Objects.requireNonNull(Global.enemySets.toFile().listFiles())) {
-            enemies.add(f.getName().substring(0, f.getName().length() - 5));
-        }
+        enemies.addAll("Ararita", "Eye", "Goblin", "Lizard-Man", "Skeleton", "Slime", "Spider", "Turtle", "Wasp", "Wyvern");
         enemies.sort((o1, o2) -> {
             try {
                 return Integer.compare(Global.getEnemy(o1).getLevel(), Global.getEnemy(o2).getLevel());
@@ -75,9 +74,9 @@ public class BattleSelectScreen implements Screen {
             Setting the background texture.
          */
 
-        backgroundTexture = new Texture(Gdx.files.local("assets/Backgrounds/paperbg.png"));
+        backgroundTexture = new Texture(Gdx.files.local(game.backgroundPaper));
         backgroundSprite = new Sprite(backgroundTexture);
-        backgroundSprite.setSize((int) (Gdx.graphics.getWidth() * 1.1), (int) (Gdx.graphics.getHeight() * 1.1));
+        backgroundSprite.setSize(1920, 1080);
 
         /*
             Setting the title.
@@ -239,7 +238,7 @@ public class BattleSelectScreen implements Screen {
     /**
      * The enemy image is updated.
      */
-    public void updateTexture(){
+    public void updateTexture() {
         enemyTexture = new Texture(Gdx.files.local(game.enemyPath + enemySelectBox.getSelected() + ".png"));
         stage.getActors().removeValue(enemyImage, true);
         enemyImage = new Image(new TextureRegionDrawable(enemyTexture));
@@ -247,5 +246,4 @@ public class BattleSelectScreen implements Screen {
         enemyImage.setPosition((Gdx.graphics.getWidth() - enemyImage.getWidth()) * 3 / 4 - 20, Gdx.graphics.getHeight() - 650);
         stage.addActor(enemyImage);
     }
-
 }

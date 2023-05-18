@@ -1,0 +1,11 @@
+{
+    "attributesAffection": {
+        "Strength": 4,
+        "Agility": 2
+    },
+    "price": 150,
+    "name": "Tiger Gloves",
+    "weaponType": "Gloves",
+    "description": "Four claws are on these gloves\n to resemble a tiger's paw.",
+    "type": "Weapon"
+}

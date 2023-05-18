@@ -2,6 +2,7 @@ package com.ararita.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -21,10 +22,15 @@ public class SettingsScreen implements Screen {
 
     Dialog confirmDeleteDialog;
 
+    Label title;
+    Label.LabelStyle titleStyle;
+
     Slider volumeSlider;
     Slider soundEffectsSlider;
 
+    Label.LabelStyle labelStyle;
     Label soundEffectLabel;
+    Label volumeLabel;
     TextButton deleteButton;
     TextButton backButton;
 
@@ -38,7 +44,7 @@ public class SettingsScreen implements Screen {
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
-        skin = game.skin;
+        skin = new Skin(Gdx.files.internal(game.stylesPath));
 
         /*
             Creating the two sliders.
@@ -46,8 +52,8 @@ public class SettingsScreen implements Screen {
 
         volumeSlider = new Slider(0, 100, 1, false, game.sliderStyle);
         soundEffectsSlider = new Slider(0, 100, 1, false, game.sliderStyle);
-        volumeSlider.setWidth(300);
-        soundEffectsSlider.setWidth(300);
+        volumeSlider.setWidth(game.width300);
+        soundEffectsSlider.setWidth(game.width300);
         volumeSlider.setValue(game.volume);
         soundEffectsSlider.setValue(game.soundEffects);
         volumeSlider.setPosition(((Gdx.graphics.getWidth() - volumeSlider.getWidth()) / 2) - 100, Gdx.graphics.getHeight() - 300);
@@ -56,8 +62,18 @@ public class SettingsScreen implements Screen {
         /*
             Creating the SoundEffects Label.
          */
-        soundEffectLabel = new Label("Sound Effects: " + (float) game.soundEffects, skin);
+
+        labelStyle = skin.get("default", Label.LabelStyle.class);
+        labelStyle.font = game.normalFont;
+        soundEffectLabel = new Label("Sound Effects: " + (float) game.soundEffects, labelStyle);
         soundEffectLabel.setPosition(soundEffectsSlider.getX() + 325, soundEffectsSlider.getY() + 15);
+
+        /*
+            Creating the Volume label.
+         */
+
+        volumeLabel = new Label("Volume: " + (float) game.volume, labelStyle);
+        volumeLabel.setPosition(volumeSlider.getX() + 325, volumeSlider.getY() + 15);
 
         /*
             Creating the two main buttons.
@@ -67,6 +83,16 @@ public class SettingsScreen implements Screen {
         backButton.setPosition((Gdx.graphics.getWidth() - backButton.getWidth()) / 2, Gdx.graphics.getHeight() - 950);
         deleteButton = new TextButton("Erase Data", game.textButtonStyle);
         deleteButton.setPosition((Gdx.graphics.getWidth() - deleteButton.getWidth()) / 2, Gdx.graphics.getHeight() - 720);
+
+        /*
+            Setting the title.
+         */
+
+        titleStyle = skin.get("default", Label.LabelStyle.class);
+        titleStyle.font = game.titleFont;
+        title = new Label("SETTINGS", titleStyle);
+        title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() - 150);
+        title.setColor(Color.WHITE);
 
         /*
             Creating the dialog.
@@ -129,11 +155,20 @@ public class SettingsScreen implements Screen {
             }
         });
 
+        volumeSlider.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                volumeLabel.setText("Volume: " + volumeSlider.getValue());
+            }
+        });
+
         stage.addActor(soundEffectLabel);
+        stage.addActor(volumeLabel);
         stage.addActor(volumeSlider);
         stage.addActor(soundEffectsSlider);
         stage.addActor(backButton);
         stage.addActor(deleteButton);
+        stage.addActor(title);
     }
 
     @Override
@@ -149,10 +184,6 @@ public class SettingsScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-
-        game.titleFont.draw(game.batch, "SETTINGS", 730, Gdx.graphics.getHeight() - 50);
-        game.normalFont.draw(game.batch, "Volume: " + volumeSlider.getValue(), volumeSlider.getX() + 325, volumeSlider.getY() + 39);
-
         game.batch.end();
 
         stage.draw();

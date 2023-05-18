@@ -1,0 +1,7 @@
+{
+    "price": 10,
+    "effect": {"HP": 50},
+    "name": "Potion",
+    "description": "Heals 50 HP.",
+    "type": "Consumable"
+}

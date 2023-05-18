@@ -1,0 +1,7 @@
+{
+    "price": 10,
+    "effect": {"MP": 50},
+    "name": "Ether",
+    "description": "Restores 50 MP.",
+    "type": "Consumable"
+}

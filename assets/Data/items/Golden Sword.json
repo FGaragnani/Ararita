@@ -1,0 +1,11 @@
+{
+    "attributesAffection": {
+        "Strength": 24,
+        "Agility": -3
+    },
+    "price": 600,
+    "name": "Golden Sword",
+    "weaponType": "Sword",
+    "description": "Forged by an expert blacksmith; its power\n is only overcame by the legendary sword Phinia.",
+    "type": "Weapon"
+}

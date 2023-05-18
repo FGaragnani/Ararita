@@ -1,0 +1,8 @@
+{
+    "attributesAffection": {"Strength": 7},
+    "price": 150,
+    "name": "Bronze Sword",
+    "weaponType": "Sword",
+    "description": "A light sword handed out to every soldier.",
+    "type": "Weapon"
+}

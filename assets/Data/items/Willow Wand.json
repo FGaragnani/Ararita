@@ -1,0 +1,8 @@
+{
+    "attributesAffection": {"Intelligence": 7},
+    "price": 150,
+    "name": "Willow Wand",
+    "weaponType": "Staff",
+    "description": "A small wand, made to focus onto casting spells.",
+    "type": "Weapon"
+}

@@ -1,0 +1,7 @@
+{
+    "price": 100,
+    "effect": {"HP": 750},
+    "name": "Maxima Potion",
+    "description": "Heals 750 HP.",
+    "type": "Consumable"
+}

@@ -10,12 +10,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5676402a-2187-4a8f-bfe0-ac646c9fd387" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/Global.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/Global.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/global.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Music/Fanfare.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/out/production/resources/Music/Fanfare.mp3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/out/production/resources/Settings/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/out/production/resources/Settings/settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/Ararita_jar/Ararita.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/Ararita_jar/Ararita.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Settings/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Settings/settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/Data/global.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/core/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,24 +80,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "create.test.in.the.same.root": "true",
-    "jdk.selected.JAVA_MODULE": "17",
-    "last_directory_selection": "C:/Users/filip/Desktop/Universita'/Anno II - Semestre II/Programmazione ad Oggetti/Progetti/Ararita/desktop/src",
-    "last_opened_file_path": "C:/Users/filip/Desktop/Universita/Anno II - Semestre II/Programmazione ad Oggetti/Progetti/Ararita/assets",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2505747",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;create.test.in.the.same.root&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
+    &quot;last_directory_selection&quot;: &quot;C:/Users/filip/Desktop/Universita'/Anno II - Semestre II/Programmazione ad Oggetti/Progetti/Ararita/desktop/src&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/filip/Desktop/Universita/Anno II - Semestre II/Programmazione ad Oggetti/Progetti/Ararita/assets&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2505747&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\core\src\com\ararita\game\enemies\data" />
@@ -103,11 +107,11 @@
       <recent name="" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets\Data\Settings" />
+      <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets\Data" />
       <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita" />
       <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\core" />
       <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets\General" />
-      <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets\Backgrounds" />
-      <recent name="C:\Users\filip\Desktop\Universita\Anno II - Semestre II\Programmazione ad Oggetti\Progetti\Ararita\assets\README" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
@@ -116,7 +120,7 @@
       <recent name="com.ararita.game" />
     </key>
   </component>
-  <component name="RunManager" selected="JAR Application.Ararita JAR">
+  <component name="RunManager" selected="Application.DesktopLauncher">
     <configuration name="android" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="Ararita.android.main" />
       <option name="DEPLOY" value="true" />
@@ -291,7 +295,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/core/src/com/ararita/game/Global.java</url>
-          <line>211</line>
+          <line>202</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>

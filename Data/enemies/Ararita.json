@@ -1,0 +1,21 @@
+{
+    "money": 1000,
+    "toDrop": {
+        "Bulk Soul": 0.01,
+        "Gust Soul": 0.01,
+        "Mind Soul": 0.01,
+        "Fist Soul": 0.01,
+        "Grim Soul": 0.01,
+        "Pure Soul": 0.01
+    },
+    "level": 30,
+    "defense": 60,
+    "statusEffect": "no",
+    "attack": 70,
+    "name": "Ararita",
+    "magicDefense": 60,
+    "dead": false,
+    "currHP": 1000,
+    "speed": 50,
+    "weakTo": []
+}

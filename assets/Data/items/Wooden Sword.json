@@ -1,0 +1,8 @@
+{
+    "attributesAffection": {"Strength": 2},
+    "price": 20,
+    "name": "Wooden Sword",
+    "weaponType": "Sword",
+    "description": "A simple sword carved out of wood.",
+    "type": "Weapon"
+}

@@ -1,0 +1,21 @@
+{
+    "money": 250,
+    "toDrop": {"Maxima Potion": 0.1},
+    "level": 20,
+    "defense": 25,
+    "statusEffect": "no",
+    "attack": 36,
+    "name": "Lizard-Man",
+    "magicDefense": 21,
+    "dead": false,
+    "currHP": 500,
+    "speed": 40,
+    "weakTo": [
+        "Water",
+        "Light",
+        "Earth",
+        "Sword",
+        "Staff",
+        "Gloves"
+    ]
+}

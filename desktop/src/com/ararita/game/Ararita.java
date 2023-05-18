@@ -37,24 +37,37 @@ public class Ararita extends Game {
     public final int spriteFrameCols = 3;
     public final int baseEXP = 100;
 
-    public final String settingsPath = "assets/Settings/settings.json";
-    public final String stylesPath = "assets/Pixthulhu/pixthulhu-ui.json";
-    public final String fontPath = "assets/Font/mainFontWhite.fnt";
+    public final String settingsPath = "Data/Settings/settings.json";
+    public final String stylesPath = "Pixthulhu/pixthulhu-ui.json";
+    public final String fontPath = "Font/mainFontWhite.fnt";
 
-    public final String spritesPath = "assets/General/msprites.png";
-    public final String coinPath = "assets/Icons/coin.png";
-    public final String enemyPath = "assets/Enemies/";
-    public final String handPath = "assets/General/hand.png";
+    public final String spritesPath = "General/msprites.png";
+    public final String coinPath = "Icons/coin.png";
+    public final String enemyPath = "Enemies/";
+    public final String handPath = "General/hand.png";
 
-    public final String cityTheme = "assets/Music/CityTheme.mp3";
-    public final String battleTheme = "assets/Music/BattleTheme.mp3";
-    public final String fanfareTheme = "assets/Music/Fanfare.mp3";
+    public final String cityTheme = "Music/CityTheme.mp3";
+    public final String battleTheme = "Music/BattleTheme.mp3";
+    public final String fanfareTheme = "Music/Fanfare.mp3";
+
+    public final String backgroundPaper = "Backgrounds/paperbg.png";
+    public final String backgroundCity = "Backgrounds/city.png";
+    public final String backgroundBattle = "Backgrounds";
 
     Skin skin;
     Music audio;
 
     int volume;
     int soundEffects;
+
+    float statScaleX;
+    float statScaleY;
+    float descScaleX;
+    float descScaleY;
+    float width200;
+    float width300;
+    float width400;
+    int otherLinesFactor;
 
     boolean newPlayer;
 
@@ -70,16 +83,16 @@ public class Ararita extends Game {
         batch = new SpriteBatch();
 
         normalFont = new BitmapFont(Gdx.files.internal(fontPath));
-        normalFont.getData().setScale(2.7f, 3.65f);
+        normalFont.getData().setScale(Gdx.graphics.getWidth() / 711f, Gdx.graphics.getHeight() / 296f);
 
         titleFont = new BitmapFont(Gdx.files.internal(fontPath));
-        titleFont.getData().setScale(9f, 13f);
+        titleFont.getData().setScale(Gdx.graphics.getWidth() / 213f, Gdx.graphics.getHeight() / 83f);
 
         bigFont = new BitmapFont(Gdx.files.internal(fontPath));
-        bigFont.getData().setScale(7f, 10f);
+        bigFont.getData().setScale(Gdx.graphics.getWidth() / 274f, Gdx.graphics.getHeight() / 108f);
 
         mediumFont = new BitmapFont(Gdx.files.internal(fontPath));
-        mediumFont.getData().setScale(4.8f, 6.75f);
+        mediumFont.getData().setScale(Gdx.graphics.getWidth() / 400f, Gdx.graphics.getHeight() / 160f);
 
         labelStyle = skin.get("default", Label.LabelStyle.class);
         labelStyle.font = this.normalFont;
@@ -102,6 +115,17 @@ public class Ararita extends Game {
         spriteNames.addAll(List.of("Fighter", "Magician", "Healer", "Ninja", "Archer", "Monk"));
 
         this.setScreen(new MainMenuScreen(this));
+
+        statScaleX = Gdx.graphics.getWidth() / 686f;
+        statScaleY = Gdx.graphics.getHeight() / 284f;
+        descScaleX = Gdx.graphics.getWidth() / 640f;
+        descScaleY = Gdx.graphics.getHeight() / 257f;
+
+        otherLinesFactor = Gdx.graphics.getHeight() / 79;
+
+        width200 = Gdx.graphics.getWidth() / 9.6f;
+        width300 = Gdx.graphics.getWidth() / 6.4f;
+        width400 = Gdx.graphics.getWidth() / 4.8f;
     }
 
     public void render() {
@@ -113,7 +137,7 @@ public class Ararita extends Game {
      */
     public void settingsUpdate() {
         try {
-            Path settingsAbsolutePath = Path.of(settingsPath);
+            Path settingsAbsolutePath = Path.of(Gdx.files.internal(settingsPath).path());
             JSONObject jsonSettings = Global.getJSON(settingsAbsolutePath);
             jsonSettings.put("Volume", volume);
             jsonSettings.put("Sound Effects", soundEffects);

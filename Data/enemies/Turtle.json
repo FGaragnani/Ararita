@@ -1,0 +1,24 @@
+{
+    "money": 120,
+    "toDrop": {
+        "Ether": 0.05,
+        "Cosmic Ether": 0.05,
+        "Maior Potion": 0.05
+    },
+    "level": 12,
+    "defense": 20,
+    "statusEffect": "no",
+    "attack": 16,
+    "name": "Turtle",
+    "magicDefense": 10,
+    "dead": false,
+    "currHP": 300,
+    "speed": 5,
+    "weakTo": [
+        "Chaos",
+        "Gloves",
+        "Dagger",
+        "Earth",
+        "Wind"
+    ]
+}

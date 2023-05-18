@@ -1,0 +1,7 @@
+{
+    "price": 600,
+    "effect": {"Life": 750},
+    "name": "Revitalizing Leaf",
+    "description": "Revives a dead character and heals 750 HP.",
+    "type": "Consumable"
+}
