@@ -88,7 +88,7 @@ public class CharacterCreationScreen implements Screen {
         charSheet = new Texture(Gdx.files.internal(game.spritesPath));
         tmp = TextureRegion.split(charSheet, charSheet.getWidth() / (game.spriteFrameCols * 6), charSheet.getHeight());
         spriteImage = new Image();
-        spriteImage.setPosition((Gdx.graphics.getWidth() - spriteImage.getWidth()) / 2, (Gdx.graphics.getHeight() - spriteImage.getHeight()) / 2);
+        spriteImage.setPosition((Gdx.graphics.getWidth() - spriteImage.getWidth()) * 3 / 4, (Gdx.graphics.getHeight() - spriteImage.getHeight()) / 2);
         spriteImage.setScale(Gdx.graphics.getWidth() / 174.5f);
 
         /*
@@ -253,7 +253,7 @@ public class CharacterCreationScreen implements Screen {
         stats.setFontScale(game.statScaleX, game.statScaleY);
         stats.setColor(Color.BLACK);
         statX = Gdx.graphics.getWidth() / 6.4f;
-        statY = Gdx.graphics.getHeight() * 0.37f;
+        statY = Gdx.graphics.getHeight() * 0.5f;
         stats.setPosition(statX, statY);
         statUpdate();
 

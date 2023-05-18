@@ -60,9 +60,9 @@ public class Ararita extends Game {
     int volume;
     int soundEffects;
 
-    float statScaleX = Gdx.graphics.getWidth() / 686f;
-    float statScaleY = Gdx.graphics.getHeight() / 284f;
-    int otherLinesFactor = Gdx.graphics.getHeight() / 18;
+    float statScaleX;
+    float statScaleY;
+    int otherLinesFactor;
 
     boolean newPlayer;
 
@@ -110,6 +110,10 @@ public class Ararita extends Game {
         spriteNames.addAll(List.of("Fighter", "Magician", "Healer", "Ninja", "Archer", "Monk"));
 
         this.setScreen(new MainMenuScreen(this));
+
+        statScaleX = Gdx.graphics.getWidth() / 686f;
+        statScaleY = Gdx.graphics.getHeight() / 284f;
+        otherLinesFactor = Gdx.graphics.getHeight() / 107;
     }
 
     public void render() {
