@@ -532,6 +532,7 @@ public class ClassCreationScreen implements Screen {
         text.append(" Arcane: ").append(statsList.get(5)).append("\n");
         if (!proficiencies.isEmpty()) {
             text.append("Proficiencies:\n");
+            otherLines++;
             proficiencies.forEach((s, o) -> {
                 text.append(" ").append(s).append(":");
                 text.append(" +".repeat(o));
@@ -540,12 +541,13 @@ public class ClassCreationScreen implements Screen {
             otherLines += proficiencies.size();
         }
         if (!spellTypes.isEmpty()) {
+            otherLines++;
             text.append("Learnable spell types:\n");
             spellTypes.forEach((str) -> text.append(" - ").append(str).append("\n"));
             otherLines += spellTypes.size();
         }
         stats.setText(text);
-        stats.setPosition(statX, statY - (game.otherLinesFactor * otherLines));
+        stats.setPosition(statX, statY - (game.otherLinesFactor * (otherLines)));
     }
 
     /**
@@ -554,7 +556,7 @@ public class ClassCreationScreen implements Screen {
     public void updateCost() {
         costLabel.setText("Class cost: " + getClassCost());
         costLabel.setX((Gdx.graphics.getWidth() - confirmButton.getWidth()) / 2);
-        coinImage.setPosition(((Gdx.graphics.getWidth() - confirmButton.getWidth()) / 2) + (costLabel.getText().length() * (Gdx.graphics.getWidth() / 384f)) + Gdx.graphics.getWidth() * 0.1f, confirmButton.getY() + (Gdx.graphics.getHeight() * 0.116f));
+        coinImage.setPosition(((Gdx.graphics.getWidth() - confirmButton.getWidth()) / 2) + (costLabel.getText().length() * (Gdx.graphics.getWidth() / 350f)) + Gdx.graphics.getWidth() * 0.1f, confirmButton.getY() + (Gdx.graphics.getHeight() * 0.116f));
     }
 
     /**

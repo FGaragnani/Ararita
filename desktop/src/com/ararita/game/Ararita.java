@@ -62,6 +62,9 @@ public class Ararita extends Game {
 
     float statScaleX;
     float statScaleY;
+    float descScaleX;
+    float descScaleY;
+    float width200;
     float width300;
     float width400;
     int otherLinesFactor;
@@ -115,7 +118,12 @@ public class Ararita extends Game {
 
         statScaleX = Gdx.graphics.getWidth() / 686f;
         statScaleY = Gdx.graphics.getHeight() / 284f;
-        otherLinesFactor = Gdx.graphics.getHeight() / 107;
+        descScaleX = Gdx.graphics.getWidth() / 640f;
+        descScaleY = Gdx.graphics.getHeight() / 257f;
+
+        otherLinesFactor = Gdx.graphics.getHeight() / 79;
+
+        width200 = Gdx.graphics.getWidth() / 9.6f;
         width300 = Gdx.graphics.getWidth() / 6.4f;
         width400 = Gdx.graphics.getWidth() / 4.8f;
     }

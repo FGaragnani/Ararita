@@ -131,7 +131,7 @@ public class SpellCreationScreen implements Screen {
          */
 
         confirmButton = new TextButton("Confirm", game.textButtonStyle);
-        confirmButton.setPosition((Gdx.graphics.getWidth() - (confirmButton.getWidth())) / 2, Gdx.graphics.getHeight() - 850);
+        confirmButton.setPosition((Gdx.graphics.getWidth() - (confirmButton.getWidth())) / 2, Gdx.graphics.getHeight() * 0.21f);
         confirmButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -158,7 +158,7 @@ public class SpellCreationScreen implements Screen {
          */
 
         exitButton = new TextButton("Exit", game.textButtonStyle);
-        exitButton.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, Gdx.graphics.getHeight() - 1000);
+        exitButton.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, Gdx.graphics.getHeight() * 0.074f);
         exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -172,17 +172,17 @@ public class SpellCreationScreen implements Screen {
          */
 
         stats = new Label("", game.labelStyle);
-        stats.setFontScale(2.8f, 3.8f);
+        stats.setFontScale(game.statScaleX, game.statScaleY);
         stats.setColor(Color.BLACK);
-        stats.setPosition(250, Gdx.graphics.getHeight() - 300);
+        stats.setPosition(Gdx.graphics.getWidth() * 0.13f, Gdx.graphics.getHeight() * 0.72f);
 
         /*
             Creating the TextField - for the spell's name.
          */
 
         spellNameField = new TextField("Spell Name", game.textFieldStyle);
-        spellNameField.setWidth(400);
-        spellNameField.setPosition((Gdx.graphics.getWidth() - spellNameField.getWidth()) / 2, Gdx.graphics.getHeight() - 300);
+        spellNameField.setWidth(game.width400);
+        spellNameField.setPosition((Gdx.graphics.getWidth() - spellNameField.getWidth()) / 2, Gdx.graphics.getHeight() * 0.72f);
 
         /*
             Creating the SpellType Select Box and its label.
@@ -190,8 +190,8 @@ public class SpellCreationScreen implements Screen {
 
         spellTypeSelectBox = new SelectBox<>(game.selectBoxStyle);
         spellTypeSelectBox.setItems(spellLists);
-        spellTypeSelectBox.setWidth(200);
-        spellTypeSelectBox.setPosition((Gdx.graphics.getWidth() - spellTypeSelectBox.getWidth()) / 2 + 95, Gdx.graphics.getHeight() - 420);
+        spellTypeSelectBox.setWidth(game.width200);
+        spellTypeSelectBox.setPosition((Gdx.graphics.getWidth() - spellTypeSelectBox.getWidth()) / 2 + (Gdx.graphics.getWidth() / 20.2f), Gdx.graphics.getHeight() * 0.61f);
         spellTypeSelectBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -203,9 +203,9 @@ public class SpellCreationScreen implements Screen {
             }
         });
         spellTypeLabel = new Label("Spell Type: ", game.labelStyle);
-        spellTypeLabel.setFontScale(3f, 4.2f);
+        spellTypeLabel.setFontScale(game.descScaleX, game.descScaleY);
         spellTypeLabel.setColor(Color.BLACK);
-        spellTypeLabel.setPosition((Gdx.graphics.getWidth() - spellTypeSelectBox.getWidth()) / 2 - 92, Gdx.graphics.getHeight() - 402);
+        spellTypeLabel.setPosition((Gdx.graphics.getWidth() - spellTypeSelectBox.getWidth()) / 2 - (Gdx.graphics.getWidth() / 20.87f), Gdx.graphics.getHeight() * 0.628f);
 
         /*
             Creating the Spell Power Select Box, its label and its listener.
@@ -213,8 +213,8 @@ public class SpellCreationScreen implements Screen {
 
         spellPowerSelectBox = new SelectBox<>(game.selectBoxStyle);
         spellPowerSelectBox.setItems(spellPowerList);
-        spellPowerSelectBox.setWidth(200);
-        spellPowerSelectBox.setPosition((Gdx.graphics.getWidth() - spellTypeSelectBox.getWidth()) / 2 + 95, Gdx.graphics.getHeight() - 548);
+        spellPowerSelectBox.setWidth(game.width200);
+        spellPowerSelectBox.setPosition((Gdx.graphics.getWidth() - spellTypeSelectBox.getWidth()) / 2 + (Gdx.graphics.getWidth() / 20.2f), Gdx.graphics.getHeight() * 0.49f);
         spellPowerSelectBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -223,23 +223,23 @@ public class SpellCreationScreen implements Screen {
             }
         });
         spellPowerLabel = new Label("Spell Power: ", game.labelStyle);
-        spellPowerLabel.setFontScale(3f, 4.2f);
+        spellPowerLabel.setFontScale(game.descScaleX, game.descScaleY);
         spellPowerLabel.setColor(Color.BLACK);
-        spellPowerLabel.setPosition((Gdx.graphics.getWidth() - spellTypeSelectBox.getWidth()) / 2 - 100, Gdx.graphics.getHeight() - 530);
+        spellPowerLabel.setPosition((Gdx.graphics.getWidth() - spellTypeSelectBox.getWidth()) / 2 - (Gdx.graphics.getWidth() / 19.2f), Gdx.graphics.getHeight() * 0.5f);
 
         /*
             Creating the coin icon and the cost label.
          */
 
         costLabel = new Label("", stats.getStyle());
-        costLabel.setFontScale(2.8f, 3.8f);
+        costLabel.setFontScale(game.statScaleX, game.statScaleY);
         costLabel.setColor(Color.BLACK);
-        costLabel.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, confirmButton.getY() + 155);
+        costLabel.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, confirmButton.getY() + (Gdx.graphics.getHeight() * 0.14f));
         coinTexture = new Texture(Gdx.files.local(game.coinPath));
         coinImage = new Image();
         coinImage.setDrawable(new TextureRegionDrawable(coinTexture));
         coinImage.setSize(coinTexture.getWidth(), coinTexture.getHeight());
-        coinImage.setPosition(((Gdx.graphics.getWidth() - confirmButton.getWidth()) / 2) + costLabel.getText().length() + 250, confirmButton.getY() + 125);
+        coinImage.setPosition(((Gdx.graphics.getWidth() - confirmButton.getWidth()) / 2) + costLabel.getText().length() + (Gdx.graphics.getWidth() / 7.68f), confirmButton.getY() + (Gdx.graphics.getHeight() * 0.11f));
 
         /*
             Adding the current money label and image.
@@ -251,10 +251,10 @@ public class SpellCreationScreen implements Screen {
             currentMoney = new Label("Money: ?", stats.getStyle());
         }
         currentMoney.setColor(Color.BLACK);
-        currentMoney.setPosition(1450, 950);
+        currentMoney.setPosition(0.75f * Gdx.graphics.getWidth(), 0.88f * Gdx.graphics.getHeight());
         currentMoneyImage = new Image(new TextureRegionDrawable(coinTexture));
         currentMoneyImage.setSize(coinTexture.getWidth(), coinTexture.getHeight());
-        currentMoneyImage.setPosition(1400 + (currentMoney.getText().length() * 10) + 160, 935);
+        currentMoneyImage.setPosition(Gdx.graphics.getWidth() * 0.81f + (currentMoney.getText().length() * (Gdx.graphics.getWidth() / 192f)), 0.86f * Gdx.graphics.getHeight());
 
         /*
             Creating the Status Effect Select Box.
@@ -262,8 +262,8 @@ public class SpellCreationScreen implements Screen {
 
         statusEffectSelectBox = new SelectBox<>(game.selectBoxStyle);
         statusEffectSelectBox.setItems(statusEffectsList);
-        statusEffectSelectBox.setWidth(250);
-        statusEffectSelectBox.setPosition(Gdx.graphics.getWidth() - 460, Gdx.graphics.getHeight() - 300);
+        statusEffectSelectBox.setWidth((game.width300 + game.width200) / 2);
+        statusEffectSelectBox.setPosition(Gdx.graphics.getWidth() * 0.76f, Gdx.graphics.getHeight() * 0.72f);
         statusEffectSelectBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -278,13 +278,13 @@ public class SpellCreationScreen implements Screen {
          */
 
         probabilityLabel = new Label("Probability: 0.25 %", stats.getStyle());
-        probabilityLabel.setFontScale(2.9f, 4);
+        probabilityLabel.setFontScale(game.descScaleX, game.descScaleY);
         probabilityLabel.setColor(Color.BLACK);
-        probabilityLabel.setPosition(Gdx.graphics.getWidth() - 460, Gdx.graphics.getHeight() - 460);
+        probabilityLabel.setPosition(Gdx.graphics.getWidth() * 0.76f, Gdx.graphics.getHeight() * 0.574f);
         probabilitySlider = new Slider(0.01f, 0.5f, 0.01f, false, game.sliderStyle);
-        probabilitySlider.setWidth(300);
+        probabilitySlider.setWidth(game.width300);
         probabilitySlider.setValue(0.25f);
-        probabilitySlider.setPosition(Gdx.graphics.getWidth() - 485, Gdx.graphics.getHeight() - 400);
+        probabilitySlider.setPosition(Gdx.graphics.getWidth() * 0.75f, Gdx.graphics.getHeight() * 0.63f);
         probabilitySlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -305,11 +305,11 @@ public class SpellCreationScreen implements Screen {
         plusMinusStyle.font = game.normalFont;
 
         statusPlus = new TextButton("+", plusMinusStyle);
-        statusPlus.setSize(80, 90);
-        statusPlus.setPosition(Gdx.graphics.getWidth() - 150, Gdx.graphics.getHeight() - 310);
+        statusPlus.setSize(Gdx.graphics.getWidth() / 24f, Gdx.graphics.getHeight() / 12f);
+        statusPlus.setPosition(Gdx.graphics.getWidth() * 0.92f, Gdx.graphics.getHeight() * 0.71f);
         statusMinus = new TextButton("-", plusMinusStyle);
-        statusMinus.setPosition(Gdx.graphics.getWidth() - 600, Gdx.graphics.getHeight() - 310);
-        statusMinus.setSize(80, 90);
+        statusMinus.setPosition(Gdx.graphics.getWidth() * 0.6875f, Gdx.graphics.getHeight() * 0.71f);
+        statusMinus.setSize(Gdx.graphics.getWidth() / 24f, Gdx.graphics.getHeight() / 12f);
 
         statusPlus.addListener(new ChangeListener() {
             @Override
@@ -334,8 +334,8 @@ public class SpellCreationScreen implements Screen {
          */
 
         characterSelectBox = new SelectBox<>(game.selectBoxStyle);
-        characterSelectBox.setWidth(500);
-        characterSelectBox.setPosition(Gdx.graphics.getWidth() - 590, Gdx.graphics.getHeight() - 600);
+        characterSelectBox.setWidth(game.width200 + game.width300);
+        characterSelectBox.setPosition(Gdx.graphics.getWidth() * 0.69f, Gdx.graphics.getHeight() * 0.444f);
 
         /*
             Creating the five dialogs.
@@ -524,7 +524,7 @@ public class SpellCreationScreen implements Screen {
             otherLines += statusEffects.size();
         }
         stats.setText(text);
-        stats.setPosition(250, Gdx.graphics.getHeight() - 300 - (17 * otherLines));
+        stats.setPosition(Gdx.graphics.getWidth() * 0.13f, Gdx.graphics.getHeight() * 0.72f - (game.otherLinesFactor * otherLines));
     }
 
     /**
@@ -536,7 +536,7 @@ public class SpellCreationScreen implements Screen {
             Spell toCreate = new Spell("", MPCost(), spellTypeSelectBox.getSelected(), spellBasePower, statusEffects, false);
             costLabel.setText("Spell cost: " + toCreate.moneyCost());
             costLabel.setX((Gdx.graphics.getWidth() - confirmButton.getWidth()) / 2);
-            coinImage.setPosition(((Gdx.graphics.getWidth() - confirmButton.getWidth()) / 2) + (costLabel.getText().length() * 5) + 200, confirmButton.getY() + 125);
+            coinImage.setPosition(((Gdx.graphics.getWidth() - confirmButton.getWidth()) / 2) + (costLabel.getText().length() * (Gdx.graphics.getWidth() / 350f)) + (Gdx.graphics.getWidth() / 7.68f), confirmButton.getY() + (Gdx.graphics.getHeight() * 0.11f));
             cost = toCreate.moneyCost();
         } catch (IOException e) {
             throw new RuntimeException(e);
