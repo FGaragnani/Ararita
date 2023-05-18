@@ -33,6 +33,8 @@ public class CharacterCreationScreen implements Screen {
     Label.LabelStyle titleStyle;
 
     Label stats;
+    float statX;
+    float statY;
 
     TextField charNameField;
     SelectBox<String> charClassSelectBox;
@@ -86,14 +88,15 @@ public class CharacterCreationScreen implements Screen {
         charSheet = new Texture(Gdx.files.internal(game.spritesPath));
         tmp = TextureRegion.split(charSheet, charSheet.getWidth() / (game.spriteFrameCols * 6), charSheet.getHeight());
         spriteImage = new Image();
-        spriteImage.setPosition(Gdx.graphics.getWidth() - 500, Gdx.graphics.getHeight() - 550);
-        spriteImage.setScale(11);
+        spriteImage.setPosition((Gdx.graphics.getWidth() - spriteImage.getWidth()) / 2, (Gdx.graphics.getHeight() - spriteImage.getHeight()) / 2);
+        spriteImage.setScale(Gdx.graphics.getWidth() / 174.5f);
 
         /*
             Creating the three dialogs.
             One will pop up before creating a new class.
             The other two will pop up for invalid inputs.
          */
+
         classCreationDialog = new Dialog("", skin) {
             public void result(Object confirm) {
                 if (confirm.equals(true)) {
@@ -138,7 +141,7 @@ public class CharacterCreationScreen implements Screen {
         titleStyle.font = game.titleFont;
         title = new Label("CHARACTER CREATION", titleStyle);
         title.setColor(Color.BLACK);
-        title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() - 150);
+        title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() * 0.86f);
 
         /*
             Creating the TextField - for the character's name.
@@ -147,7 +150,7 @@ public class CharacterCreationScreen implements Screen {
         TextField.TextFieldStyle textFieldStyle = game.textFieldStyle;
         charNameField = new TextField("Character Name", textFieldStyle);
         charNameField.setWidth(400);
-        charNameField.setPosition((Gdx.graphics.getWidth() - charNameField.getWidth()) / 2, Gdx.graphics.getHeight() - 350);
+        charNameField.setPosition((Gdx.graphics.getWidth() - charNameField.getWidth()) / 2, Gdx.graphics.getHeight() * 0.676f);
 
         /*
             Creating the SelectBox - for selecting the character's class.
@@ -164,7 +167,7 @@ public class CharacterCreationScreen implements Screen {
         }
         charClassSelectBox.setItems(classArray);
         charClassSelectBox.setWidth(400);
-        charClassSelectBox.setPosition((Gdx.graphics.getWidth() - charClassSelectBox.getWidth()) / 2, Gdx.graphics.getHeight() - 500);
+        charClassSelectBox.setPosition((Gdx.graphics.getWidth() - charClassSelectBox.getWidth()) / 2, Gdx.graphics.getHeight() * 0.54f);
 
         charClassSelectBox.addListener(new ChangeListener() {
             @Override
@@ -186,7 +189,7 @@ public class CharacterCreationScreen implements Screen {
         game.spriteNames.forEach(imageArray::add);
         charImageSelectBox.setItems(imageArray);
         charImageSelectBox.setWidth(400);
-        charImageSelectBox.setPosition((Gdx.graphics.getWidth() - charImageSelectBox.getWidth()) / 2, Gdx.graphics.getHeight() - 600);
+        charImageSelectBox.setPosition((Gdx.graphics.getWidth() - charImageSelectBox.getWidth()) / 2, Gdx.graphics.getHeight() * 0.444f);
         charImageSelectBox.setSelected("Fighter");
         changeSprite(charImageSelectBox.getSelected());
         charImageSelectBox.addListener(new ChangeListener() {
@@ -202,7 +205,7 @@ public class CharacterCreationScreen implements Screen {
          */
 
         confirmButton = new TextButton("Confirm", game.textButtonStyle);
-        confirmButton.setPosition((Gdx.graphics.getWidth() - (confirmButton.getWidth())) / 2, Gdx.graphics.getHeight() - 850);
+        confirmButton.setPosition((Gdx.graphics.getWidth() - (confirmButton.getWidth())) / 2, Gdx.graphics.getHeight() * 0.21f);
         confirmButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -233,7 +236,7 @@ public class CharacterCreationScreen implements Screen {
          */
 
         exitButton = new TextButton("Exit", game.textButtonStyle);
-        exitButton.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, Gdx.graphics.getHeight() - 1000);
+        exitButton.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, Gdx.graphics.getHeight() * 0.074f);
         exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -247,9 +250,11 @@ public class CharacterCreationScreen implements Screen {
          */
 
         stats = new Label("", game.labelStyle);
-        stats.setFontScale(2.8f, 3.8f);
+        stats.setFontScale(game.statScaleX, game.statScaleY);
         stats.setColor(Color.BLACK);
-        stats.setPosition(300, Gdx.graphics.getHeight() - 480);
+        statX = Gdx.graphics.getWidth() / 6.4f;
+        statY = Gdx.graphics.getHeight() * 0.37f;
+        stats.setPosition(statX, statY);
         statUpdate();
 
         stage.addActor(title);
@@ -343,7 +348,7 @@ public class CharacterCreationScreen implements Screen {
             jsonClass.getJSONArray("spellTypes").toList().forEach((str) -> text.append("\t- ").append(str.toString()).append("\n"));
             otherLines += jsonClass.getJSONArray("spellTypes").toList().size();
             stats.setText(text.toString());
-            stats.setPosition(300, Gdx.graphics.getHeight() - 480 - (18 * (otherLines - 1)));
+            stats.setPosition(statX, statY - (game.otherLinesFactor * (otherLines - 1)));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

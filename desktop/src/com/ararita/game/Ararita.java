@@ -60,6 +60,10 @@ public class Ararita extends Game {
     int volume;
     int soundEffects;
 
+    float statScaleX = Gdx.graphics.getWidth() / 686f;
+    float statScaleY = Gdx.graphics.getHeight() / 284f;
+    int otherLinesFactor = Gdx.graphics.getHeight() / 18;
+
     boolean newPlayer;
 
     public void create() {
