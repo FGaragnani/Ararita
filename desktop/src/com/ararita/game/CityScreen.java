@@ -63,7 +63,7 @@ public class CityScreen implements Screen {
 
         backgroundTexture = new Texture(Gdx.files.local(game.backgroundCity));
         backgroundSprite = new Sprite(backgroundTexture);
-        backgroundSprite.setSize((int) (Gdx.graphics.getWidth() * 1.1), (int) (Gdx.graphics.getHeight() * 1.1));
+        backgroundSprite.setSize(1920, 1080);
 
         /*
             Initialize the Character Creation Button and its listener.

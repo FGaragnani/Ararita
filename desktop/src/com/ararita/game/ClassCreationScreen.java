@@ -105,7 +105,7 @@ public class ClassCreationScreen implements Screen {
 
         backgroundTexture = new Texture(Gdx.files.local(game.backgroundPaper));
         backgroundSprite = new Sprite(backgroundTexture);
-        backgroundSprite.setSize((int) (Gdx.graphics.getWidth() * 1.1), (int) (Gdx.graphics.getHeight() * 1.1));
+        backgroundSprite.setSize(1920, 1080);
 
          /*
             Setting the title.
