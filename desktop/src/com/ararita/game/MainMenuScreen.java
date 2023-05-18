@@ -55,9 +55,9 @@ public class MainMenuScreen implements Screen {
         mainButton = new TextButton("Play", textButtonStyle);
         settingsButton = new TextButton("Settings", textButtonStyle);
         exitButton = new TextButton("Exit", textButtonStyle);
-        mainButton.setPosition((Gdx.graphics.getWidth() - mainButton.getWidth()) / 2, Gdx.graphics.getHeight() - 400);
-        settingsButton.setPosition((Gdx.graphics.getWidth() - settingsButton.getWidth()) / 2, Gdx.graphics.getHeight() - 600);
-        exitButton.setPosition((Gdx.graphics.getWidth() - mainButton.getWidth()) / 2, Gdx.graphics.getHeight() - 800);
+        mainButton.setPosition((Gdx.graphics.getWidth() - mainButton.getWidth()) / 2, Gdx.graphics.getHeight() * 0.63f);
+        settingsButton.setPosition((Gdx.graphics.getWidth() - settingsButton.getWidth()) / 2, Gdx.graphics.getHeight() * 0.44f);
+        exitButton.setPosition((Gdx.graphics.getWidth() - mainButton.getWidth()) / 2, Gdx.graphics.getHeight() * 0.26f);
 
         /*
             Adding the title.
@@ -66,7 +66,7 @@ public class MainMenuScreen implements Screen {
         titleStyle = skin.get("default", Label.LabelStyle.class);
         titleStyle.font = game.titleFont;
         title = new Label("ARARITA", titleStyle);
-        title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() - 150);
+        title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() * 0.86f);
         title.setColor(Color.WHITE);
 
         /*
@@ -76,10 +76,9 @@ public class MainMenuScreen implements Screen {
         mainButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(game.newPlayer){
+                if (game.newPlayer) {
                     game.setScreen(new TutorialScreen(game));
-                }
-                else {
+                } else {
                     game.setScreen(new CityScreen(game));
                 }
             }
