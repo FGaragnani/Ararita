@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class BattleScreen implements Screen {
 
@@ -666,7 +667,7 @@ public class BattleScreen implements Screen {
                             }
                             int alivePCs = (int) battle.getBattlers().stream().filter((battler) -> (battler instanceof PC) && (!battler.isDead())).count();
                             int attacked = (int) Math.round(Global.getRandomZeroOne() * (alivePCs - 1));
-                            int attackedCurrHP = battle.getCharacters().get(attacked).getCurrHP();
+                            int attackedCurrHP = battle.getCharacters().stream().filter((PC) -> (!PC.isDead())).toList().get(attacked).getCurrHP();
                             battle.attack(enemy, battle.getCharacters().get(attacked));
                             updateAttack(attackedCurrHP - battle.getCharacters().get(attacked).getCurrHP(), attacked);
                         }
@@ -759,7 +760,7 @@ public class BattleScreen implements Screen {
 
                     @Override
                     public void end() {
-                        StringBuilder text = new StringBuilder("You gained:\n");
+                        StringBuilder text = new StringBuilder("\t   You gained:\t  \n");
                         for (Map.Entry<Item, Double> toDrop : enemy.getToDrop().entrySet()) {
                             if (Global.getRandomZeroOne() <= toDrop.getValue()) {
                                 try {
@@ -770,7 +771,7 @@ public class BattleScreen implements Screen {
                                 text.append("- ").append(toDrop.getKey().getName()).append("\n");
                             }
                         }
-                        if (text.toString().equals("You gained:\n")) {
+                        if (text.toString().equals("\t   You gained:\t  \n")) {
                             dropDialog.text("The enemy didn't \n drop anything. ");
                         } else {
                             dropDialog.text(text.toString());
