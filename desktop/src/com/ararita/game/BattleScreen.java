@@ -666,8 +666,9 @@ public class BattleScreen implements Screen {
                                 throw new RuntimeException(e);
                             }
                             int alivePCs = (int) battle.getBattlers().stream().filter((battler) -> (battler instanceof PC) && (!battler.isDead())).count();
-                            int attacked = (int) Math.round(Global.getRandomZeroOne() * (alivePCs - 1));
-                            int attackedCurrHP = battle.getCharacters().stream().filter((PC) -> (!PC.isDead())).toList().get(attacked).getCurrHP();
+                            PC attackedPC = battle.getCharacters().stream().filter((PC) -> (!PC.isDead())).toList().get((int) Math.round(Global.getRandomZeroOne() * (alivePCs - 1)));
+                            int attacked = battle.getCharacters().indexOf(attackedPC);
+                            int attackedCurrHP = attackedPC.getCurrHP();
                             battle.attack(enemy, battle.getCharacters().get(attacked));
                             updateAttack(attackedCurrHP - battle.getCharacters().get(attacked).getCurrHP(), attacked);
                         }
@@ -683,8 +684,7 @@ public class BattleScreen implements Screen {
                         }
                     });
                 }
-            }
-            case "attack" -> {
+            } case "attack" -> {
                 if (battle.getBattlers().get(currentBattler) instanceof Enemy) {
                     labelMain = new TypingLabel(" The enemy attacks " + party.get(attacked).getName() + ", dealing " + info + " damage!", labelStyle);
                 } else {
@@ -852,8 +852,7 @@ public class BattleScreen implements Screen {
                     }
                 });
             }
-        }
-        assert labelMain != null;
+        } assert labelMain != null;
         labelMain.setPosition((Gdx.graphics.getWidth() - labelMain.getWidth()) / 2.0f, Gdx.graphics.getHeight() * 0.935f);
         labelMain.setFontScale(game.descScaleX * 1.5f, game.descScaleY * 1.4f);
         stage.addActor(labelMain);

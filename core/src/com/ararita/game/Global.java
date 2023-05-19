@@ -912,7 +912,8 @@ public class Global {
         writeJSON(globalSets, jsonGlobal);
         if (classSets.toFile().isDirectory()) {
             for (File f : Objects.requireNonNull(classSets.toFile().listFiles())) {
-                if (jsonGlobal.getJSONArray("classNamesSet").toList().contains(f.getName())) {
+                if (!jsonGlobal.getJSONArray("classNamesSet").toList().contains(f.getName().substring(0,
+                        f.getName().length() - 5))) {
                     f.delete();
                 }
             }
