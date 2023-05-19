@@ -86,25 +86,25 @@ public class BattleSelectScreen implements Screen {
         titleStyle.font = game.titleFont;
         title = new Label("ENEMY SELECTION", titleStyle);
         title.setColor(Color.BLACK);
-        title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() - 150);
+        title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() * 0.86f);
 
         /*
             Creating the statistics label.
          */
 
         statsLabel = new Label("", skin.get("default", Label.LabelStyle.class));
-        statsLabel.setFontScale(2.8f, 3.8f);
+        statsLabel.setFontScale(game.statScaleX, game.statScaleY);
         statsLabel.setColor(Color.BLACK);
-        statsLabel.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 6, Gdx.graphics.getHeight() - 500);
+        statsLabel.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 6, Gdx.graphics.getHeight() * 0.537f);
 
         /*
             Creating the two main buttons.
          */
 
         confirmButton = new TextButton("Battle!", game.textButtonStyle);
-        confirmButton.setPosition((Gdx.graphics.getWidth() - (confirmButton.getWidth())) / 2, Gdx.graphics.getHeight() - 850);
+        confirmButton.setPosition((Gdx.graphics.getWidth() - (confirmButton.getWidth())) / 2, Gdx.graphics.getHeight() * 0.213f);
         exitButton = new TextButton("Exit", game.textButtonStyle);
-        exitButton.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, Gdx.graphics.getHeight() - 1000);
+        exitButton.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, Gdx.graphics.getHeight() * 0.074f);
         confirmButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -132,8 +132,8 @@ public class BattleSelectScreen implements Screen {
 
         enemySelectBox = new SelectBox<>(game.selectBoxStyle);
         enemySelectBox.setItems(enemies);
-        enemySelectBox.setWidth(400);
-        enemySelectBox.setPosition((Gdx.graphics.getWidth() - enemySelectBox.getWidth()) / 2, Gdx.graphics.getHeight() - 500);
+        enemySelectBox.setWidth(game.width400);
+        enemySelectBox.setPosition((Gdx.graphics.getWidth() - enemySelectBox.getWidth()) / 2, Gdx.graphics.getHeight() * 0.537f);
         enemySelectBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -148,8 +148,8 @@ public class BattleSelectScreen implements Screen {
 
         enemyTexture = new Texture(Gdx.files.local(game.enemyPath + enemySelectBox.getSelected() + ".png"));
         enemyImage = new Image(new TextureRegionDrawable(enemyTexture));
-        enemyImage.setScale(10);
-        enemyImage.setPosition((Gdx.graphics.getWidth() - enemyImage.getWidth()) * 3 / 4 - 20, Gdx.graphics.getHeight() - 650);
+        enemyImage.setScale((Gdx.graphics.getWidth() / 192f));
+        enemyImage.setPosition((Gdx.graphics.getWidth() - enemyImage.getWidth()) * 3 / 4 - (Gdx.graphics.getWidth() / 96f), Gdx.graphics.getHeight() * 0.398f);
 
         /*
             Adding all actors.
@@ -243,7 +243,7 @@ public class BattleSelectScreen implements Screen {
         stage.getActors().removeValue(enemyImage, true);
         enemyImage = new Image(new TextureRegionDrawable(enemyTexture));
         enemyImage.setScale(10);
-        enemyImage.setPosition((Gdx.graphics.getWidth() - enemyImage.getWidth()) * 3 / 4 - 20, Gdx.graphics.getHeight() - 650);
+        enemyImage.setPosition((Gdx.graphics.getWidth() - enemyImage.getWidth()) * 3 / 4 - (Gdx.graphics.getWidth() / 96f), Gdx.graphics.getHeight() * 0.398f);
         stage.addActor(enemyImage);
     }
 }
