@@ -1,0 +1,29 @@
+{
+    "baseEXP": 100,
+    "currMP": 0,
+    "MP": 44,
+    "strength": 1,
+    "level": 1,
+    "vigor": 2,
+    "spirit": 1,
+    "HP": 17,
+    "dead": true,
+    "exponentEXP": 1.28,
+    "currHP": 0,
+    "increaseEXP": 1.29,
+    "intelligence": 6,
+    "proficiencies": {
+        "Dagger": 1,
+        "Staff": 2
+    },
+    "spellTypes": [
+        "Chaos",
+        "Fire"
+    ],
+    "charClass": "Black Mage",
+    "spells": [],
+    "agility": 1,
+    "EXP": 0,
+    "weapons": [],
+    "arcane": 4
+}

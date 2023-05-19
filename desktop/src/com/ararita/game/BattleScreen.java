@@ -25,7 +25,6 @@ import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 import com.rafaskoberg.gdx.typinglabel.TypingListener;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -135,15 +134,15 @@ public class BattleScreen implements Screen {
 
         enemyTexture = new Texture(Gdx.files.local(game.enemyPath + enemy.getName() + ".png"));
         enemyImage = new Image(new TextureRegionDrawable(enemyTexture));
-        enemyImage.setScale(7);
-        enemyImage.setPosition((Gdx.graphics.getWidth() - enemyImage.getWidth()) / 4 - 100, Gdx.graphics.getHeight() - 750);
+        enemyImage.setScale((Gdx.graphics.getWidth() / 274f));
+        enemyImage.setPosition((Gdx.graphics.getWidth() - enemyImage.getWidth()) / 4 - (Gdx.graphics.getWidth() / 19.2f), Gdx.graphics.getHeight() * 0.3f);
 
         /*
             Setting the label style.
          */
 
         labelStyle = new Skin(Gdx.files.internal(game.stylesPath)).get("default", Label.LabelStyle.class);
-        labelColor = new Pixmap(Gdx.graphics.getWidth(), 100, Pixmap.Format.RGB888);
+        labelColor = new Pixmap(Gdx.graphics.getWidth(), (int) (Gdx.graphics.getHeight() / 10.8), Pixmap.Format.RGB888);
         labelColor.setColor(Color.BLACK);
         labelColor.fill();
         labelStyle.background = new TextureRegionDrawable(new TextureRegion(new Texture(labelColor)));
@@ -159,17 +158,18 @@ public class BattleScreen implements Screen {
         secondCharImage = new Image();
         thirdCharImage = new Image();
         fourthCharImage = new Image();
-        firstCharImage.setScale(8.5f);
-        secondCharImage.setScale(8.5f);
-        thirdCharImage.setScale(8.5f);
-        fourthCharImage.setScale(8.5f);
+        float charImageScale = (Gdx.graphics.getWidth() / 225.88f);
+        firstCharImage.setScale(charImageScale);
+        secondCharImage.setScale(charImageScale);
+        thirdCharImage.setScale(charImageScale);
+        fourthCharImage.setScale(charImageScale);
 
         updateImages();
 
-        firstCharImage.setPosition((Gdx.graphics.getWidth() - firstCharImage.getWidth()) * 3 / 4 - 100, Gdx.graphics.getHeight() - 600);
-        secondCharImage.setPosition((Gdx.graphics.getWidth() - secondCharImage.getWidth()) * 3 / 4, Gdx.graphics.getHeight() - 700);
-        thirdCharImage.setPosition((Gdx.graphics.getWidth() - thirdCharImage.getWidth()) * 3 / 4 + 100, Gdx.graphics.getHeight() - 800);
-        fourthCharImage.setPosition((Gdx.graphics.getWidth() - fourthCharImage.getWidth()) * 3 / 4 + 200, Gdx.graphics.getHeight() - 900);
+        firstCharImage.setPosition((Gdx.graphics.getWidth() - firstCharImage.getWidth()) * 3 / 4 - (Gdx.graphics.getWidth() / 19.2f), Gdx.graphics.getHeight() * 0.444f);
+        secondCharImage.setPosition((Gdx.graphics.getWidth() - secondCharImage.getWidth()) * 3 / 4, Gdx.graphics.getHeight() * 0.352f);
+        thirdCharImage.setPosition((Gdx.graphics.getWidth() - thirdCharImage.getWidth()) * 3 / 4 + (Gdx.graphics.getWidth() / 19.2f), Gdx.graphics.getHeight() * 0.259f);
+        fourthCharImage.setPosition((Gdx.graphics.getWidth() - fourthCharImage.getWidth()) * 3 / 4 + (Gdx.graphics.getWidth() / 9.6f), Gdx.graphics.getHeight() / 6f);
 
         /*
             Adding the hand cursor.
@@ -177,7 +177,7 @@ public class BattleScreen implements Screen {
 
         handTexture = new Texture(Gdx.files.local(game.handPath));
         handImage = new Image(new TextureRegionDrawable(handTexture));
-        handImage.setScale(2);
+        handImage.setScale(Gdx.graphics.getWidth() / 960f);
         handImage.setSize(handTexture.getWidth(), handTexture.getHeight());
 
         /*
@@ -194,10 +194,11 @@ public class BattleScreen implements Screen {
         itemButton.setWidth(Gdx.graphics.getWidth() / 4f);
         runButton.setWidth(Gdx.graphics.getWidth() / 4f);
 
-        attackButton.setHeight(100);
-        castButton.setHeight(100);
-        itemButton.setHeight(100);
-        runButton.setHeight(100);
+        float buttonHeight = Gdx.graphics.getHeight() / 10.8f;
+        attackButton.setHeight(buttonHeight);
+        castButton.setHeight(buttonHeight);
+        itemButton.setHeight(buttonHeight);
+        runButton.setHeight(buttonHeight);
 
         attackButton.setPosition(0, 0);
         castButton.setPosition(Gdx.graphics.getWidth() / 4f, 0);
@@ -268,7 +269,7 @@ public class BattleScreen implements Screen {
         runDialog.setPosition(0, 0);
 
         itemDialogSelectBox = new SelectBox<>(game.selectBoxStyle);
-        itemDialogSelectBox.setWidth(400);
+        itemDialogSelectBox.setWidth(game.width400);
         itemsSelectBox = new Array<>();
         inventory.getItems().entrySet().stream().filter((entry) -> (entry.getKey() instanceof ConsumableItem)).forEach((entry) -> itemsSelectBox.add(entry.getValue().toString() + " " + entry.getKey().getName()));
         if (itemsSelectBox.isEmpty()) {
@@ -295,14 +296,14 @@ public class BattleScreen implements Screen {
         };
         itemDialog.text("\t   Use which item?\t  ", game.labelStyle);
         itemDialog.getContentTable().addActor(itemDialogSelectBox);
-        itemDialog.getContentTable().padBottom(100);
+        itemDialog.getContentTable().padBottom(Gdx.graphics.getHeight() / 10.8f);
         itemDialog.button("Use", true, textButtonStyle);
         itemDialog.button("Back", false, textButtonStyle);
-        itemDialog.getButtonTable().padTop(30);
+        itemDialog.getButtonTable().padTop(Gdx.graphics.getHeight() / 36f);
         itemDialog.setPosition(0, 0);
 
         castDialogSelectBox = new SelectBox<>(game.selectBoxStyle);
-        castDialogSelectBox.setWidth(400);
+        castDialogSelectBox.setWidth(game.width400);
         castDialogSelectBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -339,7 +340,7 @@ public class BattleScreen implements Screen {
         castDialog.getContentTable().add(castDialogLabel);
         castDialog.button("Cast", true, textButtonStyle);
         castDialog.button("Back", false, textButtonStyle);
-        castDialog.getButtonTable().padTop(30);
+        castDialog.getButtonTable().padTop(Gdx.graphics.getHeight() / 36f);
         castDialog.setPosition(0, 0);
 
         levelUpDialog = new Dialog("", game.skin) {
@@ -549,27 +550,27 @@ public class BattleScreen implements Screen {
         progressBarStyle.knobBefore.setMinHeight(15);
         firstBar = new ProgressBar(0, party.get(0).maxHP(), 1, false, progressBarStyle);
         firstBar.setWidth(100);
-        firstBar.setPosition(firstCharImage.getX() + 20, firstCharImage.getY() + firstCharImage.getHeight() + 135);
+        firstBar.setPosition(firstCharImage.getX() + 20, firstCharImage.getY() + firstCharImage.getHeight() + Gdx.graphics.getHeight() / 8f);
         firstBar.setValue(firstBar.getMaxValue());
         stage.addActor(firstBar);
         if (party.size() >= 2) {
             secondBar = new ProgressBar(0, party.get(1).maxHP(), 1, false, progressBarStyle);
             secondBar.setWidth(100);
-            secondBar.setPosition(secondCharImage.getX() + 20, secondCharImage.getY() + secondCharImage.getHeight() + 135);
+            secondBar.setPosition(secondCharImage.getX() + 20, secondCharImage.getY() + secondCharImage.getHeight() + Gdx.graphics.getHeight() / 8f);
             secondBar.setValue(secondBar.getMaxValue());
             stage.addActor(secondBar);
         }
         if (party.size() >= 3) {
             thirdBar = new ProgressBar(0, party.get(2).maxHP(), 1, false, progressBarStyle);
             thirdBar.setWidth(100);
-            thirdBar.setPosition(thirdCharImage.getX() + 20, thirdCharImage.getY() + thirdCharImage.getHeight() + 135);
+            thirdBar.setPosition(thirdCharImage.getX() + 20, thirdCharImage.getY() + thirdCharImage.getHeight() + Gdx.graphics.getHeight() / 8f);
             thirdBar.setValue(thirdBar.getMaxValue());
             stage.addActor(thirdBar);
         }
         if (party.size() >= 4) {
             fourthBar = new ProgressBar(0, party.get(3).maxHP(), 1, false, progressBarStyle);
             fourthBar.setWidth(100);
-            fourthBar.setPosition(fourthCharImage.getX() + 20, fourthCharImage.getY() + fourthCharImage.getHeight() + 135);
+            fourthBar.setPosition(fourthCharImage.getX() + 20, fourthCharImage.getY() + fourthCharImage.getHeight() + Gdx.graphics.getHeight() / 8f);
             fourthBar.setValue(fourthBar.getMaxValue());
             stage.addActor(fourthBar);
         }
@@ -586,7 +587,7 @@ public class BattleScreen implements Screen {
             handImage.setVisible(true);
         }
         int toUse = battle.getBattlers().stream().filter((battler) -> (battler instanceof PC)).toList().indexOf(battle.getBattlers().get(currentBattler));
-        handImage.setPosition((Gdx.graphics.getWidth() - firstCharImage.getWidth()) * 3 / 4 + (100 * (toUse - 1)) - 50, Gdx.graphics.getHeight() - 550 - (100 * toUse));
+        handImage.setPosition((Gdx.graphics.getWidth() - firstCharImage.getWidth()) * 3 / 4 + ((Gdx.graphics.getWidth() / 19.2f) * (toUse - 1)) - (Gdx.graphics.getWidth() / 38.4f), Gdx.graphics.getHeight() * 0.49f - ((Gdx.graphics.getHeight() / 10.8f) * toUse));
     }
 
     /**
@@ -852,8 +853,8 @@ public class BattleScreen implements Screen {
             }
         }
         assert labelMain != null;
-        labelMain.setPosition((Gdx.graphics.getWidth() - labelMain.getWidth()) / 2.0f, Gdx.graphics.getHeight() - 70);
-        labelMain.setFontScale(4.8f, 6);
+        labelMain.setPosition((Gdx.graphics.getWidth() - labelMain.getWidth()) / 2.0f, Gdx.graphics.getHeight() * 0.935f);
+        labelMain.setFontScale(game.descScaleX * 1.5f, game.descScaleY * 1.4f);
         stage.addActor(labelMain);
     }
 

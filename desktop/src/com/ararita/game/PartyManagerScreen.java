@@ -662,7 +662,7 @@ public class PartyManagerScreen implements Screen {
                         otherLines++;
                     }
                     statsEquippedWeapon.setText(equipText);
-                    statsEquippedWeapon.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 - (Gdx.graphics.getWidth() / 38.4f), Gdx.graphics.getHeight() * 0.194f - (otherLines * game.otherLinesFactor));
+                    statsEquippedWeapon.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 - (Gdx.graphics.getWidth() / 38.4f), Gdx.graphics.getHeight() * 0.18f - (otherLines * game.otherLinesFactor));
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -687,7 +687,7 @@ public class PartyManagerScreen implements Screen {
                 otherLines++;
             }
             statsInventoryWeapon.setText(equipText);
-            statsInventoryWeapon.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 + (Gdx.graphics.getWidth() / 8.73f), Gdx.graphics.getHeight() * 0.194f - (otherLines * game.otherLinesFactor));
+            statsInventoryWeapon.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 + (Gdx.graphics.getWidth() / 8.73f), Gdx.graphics.getHeight() * 0.18f - (otherLines * game.otherLinesFactor));
         }
     }
 }
