@@ -54,7 +54,7 @@ Both double-clicking on the file and command-line execution will work; the latte
 ```console
 java -jar ararita.jar
 ```
-**Note:** executing the .jar will generate a Data folder in the same directory, which is needed for the game to work.
+**Note:** executing the .jar will generate a Data folder in the same directory, which is needed to save your files.
   
 ## Credits
 
