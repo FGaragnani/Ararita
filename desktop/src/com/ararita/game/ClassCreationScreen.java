@@ -67,12 +67,15 @@ public class ClassCreationScreen implements Screen {
     double increaseEXP = 1.5;
     double exponentEXP = 1.5;
 
+    Label classCreationDialogLabel;
+
     Dialog nameLengthDialog;
     Dialog nameExistsDialog;
     Dialog classCreationDialog;
     Dialog moneyDialog;
 
     public ClassCreationScreen(final Ararita game) {
+
         /*
             First initialization.
          */
@@ -157,6 +160,7 @@ public class ClassCreationScreen implements Screen {
                     } else if (getClassCost() > Global.getMoney()) {
                         moneyDialog.show(stage);
                     } else {
+                        classCreationDialogLabel.setText(" Do you want to create\n the " + classNameField.getText() + " class? \n");
                         classCreationDialog.show(stage);
                     }
                 } catch (IOException e) {
@@ -371,9 +375,13 @@ public class ClassCreationScreen implements Screen {
             }
         };
         classCreationDialog.setResizable(false);
-        classCreationDialog.text(" Do you want to create \n the " + classNameField.getText() + " class?\n", game.labelStyle);
+        classCreationDialogLabel = new Label("Do", game.labelStyle);
+        classCreationDialog.getContentTable().addActor(classCreationDialogLabel);
+        classCreationDialog.getContentTable().padBottom(Gdx.graphics.getHeight() / 11f);
+        classCreationDialog.getContentTable().row();
         classCreationDialog.button("Yes", true, game.textButtonStyle);
         classCreationDialog.button("No", false, game.textButtonStyle);
+        classCreationDialog.getButtonTable().padTop(Gdx.graphics.getHeight() / 100f);
         classCreationDialog.setPosition(0, 0);
 
         nameExistsDialog = new Dialog("", skin) {
