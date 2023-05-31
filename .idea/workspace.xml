@@ -10,8 +10,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5676402a-2187-4a8f-bfe0-ac646c9fd387" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/TODO.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/characters/Ruggero.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Settings/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Settings/settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/Data/global.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/Ararita.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/Ararita.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -292,5 +295,10 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Ararita$DesktopLauncher.ic" NAME="DesktopLauncher Coverage Results" MODIFIED="1685552315925" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.ararita.game.*</FILTER>
+    </SUITE>
   </component>
 </project>

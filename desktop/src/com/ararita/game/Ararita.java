@@ -150,7 +150,6 @@ public class Ararita extends Game {
     }
 
     public void dispose() {
-        batch.dispose();
         mediumFont.dispose();
         normalFont.dispose();
         titleFont.dispose();
