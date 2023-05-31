@@ -23,25 +23,33 @@ import java.util.stream.Stream;
 
 public class Global {
 
-    final public static int MAX_PARTY_MEMBERS = 4;
-    final public static int MAX_WEAPON_EQUIPPED = 1;
-    final public static int MAX_INVENTORY_SPACE = 200;
-    final public static double RESELL_MULTIPLIER = 0.75;
-    final public static int MAX_SPELLS_LEARNT = 20;
-    final public static double WEAKNESS_MULTIPLIER = 1.5;
-    final public static int INITIAL_ATTRIBUTES_POINT = 15;
+    public static final int MAX_PARTY_MEMBERS = 4;
+    public static final int MAX_WEAPON_EQUIPPED = 1;
+    public static final int MAX_INVENTORY_SPACE = 200;
+    public static final double RESELL_MULTIPLIER = 0.75;
+    public static final int MAX_SPELLS_LEARNT = 20;
+    public static final double WEAKNESS_MULTIPLIER = 1.5;
+    public static final int INITIAL_ATTRIBUTES_POINT = 15;
 
-    final public static double BURN_CURE = 0.5;
-    final public static double BLINDNESS_INEFFICIENCY = 0.5;
-    final public static double BURN_DAMAGE = 0.06;
-    final public static double POISON_DAMAGE = 0.02;
+    public static final double BURN_CURE = 0.5;
+    public static final double BLINDNESS_INEFFICIENCY = 0.5;
+    public static final double BURN_DAMAGE = 0.06;
+    public static final double POISON_DAMAGE = 0.02;
 
-    final public static Path globalSets = Path.of("Data/global.json");
-    final public static Path classSets = Path.of("Data/classes");
-    final public static Path characterSets = Paths.get("Data/characters");
-    final public static Path spellSets = Paths.get("Data/spells");
-    final public static Path itemSets = Paths.get("Data/items");
-    final public static Path enemySets = Paths.get("Data/enemies");
+    public static final Path globalSets = Path.of("Data/global.json");
+    public static final Path classSets = Path.of("Data/classes");
+    public static final Path characterSets = Paths.get("Data/characters");
+    public static final Path spellSets = Paths.get("Data/spells");
+    public static final Path itemSets = Paths.get("Data/items");
+    public static final Path enemySets = Paths.get("Data/enemies");
+    private static final Random random = new Random();
+
+    /**
+     * A private constructor; in this way, Global class may not be initialized.
+     */
+    private Global(){
+        throw new IllegalStateException("Utility Class");
+    }
 
     /**
      * A path to a JSON file is created from its root and its name.
@@ -74,7 +82,7 @@ public class Global {
      * @return The random double.
      */
     public static double getRandomZeroOne() {
-        return new Random().nextDouble();
+        return random.nextDouble();
     }
 
     /**
