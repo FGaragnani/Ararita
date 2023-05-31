@@ -234,7 +234,6 @@ public class SpellCreationScreen implements Screen {
         costLabel = new Label("", stats.getStyle());
         costLabel.setFontScale(game.statScaleX, game.statScaleY);
         costLabel.setColor(Color.BLACK);
-        costLabel.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, confirmButton.getY() + (Gdx.graphics.getHeight() * 0.14f));
         coinTexture = new Texture(Gdx.files.local(game.coinPath));
         coinImage = new Image();
         coinImage.setDrawable(new TextureRegionDrawable(coinTexture));
@@ -536,8 +535,8 @@ public class SpellCreationScreen implements Screen {
             Spell toCreate = new Spell("", MPCost(), spellTypeSelectBox.getSelected(), spellBasePower, statusEffects, false);
             costLabel.setText("Spell cost: " + toCreate.moneyCost());
             costLabel.setX((Gdx.graphics.getWidth() - confirmButton.getWidth()) / 2);
-            costLabel.setY(confirmButton.getY() + (Gdx.graphics.getHeight() * 0.14f));
-            coinImage.setPosition(((Gdx.graphics.getWidth() - confirmButton.getWidth()) / 2) + (costLabel.getText().length() * (Gdx.graphics.getWidth() / 350f)) + (Gdx.graphics.getWidth() / 7.68f), confirmButton.getY() + (Gdx.graphics.getHeight() * 0.11f));
+            costLabel.setY(confirmButton.getY() + (Gdx.graphics.getHeight() * 0.165f));
+            coinImage.setPosition(((Gdx.graphics.getWidth() - confirmButton.getWidth()) / 2) + (costLabel.getText().length() * (Gdx.graphics.getWidth() / 350f)) + (Gdx.graphics.getWidth() / 8f), confirmButton.getY() + (Gdx.graphics.getHeight() * 0.135f));
             cost = toCreate.moneyCost();
         } catch (IOException e) {
             throw new RuntimeException(e);

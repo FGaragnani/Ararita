@@ -256,7 +256,7 @@ public class PartyManagerScreen implements Screen {
         inventoryLabel = new Label("Inventory:", skin.get("default", Label.LabelStyle.class));
         inventoryLabel.setFontScale(game.statScaleX, game.statScaleY);
         inventoryLabel.setColor(Color.BLACK);
-        inventoryLabel.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 - (Gdx.graphics.getWidth() / 12.8f), Gdx.graphics.getHeight() * 0.477f);
+        inventoryLabel.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 - (Gdx.graphics.getWidth() / 12f), Gdx.graphics.getHeight() * 0.46f);
 
         /*
             Setting the weapons SelectBox.
