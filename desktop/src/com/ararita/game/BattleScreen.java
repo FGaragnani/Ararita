@@ -684,7 +684,8 @@ public class BattleScreen implements Screen {
                         }
                     });
                 }
-            } case "attack" -> {
+            }
+            case "attack" -> {
                 if (battle.getBattlers().get(currentBattler) instanceof Enemy) {
                     labelMain = new TypingLabel(" The enemy attacks " + party.get(attacked).getName() + ", dealing " + info + " damage!", labelStyle);
                 } else {
@@ -720,7 +721,7 @@ public class BattleScreen implements Screen {
             }
             case "item" -> {
                 String usedName = Global.getAllItems().get(info).getName();
-                labelMain = new TypingLabel(" " + battle.getBattlers().get(currentBattler).getName() + " uses a " + usedName + " " + "!", labelStyle);
+                labelMain = new TypingLabel(" " + battle.getBattlers().get(currentBattler).getName() + " uses a " + usedName + "!", labelStyle);
                 labelMain.setTypingListener(new TypingListener() {
                     @Override
                     public void event(String event) {
@@ -823,7 +824,7 @@ public class BattleScreen implements Screen {
                 });
             }
             case "cast" -> {
-                labelMain = new TypingLabel(" " + battle.getBattlers().get(currentBattler).getName() + " cast " + ((PC) battle.getBattlers().get(currentBattler)).getSpells().get(attacked).getName() + " inflicting " + info + " damage!", labelStyle);
+                labelMain = new TypingLabel(" " + battle.getBattlers().get(currentBattler).getName() + " casts " + ((PC) battle.getBattlers().get(currentBattler)).getSpells().get(attacked).getName() + ", inflicting " + info + " damage!", labelStyle);
                 labelMain.setTypingListener(new TypingListener() {
                     @Override
                     public void event(String event) {
@@ -852,7 +853,8 @@ public class BattleScreen implements Screen {
                     }
                 });
             }
-        } assert labelMain != null;
+        }
+        assert labelMain != null;
         labelMain.setPosition((Gdx.graphics.getWidth() - labelMain.getWidth()) / 2.0f, Gdx.graphics.getHeight() * 0.935f);
         labelMain.setFontScale(game.descScaleX * 1.5f, game.descScaleY * 1.4f);
         stage.addActor(labelMain);
