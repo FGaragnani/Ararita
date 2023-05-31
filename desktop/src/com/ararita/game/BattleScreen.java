@@ -212,7 +212,9 @@ public class BattleScreen implements Screen {
         runButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                runDialog.show(stage);
+                if (labelMain.hasEnded()) {
+                    runDialog.show(stage);
+                }
             }
         });
 
