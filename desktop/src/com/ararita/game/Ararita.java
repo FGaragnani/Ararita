@@ -151,9 +151,11 @@ public class Ararita extends Game {
 
     public void dispose() {
         batch.dispose();
+        mediumFont.dispose();
         normalFont.dispose();
         titleFont.dispose();
         bigFont.dispose();
+        skin.dispose();
         if (audio != null) {
             audio.dispose();
         }

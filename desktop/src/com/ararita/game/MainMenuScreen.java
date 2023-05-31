@@ -96,6 +96,7 @@ public class MainMenuScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 dispose();
+                game.dispose();
                 Gdx.app.exit();
             }
         });
@@ -119,9 +120,6 @@ public class MainMenuScreen implements Screen {
 
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
-
-        game.batch.begin();
-        game.batch.end();
 
         stage.draw();
     }

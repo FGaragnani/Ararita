@@ -187,9 +187,6 @@ public class SettingsScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 
-        game.batch.begin();
-        game.batch.end();
-
         stage.draw();
     }
 
