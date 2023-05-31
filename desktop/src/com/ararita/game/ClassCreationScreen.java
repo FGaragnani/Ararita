@@ -190,7 +190,6 @@ public class ClassCreationScreen implements Screen {
         costLabel = new Label("", stats.getStyle());
         costLabel.setFontScale(game.statScaleX, game.statScaleY);
         costLabel.setColor(Color.BLACK);
-        costLabel.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, confirmButton.getY() + (Gdx.graphics.getHeight() / 7f));
 
         /*
             Creating the EXP Slider.
@@ -564,8 +563,8 @@ public class ClassCreationScreen implements Screen {
     public void updateCost() {
         costLabel.setText("Class cost: " + getClassCost());
         costLabel.setX((Gdx.graphics.getWidth() - confirmButton.getWidth()) / 2);
-        costLabel.setY(confirmButton.getY() + (Gdx.graphics.getHeight() / 7f));
-        coinImage.setPosition(((Gdx.graphics.getWidth() - confirmButton.getWidth()) / 2) + (costLabel.getText().length() * (Gdx.graphics.getWidth() / 350f)) + Gdx.graphics.getWidth() * 0.1f, confirmButton.getY() + (Gdx.graphics.getHeight() * 0.116f));
+        costLabel.setY(confirmButton.getY() + (Gdx.graphics.getHeight() / 6.2f));
+        coinImage.setPosition(((Gdx.graphics.getWidth() - confirmButton.getWidth()) / 2) + (costLabel.getText().length() * (Gdx.graphics.getWidth() / 350f)) + Gdx.graphics.getWidth() * 0.1f, confirmButton.getY() + (Gdx.graphics.getHeight() / 7.5f));
     }
 
     /**
