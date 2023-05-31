@@ -49,6 +49,7 @@ public class Ararita extends Game {
     public final String cityTheme = "Music/CityTheme.mp3";
     public final String battleTheme = "Music/BattleTheme.mp3";
     public final String fanfareTheme = "Music/Fanfare.mp3";
+    public final String mainTheme = "Music/MainTheme.mp3";
 
     public final String backgroundPaper = "Backgrounds/paperbg.png";
     public final String backgroundCity = "Backgrounds/city.png";
@@ -159,6 +160,13 @@ public class Ararita extends Game {
     }
 
     /**
+     * If the audio is playing, its volumes is updated.
+     */
+    public void updateVolume(){
+        audio.setVolume(volume / 1000f);
+    }
+
+    /**
      * If the audio is not playing, the audio is set playing the specified music.
      *
      * @param music The String containing a path to the music file.
@@ -166,7 +174,7 @@ public class Ararita extends Game {
     public void playAudio(String music) {
         if (audio == null) {
             audio = Gdx.audio.newMusic(Gdx.files.local(music));
-            audio.setVolume(volume / 1000f);
+            updateVolume();
             audio.setLooping(true);
             audio.play();
         }

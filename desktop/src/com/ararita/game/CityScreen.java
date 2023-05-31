@@ -149,6 +149,7 @@ public class CityScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 game.stopAudio();
+                game.playAudio(game.mainTheme);
                 dispose();
                 game.setScreen(new MainMenuScreen(game));
             }

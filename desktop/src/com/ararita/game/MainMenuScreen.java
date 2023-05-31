@@ -79,6 +79,7 @@ public class MainMenuScreen implements Screen {
                 if (game.newPlayer) {
                     game.setScreen(new TutorialScreen(game));
                 } else {
+                    game.stopAudio();
                     game.setScreen(new CityScreen(game));
                 }
             }
@@ -103,6 +104,8 @@ public class MainMenuScreen implements Screen {
         stage.addActor(settingsButton);
         stage.addActor(exitButton);
         stage.addActor(title);
+
+        game.playAudio(game.mainTheme);
     }
 
     @Override

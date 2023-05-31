@@ -152,6 +152,7 @@ public class SettingsScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 soundEffectLabel.setText("Sound Effects: " + soundEffectsSlider.getValue());
+                game.soundEffects = (int) soundEffectsSlider.getValue();
             }
         });
 
@@ -159,6 +160,9 @@ public class SettingsScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 volumeLabel.setText("Volume: " + volumeSlider.getValue());
+                game.volume = (int) volumeSlider.getValue();
+                game.updateVolume();
+
             }
         });
 

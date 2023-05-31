@@ -218,6 +218,7 @@ public class TutorialScreen implements Screen {
         } else {
             dispose();
             try {
+                game.stopAudio();
                 game.setScreen(new CharacterCreationScreen(game, true));
             } catch (IOException e) {
                 throw new RuntimeException(e);
