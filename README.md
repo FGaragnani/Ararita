@@ -48,7 +48,7 @@ This project was done for the 'Programmazione ad Oggetti e Lab.' course at UniMO
 ### IDE
 You can play the game simply by cloning this repository and opening it in your IDE, if you have a JDK installed with Version 17 or above.
 There is only one main method - in DesktopLauncher.java - and if everything is set correctly, it should run the project.
-
+***
 ### JAR
 In releases, you can find a .jar file. In order to use it, you must have a JDK with Version 17 or above.
 Both double-clicking on the file and command-line execution will work; the latter can be done using:
