@@ -10,6 +10,7 @@ This project was done for the 'Programmazione ad Oggetti e Lab.' course at UniMO
   * [Overview](#Overview)  
   * [Features](#Features)
   * [Installing](#Installing)
+  * [Contribute](#Contribute)
   * [Credits](#Credits)
   * [License](#License)
 
@@ -47,7 +48,7 @@ This project was done for the 'Programmazione ad Oggetti e Lab.' course at UniMO
 ### IDE
 You can play the game simply by cloning this repository and opening it in your IDE, if you have a JDK installed with Version 17 or above.
 There is only one main method - in DesktopLauncher.java - and if everything is set correctly, it should run the project.
-
+***
 ### JAR
 In releases, you can find a .jar file. In order to use it, you must have a JDK with Version 17 or above.
 Both double-clicking on the file and command-line execution will work; the latter can be done using:
@@ -55,7 +56,13 @@ Both double-clicking on the file and command-line execution will work; the latte
 java -jar ararita.jar
 ```
 **Note:** executing the .jar will generate a Data folder in the same directory, which is needed to save your files.
-  
+ 
+## Contribute
+
+Everyone can contribute.
+You can add new features, solve graphical issues (like portability problems) or make balance changes. After that, you can make a pull request.
+If you need inspiration or a guide, please check the TODO file!
+ 
 ## Credits
 
 * Code used:
