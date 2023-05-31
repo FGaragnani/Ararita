@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 public class BattleScreen implements Screen {
 
@@ -253,6 +252,7 @@ public class BattleScreen implements Screen {
          */
 
         runDialog = new Dialog("", game.skin) {
+            @Override
             public void result(Object confirm) {
                 if (confirm.equals(true) && labelMain.hasEnded()) {
                     game.stopAudio();
@@ -279,18 +279,17 @@ public class BattleScreen implements Screen {
         itemDialogSelectBox.setItems(itemsSelectBox);
 
         itemDialog = new Dialog("", game.skin) {
+            @Override
             public void result(Object confirm) {
-                if ((boolean) confirm) {
-                    if (!itemDialogSelectBox.getSelected().equals("No consumables...")) {
-                        int index = itemDialogSelectBox.getSelectedIndex();
-                        ConsumableItem toUse = (ConsumableItem) new ArrayList<>(inventory.getItems().entrySet()).get(index).getKey();
-                        try {
-                            inventory.use((PC) battle.getBattlers().get(currentBattler), toUse);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                        updateItem(toUse);
+                if ((boolean) confirm && !itemDialogSelectBox.getSelected().equals("No consumables...")) {
+                    int index = itemDialogSelectBox.getSelectedIndex();
+                    ConsumableItem toUse = (ConsumableItem) new ArrayList<>(inventory.getItems().entrySet()).get(index).getKey();
+                    try {
+                        inventory.use((PC) battle.getBattlers().get(currentBattler), toUse);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
+                    updateItem(toUse);
                 }
                 hide();
             }
@@ -315,20 +314,18 @@ public class BattleScreen implements Screen {
         castDialogLabel = new Label("", game.labelStyle);
 
         castDialog = new Dialog("", game.skin) {
-
+            @Override
             public void result(Object confirm) {
-                if ((boolean) confirm) {
-                    if (!castDialogSelectBox.getSelected().equals("No spells...")) {
-                        try {
-                            Spell toCast = Global.getSpell(castDialogSelectBox.getSelected());
-                            if (((PC) battle.getBattlers().get(currentBattler)).canCast(toCast)) {
-                                int oldEnemyHP = enemy.getCurrHP();
-                                battle.cast((PC) battle.getBattlers().get(currentBattler), enemy, toCast);
-                                updateCast(toCast, oldEnemyHP - enemy.getCurrHP());
-                            }
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
+                if ((boolean) confirm && !castDialogSelectBox.getSelected().equals("No spells...")) {
+                    try {
+                        Spell toCast = Global.getSpell(castDialogSelectBox.getSelected());
+                        if (((PC) battle.getBattlers().get(currentBattler)).canCast(toCast)) {
+                            int oldEnemyHP = enemy.getCurrHP();
+                            battle.cast((PC) battle.getBattlers().get(currentBattler), enemy, toCast);
+                            updateCast(toCast, oldEnemyHP - enemy.getCurrHP());
                         }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
                 }
                 hide();
@@ -548,7 +545,7 @@ public class BattleScreen implements Screen {
     public void setProgressBars() {
         ProgressBar.ProgressBarStyle progressBarStyle = skin.get("default-horizontal", ProgressBar.ProgressBarStyle.class);
         progressBarStyle.background.setMinHeight(20);
-        progressBarStyle.knobBefore.setMinHeight(15);
+        progressBarStyle.knobBefore.setMinHeight(14);
         firstBar = new ProgressBar(0, party.get(0).maxHP(), 1, false, progressBarStyle);
         firstBar.setWidth(100);
         firstBar.setPosition(firstCharImage.getX() + 20, firstCharImage.getY() + firstCharImage.getHeight() + Gdx.graphics.getHeight() / 8f);
@@ -915,7 +912,7 @@ public class BattleScreen implements Screen {
     public void updateCastDialog(boolean onlyLabel) {
         if (!onlyLabel) {
             castsSelectBox = new Array<>();
-            ((PC) battle.getBattlers().get(currentBattler)).getSpells().forEach((spell) -> castsSelectBox.add(spell.getName()));
+            ((PC) battle.getBattlers().get(currentBattler)).getSpells().forEach(spell -> castsSelectBox.add(spell.getName()));
             if (castsSelectBox.isEmpty()) {
                 castsSelectBox.add("No spells...");
             }

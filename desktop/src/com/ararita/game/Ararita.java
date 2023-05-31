@@ -129,10 +129,6 @@ public class Ararita extends Game {
         width400 = Gdx.graphics.getWidth() / 4.8f;
     }
 
-    public void render() {
-        super.render();
-    }
-
     /**
      * Saves the local values into the JSON settings file.
      */
@@ -149,6 +145,7 @@ public class Ararita extends Game {
         }
     }
 
+    @Override
     public void dispose() {
         mediumFont.dispose();
         normalFont.dispose();
