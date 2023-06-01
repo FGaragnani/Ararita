@@ -14,10 +14,10 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -47,7 +47,7 @@ public class Global {
     /**
      * A private constructor; in this way, Global class may not be initialized.
      */
-    private Global(){
+    private Global() {
         throw new IllegalStateException("Utility Class");
     }
 
@@ -71,7 +71,11 @@ public class Global {
     public static void deleteAllFolders(Path dirPath) {
         if (dirPath.toFile().isDirectory()) {
             for (File f : Objects.requireNonNull(dirPath.toFile().listFiles())) {
-                f.delete();
+                try {
+                    Files.delete(f.toPath());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
@@ -259,8 +263,8 @@ public class Global {
         JSONObject toWrite = new JSONObject(character);
         toWrite.remove("weapons");
         toWrite.remove("spells");
-        toWrite.put("weapons", character.getWeapons().stream().map(Item::getName).collect(Collectors.toList()));
-        toWrite.put("spells", character.getSpells().stream().map(Spell::getName).collect(Collectors.toList()));
+        toWrite.put("weapons", character.getWeapons().stream().map(Item::getName).toList());
+        toWrite.put("spells", character.getSpells().stream().map(Spell::getName).toList());
         writeJSON(Path.of(charFile.path()), toWrite);
     }
 
@@ -279,19 +283,19 @@ public class Global {
             JSONObject jsonGlobal = getJSON(charFile);
             List<String> weapons = getListJSON(charFile, "weapons");
             List<String> spells = getListJSON(charFile, "spells");
-            PC toRet = new PC(jsonGlobal.getInt("strength"), jsonGlobal.getInt("intelligence"), jsonGlobal.getInt("vigor"), jsonGlobal.getInt("agility"), jsonGlobal.getInt("spirit"), jsonGlobal.getInt("arcane"), jsonGlobal.getString("charClass"), charName, jsonGlobal.getInt("currHP"), jsonGlobal.getInt("currMP"), jsonGlobal.getInt("level"), jsonGlobal.getInt("EXP"), weapons.stream().map((name) -> {
+            PC toRet = new PC(jsonGlobal.getInt("strength"), jsonGlobal.getInt("intelligence"), jsonGlobal.getInt("vigor"), jsonGlobal.getInt("agility"), jsonGlobal.getInt("spirit"), jsonGlobal.getInt("arcane"), jsonGlobal.getString("charClass"), charName, jsonGlobal.getInt("currHP"), jsonGlobal.getInt("currMP"), jsonGlobal.getInt("level"), jsonGlobal.getInt("EXP"), weapons.stream().map(name -> {
                 try {
                     return Global.getWeapon(name);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-            }).collect(Collectors.toList()), spells.stream().map((name) -> {
+            }).toList(), spells.stream().map(name -> {
                 try {
                     return Global.getSpell(name);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-            }).collect(Collectors.toList()));
+            }).toList());
             toRet.setImage(jsonGlobal.getString("image"));
             return toRet;
         } else {
@@ -438,7 +442,7 @@ public class Global {
     public static List<PC> getListPCJSON(Path filePath, String identifier) throws IOException {
         List<String> charNames = getListJSON(filePath, identifier);
         List<PC> toRet = new ArrayList<>();
-        charNames.forEach((str) -> {
+        charNames.forEach(str -> {
             try {
                 toRet.add(getCharacter(str));
             } catch (IOException e) {
@@ -598,7 +602,7 @@ public class Global {
      * @throws IOException If the file cannot be read.
      */
     public static boolean canBuy(Item item, int n) throws IOException {
-        return getMoney() >= (item.getPrice() * n) && (getInventory().entrySet().stream().flatMapToInt((entry) -> IntStream.of(entry.getValue())).sum() + n <= MAX_INVENTORY_SPACE);
+        return getMoney() >= (item.getPrice() * n) && (getInventory().entrySet().stream().flatMapToInt(entry -> IntStream.of(entry.getValue())).sum() + n <= MAX_INVENTORY_SPACE);
     }
 
     /**
@@ -651,13 +655,13 @@ public class Global {
      * @return The list of all the items.
      */
     public static List<Item> getAllItems() {
-        return Stream.of("Angelic Staff", "Apprentice Staff", "Bladed Gloves", "Bone Bow", "Bone Dagger", "Boxing " + "Gloves", "Bronze Sword", "Bulk Soul", "Cosmic Ether", "Curved Staff", "Death Dirk", "Dueling Gloves", "Eden Bow", "Elder Staff", "Ether", "Fist Soul", "Golden Sword", "Grim Dagger", "Grim Soul", "Guard" + " Spear", "Gust Soul", "Hunter Bow", "Iron Bow", "Iron Lance", "Iron Poniard", "Javelin", "Longbow", "Maior Potion", "Maxima Potion", "Midas' Spear", "Mind Soul", "Monk Gloves", "Phinia", "Potion", "Pure Soul", "Revitalizing", "Revitalizing Brew", "Revitalizing Leaf", "Silver Sword", "Small Dagger", "Supernal Ether", "Tiger Gloves", "Trident", "Willow Wand", "Wooden Sword").map((str) -> {
+        return Stream.of("Angelic Staff", "Apprentice Staff", "Bladed Gloves", "Bone Bow", "Bone Dagger", "Boxing " + "Gloves", "Bronze Sword", "Bulk Soul", "Cosmic Ether", "Curved Staff", "Death Dirk", "Dueling Gloves", "Eden Bow", "Elder Staff", "Ether", "Fist Soul", "Golden Sword", "Grim Dagger", "Grim Soul", "Guard" + " Spear", "Gust Soul", "Hunter Bow", "Iron Bow", "Iron Lance", "Iron Poniard", "Javelin", "Longbow", "Maior Potion", "Maxima Potion", "Midas' Spear", "Mind Soul", "Monk Gloves", "Phinia", "Potion", "Pure Soul", "Revitalizing", "Revitalizing Brew", "Revitalizing Leaf", "Silver Sword", "Small Dagger", "Supernal Ether", "Tiger Gloves", "Trident", "Willow Wand", "Wooden Sword").map(str -> {
             try {
                 return (Global.getItem(str));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }).collect(Collectors.toList());
+        }).toList();
     }
 
     /**
@@ -718,7 +722,7 @@ public class Global {
      * @throws IOException If the file cannot be read.
      */
     public static boolean isInventoryFull() throws IOException {
-        return getInventory().entrySet().stream().flatMapToInt((entry) -> IntStream.of(entry.getValue())).sum() >= MAX_INVENTORY_SPACE;
+        return getInventory().entrySet().stream().flatMapToInt(entry -> IntStream.of(entry.getValue())).sum() >= MAX_INVENTORY_SPACE;
     }
 
     /**
@@ -920,9 +924,8 @@ public class Global {
         writeJSON(globalSets, jsonGlobal);
         if (classSets.toFile().isDirectory()) {
             for (File f : Objects.requireNonNull(classSets.toFile().listFiles())) {
-                if (!jsonGlobal.getJSONArray("classNamesSet").toList().contains(f.getName().substring(0,
-                        f.getName().length() - 5))) {
-                    f.delete();
+                if (!jsonGlobal.getJSONArray("classNamesSet").toList().contains(f.getName().substring(0, f.getName().length() - 5))) {
+                    Files.delete(f.toPath());
                 }
             }
         }

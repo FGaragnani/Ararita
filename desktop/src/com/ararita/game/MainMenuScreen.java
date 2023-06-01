@@ -107,6 +107,7 @@ public class MainMenuScreen implements Screen {
         stage.addActor(title);
 
         game.playAudio(game.mainTheme);
+        game.updateVolume();
     }
 
     @Override

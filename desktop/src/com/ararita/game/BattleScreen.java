@@ -274,7 +274,7 @@ public class BattleScreen implements Screen {
         itemDialogSelectBox = new SelectBox<>(game.selectBoxStyle);
         itemDialogSelectBox.setWidth(game.width400);
         itemsSelectBox = new Array<>();
-        inventory.getItems().entrySet().stream().filter((entry) -> (entry.getKey() instanceof ConsumableItem)).forEach((entry) -> itemsSelectBox.add(entry.getValue().toString() + " " + entry.getKey().getName()));
+        inventory.getItems().entrySet().stream().filter(entry -> (entry.getKey() instanceof ConsumableItem)).forEach(entry -> itemsSelectBox.add(entry.getValue().toString() + " " + entry.getKey().getName()));
         if (itemsSelectBox.isEmpty()) {
             itemsSelectBox.add("No consumables...");
         }
@@ -344,7 +344,7 @@ public class BattleScreen implements Screen {
         castDialog.setPosition(0, 0);
 
         levelUpDialog = new Dialog("", game.skin) {
-
+            @Override
             public void result(Object confirm) {
                 hide();
                 game.stopAudio();
@@ -357,7 +357,7 @@ public class BattleScreen implements Screen {
         levelUpDialog.setPosition(0, 0);
 
         dropDialog = new Dialog("", game.skin) {
-
+            @Override
             public void result(Object confirm) {
                 StringBuilder text = new StringBuilder();
                 int level;
@@ -586,7 +586,7 @@ public class BattleScreen implements Screen {
         } else {
             handImage.setVisible(true);
         }
-        int toUse = battle.getBattlers().stream().filter((battler) -> (battler instanceof PC)).toList().indexOf(battle.getBattlers().get(currentBattler));
+        int toUse = battle.getBattlers().stream().filter(PC.class::isInstance).toList().indexOf(battle.getBattlers().get(currentBattler));
         handImage.setPosition((Gdx.graphics.getWidth() - firstCharImage.getWidth()) * 3 / 4 + ((Gdx.graphics.getWidth() / 19.2f) * (toUse - 1)) - (Gdx.graphics.getWidth() / 38.4f), Gdx.graphics.getHeight() * 0.49f - ((Gdx.graphics.getHeight() / 10.8f) * toUse));
     }
 
@@ -664,8 +664,8 @@ public class BattleScreen implements Screen {
                             } catch (InterruptedException e) {
                                 throw new RuntimeException(e);
                             }
-                            int alivePCs = (int) battle.getBattlers().stream().filter((battler) -> (battler instanceof PC) && (!battler.isDead())).count();
-                            PC attackedPC = battle.getCharacters().stream().filter((PC) -> (!PC.isDead())).toList().get((int) Math.round(Global.getRandomZeroOne() * (alivePCs - 1)));
+                            int alivePCs = (int) battle.getBattlers().stream().filter(battler -> (battler instanceof PC) && (!battler.isDead())).count();
+                            PC attackedPC = battle.getCharacters().stream().filter(PC -> (!PC.isDead())).toList().get((int) Math.round(Global.getRandomZeroOne() * (alivePCs - 1)));
                             int attacked = battle.getCharacters().indexOf(attackedPC);
                             int attackedCurrHP = attackedPC.getCurrHP();
                             battle.attack(enemy, battle.getCharacters().get(attacked));
@@ -901,7 +901,7 @@ public class BattleScreen implements Screen {
      */
     public void updateItemsDialog() {
         itemsSelectBox = new Array<>();
-        inventory.getItems().entrySet().stream().filter((entry) -> (entry.getKey() instanceof ConsumableItem)).forEach((entry) -> itemsSelectBox.add(entry.getValue().toString() + " " + entry.getKey().getName()));
+        inventory.getItems().entrySet().stream().filter(entry -> (entry.getKey() instanceof ConsumableItem)).forEach(entry -> itemsSelectBox.add(entry.getValue().toString() + " " + entry.getKey().getName()));
         if (itemsSelectBox.isEmpty()) {
             itemsSelectBox.add("No consumables...");
         }

@@ -161,7 +161,9 @@ public class Ararita extends Game {
      * If the audio is playing, its volumes is updated.
      */
     public void updateVolume(){
-        audio.setVolume(volume / 1000f);
+        if (audio != null) {
+            audio.setVolume(volume / 1000f);
+        }
     }
 
     /**
