@@ -10,20 +10,20 @@ import java.util.stream.IntStream;
 
 public class PC extends AbstractBattler implements Battler {
 
-    final static double HP_VIGOR_EFFECTIVENESS = 7;
-    final static double HP_SECOND_STAT_EFFECTIVENESS = 2.5;
-    final static double HP_THIRD_STAT_EFFECTIVENESS = 1.5;
-    final static double HP_LEVEL_EFFECTIVENESS = 2.5;
-    final static double MP_INTELLIGENCE_EFFECTIVENESS = 5;
-    final static double MP_SECOND_STAT_EFFECTIVENESS = 3;
-    final static double MP_THIRD_STAT_EFFECTIVENESS = 2;
-    final static double MP_LEVEL_EFFECTIVENESS = 1.25;
+    static final double HP_VIGOR_EFFECTIVENESS = 7;
+    static final double HP_SECOND_STAT_EFFECTIVENESS = 2.5;
+    static final double HP_THIRD_STAT_EFFECTIVENESS = 1.5;
+    static final double HP_LEVEL_EFFECTIVENESS = 2.5;
+    static final double MP_INTELLIGENCE_EFFECTIVENESS = 5;
+    static final double MP_SECOND_STAT_EFFECTIVENESS = 3;
+    static final double MP_THIRD_STAT_EFFECTIVENESS = 2;
+    static final double MP_LEVEL_EFFECTIVENESS = 1.25;
 
-    final static double MAIN_STAT_INCREASE = 0.15;
-    final static double MAIN_EQUAL_STAT_INCREASE = 0.15;
-    final static double SECOND_STAT_INCREASE = 0.1;
-    final static double SECOND_EQUAL_STAT_INCREASE = 0.075;
-    final static double PERCENTAGE_INCREASE = 0.125;
+    static final double MAIN_STAT_INCREASE = 0.15;
+    static final double MAIN_EQUAL_STAT_INCREASE = 0.15;
+    static final double SECOND_STAT_INCREASE = 0.1;
+    static final double SECOND_EQUAL_STAT_INCREASE = 0.075;
+    static final double PERCENTAGE_INCREASE = 0.125;
 
     int currHP;
     int currMP;
@@ -214,7 +214,7 @@ public class PC extends AbstractBattler implements Battler {
             setIntelligence((int) (getIntelligence() + Math.floor(Math.max(getIntelligence() * MAIN_EQUAL_STAT_INCREASE, 1))));
             if (getVigor() > getAgility()) {
                 setVigor((int) (getVigor() + Math.floor(Math.max(getVigor() * SECOND_STAT_INCREASE, 1))));
-            } else if (getAgility() > getAgility()) {
+            } else if (getAgility() > getVigor()) {
                 setAgility((int) (getAgility() + Math.floor(Math.max(getAgility() * SECOND_STAT_INCREASE, 1))));
             } else {
                 setVigor((int) (getVigor() + Math.floor(Math.max(getVigor() * SECOND_EQUAL_STAT_INCREASE, 1))));
@@ -271,7 +271,7 @@ public class PC extends AbstractBattler implements Battler {
      */
     @Override
     public void getMagicalDamage(int attack) {
-        int damage = Math.max(1, attack - hasPhysicalDefense());
+        int damage = Math.max(1, attack - hasMagicalDefense());
         setCurrHP(getCurrHP() - damage);
     }
 
@@ -363,7 +363,7 @@ public class PC extends AbstractBattler implements Battler {
      * @return The character's Physical Attack.
      */
     public int hasPhysicalAttackPower() {
-        double multiplier = getWeapons().stream().filter((weapon) -> this.getProficiencies().containsKey(weapon.getWeaponType())).count() / 2.0;
+        double multiplier = getWeapons().stream().filter(weapon -> this.getProficiencies().containsKey(weapon.getWeaponType())).count() / 2.0;
         return (int) ((getEquippedStat("Strength") + Math.floor((getEquippedStat("Vigor") + getEquippedStat("Agility")) / 2.0)) * (multiplier + 0.5));
     }
 
@@ -374,7 +374,7 @@ public class PC extends AbstractBattler implements Battler {
      */
     @Override
     public int hasMagicalAttackPower() {
-        double multiplier = getWeapons().stream().filter((weapon) -> this.getProficiencies().containsKey(weapon.getWeaponType())).count() / 2.0;
+        double multiplier = getWeapons().stream().filter(weapon -> this.getProficiencies().containsKey(weapon.getWeaponType())).count() / 2.0;
         return (int) ((getEquippedStat("Intelligence") + (int) Math.floor((getEquippedStat("Spirit") + getEquippedStat("Arcane")) / 6.0)) * (multiplier + 0.5));
     }
 
@@ -484,7 +484,7 @@ public class PC extends AbstractBattler implements Battler {
         int proficienciesAndSpells = 1;
         int i = 1;
         for (int proficiencyValue : proficiencies.values()) {
-            initialCost += (1 / ((Math.pow(getIncreaseEXP(), 1.5) * Math.pow(getExponentEXP(), 1.5)))) * Math.pow(10, proficiencyValue) * Math.pow(i, 3) * proficienciesAndSpells;
+            initialCost += (1 / (Math.pow(getIncreaseEXP(), 1.5) * Math.pow(getExponentEXP(), 1.5))) * Math.pow(10, proficiencyValue) * Math.pow(i, 3) * proficienciesAndSpells;
             if (initialCost > 10000000) {
                 return 10000000;
             }
@@ -492,8 +492,8 @@ public class PC extends AbstractBattler implements Battler {
             proficienciesAndSpells++;
         }
         i = 1;
-        for (String spellType : spellTypes) {
-            initialCost += (1 / ((Math.pow(getIncreaseEXP(), 1.5) * Math.pow(getExponentEXP(), 1.5)))) * Math.pow(10, i) * Math.pow(i, 3) * proficienciesAndSpells;
+        for (String ignored : spellTypes) {
+            initialCost += (1 / (Math.pow(getIncreaseEXP(), 1.5) * Math.pow(getExponentEXP(), 1.5))) * Math.pow(10, i) * Math.pow(i, 3) * proficienciesAndSpells;
             if (initialCost > 10000000) {
                 return 10000000;
             }
@@ -519,22 +519,21 @@ public class PC extends AbstractBattler implements Battler {
      * @return The total stat value.
      */
     public int getEquippedStat(String stat) {
-        int toRet = switch (stat) {
+        return switch (stat) {
             case "Strength" ->
-                    getStrength() + getWeapons().stream().flatMapToInt((weapon) -> IntStream.of(weapon.getAttributesAffection().getOrDefault(stat, 0))).sum();
+                    getStrength() + getWeapons().stream().flatMapToInt(weapon -> IntStream.of(weapon.getAttributesAffection().getOrDefault(stat, 0))).sum();
             case "Intelligence" ->
-                    getIntelligence() + getWeapons().stream().flatMapToInt((weapon) -> IntStream.of(weapon.getAttributesAffection().getOrDefault(stat, 0))).sum();
+                    getIntelligence() + getWeapons().stream().flatMapToInt(weapon -> IntStream.of(weapon.getAttributesAffection().getOrDefault(stat, 0))).sum();
             case "Vigor" ->
-                    getVigor() + getWeapons().stream().flatMapToInt((weapon) -> IntStream.of(weapon.getAttributesAffection().getOrDefault(stat, 0))).sum();
+                    getVigor() + getWeapons().stream().flatMapToInt(weapon -> IntStream.of(weapon.getAttributesAffection().getOrDefault(stat, 0))).sum();
             case "Agility" ->
-                    getAgility() + getWeapons().stream().flatMapToInt((weapon) -> IntStream.of(weapon.getAttributesAffection().getOrDefault(stat, 0))).sum();
+                    getAgility() + getWeapons().stream().flatMapToInt(weapon -> IntStream.of(weapon.getAttributesAffection().getOrDefault(stat, 0))).sum();
             case "Spirit" ->
-                    getSpirit() + getWeapons().stream().flatMapToInt((weapon) -> IntStream.of(weapon.getAttributesAffection().getOrDefault(stat, 0))).sum();
+                    getSpirit() + getWeapons().stream().flatMapToInt(weapon -> IntStream.of(weapon.getAttributesAffection().getOrDefault(stat, 0))).sum();
             case "Arcane" ->
-                    getArcane() + getWeapons().stream().flatMapToInt((weapon) -> IntStream.of(weapon.getAttributesAffection().getOrDefault(stat, 0))).sum();
+                    getArcane() + getWeapons().stream().flatMapToInt(weapon -> IntStream.of(weapon.getAttributesAffection().getOrDefault(stat, 0))).sum();
             default -> 0;
         };
-        return toRet;
     }
 
     public String getImage() {

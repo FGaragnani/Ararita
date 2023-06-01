@@ -9,7 +9,6 @@ import com.ararita.game.spells.Spell;
 import java.io.IOException;
 import java.util.*;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 public class GlobalBattle {
 
@@ -107,7 +106,7 @@ public class GlobalBattle {
             }
         }
         if (attacker instanceof PC && attacked instanceof Enemy) {
-            long count = ((PC) attacker).getWeapons().stream().map(Weapon::getWeaponType).filter((weaponType) -> ((Enemy) attacked).getWeakTo().contains(weaponType)).count();
+            long count = ((PC) attacker).getWeapons().stream().map(Weapon::getWeaponType).filter(weaponType -> ((Enemy) attacked).getWeakTo().contains(weaponType)).count();
             if (count > 0) {
                 multiplier *= Math.pow(Global.WEAKNESS_MULTIPLIER, count);
             }
@@ -132,16 +131,16 @@ public class GlobalBattle {
         }
 
         double multiplier = 1;
-        long count = (attacker.getWeapons().stream().map(Weapon::getWeaponType).filter((weaponType) -> attacked.getWeakTo().contains(weaponType)).count());
+        long count = (attacker.getWeapons().stream().map(Weapon::getWeaponType).filter(weaponType -> attacked.getWeakTo().contains(weaponType)).count());
         if (count > 0) {
             multiplier = Math.pow(Global.WEAKNESS_MULTIPLIER, count);
         }
 
         double statEffect;
         if (Set.of("Water", "Light", "Wind").contains(spell.getType())) {
-            statEffect = Math.sqrt(attacker.getSpirit() + attacker.getIntelligence()) / 5;
+            statEffect = Math.sqrt((double) attacker.getSpirit() + attacker.getIntelligence()) / 5;
         } else {
-            statEffect = Math.sqrt(attacker.getArcane() + attacker.getIntelligence()) / 5;
+            statEffect = Math.sqrt((double) attacker.getArcane() + attacker.getIntelligence()) / 5;
         }
 
         attacked.getMagicalDamage((int) (attacker.cast(spell) * (multiplier + statEffect)));
@@ -168,7 +167,7 @@ public class GlobalBattle {
      * @return True, if the battle has ended and was lost.
      */
     public boolean isLost() {
-        return isBattleFinished() && battlers.stream().filter((b) -> b instanceof PC).allMatch(Battler::isDead);
+        return isBattleFinished() && battlers.stream().filter(PC.class::isInstance).allMatch(Battler::isDead);
     }
 
     public List<Battler> getBattlers() {
@@ -182,7 +181,7 @@ public class GlobalBattle {
      */
     public Enemy getEnemy() {
         try {
-            return (Enemy) getBattlers().stream().filter((battler -> battler instanceof Enemy)).findFirst().orElseThrow((Supplier<Throwable>) () -> null);
+            return (Enemy) getBattlers().stream().filter((Enemy.class::isInstance)).findFirst().orElseThrow((Supplier<Throwable>) () -> null);
         } catch (Throwable e) {
             throw new RuntimeException(e);
         }
@@ -194,6 +193,6 @@ public class GlobalBattle {
      * @return The list of playing characters.
      */
     public List<PC> getCharacters() {
-        return getBattlers().stream().filter((battler) -> battler instanceof PC).map((battler) -> (PC) battler).collect(Collectors.toList());
+        return getBattlers().stream().filter(PC.class::isInstance).map(PC.class::cast).toList();
     }
 }

@@ -5,6 +5,7 @@ import com.ararita.game.battlers.PC;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Objects;
 
 public class ConsumableItem extends Item implements Consumable {
 
@@ -53,6 +54,7 @@ public class ConsumableItem extends Item implements Consumable {
                         characterUsing.setHP(Math.min(characterUsing.maxHP(), entry.getValue()));
                     }
                 }
+                default -> characterUsing.setCurrHP(characterUsing.getCurrHP());
             }
             characterUsing.check();
         }
@@ -60,5 +62,22 @@ public class ConsumableItem extends Item implements Consumable {
 
     public Map<String, Integer> getEffect() {
         return effect;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        if (!super.equals(o))
+            return false;
+        ConsumableItem that = (ConsumableItem) o;
+        return Objects.equals(effect, that.effect);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), effect);
     }
 }

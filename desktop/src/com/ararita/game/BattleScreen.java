@@ -367,7 +367,7 @@ public class BattleScreen implements Screen {
                         level = character.getLevel();
                         character.gainEXP(Math.max(EXP / party.size(), 1));
                         if (level != character.getLevel()) {
-                            text.append(character.getName()).append(" levelled up!\n");
+                            text.append(" ").append(character.getName()).append(" levelled up!\n");
                         }
                         character.healAll();
                         character.update();

@@ -13,8 +13,8 @@ public class Inventory {
 
     Map<Item, Integer> items;
     int money;
-    final public int MAX_INVENTORY_SPACE;
-    final public double RESELL_MULTIPLIER;
+    public final int MAX_INVENTORY_SPACE;
+    public final double RESELL_MULTIPLIER;
 
     /**
      * Inventory constructor. All data is fetched from the global manager.
@@ -78,7 +78,7 @@ public class Inventory {
      * @return The inventory's size.
      */
     public int inventorySize() {
-        return items.entrySet().stream().flatMapToInt((entry) -> IntStream.of((entry.getValue()))).sum();
+        return items.entrySet().stream().flatMapToInt(entry -> IntStream.of((entry.getValue()))).sum();
     }
 
     /**

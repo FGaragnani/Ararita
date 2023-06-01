@@ -87,7 +87,8 @@ public abstract class AbstractBattler {
      *
      * @throws IOException If the files cannot be read or written upon.
      */
-    public AbstractBattler(int strength, int intelligence, int vigor, int agility, int spirit, int arcane, String charClass, int baseEXP, double increaseEXP, double exponentEXP, Map<String, Integer> proficiencies, Set<String> spellTypes, boolean toSave) throws IOException {
+    protected AbstractBattler(int strength, int intelligence, int vigor, int agility, int spirit, int arcane,
+                      String charClass, int baseEXP, double increaseEXP, double exponentEXP, Map<String, Integer> proficiencies, Set<String> spellTypes, boolean toSave) throws IOException {
         this.strength = strength;
         this.intelligence = intelligence;
         this.vigor = vigor;

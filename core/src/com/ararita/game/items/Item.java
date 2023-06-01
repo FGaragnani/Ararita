@@ -15,7 +15,7 @@ public abstract class Item {
      * @param name The name of the item.
      * @param price The price of the item.
      */
-    public Item(String name, int price, String type, String description) {
+    protected Item(String name, int price, String type, String description) {
         this.name = name;
         this.price = price;
         this.type = type;
