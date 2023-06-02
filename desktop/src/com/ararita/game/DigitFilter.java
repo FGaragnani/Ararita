@@ -12,6 +12,9 @@ public class DigitFilter implements TextField.TextFieldFilter {
 
     @Override
     public boolean acceptChar(TextField textField, char c) {
+        if(textField.getText().length() >= 2){
+            return false;
+        }
         for (char a : accepted)
             if (a == c) return true;
         return false;

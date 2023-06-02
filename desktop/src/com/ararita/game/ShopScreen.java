@@ -166,7 +166,7 @@ public class ShopScreen implements Screen {
         coinImage = new Image();
         coinImage.setDrawable(new TextureRegionDrawable(coinTexture));
         coinImage.setSize(coinTexture.getWidth(), coinTexture.getHeight());
-        coinImage.setPosition(((Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 3) + (Gdx.graphics.getWidth() / 160f), Gdx.graphics.getHeight() * 0.722f);
+        coinImage.setPosition(((Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 3) + (Gdx.graphics.getWidth() / 45f), Gdx.graphics.getHeight() * 0.722f);
 
         /*
             Setting the number to buy TextField, its label and its listener.
@@ -259,7 +259,7 @@ public class ShopScreen implements Screen {
         coinImageSell = new Image();
         coinImageSell.setDrawable(new TextureRegionDrawable(coinTexture));
         coinImageSell.setSize(coinTexture.getWidth(), coinTexture.getHeight());
-        coinImageSell.setPosition(((Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 3) + (0.39f * Gdx.graphics.getWidth()), Gdx.graphics.getHeight() * 0.722f);
+        coinImageSell.setPosition(((Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 3) + (0.41f * Gdx.graphics.getWidth()), Gdx.graphics.getHeight() * 0.722f);
 
         /*
             Setting the sell stats Label.
