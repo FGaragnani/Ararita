@@ -79,14 +79,14 @@ public class ShopScreen implements Screen {
         try {
             inventory = new Inventory();
             allItemsArray = new Array<>();
-            Global.getAllItems().stream().filter((entry) -> entry.getPrice() < 1000).sorted((o1, o2) -> {
+            Global.getAllItems().stream().filter(entry -> entry.getPrice() < 1000).sorted((o1, o2) -> {
                 if (o1.getPrice() == o2.getPrice()) {
                     return 0;
                 } else if (o1.getPrice() > o2.getPrice()) {
                     return 1;
                 }
                 return -1;
-            }).forEach((item) -> allItemsArray.add(item.getName()));
+            }).forEach(item -> allItemsArray.add(item.getName()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -329,6 +329,7 @@ public class ShopScreen implements Screen {
          */
 
         moneyDialog = new Dialog("", skin) {
+            @Override
             public void result(Object confirm) {
                 hide();
             }
@@ -339,6 +340,7 @@ public class ShopScreen implements Screen {
         moneyDialog.setPosition(0, 0);
 
         noInventorySpaceDialog = new Dialog("", skin) {
+            @Override
             public void result(Object confirm) {
                 hide();
             }
@@ -349,6 +351,7 @@ public class ShopScreen implements Screen {
         noInventorySpaceDialog.setPosition(0, 0);
 
         noItemDialog = new Dialog("", skin) {
+            @Override
             public void result(Object confirm) {
                 hide();
             }
@@ -476,7 +479,7 @@ public class ShopScreen implements Screen {
                 }
             }
             text.append("Description:\n ").append(toDescribe.getDescription());
-            otherLines += toDescribe.getDescription().codePoints().filter((ch) -> (ch == '\n')).count();
+            otherLines += toDescribe.getDescription().codePoints().filter(ch -> (ch == '\n')).count();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -539,7 +542,7 @@ public class ShopScreen implements Screen {
                     }
                 }
                 text.append("Description:\n ").append(toDescribe.getDescription());
-                otherLines += toDescribe.getDescription().codePoints().filter((ch) -> (ch == '\n')).count();
+                otherLines += toDescribe.getDescription().codePoints().filter(ch -> (ch == '\n')).count();
                 sellStats.setText(text);
                 sellStats.setPosition((Gdx.graphics.getWidth() - buySelectBox.getWidth()) * 3 / 4 - (Gdx.graphics.getWidth() / 96f), Gdx.graphics.getHeight() * 0.58f - (game.otherLinesFactor * otherLines));
                 toSellLabel.setText("How many:\n\n\nYou have: " + (inventory.getItems().get(toDescribe)));
