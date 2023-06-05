@@ -9,6 +9,7 @@ import com.ararita.game.items.Weapon;
 import com.ararita.game.spells.Spell;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -116,7 +117,11 @@ public class Global {
      */
     public static void writeJSON(Path pathToWrite, JSONObject jsonObject) throws IOException {
         FileHandle file = Gdx.files.local(pathToWrite.toString());
-        file.writeString(jsonObject.toString(4), false);
+        try {
+            file.writeString(jsonObject.toString(4), false);
+        } catch(GdxRuntimeException e){
+            throw new IOException(e);
+        }
     }
 
     /**
@@ -129,7 +134,11 @@ public class Global {
      * @throws IOException If the file cannot be read or written upon.
      */
     public static JSONObject getJSON(Path filePath) throws IOException {
-        return new JSONObject(Gdx.files.internal(filePath.toString()).readString());
+        try {
+            return new JSONObject(Gdx.files.internal(filePath.toString()).readString());
+        } catch(GdxRuntimeException e){
+            throw new IOException(e);
+        }
     }
 
     /**
