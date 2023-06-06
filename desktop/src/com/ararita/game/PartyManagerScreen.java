@@ -558,7 +558,7 @@ public class PartyManagerScreen implements Screen {
             int partyIndex = partyCharactersSelectBox.getSelectedIndex();
             PC partyChar = Global.getCharacter(Global.getParty().get(partyIndex).getName());
             partyText.append("LVL: ").append(partyChar.getLevel()).append("\n");
-            partyText.append("NXT: ").append(BigDecimal.valueOf((double) (partyChar.getEXP() - partyChar.EXPForLevel(partyChar.getLevel())) / partyChar.EXPForLevel(partyChar.getLevel() + 1)).setScale(2, RoundingMode.HALF_UP).doubleValue()).append("%\n");
+            partyText.append("NXT: ").append(BigDecimal.valueOf((double) (partyChar.getEXP() - partyChar.EXPForLevel(partyChar.getLevel())) / (partyChar.EXPForLevel(partyChar.getLevel() + 1) - partyChar.EXPForLevel(partyChar.getLevel()))).setScale(2, RoundingMode.HALF_UP).doubleValue()).append("%\n");
             partyText.append("STR: ").append(partyChar.getEquippedStat("Strength")).append("\n");
             partyText.append("INT: ").append(partyChar.getEquippedStat("Intelligence")).append("\n");
             partyText.append("AGI: ").append(partyChar.getEquippedStat("Agility")).append("\n");
@@ -591,7 +591,7 @@ public class PartyManagerScreen implements Screen {
             int reserveIndex = otherCharactersSelectBox.getSelectedIndex();
             PC reserveChar = Global.getCharacter(Global.getOtherCharacters().get(reserveIndex).getName());
             reserveText.append("LVL: ").append(reserveChar.getLevel()).append("\n");
-            reserveText.append("NXT: ").append(BigDecimal.valueOf((double) (reserveChar.getEXP() - reserveChar.EXPForLevel(reserveChar.getLevel())) / reserveChar.EXPForLevel(reserveChar.getLevel() + 1)).setScale(2, RoundingMode.HALF_UP).doubleValue()).append("%\n");
+            reserveText.append("NXT: ").append(BigDecimal.valueOf((double) (reserveChar.getEXP() - reserveChar.EXPForLevel(reserveChar.getLevel())) / (reserveChar.EXPForLevel(reserveChar.getLevel() + 1) - reserveChar.EXPForLevel(reserveChar.getLevel()))).setScale(2, RoundingMode.HALF_UP).doubleValue()).append("%\n");
             reserveText.append("STR: ").append(reserveChar.getEquippedStat("Strength")).append("\n");
             reserveText.append("INT: ").append(reserveChar.getEquippedStat("Intelligence")).append("\n");
             reserveText.append("AGI: ").append(reserveChar.getEquippedStat("Agility")).append("\n");
