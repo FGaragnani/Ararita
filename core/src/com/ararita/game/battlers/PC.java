@@ -19,6 +19,8 @@ public class PC extends AbstractBattler implements Battler {
     static final double MP_THIRD_STAT_EFFECTIVENESS = 2;
     static final double MP_LEVEL_EFFECTIVENESS = 1.25;
 
+    static final int LEVEL_UP_LAST_STAT = 2;
+
     static final double MAIN_STAT_INCREASE = 0.15;
     static final double MAIN_EQUAL_STAT_INCREASE = 0.15;
     static final double SECOND_STAT_INCREASE = 0.1;
@@ -184,7 +186,7 @@ public class PC extends AbstractBattler implements Battler {
      * then the ternary main stats are determined and increased.
      * Finally, every stat may be increased following a 1:8 probability (see PERCENTAGE_INCREASE).
      */
-    public void levelUp() {
+    public void levelUp(int newLevel) {
         if (getIntelligence() > getStrength()) {
             setIntelligence((int) (getIntelligence() + Math.floor(Math.max(getIntelligence() * MAIN_STAT_INCREASE, 1))));
             if (getStrength() > getSpirit() && getStrength() > getArcane()) {
@@ -228,6 +230,28 @@ public class PC extends AbstractBattler implements Battler {
                 setSpirit((int) (getSpirit() + Math.floor(Math.max(getSpirit() * SECOND_EQUAL_STAT_INCREASE, 1))));
                 setArcane((int) (getArcane() + Math.floor(Math.max(getArcane() * SECOND_EQUAL_STAT_INCREASE, 1))));
             }
+        }
+
+        if(newLevel % LEVEL_UP_LAST_STAT == 0){
+
+            HashMap<String, Integer> stats = new HashMap<>();
+            stats.put("Strength", getStrength());
+            stats.put("Intelligence", getIntelligence());
+            stats.put("Vigor", getVigor());
+            stats.put("Agility", getAgility());
+            stats.put("Spirit", getSpirit());
+            stats.put("Arcane", getArcane());
+            String minStat = stats.entrySet().stream()
+                    .min(Comparator.comparingInt(Map.Entry::getValue)).get().getKey();
+            switch (minStat) {
+                case "Strength" -> setStrength(getStrength() + 1);
+                case "Intelligence" -> setIntelligence(getIntelligence() + 1);
+                case "Vigor" -> setVigor(getVigor() + 1);
+                case "Agility" -> setAgility(getAgility() + 1);
+                case "Spirit" -> setSpirit(getSpirit() + 1);
+                case "Arcane" -> setArcane(getArcane() + 1);
+            }
+
         }
 
         if (Global.getRandomZeroOne() <= PERCENTAGE_INCREASE) {

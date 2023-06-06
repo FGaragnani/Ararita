@@ -359,7 +359,7 @@ public class ClassCreationScreen implements Screen {
                             }
 
                             @Override
-                            public void levelUp() {
+                            public void levelUp(int newLevel) {
 
                             }
                         };

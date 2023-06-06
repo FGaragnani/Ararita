@@ -163,7 +163,7 @@ public abstract class AbstractBattler {
         setEXP(getEXP() + gainedEXP);
         charLevel();
         for (int i = currLevel; i < getLevel(); i++) {
-            levelUp();
+            levelUp(i);
         }
         check();
     }
@@ -288,5 +288,5 @@ public abstract class AbstractBattler {
 
     public abstract int maxHP();
 
-    public abstract void levelUp();
+    public abstract void levelUp(int newLevel);
 }
