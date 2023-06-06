@@ -266,7 +266,7 @@ public class BattleScreen implements Screen {
             }
         };
         runDialog.setResizable(false);
-        runDialog.text(" Do you want to run away?\n All used items will remain lost! \n ", game.labelStyle);
+        runDialog.text(" Do you want to run away? \n All used items will remain lost! \n ", game.labelStyle);
         runDialog.button("Yes", true, game.textButtonStyle);
         runDialog.button("No", false, game.textButtonStyle);
         runDialog.setPosition(0, 0);
@@ -367,7 +367,7 @@ public class BattleScreen implements Screen {
                         level = character.getLevel();
                         character.gainEXP(Math.max(EXP / party.size(), 1));
                         if (level != character.getLevel()) {
-                            text.append(" ").append(character.getName()).append(" levelled up!\n");
+                            text.append(" ").append(character.getName()).append(" levelled up! \n");
                         }
                         character.healAll();
                         character.update();
@@ -720,7 +720,8 @@ public class BattleScreen implements Screen {
             }
             case "item" -> {
                 String usedName = Global.getAllItems().get(info).getName();
-                labelMain = new TypingLabel(" " + battle.getBattlers().get(currentBattler).getName() + " uses a " + usedName + "!", labelStyle);
+                labelMain =
+                        new TypingLabel(" " + battle.getBattlers().get(currentBattler).getName() + " uses a " + usedName + "! ", labelStyle);
                 labelMain.setTypingListener(new TypingListener() {
                     @Override
                     public void event(String event) {
@@ -768,7 +769,7 @@ public class BattleScreen implements Screen {
                                 } catch (IOException e) {
                                     throw new RuntimeException(e);
                                 }
-                                text.append("- ").append(toDrop.getKey().getName()).append("\n");
+                                text.append(" - ").append(toDrop.getKey().getName()).append(" \n");
                             }
                         }
                         if (text.toString().equals("\t   You gained:\t  \n")) {
