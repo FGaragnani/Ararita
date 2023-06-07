@@ -4,6 +4,7 @@ import com.ararita.game.Global;
 import com.ararita.game.items.Weapon;
 import com.ararita.game.spells.Spell;
 
+import javax.print.attribute.standard.MediaSize;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.IntStream;
@@ -248,15 +249,10 @@ public class PC extends AbstractBattler implements Battler {
 
         List<Map.Entry<String, Integer>> statsList =
                 stats.entrySet().stream()
-                        .sorted(Comparator.comparingInt(Map.Entry::getValue)).toList();
+                        .sorted(Comparator.comparingInt(Map.Entry::getValue)).limit(OTHER_INCREASABLE_STATS).toList();
 
-        int count = 0;
         for(Map.Entry<String, Integer> entry : statsList){
-            if(count >= OTHER_INCREASABLE_STATS){
-                break;
-            }
             if(Global.getRandomZeroOne() <= 4*PERCENTAGE_INCREASE){
-                count++;
                 switch (entry.getKey()) {
                     case "Strength" -> setStrength(getStrength() + 1);
                     case "Intelligence" -> setIntelligence(getIntelligence() + 1);
