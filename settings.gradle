@@ -1,2 +1,3 @@
 include 'desktop', 'core'
+rootProject.name = "ararita"
 

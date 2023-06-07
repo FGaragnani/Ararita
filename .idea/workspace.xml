@@ -13,9 +13,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/Settings/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Settings/settings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/Data/global.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/PC.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/ararita/game/battlers/PC.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/BattleScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/BattleScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/PartyManagerScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/PartyManagerScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/DesktopLauncher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,7 +156,7 @@
       <option name="ALTERNATIVE_JRE_PATH" value="17" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="com.ararita.game.DesktopLauncher" />
-      <module name="Ararita.desktop.main" />
+      <module name="ararita.desktop.main" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.ararita.game.*" />
@@ -168,7 +168,7 @@
       </method>
     </configuration>
     <configuration name="GlobalTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Ararita.core.main" />
+      <module name="ararita.core.main" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.ararita.game.*" />
@@ -185,7 +185,7 @@
       </method>
     </configuration>
     <configuration name="GlobalTest.addCharacter" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Ararita.core.main" />
+      <module name="ararita.core.main" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.ararita.game.*" />
@@ -201,7 +201,7 @@
       </method>
     </configuration>
     <configuration name="GlobalTest.getFromJSONClass" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Ararita.core.main" />
+      <module name="ararita.core.main" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.ararita.game.*" />
@@ -217,7 +217,7 @@
       </method>
     </configuration>
     <configuration name="GlobalTest.getInventory" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Ararita.core.main" />
+      <module name="ararita.core.main" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.ararita.game.*" />
@@ -240,6 +240,19 @@
         <option name="BuildArtifacts" enabled="true">
           <artifact name="Ararita:jar" />
         </option>
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="ararita" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="ararita" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
