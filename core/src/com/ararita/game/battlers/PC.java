@@ -20,6 +20,7 @@ public class PC extends AbstractBattler implements Battler {
     static final double MP_LEVEL_EFFECTIVENESS = 1.25;
 
     static final int LEVEL_UP_LAST_STAT = 2;
+    static final int OTHER_INCREASABLE_STATS = 3;
 
     static final double MAIN_STAT_INCREASE = 0.15;
     static final double MAIN_EQUAL_STAT_INCREASE = 0.15;
@@ -184,6 +185,11 @@ public class PC extends AbstractBattler implements Battler {
      * then the secondary main stats are determined (Strength -> Vigor and/or Agility, Intelligence -> Spirit and/or
      * Arcane), and increased;
      * then the ternary main stats are determined and increased.
+     * Then, starting from the lowest stat, up to three (see OTHER_INCREASABLE_STATS) stats may increase with a 1:2
+     * probability
+     * (see
+     * 4*PERCENTAGE_INCREASE).
+     * The lowest stat from here is certainly increased once every two (see LEVEL_UP_LAST_STAT) levels.
      * Finally, every stat may be increased following a 1:8 probability (see PERCENTAGE_INCREASE).
      */
     public void levelUp(int newLevel) {
@@ -232,9 +238,39 @@ public class PC extends AbstractBattler implements Battler {
             }
         }
 
+        HashMap<String, Integer> stats = new HashMap<>();
+        stats.put("Strength", getStrength());
+        stats.put("Intelligence", getIntelligence());
+        stats.put("Vigor", getVigor());
+        stats.put("Agility", getAgility());
+        stats.put("Spirit", getSpirit());
+        stats.put("Arcane", getArcane());
+
+        List<Map.Entry<String, Integer>> statsList =
+                stats.entrySet().stream()
+                        .sorted(Comparator.comparingInt(Map.Entry::getValue)).toList();
+
+        int count = 0;
+        for(Map.Entry<String, Integer> entry : statsList){
+            if(count >= OTHER_INCREASABLE_STATS){
+                break;
+            }
+            if(Global.getRandomZeroOne() <= 4*PERCENTAGE_INCREASE){
+                count++;
+                switch (entry.getKey()) {
+                    case "Strength" -> setStrength(getStrength() + 1);
+                    case "Intelligence" -> setIntelligence(getIntelligence() + 1);
+                    case "Vigor" -> setVigor(getVigor() + 1);
+                    case "Agility" -> setAgility(getAgility() + 1);
+                    case "Spirit" -> setSpirit(getSpirit() + 1);
+                    case "Arcane" -> setArcane(getArcane() + 1);
+                }
+            }
+        }
+
         if(newLevel % LEVEL_UP_LAST_STAT == 0){
 
-            HashMap<String, Integer> stats = new HashMap<>();
+            stats = new HashMap<>();
             stats.put("Strength", getStrength());
             stats.put("Intelligence", getIntelligence());
             stats.put("Vigor", getVigor());
@@ -285,7 +321,7 @@ public class PC extends AbstractBattler implements Battler {
     @Override
     public void getPhysicalDamage(int attack) {
         int damage = Math.max(1, attack - hasPhysicalDefense());
-        setCurrHP(getCurrHP() - damage);
+        loseHP(damage);
     }
 
     /**
@@ -461,7 +497,7 @@ public class PC extends AbstractBattler implements Battler {
      */
     public int cast(Spell spell) {
         if (canCast(spell)) {
-            this.setCurrMP(getCurrMP() - spell.getMPCost());
+            this.loseMP(spell.getMPCost());
             return (int) (hasMagicalAttackPower() * (spell.getBasePower() / 1.5));
         }
         return 0;
