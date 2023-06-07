@@ -1,6 +1,6 @@
 ![Title](https://user-images.githubusercontent.com/101595335/235752910-d8e160a0-c3e9-4a5d-abf8-e94362007559.png)
 
-Inspired by classic videogames such as **Final Fantasy I** and **Phantasy Star II**, Ararita follows as a turn-based RPG with a specific focus to character personalization.
+Inspired by classic videogames such as **Final Fantasy** and **Phantasy Star** sagas, Ararita follows as a turn-based RPG with a specific focus to character personalization.
 
 This project was done for the 'Programmazione ad Oggetti e Lab.' course at UniMORE.
 
