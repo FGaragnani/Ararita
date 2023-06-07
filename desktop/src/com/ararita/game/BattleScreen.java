@@ -773,7 +773,7 @@ public class BattleScreen implements Screen {
                             }
                         }
                         if (text.toString().equals("\t   You gained:\t  \n")) {
-                            dropDialog.text("The enemy didn't \n drop anything. ");
+                            dropDialog.text(" The enemy didn't \n drop anything. ");
                         } else {
                             dropDialog.text(text.toString());
                         }

@@ -576,7 +576,7 @@ public class PartyManagerScreen implements Screen {
             partyChar.getSpellTypes().forEach((str) -> partyText.append(" - ").append(str).append("\n"));
             otherLines += partyChar.getSpellTypes().size();
             partyStats.setText(partyText.toString());
-            partyStats.setPosition(Gdx.graphics.getWidth() / 2.9f, Gdx.graphics.getHeight() * 0.463f - (game.otherLinesFactor * (otherLines - 1)));
+            partyStats.setPosition(Gdx.graphics.getWidth() / 2.9f, Gdx.graphics.getHeight() * 0.455f - (game.otherLinesFactor * (otherLines - 1)));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -609,7 +609,7 @@ public class PartyManagerScreen implements Screen {
             reserveChar.getSpells().forEach((str) -> reserveText.append(" - ").append(str.toString()).append("\n"));
             otherLines += reserveChar.getSpells().size();
             reserveStats.setText(reserveText.toString());
-            reserveStats.setPosition(Gdx.graphics.getWidth() / 1.2f, Gdx.graphics.getHeight() * 0.463f - (game.otherLinesFactor * (otherLines - 1)));
+            reserveStats.setPosition(Gdx.graphics.getWidth() / 1.2f, Gdx.graphics.getHeight() * 0.455f - (game.otherLinesFactor * (otherLines - 1)));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
