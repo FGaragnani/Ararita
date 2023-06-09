@@ -163,7 +163,7 @@ public class SpellCreationScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 dispose();
-                game.setScreen(new CityScreen(game));
+                game.setScreen(new SpellScreen(game));
             }
         });
 
