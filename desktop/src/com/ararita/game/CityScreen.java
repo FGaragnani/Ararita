@@ -101,13 +101,13 @@ public class CityScreen implements Screen {
             Initialize the Spell Creation Button and its listener.
          */
 
-        spellCreateButton = new TextButton(" Create new \n spell ", textButtonStyle);
+        spellCreateButton = new TextButton("   Organize   \n spells ", textButtonStyle);
         spellCreateButton.setPosition((Gdx.graphics.getWidth() - classCreateButton.getWidth()) / 4, Gdx.graphics.getHeight() * 0.25f);
         spellCreateButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 dispose();
-                game.setScreen(new SpellCreationScreen(game));
+                game.setScreen(new SpellScreen(game));
             }
         });
 
