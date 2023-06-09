@@ -60,8 +60,7 @@ public class SpellScreen implements Screen {
          */
 
         spellCreateButton = new TextButton(" Create new \n spells ", textButtonStyle);
-        spellCreateButton.setPosition((Gdx.graphics.getWidth() - spellCreateButton.getWidth()) / 2f,
-                Gdx.graphics.getHeight() * 7 / 10f);
+        spellCreateButton.setPosition((Gdx.graphics.getWidth() - spellCreateButton.getWidth()) / 2f, Gdx.graphics.getHeight() * 7 / 10f);
         spellCreateButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -81,8 +80,7 @@ public class SpellScreen implements Screen {
         });
 
         backButton = new TextButton("     Back to     \n City ", textButtonStyle);
-        backButton.setPosition((Gdx.graphics.getWidth() - spellManageButton.getWidth()) * 0.5f,
-                Gdx.graphics.getHeight() * 3 / 10f);
+        backButton.setPosition((Gdx.graphics.getWidth() - spellManageButton.getWidth()) * 0.5f, Gdx.graphics.getHeight() * 3 / 10f);
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
