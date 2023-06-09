@@ -6,9 +6,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class SpellManagerScreen implements Screen {
@@ -22,10 +25,16 @@ public class SpellManagerScreen implements Screen {
     Label title;
     Label.LabelStyle titleStyle;
 
+    Label deleteLabel;
+
+    Label learnLabel;
+
+    TextButton exitButton;
+
     Texture backgroundTexture;
     Sprite backgroundSprite;
 
-    public SpellManagerScreen(final Ararita game){
+    public SpellManagerScreen(final Ararita game) {
 
         /*
             First initialization.
@@ -58,11 +67,45 @@ public class SpellManagerScreen implements Screen {
         title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() - 150);
 
         /*
+            Creating the Exit Button.
+         */
+
+        exitButton = new TextButton("Exit", game.textButtonStyle);
+        exitButton.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, Gdx.graphics.getHeight() * 0.074f);
+        exitButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                dispose();
+                game.setScreen(new SpellScreen(game));
+            }
+        });
+
+        /*
+            Creating the 'delete' label and select boxes.
+         */
+
+        deleteLabel = new Label("Delete known spells", game.labelStyle);
+        deleteLabel.setColor(Color.BLACK);
+        deleteLabel.setFontScale(game.descScaleX, game.descScaleY);
+        deleteLabel.setPosition((Gdx.graphics.getWidth() - deleteLabel.getWidth()) * 0.15f, Gdx.graphics.getHeight() * 0.75f);
+
+        /*
+            Creating the 'learn' label and select boxes.
+         */
+
+        learnLabel = new Label("Learn created spells", game.labelStyle);
+        learnLabel.setColor(Color.BLACK);
+        learnLabel.setFontScale(game.descScaleX, game.descScaleY);
+        learnLabel.setPosition((Gdx.graphics.getWidth() - learnLabel.getWidth()) * 0.85f, Gdx.graphics.getHeight() * 0.75f);
+
+        /*
             Adding all actors.
          */
 
         stage.addActor(title);
-
+        stage.addActor(deleteLabel);
+        stage.addActor(learnLabel);
+        stage.addActor(exitButton);
     }
 
     @Override
