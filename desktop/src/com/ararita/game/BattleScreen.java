@@ -73,6 +73,7 @@ public class BattleScreen implements Screen {
     Dialog runDialog;
     Dialog itemDialog;
     SelectBox<String> itemDialogSelectBox;
+    SelectBox<String> itemDialogCharSelectBox;
     Dialog castDialog;
     SelectBox<String> castDialogSelectBox;
     Label castDialogLabel;
@@ -84,6 +85,7 @@ public class BattleScreen implements Screen {
     int currentBattler;
     Inventory inventory;
     Array<String> itemsSelectBox;
+    Array<String> charSelectBox;
     Array<String> castsSelectBox;
 
     public BattleScreen(final Ararita game, final GlobalBattle battle) {
@@ -273,12 +275,17 @@ public class BattleScreen implements Screen {
 
         itemDialogSelectBox = new SelectBox<>(game.selectBoxStyle);
         itemDialogSelectBox.setWidth(game.width400);
+        itemDialogCharSelectBox = new SelectBox<>(game.selectBoxStyle);
+        itemDialogCharSelectBox.setWidth(game.width400);
         itemsSelectBox = new Array<>();
         inventory.getItems().entrySet().stream().filter(entry -> (entry.getKey() instanceof ConsumableItem)).forEach(entry -> itemsSelectBox.add(entry.getValue().toString() + " " + entry.getKey().getName()));
         if (itemsSelectBox.isEmpty()) {
             itemsSelectBox.add("No consumables...");
         }
         itemDialogSelectBox.setItems(itemsSelectBox);
+        charSelectBox = new Array<>();
+        battle.getCharacters().forEach(PC -> charSelectBox.add(PC.getName()));
+        itemDialogCharSelectBox.setItems(charSelectBox);
 
         itemDialog = new Dialog("", game.skin) {
             @Override
@@ -287,17 +294,20 @@ public class BattleScreen implements Screen {
                     int index = itemDialogSelectBox.getSelectedIndex();
                     ConsumableItem toUse = (ConsumableItem) new ArrayList<>(inventory.getItems().entrySet()).get(index).getKey();
                     try {
-                        inventory.use((PC) battle.getBattlers().get(currentBattler), toUse);
+                        inventory.use(battle.getCharacters().get(itemDialogCharSelectBox.getSelectedIndex()), toUse);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    updateItem(toUse);
+                    updateItem(toUse, battle.getCharacters().get(itemDialogCharSelectBox.getSelectedIndex()));
                 }
                 hide();
             }
         };
         itemDialog.text("\t   Use which item?\t  ", game.labelStyle);
-        itemDialog.getContentTable().addActor(itemDialogSelectBox);
+        itemDialog.getContentTable().row();
+        itemDialog.getContentTable().add(itemDialogSelectBox).expand();
+        itemDialog.getContentTable().row();
+        itemDialog.getContentTable().add(itemDialogCharSelectBox).expand();
         itemDialog.getContentTable().padBottom(Gdx.graphics.getHeight() / 10.8f);
         itemDialog.button("Use", true, textButtonStyle);
         itemDialog.button("Back", false, textButtonStyle);
@@ -480,9 +490,10 @@ public class BattleScreen implements Screen {
      * A turn is used to consume an item.
      *
      * @param itemUsed The item that has been used.
+     * @param characterUsing The character which will use the consumable item.
      */
-    public void updateItem(ConsumableItem itemUsed) {
-        updateLabel("item", Global.getAllItems().indexOf(itemUsed), 0);
+    public void updateItem(ConsumableItem itemUsed, PC characterUsing) {
+        updateLabel("item", Global.getAllItems().indexOf(itemUsed), battle.getCharacters().indexOf(characterUsing));
     }
 
     /**
@@ -625,7 +636,7 @@ public class BattleScreen implements Screen {
      * <p>
      * - for attack, the index of the attacked character;
      * <p>
-     * - for item, unused;
+     * - for item, the index of the character using the item;
      * <p>
      * - for cast, the damage done by the spell;
      * <p>
@@ -720,8 +731,7 @@ public class BattleScreen implements Screen {
             }
             case "item" -> {
                 String usedName = Global.getAllItems().get(info).getName();
-                labelMain =
-                        new TypingLabel(" " + battle.getBattlers().get(currentBattler).getName() + " uses a " + usedName + "! ", labelStyle);
+                labelMain = new TypingLabel(" " + battle.getBattlers().get(attacked).getName() + " uses a " + usedName + "! ", labelStyle);
                 labelMain.setTypingListener(new TypingListener() {
                     @Override
                     public void event(String event) {
