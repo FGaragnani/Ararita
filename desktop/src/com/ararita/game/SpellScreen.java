@@ -12,8 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-import java.io.IOException;
-
 public class SpellScreen implements Screen {
 
     final Ararita game;
@@ -22,7 +20,6 @@ public class SpellScreen implements Screen {
     OrthographicCamera camera;
     Skin skin;
 
-    TextButton.TextButtonStyle textButtonStyle;
     TextButton spellCreateButton;
     TextButton spellManageButton;
     TextButton backButton;
@@ -44,9 +41,6 @@ public class SpellScreen implements Screen {
         this.camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
 
-        textButtonStyle = skin.get("default", TextButton.TextButtonStyle.class);
-        textButtonStyle.font = game.normalFont;
-
         /*
             Setting the background texture.
          */
@@ -59,8 +53,7 @@ public class SpellScreen implements Screen {
             Creating the three buttons.
          */
 
-        spellCreateButton = new TextButton(" Create new \n spells ", textButtonStyle);
-        spellCreateButton.setPosition((Gdx.graphics.getWidth() - spellCreateButton.getWidth()) / 2f, Gdx.graphics.getHeight() * 7 / 10f);
+        spellCreateButton = game.createNormalButton(" Create new \n spells ", textButton -> (Gdx.graphics.getWidth() - textButton.getWidth()) / 2f, Gdx.graphics.getHeight() * 7 / 10f, stage);
         spellCreateButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -69,8 +62,7 @@ public class SpellScreen implements Screen {
             }
         });
 
-        spellManageButton = new TextButton(" Manage your \n spells", textButtonStyle);
-        spellManageButton.setPosition((Gdx.graphics.getWidth() - spellManageButton.getWidth()) * 5 / 10, Gdx.graphics.getHeight() * 0.5f);
+        spellManageButton = game.createNormalButton(" Manage your \n spells", textButton -> (Gdx.graphics.getWidth() - textButton.getWidth()) * 5 / 10, Gdx.graphics.getHeight() * 0.5f, stage);
         spellManageButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -79,8 +71,7 @@ public class SpellScreen implements Screen {
             }
         });
 
-        backButton = new TextButton("     Back to     \n City ", textButtonStyle);
-        backButton.setPosition((Gdx.graphics.getWidth() - spellManageButton.getWidth()) * 0.5f, Gdx.graphics.getHeight() * 3 / 10f);
+        backButton = game.createNormalButton("     Back to     \n City ", textButton -> (Gdx.graphics.getWidth() - textButton.getWidth()) * 0.5f, Gdx.graphics.getHeight() * 3 / 10f, stage);
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -88,10 +79,6 @@ public class SpellScreen implements Screen {
                 game.setScreen(new CityScreen(game));
             }
         });
-
-        stage.addActor(spellCreateButton);
-        stage.addActor(spellManageButton);
-        stage.addActor(backButton);
     }
 
     @Override
