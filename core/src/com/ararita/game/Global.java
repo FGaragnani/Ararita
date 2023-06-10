@@ -343,6 +343,14 @@ public class Global {
         return new Spell(jsonGlobal.getString("name"), jsonGlobal.getInt("MPCost"), jsonGlobal.getString("type"), jsonGlobal.getInt("basePower"), statusEffects, true);
     }
 
+    public static List<Spell> getAllSpells() throws IOException {
+        List<Spell> spells = new ArrayList<>(spellSets.getNameCount());
+        for(File f : Objects.requireNonNull(spellSets.toFile().listFiles())){
+            spells.add(Global.getSpell(f.getName().substring(0, f.getName().length() - 5)));
+        }
+        return spells;
+    }
+
     /**
      * The spells are deleted, both in the global manager and in their files.
      * Useful for tests.

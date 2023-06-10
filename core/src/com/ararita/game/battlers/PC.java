@@ -381,7 +381,15 @@ public class PC extends AbstractBattler implements Battler {
      * @return True, if the spell can indeed be read.
      */
     public boolean canLearn(Spell spell) {
-        return spellTypes.contains(spell.getType()) && !spells.contains(spell) && spells.size() < Global.MAX_SPELLS_LEARNT;
+        return spellTypes.contains(spell.getType()) && !spells.contains(spell) && canLearnAnySpell();
+    }
+
+    /**
+     * Determines if any spell can be learnt. Checks for the maximum number of spells learnable.
+     * @return True, if he could learn any spells.
+     */
+    public boolean canLearnAnySpell(){
+        return spells.size() < Global.MAX_SPELLS_LEARNT;
     }
 
     /**
