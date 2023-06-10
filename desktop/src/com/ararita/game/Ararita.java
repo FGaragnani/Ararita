@@ -59,6 +59,7 @@ public class Ararita extends Game {
     public final String backgroundBattle = "Backgrounds";
 
     Skin skin;
+    Skin skin2;
     Music audio;
 
     int volume;
@@ -78,6 +79,7 @@ public class Ararita extends Game {
     public void create() {
 
         this.skin = new Skin(Gdx.files.internal(stylesPath));
+        this.skin2 = new Skin(Gdx.files.internal(stylesPath));
 
         JsonValue jsonSettings = new JsonReader().parse(Gdx.files.local(settingsPath));
         volume = jsonSettings.getInt("Volume");
@@ -110,7 +112,7 @@ public class Ararita extends Game {
         textFieldStyle = skin.get("default", TextField.TextFieldStyle.class);
         textFieldStyle.font = this.normalFont;
 
-        titleStyle = skin.get("default", Label.LabelStyle.class);
+        titleStyle = skin2.get("default", Label.LabelStyle.class);
         titleStyle.font = this.titleFont;
 
         selectBoxStyle = skin.get("default", SelectBox.SelectBoxStyle.class);
@@ -161,12 +163,13 @@ public class Ararita extends Game {
         if (audio != null) {
             audio.dispose();
         }
+        skin2.dispose();
     }
 
     /**
      * If the audio is playing, its volumes is updated.
      */
-    public void updateVolume(){
+    public void updateVolume() {
         if (audio != null) {
             audio.setVolume(volume / 1000f);
         }
@@ -196,22 +199,41 @@ public class Ararita extends Game {
         }
     }
 
-    public void createTitleCentered(String titleText, int screenWidth, float yPos, Color color, Stage stage){
+    public void createTitleCentered(String titleText, int screenWidth, float yPos, Color color, Stage stage) {
 
         Label title = new Label(titleText, titleStyle);
         title.setPosition((screenWidth - title.getWidth()) / 2f, yPos);
         title.setColor(color);
         stage.addActor(title);
-
     }
 
-    public TextButton createMainButtonXCentered(String buttonText, int screenWidth, float yPos, Stage stage){
+    public TextButton createMainButtonXCentered(String buttonText, int screenWidth, float yPos, Stage stage) {
 
         TextButton mainButton = new TextButton(buttonText, textButtonStyle);
         mainButton.setPosition((screenWidth - mainButton.getWidth()) / 2f, yPos);
         stage.addActor(mainButton);
         return mainButton;
-
     }
 
+    public void createLabelVoid(String labelText, float xPos, float yPos, Stage stage) {
+        createLabel(labelText, xPos, yPos, stage);
+    }
+
+    public Label createLabel(String labelText, float xPos, float yPos, Stage stage) {
+        Label label = new Label(labelText, labelStyle);
+        label.setPosition(xPos, yPos);
+        stage.addActor(label);
+        return label;
+    }
+
+    public Slider createSlider(float min, float max, float stepsize, boolean vertical, float width, float value, float xPos, float yPos, Stage stage) {
+
+        Slider slider = new Slider(min, max, stepsize, vertical, sliderStyle);
+        slider.setWidth(width);
+        slider.setValue(value);
+        slider.setPosition(xPos, yPos);
+        stage.addActor(slider);
+        return slider;
+
+    }
 }

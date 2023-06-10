@@ -22,13 +22,9 @@ public class SettingsScreen implements Screen {
 
     Dialog confirmDeleteDialog;
 
-    Label title;
-    Label.LabelStyle titleStyle;
-
     Slider volumeSlider;
     Slider soundEffectsSlider;
 
-    Label.LabelStyle labelStyle;
     Label soundEffectLabel;
     Label volumeLabel;
     TextButton deleteButton;
@@ -50,49 +46,28 @@ public class SettingsScreen implements Screen {
             Creating the two sliders.
          */
 
-        volumeSlider = new Slider(0, 100, 1, false, game.sliderStyle);
-        soundEffectsSlider = new Slider(0, 100, 1, false, game.sliderStyle);
-        volumeSlider.setWidth(game.width300);
-        soundEffectsSlider.setWidth(game.width300);
-        volumeSlider.setValue(game.volume);
-        soundEffectsSlider.setValue(game.soundEffects);
-        volumeSlider.setPosition(((Gdx.graphics.getWidth() - volumeSlider.getWidth()) / 2) - (Gdx.graphics.getWidth() / 19.2f), Gdx.graphics.getHeight() * 0.722f);
-        soundEffectsSlider.setPosition(((Gdx.graphics.getWidth() - soundEffectsSlider.getWidth()) / 2) - (Gdx.graphics.getWidth() / 19.2f), Gdx.graphics.getHeight() * 0.537f);
+        volumeSlider = game.createSlider(0, 100, 1, false, game.width300, game.volume, Gdx.graphics.getWidth() * 0.37f, Gdx.graphics.getHeight() * 0.722f, stage);
+        soundEffectsSlider = game.createSlider(0, 100, 1, false, game.width300, game.soundEffects, Gdx.graphics.getWidth() * 0.37f, Gdx.graphics.getHeight() * 0.537f, stage);
 
         /*
-            Creating the SoundEffects Label.
+            Creating the SoundEffects and Volume labels.
          */
 
-        labelStyle = skin.get("default", Label.LabelStyle.class);
-        labelStyle.font = game.normalFont;
-        soundEffectLabel = new Label("Sound Effects: " + (float) game.soundEffects, labelStyle);
-        soundEffectLabel.setPosition(soundEffectsSlider.getX() + (Gdx.graphics.getWidth() / 5.9f), soundEffectsSlider.getY() + (Gdx.graphics.getHeight() / 72f));
-
-        /*
-            Creating the Volume label.
-         */
-
-        volumeLabel = new Label("Volume: " + (float) game.volume, labelStyle);
-        volumeLabel.setPosition(volumeSlider.getX() + (Gdx.graphics.getWidth() / 5.9f), volumeSlider.getY() + (Gdx.graphics.getHeight() / 72f));
+        soundEffectLabel = game.createLabel("Sound Effects: " + (float) game.soundEffects, soundEffectsSlider.getX() + (Gdx.graphics.getWidth() / 5.9f), soundEffectsSlider.getY() + (Gdx.graphics.getHeight() / 72f), stage);
+        volumeLabel = game.createLabel("Volume: " + (float) game.volume, volumeSlider.getX() + (Gdx.graphics.getWidth() / 5.9f), volumeSlider.getY() + (Gdx.graphics.getHeight() / 72f), stage);
 
         /*
             Creating the two main buttons.
          */
 
-        backButton = new TextButton("Back", game.textButtonStyle);
-        backButton.setPosition((Gdx.graphics.getWidth() - backButton.getWidth()) / 2, Gdx.graphics.getHeight() * 0.12f);
-        deleteButton = new TextButton("Erase Data", game.textButtonStyle);
-        deleteButton.setPosition((Gdx.graphics.getWidth() - deleteButton.getWidth()) / 2, Gdx.graphics.getHeight() * 0.33f);
+        backButton = game.createMainButtonXCentered("Back", Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 0.12f, stage);
+        deleteButton = game.createMainButtonXCentered("Erase Data", Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 0.33f, stage);
 
         /*
             Setting the title.
          */
 
-        titleStyle = skin.get("default", Label.LabelStyle.class);
-        titleStyle.font = game.titleFont;
-        title = new Label("SETTINGS", titleStyle);
-        title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() * 0.86f);
-        title.setColor(Color.WHITE);
+        game.createTitleCentered("SETTINGS", Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 0.86f, Color.WHITE, stage);
 
         /*
             Creating the dialog.
@@ -120,8 +95,8 @@ public class SettingsScreen implements Screen {
         };
         confirmDeleteDialog.setResizable(false);
         confirmDeleteDialog.text("""
-                 Do you want to delete all your save files?
-                 These include classes, spells and characters!
+                 Do you want to delete all your save files?\s
+                 These include classes, spells and characters!\s
                 """, game.labelStyle);
         confirmDeleteDialog.button("Yes", true, game.textButtonStyle).button("No", false, game.textButtonStyle);
 
@@ -162,17 +137,8 @@ public class SettingsScreen implements Screen {
                 volumeLabel.setText("Volume: " + volumeSlider.getValue());
                 game.volume = (int) volumeSlider.getValue();
                 game.updateVolume();
-
             }
         });
-
-        stage.addActor(soundEffectLabel);
-        stage.addActor(volumeLabel);
-        stage.addActor(volumeSlider);
-        stage.addActor(soundEffectsSlider);
-        stage.addActor(backButton);
-        stage.addActor(deleteButton);
-        stage.addActor(title);
     }
 
     @Override
