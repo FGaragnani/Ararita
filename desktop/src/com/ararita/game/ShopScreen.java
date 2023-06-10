@@ -29,9 +29,6 @@ public class ShopScreen implements Screen {
     Skin skin;
 
     Inventory inventory;
-
-    Label title;
-    Label.LabelStyle titleStyle;
     TextButton exitButton;
 
     Array<String> allItemsArray;
@@ -103,18 +100,13 @@ public class ShopScreen implements Screen {
             Setting the title.
          */
 
-        titleStyle = skin.get("default", Label.LabelStyle.class);
-        titleStyle.font = game.titleFont;
-        title = new Label("SHOP", titleStyle);
-        title.setColor(Color.BLACK);
-        title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() * 0.86f);
+        game.createTitleCentered("SHOP", Gdx.graphics.getHeight() * 0.86f, Color.BLACK, stage);
 
         /*
             Creating the Exit Button.
          */
 
-        exitButton = new TextButton("Exit", game.textButtonStyle);
-        exitButton.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, Gdx.graphics.getHeight() * 0.074f);
+        exitButton = game.createMainButtonXCentered("Exit", Gdx.graphics.getHeight() * 0.074f, stage);
         exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -127,10 +119,8 @@ public class ShopScreen implements Screen {
             Adding the Select Box for the items to buy and its listener.
          */
 
-        buySelectBox = new SelectBox<>(game.selectBoxStyle);
+        buySelectBox = game.createSelectBox(game.width400, stringSelectBox -> (Gdx.graphics.getWidth() - stringSelectBox.getWidth()) / 4 - (Gdx.graphics.getWidth() / 96f), Gdx.graphics.getHeight() * 0.676f, stage);
         buySelectBox.setItems(allItemsArray);
-        buySelectBox.setWidth(game.width400);
-        buySelectBox.setPosition((Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 4 - (Gdx.graphics.getWidth() / 96f), Gdx.graphics.getHeight() * 0.676f);
         buySelectBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -141,22 +131,11 @@ public class ShopScreen implements Screen {
         });
 
         /*
-            Setting the stats Label.
+            Setting the stats and cost Label.
          */
 
-        stats = new Label("", game.labelStyle);
-        stats.setFontScale(game.descScaleX, game.descScaleY);
-        stats.setColor(Color.BLACK);
-        stats.setPosition((Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 4 - (Gdx.graphics.getWidth() / 96f), Gdx.graphics.getHeight() * 0.6f);
-
-        /*
-            Creating the cost label.
-         */
-
-        costLabel = new Label("", stats.getStyle());
-        costLabel.setFontScale(game.statScaleX, game.statScaleY);
-        costLabel.setColor(Color.BLACK);
-        costLabel.setPosition((Gdx.graphics.getWidth() - (buySelectBox.getWidth())) / 2 - (0.2f * Gdx.graphics.getWidth()), Gdx.graphics.getHeight() * 0.75f);
+        stats = game.createStatLabel("", Color.BLACK, (Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 4 - (Gdx.graphics.getWidth() / 96f), Gdx.graphics.getHeight() * 0.6f, stage);
+        costLabel = game.createStatLabel("", Color.BLACK, (Gdx.graphics.getWidth() - (buySelectBox.getWidth())) / 2 - (0.2f * Gdx.graphics.getWidth()), Gdx.graphics.getHeight() * 0.75f, stage);
 
         /*
             Adding the coin icon.
@@ -172,13 +151,9 @@ public class ShopScreen implements Screen {
             Setting the number to buy TextField, its label and its listener.
          */
 
-        numberBuyTextField = new TextField("1", game.textFieldStyle);
-        numberBuyTextField.setWidth(game.width200 / 2);
+        numberBuyTextField = game.createTextField("1", game.width200 / 2f, textField -> (Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 4 - (0.08f * Gdx.graphics.getWidth()), Gdx.graphics.getHeight() * 0.583f, stage);
         numberBuyTextField.setTextFieldFilter(new DigitFilter());
-        numberBuyTextField.setPosition((Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 4 - (0.08f * Gdx.graphics.getWidth()), Gdx.graphics.getHeight() * 0.583f);
-        toBuyLabel = new Label("", costLabel.getStyle());
-        toBuyLabel.setPosition((Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 4 - (0.156f * Gdx.graphics.getWidth()), Gdx.graphics.getHeight() * 0.565f);
-        toBuyLabel.setColor(Color.BLACK);
+        toBuyLabel = game.createStatLabel("", Color.BLACK, (Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 4 - (0.156f * Gdx.graphics.getWidth()), Gdx.graphics.getHeight() * 0.565f, stage);
         numberBuyTextField.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -190,9 +165,7 @@ public class ShopScreen implements Screen {
             Setting the Buy Button and its listener.
          */
 
-        buyButton = new TextButton("Buy", skin.get("default", TextButton.TextButtonStyle.class));
-        buyButton.getLabel().setStyle(stats.getStyle());
-        buyButton.setPosition((Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 4 - (0.08f * Gdx.graphics.getWidth()), Gdx.graphics.getHeight() * 0.648f);
+        buyButton = game.createNormalButton("Buy", textButton -> (Gdx.graphics.getWidth() - buySelectBox.getWidth()) / 4 - (0.08f * Gdx.graphics.getWidth()), Gdx.graphics.getHeight() * 0.648f, stage);
         buyButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -227,9 +200,7 @@ public class ShopScreen implements Screen {
             Adding the current money label and image.
          */
 
-        currentMoney = new Label("Money: " + inventory.getMoney(), stats.getStyle());
-        currentMoney.setColor(Color.BLACK);
-        currentMoney.setPosition(0.755f * Gdx.graphics.getWidth(), 0.88f * Gdx.graphics.getHeight());
+        currentMoney = game.createStatLabel("Money: " + inventory.getMoney(), Color.BLACK, 0.755f * Gdx.graphics.getWidth(), 0.88f * Gdx.graphics.getHeight(), stage);
         currentMoneyImage = new Image(new TextureRegionDrawable(coinTexture));
         currentMoneyImage.setSize(coinTexture.getWidth(), coinTexture.getHeight());
         currentMoneyImage.setPosition((0.81f * Gdx.graphics.getWidth()) + (currentMoney.getText().length() * (Gdx.graphics.getWidth() / 192f)), 0.866f * Gdx.graphics.getHeight());
@@ -238,9 +209,7 @@ public class ShopScreen implements Screen {
             Creating the Sell Select Box and its listener.
          */
 
-        sellSelectBox = new SelectBox<>(game.selectBoxStyle);
-        sellSelectBox.setWidth(game.width400);
-        sellSelectBox.setPosition((Gdx.graphics.getWidth() - buySelectBox.getWidth()) * 3 / 4 - (Gdx.graphics.getWidth() / 96f), Gdx.graphics.getHeight() * 0.676f);
+        sellSelectBox = game.createSelectBox(game.width400, stringSelectBox -> (Gdx.graphics.getWidth() - stringSelectBox.getWidth()) * 3 / 4 - (Gdx.graphics.getWidth() / 96f), Gdx.graphics.getHeight() * 0.676f, stage);
         sellSelectBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -252,10 +221,7 @@ public class ShopScreen implements Screen {
             Creating the sell label and its coin image.
          */
 
-        sellLabel = new Label("", stats.getStyle());
-        sellLabel.setFontScale(game.statScaleX, game.statScaleY);
-        sellLabel.setColor(Color.BLACK);
-        sellLabel.setPosition((Gdx.graphics.getWidth() - (buySelectBox.getWidth())) / 2 + (0.1875f * Gdx.graphics.getWidth()), Gdx.graphics.getHeight() * 3 / 4f);
+        sellLabel = game.createStatLabel("", Color.BLACK, (Gdx.graphics.getWidth() - (buySelectBox.getWidth())) / 2 + (0.1875f * Gdx.graphics.getWidth()), Gdx.graphics.getHeight() * 3 / 4f, stage);
         coinImageSell = new Image();
         coinImageSell.setDrawable(new TextureRegionDrawable(coinTexture));
         coinImageSell.setSize(coinTexture.getWidth(), coinTexture.getHeight());
@@ -265,20 +231,15 @@ public class ShopScreen implements Screen {
             Setting the sell stats Label.
          */
 
-        sellStats = new Label("", game.labelStyle);
-        sellStats.setFontScale(game.descScaleX, game.descScaleY);
-        sellStats.setColor(Color.BLACK);
+        sellStats = game.createLabel("", 0, 0, game.descScaleX, game.descScaleY, Color.BLACK, stage);
 
         /*
             Setting the "how many" and "you have" label for selling, and the sell text field.
          */
 
-        toSellLabel = new Label("", game.labelStyle);
+        toSellLabel = game.createLabel("", 0, 0, stage);
         toSellLabel.setColor(Color.BLACK);
-        numberSellTextField = new TextField("1", game.textFieldStyle);
-        numberSellTextField.setWidth(game.width200 / 2);
-        numberSellTextField.setTextFieldFilter(new DigitFilter());
-        numberSellTextField.setPosition(Gdx.graphics.getWidth() * 0.88f, Gdx.graphics.getHeight() * 0.68f);
+        numberSellTextField = game.createTextField("1", game.width200 / 2f, textField -> Gdx.graphics.getWidth() * 0.88f, Gdx.graphics.getHeight() * 0.68f, stage);
         numberSellTextField.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -290,9 +251,7 @@ public class ShopScreen implements Screen {
             Setting the Sell Button.
          */
 
-        sellButton = new TextButton("Sell", skin.get("default", TextButton.TextButtonStyle.class));
-        sellButton.getLabel().setStyle(stats.getStyle());
-        sellButton.setPosition((Gdx.graphics.getWidth() - buySelectBox.getWidth()) * 3 / 4 - (0.08f * Gdx.graphics.getWidth()), Gdx.graphics.getHeight() * 0.648f);
+        sellButton = game.createNormalButton("Sell", textButton -> (Gdx.graphics.getWidth() - buySelectBox.getWidth()) * 3 / 4 - (0.08f * Gdx.graphics.getWidth()), Gdx.graphics.getHeight() * 0.648f, stage);
         sellButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -365,24 +324,9 @@ public class ShopScreen implements Screen {
             Adding all actors.
          */
 
-        stage.addActor(title);
-        stage.addActor(exitButton);
-        stage.addActor(buySelectBox);
         stage.addActor(coinImage);
-        stage.addActor(costLabel);
-        stage.addActor(stats);
-        stage.addActor(currentMoney);
         stage.addActor(currentMoneyImage);
-        stage.addActor(buyButton);
-        stage.addActor(numberBuyTextField);
-        stage.addActor(toBuyLabel);
-        stage.addActor(sellSelectBox);
-        stage.addActor(sellLabel);
         stage.addActor(coinImageSell);
-        stage.addActor(sellStats);
-        stage.addActor(toSellLabel);
-        stage.addActor(numberSellTextField);
-        stage.addActor(sellButton);
 
         /*
             Setting the default values.
