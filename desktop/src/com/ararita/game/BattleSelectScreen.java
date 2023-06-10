@@ -3,7 +3,6 @@ package com.ararita.game;
 import com.ararita.game.battlers.Enemy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,11 +15,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.Map;
-import java.util.Objects;
 
 public class BattleSelectScreen implements Screen {
 
@@ -39,9 +36,6 @@ public class BattleSelectScreen implements Screen {
 
     Texture enemyTexture;
     Image enemyImage;
-
-    Label title;
-    Label.LabelStyle titleStyle;
 
     Texture backgroundTexture;
     Sprite backgroundSprite;
@@ -82,29 +76,20 @@ public class BattleSelectScreen implements Screen {
             Setting the title.
          */
 
-        titleStyle = skin.get("default", Label.LabelStyle.class);
-        titleStyle.font = game.titleFont;
-        title = new Label("ENEMY SELECTION", titleStyle);
-        title.setColor(Color.BLACK);
-        title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() * 0.86f);
+        game.createTitleCentered("ENEMY SELECTION", Gdx.graphics.getHeight() * 0.86f, Color.BLACK, stage);
 
         /*
             Creating the statistics label.
          */
 
-        statsLabel = new Label("", skin.get("default", Label.LabelStyle.class));
-        statsLabel.setFontScale(game.statScaleX, game.statScaleY);
-        statsLabel.setColor(Color.BLACK);
-        statsLabel.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 6, Gdx.graphics.getHeight() * 0.537f);
+        statsLabel = game.createStatLabel("", Color.BLACK, Gdx.graphics.getWidth() / 6f, Gdx.graphics.getHeight() * 0.537f, stage);
 
         /*
             Creating the two main buttons.
          */
 
-        confirmButton = new TextButton("Battle!", game.textButtonStyle);
-        confirmButton.setPosition((Gdx.graphics.getWidth() - (confirmButton.getWidth())) / 2, Gdx.graphics.getHeight() * 0.213f);
-        exitButton = new TextButton("Exit", game.textButtonStyle);
-        exitButton.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, Gdx.graphics.getHeight() * 0.074f);
+        confirmButton = game.createMainButtonXCentered("Battle!", Gdx.graphics.getHeight() * 0.213f, stage);
+        exitButton = game.createMainButtonXCentered("Exit", Gdx.graphics.getHeight() * 0.074f, stage);
         confirmButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -130,10 +115,8 @@ public class BattleSelectScreen implements Screen {
             Creating the Select Box.
          */
 
-        enemySelectBox = new SelectBox<>(game.selectBoxStyle);
+        enemySelectBox = game.createSelectBox(game.width400, stringSelectBox -> (Gdx.graphics.getWidth() - stringSelectBox.getWidth()) / 2, Gdx.graphics.getHeight() * 0.537f, stage);
         enemySelectBox.setItems(enemies);
-        enemySelectBox.setWidth(game.width400);
-        enemySelectBox.setPosition((Gdx.graphics.getWidth() - enemySelectBox.getWidth()) / 2, Gdx.graphics.getHeight() * 0.537f);
         enemySelectBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -155,11 +138,6 @@ public class BattleSelectScreen implements Screen {
             Adding all actors.
          */
 
-        stage.addActor(title);
-        stage.addActor(confirmButton);
-        stage.addActor(exitButton);
-        stage.addActor(enemySelectBox);
-        stage.addActor(statsLabel);
         stage.addActor(enemyImage);
 
         /*
