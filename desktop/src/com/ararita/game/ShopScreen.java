@@ -237,8 +237,7 @@ public class ShopScreen implements Screen {
             Setting the "how many" and "you have" label for selling, and the sell text field.
          */
 
-        toSellLabel = game.createLabel("", 0, 0, stage);
-        toSellLabel.setColor(Color.BLACK);
+        toSellLabel = game.createStatLabel("", Color.BLACK, 0, 0, stage);
         numberSellTextField = game.createTextField("1", game.width200 / 2f, textField -> Gdx.graphics.getWidth() * 0.88f, Gdx.graphics.getHeight() * 0.68f, stage);
         numberSellTextField.addListener(new ChangeListener() {
             @Override

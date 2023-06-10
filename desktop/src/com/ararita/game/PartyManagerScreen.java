@@ -37,11 +37,7 @@ public class PartyManagerScreen implements Screen {
 
     Inventory inventory;
 
-    Label title;
-    Label.LabelStyle titleStyle;
-
     SelectBox<String> partyCharactersSelectBox;
-    Label partyLabel;
     SelectBox<String> otherCharactersSelectBox;
     Label otherCharactersLabel;
     TextButton partyToReserveButton;
@@ -54,7 +50,6 @@ public class PartyManagerScreen implements Screen {
     TextButton equipButton;
     SelectBox<String> weaponsEquippedSelectBox;
     TextButton unEquipButton;
-    Label inventoryLabel;
     Label statsInventoryWeapon;
     Label statsEquippedWeapon;
 
@@ -121,18 +116,13 @@ public class PartyManagerScreen implements Screen {
             Setting the title.
          */
 
-        titleStyle = skin.get("default", Label.LabelStyle.class);
-        titleStyle.font = game.titleFont;
-        title = new Label("PARTY MANAGER", titleStyle);
-        title.setColor(Color.BLACK);
-        title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() * 0.861f);
+        game.createTitleCentered("PARTY MANAGER", Gdx.graphics.getHeight() * 0.861f, Color.BLACK, stage);
 
         /*
             Creating the Exit Button.
          */
 
-        exitButton = new TextButton("Exit", game.textButtonStyle);
-        exitButton.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, 0);
+        exitButton = game.createMainButtonXCentered("Exit", 0, stage);
         exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -145,9 +135,7 @@ public class PartyManagerScreen implements Screen {
             Setting the party SelectBox and Label.
          */
 
-        partyCharactersSelectBox = new SelectBox<>(game.selectBoxStyle);
-        partyCharactersSelectBox.setWidth(game.width200 + game.width300);
-        partyCharactersSelectBox.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 - (0.02f * Gdx.graphics.getWidth()), Gdx.graphics.getHeight() * 0.648f);
+        partyCharactersSelectBox = game.createSelectBox(game.width200 + game.width300, stringSelectBox -> (Gdx.graphics.getWidth() - stringSelectBox.getWidth()) / 6 - (0.02f * Gdx.graphics.getWidth()), Gdx.graphics.getHeight() * 0.648f, stage);
         partyCharactersSelectBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -156,39 +144,28 @@ public class PartyManagerScreen implements Screen {
                 updateWeapons();
             }
         });
-        partyLabel = new Label("Party:", skin.get("default", Label.LabelStyle.class));
-        partyLabel.setFontScale(game.statScaleX, game.statScaleY);
-        partyLabel.setColor(Color.BLACK);
-        partyLabel.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 - (0.073f * Gdx.graphics.getWidth()), Gdx.graphics.getHeight() * 0.63f);
+
+        game.createLabelVoid("Party:", (Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 - (0.073f * Gdx.graphics.getWidth()), Gdx.graphics.getHeight() * 0.655f, game.statScaleX, game.statScaleY, Color.BLACK, stage);
         spriteImageParty.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6, Gdx.graphics.getHeight() * 0.71f);
 
         /*
             Adding the other characters Select Box and its label.
          */
 
-        otherCharactersSelectBox = new SelectBox<>(game.selectBoxStyle);
-        otherCharactersSelectBox.setWidth(game.width200 + game.width300);
-        otherCharactersSelectBox.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) * 5 / 6 + (0.042f * Gdx.graphics.getWidth()), Gdx.graphics.getHeight() * 0.648f);
-        otherCharactersLabel = new Label("Reserve:", skin.get("default", Label.LabelStyle.class));
-        otherCharactersLabel.setFontScale(game.statScaleX, game.statScaleY);
-        otherCharactersLabel.setColor(Color.BLACK);
-        otherCharactersLabel.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) * 5 / 6 - (Gdx.graphics.getWidth() * 0.026f), Gdx.graphics.getHeight() * 0.63f);
+        otherCharactersSelectBox = game.createSelectBox(game.width200 + game.width300, stringSelectBox -> (Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) * 5 / 6 + (0.042f * Gdx.graphics.getWidth()), Gdx.graphics.getHeight() * 0.648f, stage);
+        otherCharactersLabel = game.createStatLabel("Reserve:", Color.BLACK, (Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) * 5 / 6 - (Gdx.graphics.getWidth() * 0.026f), Gdx.graphics.getHeight() * 0.66f, stage);
         spriteImageReserve.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) * 5 / 6 + (Gdx.graphics.getWidth() / 17.45f), Gdx.graphics.getHeight() * 0.713f);
 
         /*
             Creating the two transfer buttons.
          */
 
-        partyToReserveButton = new TextButton("Party -> Reserve", skin.get("default", TextButton.TextButtonStyle.class));
-        partyToReserveButton.getLabel().setStyle(partyLabel.getStyle());
+        partyToReserveButton = game.createNormalButton("Party -> Reserve", textButton -> (Gdx.graphics.getWidth() - textButton.getWidth()) / 2.0f, Gdx.graphics.getHeight() * 0.7f, stage);
         partyToReserveButton.getLabel().setFontScale(game.statScaleX * 0.8f, game.statScaleY * 0.8f);
         partyToReserveButton.setWidth(game.width200 * 5 / 4);
-        partyToReserveButton.setPosition((Gdx.graphics.getWidth() - partyToReserveButton.getWidth()) / 2.0f, Gdx.graphics.getHeight() * 0.7f);
-        reserveToPartyButton = new TextButton("Party <- Reserve", skin.get("default", TextButton.TextButtonStyle.class));
-        reserveToPartyButton.getLabel().setStyle(partyLabel.getStyle());
+        reserveToPartyButton = game.createNormalButton("Party <- Reserve", textButton -> (Gdx.graphics.getWidth() - textButton.getWidth()) / 2.0f, Gdx.graphics.getHeight() * 0.7f - partyToReserveButton.getHeight(), stage);
         reserveToPartyButton.getLabel().setFontScale(game.statScaleX * 0.8f, game.statScaleY * 0.8f);
         reserveToPartyButton.setWidth(game.width200 * 5 / 4);
-        reserveToPartyButton.setPosition((Gdx.graphics.getWidth() - partyToReserveButton.getWidth()) / 2.0f, Gdx.graphics.getHeight() * 0.7f - partyToReserveButton.getHeight());
 
         partyToReserveButton.addListener(new ChangeListener() {
             @Override
@@ -234,53 +211,36 @@ public class PartyManagerScreen implements Screen {
             Setting the two stats labels.
          */
 
-        partyStats = new Label("", game.labelStyle);
+        partyStats = game.createStatLabel("", Color.BLACK, 0, 0, stage);
         partyStats.setFontScale(game.statScaleX * 0.88f, game.statScaleY * 0.88f);
-        partyStats.setColor(Color.BLACK);
-        reserveStats = new Label("", game.labelStyle);
+        reserveStats = game.createStatLabel("", Color.BLACK, 0, 0, stage);
         reserveStats.setFontScale(game.statScaleX * 0.88f, game.statScaleY * 0.88f);
-        reserveStats.setColor(Color.BLACK);
 
         /*
             Setting the inventory select box.
          */
 
-        weaponsInInventorySelectBox = new SelectBox<>(game.selectBoxStyle);
-        weaponsInInventorySelectBox.setWidth(game.width400);
-        weaponsInInventorySelectBox.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6, Gdx.graphics.getHeight() * 0.26f);
-        equipButton = new TextButton("Equip", skin.get("default", TextButton.TextButtonStyle.class));
-        equipButton.getLabel().setStyle(partyLabel.getStyle());
+        weaponsInInventorySelectBox = game.createSelectBox(game.width400, stringSelectBox -> (Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6, Gdx.graphics.getHeight() * 0.26f, stage);
+        equipButton = game.createNormalButton("Equip", textButton -> (Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6, Gdx.graphics.getHeight() * 0.35f, stage);
         equipButton.getLabel().setFontScale(game.statScaleX * 0.8f, game.statScaleY * 0.8f);
         equipButton.setWidth(game.width200 / 1.43f);
-        equipButton.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6, Gdx.graphics.getHeight() * 0.35f);
-        inventoryLabel = new Label("Inventory:", skin.get("default", Label.LabelStyle.class));
-        inventoryLabel.setFontScale(game.statScaleX, game.statScaleY);
-        inventoryLabel.setColor(Color.BLACK);
-        inventoryLabel.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 - (Gdx.graphics.getWidth() / 12f), Gdx.graphics.getHeight() * 0.46f);
+        game.createLabelVoid("Inventory:", (Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 - (Gdx.graphics.getWidth() / 12f), Gdx.graphics.getHeight() * 0.5f, game.statScaleX, game.statScaleY, Color.BLACK, stage);
 
         /*
             Setting the weapons SelectBox.
          */
 
-        weaponsEquippedSelectBox = new SelectBox<>(game.selectBoxStyle);
-        weaponsEquippedSelectBox.setWidth(game.width400);
-        weaponsEquippedSelectBox.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6, Gdx.graphics.getHeight() * 0.49f);
-        unEquipButton = new TextButton("Unequip", skin.get("default", TextButton.TextButtonStyle.class));
-        unEquipButton.getLabel().setStyle(partyLabel.getStyle());
+        weaponsEquippedSelectBox = game.createSelectBox(game.width400, stringSelectBox -> (Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6, Gdx.graphics.getHeight() * 0.49f, stage);
+        unEquipButton = game.createNormalButton("Unequip", textButton -> (Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 + (Gdx.graphics.getWidth() / 7.53f), Gdx.graphics.getHeight() * 0.35f, stage);
         unEquipButton.getLabel().setFontScale(game.statScaleX * 0.8f, game.statScaleY * 0.8f);
         unEquipButton.setWidth(game.width200 / 1.43f);
-        unEquipButton.setPosition((Gdx.graphics.getWidth() - partyCharactersSelectBox.getWidth()) / 6 + (Gdx.graphics.getWidth() / 7.53f), Gdx.graphics.getHeight() * 0.35f);
 
         /*
             Setting the equipment labels.
          */
 
-        statsEquippedWeapon = new Label("", game.labelStyle);
-        statsEquippedWeapon.setFontScale(game.statScaleX, game.statScaleY);
-        statsEquippedWeapon.setColor(Color.BLACK);
-        statsInventoryWeapon = new Label("", game.labelStyle);
-        statsInventoryWeapon.setFontScale(game.statScaleX, game.statScaleY);
-        statsInventoryWeapon.setColor(Color.BLACK);
+        statsEquippedWeapon = game.createStatLabel("", Color.BLACK, 0, 0, stage);
+        statsInventoryWeapon = game.createStatLabel("", Color.BLACK, 0, 0, stage);
 
         /*
             Setting all dialogs.
@@ -340,25 +300,8 @@ public class PartyManagerScreen implements Screen {
             Adding all stage actors.
          */
 
-        stage.addActor(exitButton);
-        stage.addActor(title);
-        stage.addActor(partyCharactersSelectBox);
-        stage.addActor(partyLabel);
-        stage.addActor(otherCharactersSelectBox);
-        stage.addActor(otherCharactersLabel);
-        stage.addActor(partyToReserveButton);
-        stage.addActor(reserveToPartyButton);
         stage.addActor(spriteImageParty);
         stage.addActor(spriteImageReserve);
-        stage.addActor(partyStats);
-        stage.addActor(reserveStats);
-        stage.addActor(weaponsInInventorySelectBox);
-        stage.addActor(equipButton);
-        stage.addActor(weaponsEquippedSelectBox);
-        stage.addActor(unEquipButton);
-        stage.addActor(inventoryLabel);
-        stage.addActor(statsInventoryWeapon);
-        stage.addActor(statsEquippedWeapon);
 
         /*
             Setting the initial values.

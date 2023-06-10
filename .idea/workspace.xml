@@ -13,6 +13,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/Settings/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Settings/settings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/Data/global.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/PartyManagerScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/PartyManagerScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/desktop/src/com/ararita/game/ShopScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/ararita/game/ShopScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
