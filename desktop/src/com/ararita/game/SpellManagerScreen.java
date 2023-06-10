@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 import java.util.Map;
 
 public class SpellManagerScreen implements Screen {
@@ -35,18 +36,27 @@ public class SpellManagerScreen implements Screen {
     SelectBox<String> deleteCharSelectBox;
     SelectBox<String> deleteSpellSelectBox;
     Label deleteStats;
-    Array<String> allCharacters;
-    Array<String> charSpells;
+    Array<String> allDeleteCharacters;
+    Array<String> charDeleteSpells;
     TextButton deleteButton;
 
     Label learnLabel;
+    SelectBox<String> learnCharSelectBox;
+    SelectBox<String> learnSpellsSelectBox;
+    Label learnStats;
+    Array<String> allLearnCharacters;
+    Array<String> charLearnSpells;
+    TextButton learnButton;
 
     TextButton exitButton;
 
     Dialog deleteDialog;
+    Dialog learnDialog;
 
     Texture backgroundTexture;
     Sprite backgroundSprite;
+
+    List<PC> allCharacters;
 
     TextButton.TextButtonStyle textButtonStyle;
 
@@ -67,12 +77,17 @@ public class SpellManagerScreen implements Screen {
         textButtonStyle = skin.get("default", TextButton.TextButtonStyle.class);
         textButtonStyle.font = game.normalFont;
 
-        allCharacters = new Array<>();
         try {
-            Global.getAllCharacters().stream().filter(PC -> !PC.getSpells().isEmpty()).forEach(PC -> allCharacters.add(PC.getName()));
+            allCharacters = Global.getAllCharacters();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        allDeleteCharacters = new Array<>();
+        allCharacters.stream().filter(PC -> !PC.getSpellTypes().isEmpty()).filter(PC::canLearnAnySpell).forEach(PC -> allDeleteCharacters.add(PC.getName()));
+
+        allLearnCharacters = new Array<>();
+        allCharacters.forEach(PC -> allLearnCharacters.add(PC.getName()));
 
         /*
             Setting the background texture.
@@ -117,7 +132,11 @@ public class SpellManagerScreen implements Screen {
 
         deleteCharSelectBox = new SelectBox<>(game.selectBoxStyle);
         deleteCharSelectBox.setWidth(game.width400);
-        deleteCharSelectBox.setItems(allCharacters);
+        if (!allDeleteCharacters.isEmpty()) {
+            deleteCharSelectBox.setItems(allDeleteCharacters);
+        } else {
+            deleteCharSelectBox.setItems("No characters...");
+        }
         deleteCharSelectBox.setPosition((Gdx.graphics.getWidth() - deleteCharSelectBox.getWidth()) * 0.15f, Gdx.graphics.getHeight() * 0.65f);
         deleteCharSelectBox.addListener(new ChangeListener() {
             @Override
@@ -147,7 +166,9 @@ public class SpellManagerScreen implements Screen {
         deleteButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                deleteDialog.show(stage);
+                if (!deleteSpellSelectBox.getSelected().equals("No spells...") && !deleteCharSelectBox.getSelected().equals("No characters...")) {
+                    deleteDialog.show(stage);
+                }
             }
         });
 
@@ -157,11 +178,16 @@ public class SpellManagerScreen implements Screen {
             public void result(Object confirm) {
                 if ((boolean) confirm) {
                     try {
-                        PC toForget = Global.getCharacter(deleteCharSelectBox.getSelected());
-                        toForget.forgetSpell(Global.getSpell(deleteSpellSelectBox.getSelected()));
-                        updateDeleteCharItems();
-                        updateDeleteSpellItems();
-                        updateDeleteStats();
+                        if (!deleteCharSelectBox.getSelected().equals("No characters...")) {
+                            PC toForget = Global.getCharacter(deleteCharSelectBox.getSelected());
+                            toForget.forgetSpell(Global.getSpell(deleteSpellSelectBox.getSelected()));
+                            updateDeleteCharItems();
+                            updateDeleteSpellItems();
+                            updateDeleteStats();
+                            updateLearnCharItems();
+                            updateLearnSpellItems();
+                            updateLearnStats();
+                        }
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -184,6 +210,77 @@ public class SpellManagerScreen implements Screen {
         learnLabel.setFontScale(game.descScaleX, game.descScaleY);
         learnLabel.setPosition((Gdx.graphics.getWidth() - learnLabel.getWidth()) * 0.85f, Gdx.graphics.getHeight() * 0.75f);
 
+        learnCharSelectBox = new SelectBox<>(game.selectBoxStyle);
+        learnCharSelectBox.setWidth(game.width400);
+        learnCharSelectBox.setPosition((Gdx.graphics.getWidth() - learnCharSelectBox.getWidth()) * 0.85f, Gdx.graphics.getHeight() * 0.65f);
+        if (!allLearnCharacters.isEmpty()) {
+            learnCharSelectBox.setItems(allLearnCharacters);
+        } else {
+            learnCharSelectBox.setItems("No characters...");
+        }
+        learnCharSelectBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                updateLearnSpellItems();
+            }
+        });
+
+        learnSpellsSelectBox = new SelectBox<>(game.selectBoxStyle);
+        learnSpellsSelectBox.setWidth(game.width400);
+        learnSpellsSelectBox.setPosition((Gdx.graphics.getWidth() - learnCharSelectBox.getWidth()) * 0.85f, Gdx.graphics.getHeight() * 0.55f);
+        learnSpellsSelectBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                updateLearnStats();
+            }
+        });
+
+        learnStats = new Label("", game.labelStyle);
+        learnStats.setFontScale(game.statScaleX, game.statScaleY);
+        learnStats.setColor(Color.BLACK);
+        learnStats.setPosition((Gdx.graphics.getWidth() - deleteLabel.getWidth()) * 0.85f, Gdx.graphics.getHeight() * 0.45f);
+
+        learnButton = new TextButton("Learn", textButtonStyle);
+        learnButton.setPosition((Gdx.graphics.getWidth() - learnButton.getWidth()) * 0.85f, Gdx.graphics.getHeight() * 0.1f);
+        learnButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (!learnSpellsSelectBox.getSelected().equals("No spells...")) {
+                    learnDialog.show(stage);
+                }
+            }
+        });
+
+        learnDialog = new Dialog("", skin) {
+
+            @Override
+            public void result(Object confirm) {
+                if (!learnCharSelectBox.getSelected().equals("No characters...") && !learnSpellsSelectBox.getSelected().equals("No spells...")) {
+                    if ((boolean) confirm) {
+                        try {
+                            PC chosen = Global.getCharacter(learnCharSelectBox.getSelected());
+                            Spell toLearn = Global.getSpell(learnSpellsSelectBox.getSelected());
+                            chosen.learnSpell(toLearn);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        updateLearnCharItems();
+                        updateLearnSpellItems();
+                        updateLearnStats();
+                        updateDeleteCharItems();
+                        updateDeleteSpellItems();
+                        updateDeleteStats();
+                    }
+                }
+                hide();
+            }
+        };
+        learnDialog.setResizable(false);
+        learnDialog.text(" Do you want your character \n to learn the spell? ", game.labelStyle);
+        learnDialog.button("Yes", true, game.textButtonStyle);
+        learnDialog.button("No", false, game.textButtonStyle);
+        learnDialog.setPosition(0, 0);
+
         /*
             Adding all actors.
          */
@@ -195,6 +292,10 @@ public class SpellManagerScreen implements Screen {
         stage.addActor(deleteStats);
         stage.addActor(deleteButton);
         stage.addActor(learnLabel);
+        stage.addActor(learnCharSelectBox);
+        stage.addActor(learnSpellsSelectBox);
+        stage.addActor(learnStats);
+        stage.addActor(learnButton);
         stage.addActor(exitButton);
 
         /*
@@ -203,6 +304,8 @@ public class SpellManagerScreen implements Screen {
 
         updateDeleteSpellItems();
         updateDeleteStats();
+        updateLearnSpellItems();
+        updateLearnStats();
     }
 
     @Override
@@ -256,13 +359,17 @@ public class SpellManagerScreen implements Screen {
      * The characters inside the 'delete' select box are updated.
      */
     public void updateDeleteCharItems() {
-        allCharacters = new Array<>();
+        allDeleteCharacters = new Array<>();
         try {
-            Global.getAllCharacters().stream().filter(PC -> !PC.getSpells().isEmpty()).forEach(PC -> allCharacters.add(PC.getName()));
+            Global.getAllCharacters().stream().filter(PC -> !PC.getSpells().isEmpty()).forEach(PC -> allDeleteCharacters.add(PC.getName()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        deleteCharSelectBox.setItems(allCharacters);
+        if (!allDeleteCharacters.isEmpty()) {
+            deleteCharSelectBox.setItems(allDeleteCharacters);
+        } else {
+            deleteCharSelectBox.setItems("No characters...");
+        }
     }
 
     /**
@@ -270,10 +377,18 @@ public class SpellManagerScreen implements Screen {
      */
     public void updateDeleteSpellItems() {
         try {
-            PC chosen = Global.getCharacter(deleteCharSelectBox.getSelected());
-            charSpells = new Array<>();
-            chosen.getSpells().forEach(spell -> charSpells.add(spell.getName()));
-            deleteSpellSelectBox.setItems(charSpells);
+            if (!deleteCharSelectBox.getSelected().equals("No characters...")) {
+                PC chosen = Global.getCharacter(deleteCharSelectBox.getSelected());
+                charDeleteSpells = new Array<>();
+                chosen.getSpells().forEach(spell -> charDeleteSpells.add(spell.getName()));
+                if (!charDeleteSpells.isEmpty()) {
+                    deleteSpellSelectBox.setItems(charDeleteSpells);
+                } else {
+                    deleteSpellSelectBox.setItems("No spells...");
+                }
+            } else {
+                deleteSpellSelectBox.setItems("No spells...");
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -281,7 +396,8 @@ public class SpellManagerScreen implements Screen {
 
     public void updateDeleteStats() {
 
-        if (deleteSpellSelectBox.getItems().isEmpty()) {
+        if (deleteSpellSelectBox.getItems().isEmpty() || deleteSpellSelectBox.getSelected().equals("No spells...")) {
+            deleteStats.setText("");
             return;
         }
 
@@ -306,5 +422,68 @@ public class SpellManagerScreen implements Screen {
 
         deleteStats.setText(stringBuilder.toString());
         deleteStats.setPosition((Gdx.graphics.getWidth() - deleteLabel.getWidth()) * 0.15f, Gdx.graphics.getHeight() * 0.45f - (otherLines * game.otherLinesFactor));
+    }
+
+    public void updateLearnCharItems() {
+        allLearnCharacters = new Array<>();
+        try {
+            Global.getAllCharacters().stream().filter(PC -> !PC.getSpellTypes().isEmpty()).filter(PC::canLearnAnySpell).forEach(PC -> allLearnCharacters.add(PC.getName()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        if (!allLearnCharacters.isEmpty()) {
+            learnCharSelectBox.setItems(allLearnCharacters);
+        } else {
+            learnCharSelectBox.setItems("No characters...");
+        }
+    }
+
+    public void updateLearnSpellItems() {
+        if (learnCharSelectBox.getSelected().equals("No characters...")) {
+            learnSpellsSelectBox.setItems("No spells...");
+            return;
+        }
+        try {
+            PC chosen = Global.getCharacter(learnCharSelectBox.getSelected());
+            charLearnSpells = new Array<>();
+            Global.getAllSpells().stream().filter(chosen::canLearn).forEach(spell -> charLearnSpells.add(spell.getName()));
+            if (!charLearnSpells.isEmpty()) {
+                learnSpellsSelectBox.setItems(charLearnSpells);
+            } else {
+                learnSpellsSelectBox.setItems("No spells...");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateLearnStats() {
+
+        if (learnSpellsSelectBox.getItems().isEmpty() || learnSpellsSelectBox.getSelected().equals("No spells...")) {
+            learnStats.setText("");
+            return;
+        }
+
+        int otherLines = 0;
+        StringBuilder stringBuilder = new StringBuilder();
+        try {
+            Spell toDescribe = Global.getSpell(learnSpellsSelectBox.getSelected());
+            stringBuilder.append("Power: ").append(toDescribe.getBasePower()).append("\n");
+            stringBuilder.append("Type: ").append(toDescribe.getType()).append("\n");
+            stringBuilder.append("MP: ").append(toDescribe.getMPCost()).append("\n");
+            if (!toDescribe.getStatusEffects().isEmpty()) {
+                stringBuilder.append("Status Effects:\n");
+                otherLines++;
+                for (Map.Entry<String, Double> entry : toDescribe.getStatusEffects().entrySet()) {
+                    otherLines++;
+                    stringBuilder.append(" - ").append(entry.getKey()).append(": ").append(BigDecimal.valueOf(entry.getValue()).setScale(2, RoundingMode.HALF_UP)).append("\n");
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        learnStats.setText(stringBuilder.toString());
+        learnStats.setPosition((Gdx.graphics.getWidth() - learnLabel.getWidth()) * 0.85f, Gdx.graphics.getHeight() * 0.45f - (otherLines * game.otherLinesFactor));
     }
 }
