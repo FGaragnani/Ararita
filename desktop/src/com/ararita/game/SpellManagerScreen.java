@@ -29,10 +29,6 @@ public class SpellManagerScreen implements Screen {
     OrthographicCamera camera;
     Skin skin;
 
-    Label title;
-    Label.LabelStyle titleStyle;
-
-    Label deleteLabel;
     SelectBox<String> deleteCharSelectBox;
     SelectBox<String> deleteSpellSelectBox;
     Label deleteStats;
@@ -40,7 +36,6 @@ public class SpellManagerScreen implements Screen {
     Array<String> charDeleteSpells;
     TextButton deleteButton;
 
-    Label learnLabel;
     SelectBox<String> learnCharSelectBox;
     SelectBox<String> learnSpellsSelectBox;
     Label learnStats;
@@ -58,8 +53,6 @@ public class SpellManagerScreen implements Screen {
 
     List<PC> allCharacters;
 
-    TextButton.TextButtonStyle textButtonStyle;
-
     public SpellManagerScreen(final Ararita game) {
 
         /*
@@ -73,9 +66,6 @@ public class SpellManagerScreen implements Screen {
         this.skin = new Skin(Gdx.files.internal(game.stylesPath));
         this.camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
-
-        textButtonStyle = skin.get("default", TextButton.TextButtonStyle.class);
-        textButtonStyle.font = game.normalFont;
 
         try {
             allCharacters = Global.getAllCharacters();
@@ -101,18 +91,13 @@ public class SpellManagerScreen implements Screen {
             Title initialization.
          */
 
-        titleStyle = skin.get("default", Label.LabelStyle.class);
-        titleStyle.font = game.titleFont;
-        title = new Label("SPELL MANAGER", titleStyle);
-        title.setColor(Color.BLACK);
-        title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() - 150);
+        game.createTitleCentered("SPELL MANAGER", Gdx.graphics.getHeight() * 0.86f, Color.BLACK, stage);
 
         /*
             Creating the Exit Button.
          */
 
-        exitButton = new TextButton("Exit", game.textButtonStyle);
-        exitButton.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, Gdx.graphics.getHeight() * 0.074f);
+        exitButton = game.createMainButtonXCentered("Exit", Gdx.graphics.getHeight() * 0.074f, stage);
         exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -125,19 +110,14 @@ public class SpellManagerScreen implements Screen {
             Creating the 'delete' label and select boxes.
          */
 
-        deleteLabel = new Label("Forget known spells", game.labelStyle);
-        deleteLabel.setColor(Color.BLACK);
-        deleteLabel.setFontScale(game.descScaleX, game.descScaleY);
-        deleteLabel.setPosition((Gdx.graphics.getWidth() - deleteLabel.getWidth()) * 0.15f, Gdx.graphics.getHeight() * 0.75f);
+        game.createLabelVoid("Forget known spells", Gdx.graphics.getWidth() * 0.12f, Gdx.graphics.getHeight() * 0.75f, game.descScaleX, game.descScaleY, Color.BLACK, stage);
 
-        deleteCharSelectBox = new SelectBox<>(game.selectBoxStyle);
-        deleteCharSelectBox.setWidth(game.width400);
+        deleteCharSelectBox = game.createSelectBox(game.width400, stringSelectBox -> (Gdx.graphics.getWidth() - stringSelectBox.getWidth()) * 0.15f, Gdx.graphics.getHeight() * 0.65f, stage);
         if (!allDeleteCharacters.isEmpty()) {
             deleteCharSelectBox.setItems(allDeleteCharacters);
         } else {
             deleteCharSelectBox.setItems("No characters...");
         }
-        deleteCharSelectBox.setPosition((Gdx.graphics.getWidth() - deleteCharSelectBox.getWidth()) * 0.15f, Gdx.graphics.getHeight() * 0.65f);
         deleteCharSelectBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -146,9 +126,7 @@ public class SpellManagerScreen implements Screen {
             }
         });
 
-        deleteSpellSelectBox = new SelectBox<>(game.selectBoxStyle);
-        deleteSpellSelectBox.setWidth(game.width400);
-        deleteSpellSelectBox.setPosition((Gdx.graphics.getWidth() - deleteSpellSelectBox.getWidth()) * 0.15f, Gdx.graphics.getHeight() * 0.55f);
+        deleteSpellSelectBox = game.createSelectBox(game.width400, stringSelectBox -> (Gdx.graphics.getWidth() - stringSelectBox.getWidth()) * 0.15f, Gdx.graphics.getHeight() * 0.55f, stage);
         deleteSpellSelectBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -156,13 +134,9 @@ public class SpellManagerScreen implements Screen {
             }
         });
 
-        deleteStats = new Label("", game.labelStyle);
-        deleteStats.setFontScale(game.statScaleX, game.statScaleY);
-        deleteStats.setColor(Color.BLACK);
-        deleteStats.setPosition((Gdx.graphics.getWidth() - deleteLabel.getWidth()) * 0.15f, Gdx.graphics.getHeight() * 0.45f);
+        deleteStats = game.createStatLabel("", Color.BLACK, (Gdx.graphics.getWidth() - deleteSpellSelectBox.getWidth()) * 0.15f, Gdx.graphics.getHeight() * 0.45f, stage);
 
-        deleteButton = new TextButton("Forget", textButtonStyle);
-        deleteButton.setPosition((Gdx.graphics.getWidth() - deleteLabel.getWidth()) / 5f, Gdx.graphics.getHeight() * 0.1f);
+        deleteButton = game.createNormalButton("Forget", textButton -> (Gdx.graphics.getWidth() - textButton.getWidth()) / 5f, Gdx.graphics.getHeight() * 0.1f, stage);
         deleteButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -205,14 +179,9 @@ public class SpellManagerScreen implements Screen {
             Creating the 'learn' label and select boxes.
          */
 
-        learnLabel = new Label("Learn created spells", game.labelStyle);
-        learnLabel.setColor(Color.BLACK);
-        learnLabel.setFontScale(game.descScaleX, game.descScaleY);
-        learnLabel.setPosition((Gdx.graphics.getWidth() - learnLabel.getWidth()) * 0.85f, Gdx.graphics.getHeight() * 0.75f);
+        game.createLabelVoid("Learn created spells", Gdx.graphics.getWidth() * 0.83f, Gdx.graphics.getHeight() * 0.75f, game.descScaleX, game.descScaleY, Color.BLACK, stage);
 
-        learnCharSelectBox = new SelectBox<>(game.selectBoxStyle);
-        learnCharSelectBox.setWidth(game.width400);
-        learnCharSelectBox.setPosition((Gdx.graphics.getWidth() - learnCharSelectBox.getWidth()) * 0.85f, Gdx.graphics.getHeight() * 0.65f);
+        learnCharSelectBox = game.createSelectBox(game.width400, stringSelectBox -> (Gdx.graphics.getWidth() - stringSelectBox.getWidth()) * 0.85f, Gdx.graphics.getHeight() * 0.65f, stage);
         if (!allLearnCharacters.isEmpty()) {
             learnCharSelectBox.setItems(allLearnCharacters);
         } else {
@@ -225,9 +194,7 @@ public class SpellManagerScreen implements Screen {
             }
         });
 
-        learnSpellsSelectBox = new SelectBox<>(game.selectBoxStyle);
-        learnSpellsSelectBox.setWidth(game.width400);
-        learnSpellsSelectBox.setPosition((Gdx.graphics.getWidth() - learnCharSelectBox.getWidth()) * 0.85f, Gdx.graphics.getHeight() * 0.55f);
+        learnSpellsSelectBox = game.createSelectBox(game.width400, stringSelectBox -> (Gdx.graphics.getWidth() - stringSelectBox.getWidth()) * 0.85f, Gdx.graphics.getHeight() * 0.55f, stage);
         learnSpellsSelectBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -235,13 +202,9 @@ public class SpellManagerScreen implements Screen {
             }
         });
 
-        learnStats = new Label("", game.labelStyle);
-        learnStats.setFontScale(game.statScaleX, game.statScaleY);
-        learnStats.setColor(Color.BLACK);
-        learnStats.setPosition((Gdx.graphics.getWidth() - deleteLabel.getWidth()) * 0.85f, Gdx.graphics.getHeight() * 0.45f);
+        learnStats = game.createStatLabel("", Color.BLACK, (Gdx.graphics.getWidth() - deleteStats.getWidth()) * 0.85f, Gdx.graphics.getHeight() * 0.45f, stage);
 
-        learnButton = new TextButton("Learn", textButtonStyle);
-        learnButton.setPosition((Gdx.graphics.getWidth() - learnButton.getWidth()) * 0.85f, Gdx.graphics.getHeight() * 0.1f);
+        learnButton = game.createNormalButton("Learn", textButton -> (Gdx.graphics.getWidth() - textButton.getWidth()) * 0.85f, Gdx.graphics.getHeight() * 0.1f, stage);
         learnButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -280,23 +243,6 @@ public class SpellManagerScreen implements Screen {
         learnDialog.button("Yes", true, game.textButtonStyle);
         learnDialog.button("No", false, game.textButtonStyle);
         learnDialog.setPosition(0, 0);
-
-        /*
-            Adding all actors.
-         */
-
-        stage.addActor(title);
-        stage.addActor(deleteLabel);
-        stage.addActor(deleteCharSelectBox);
-        stage.addActor(deleteSpellSelectBox);
-        stage.addActor(deleteStats);
-        stage.addActor(deleteButton);
-        stage.addActor(learnLabel);
-        stage.addActor(learnCharSelectBox);
-        stage.addActor(learnSpellsSelectBox);
-        stage.addActor(learnStats);
-        stage.addActor(learnButton);
-        stage.addActor(exitButton);
 
         /*
             Setting every initial values.
@@ -421,7 +367,7 @@ public class SpellManagerScreen implements Screen {
         }
 
         deleteStats.setText(stringBuilder.toString());
-        deleteStats.setPosition((Gdx.graphics.getWidth() - deleteLabel.getWidth()) * 0.15f, Gdx.graphics.getHeight() * 0.45f - (otherLines * game.otherLinesFactor));
+        deleteStats.setPosition((Gdx.graphics.getWidth() - deleteStats.getWidth()) * 0.15f, Gdx.graphics.getHeight() * 0.45f - (otherLines * game.otherLinesFactor));
     }
 
     public void updateLearnCharItems() {
@@ -484,6 +430,6 @@ public class SpellManagerScreen implements Screen {
         }
 
         learnStats.setText(stringBuilder.toString());
-        learnStats.setPosition((Gdx.graphics.getWidth() - learnLabel.getWidth()) * 0.85f, Gdx.graphics.getHeight() * 0.45f - (otherLines * game.otherLinesFactor));
+        learnStats.setPosition((Gdx.graphics.getWidth() - learnStats.getWidth()) * 0.85f, Gdx.graphics.getHeight() * 0.45f - (otherLines * game.otherLinesFactor));
     }
 }
