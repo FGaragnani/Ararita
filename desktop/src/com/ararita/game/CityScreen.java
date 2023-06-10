@@ -69,8 +69,7 @@ public class CityScreen implements Screen {
             Initialize the Character Creation Button and its listener.
          */
 
-        charCreateButton = new TextButton(" Recruit new \n character ", textButtonStyle);
-        charCreateButton.setPosition((Gdx.graphics.getWidth() - charCreateButton.getWidth()) / 4, Gdx.graphics.getHeight() * 0.676f);
+        charCreateButton = game.createNormalButton(" Recruit new \n character ", textButton -> (Gdx.graphics.getWidth() - textButton.getWidth()) / 4f, Gdx.graphics.getHeight() * 0.676f, stage);
         charCreateButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -87,8 +86,7 @@ public class CityScreen implements Screen {
             Initialize the Class Creation Button and its listener.
          */
 
-        classCreateButton = new TextButton(" Create new \n class ", textButtonStyle);
-        classCreateButton.setPosition((Gdx.graphics.getWidth() - classCreateButton.getWidth()) / 4, Gdx.graphics.getHeight() * 0.463f);
+        classCreateButton = game.createNormalButton(" Create new \n class ", textButton -> (Gdx.graphics.getWidth() - textButton.getWidth()) / 4, Gdx.graphics.getHeight() * 0.463f, stage);
         classCreateButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -101,8 +99,7 @@ public class CityScreen implements Screen {
             Initialize the Spell Creation Button and its listener.
          */
 
-        spellCreateButton = new TextButton("   Organize   \n spells ", textButtonStyle);
-        spellCreateButton.setPosition((Gdx.graphics.getWidth() - classCreateButton.getWidth()) / 4, Gdx.graphics.getHeight() * 0.25f);
+        spellCreateButton = game.createNormalButton("   Organize   \n spells ", textButton -> (Gdx.graphics.getWidth() - textButton.getWidth()) / 4, Gdx.graphics.getHeight() * 0.25f, stage);
         spellCreateButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -115,8 +112,7 @@ public class CityScreen implements Screen {
             Initialize the Shop Button and its listener.
          */
 
-        shopButton = new TextButton(" Enter the \n shop ", textButtonStyle);
-        shopButton.setPosition((Gdx.graphics.getWidth() - shopButton.getWidth()) * 3 / 4, Gdx.graphics.getHeight() * 0.676f);
+        shopButton = game.createNormalButton(" Enter the \n shop ", textButton -> (Gdx.graphics.getWidth() - textButton.getWidth()) * 3 / 4, Gdx.graphics.getHeight() * 0.676f, stage);
         shopButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -129,8 +125,7 @@ public class CityScreen implements Screen {
             Initialize the Party Manage Button and its listener.
          */
 
-        partyManageButton = new TextButton(" Manage \n the party ", textButtonStyle);
-        partyManageButton.setPosition((Gdx.graphics.getWidth() - partyManageButton.getWidth()) * 3 / 4, Gdx.graphics.getHeight() * 0.463f);
+        partyManageButton = game.createNormalButton(" Manage \n the party ", textButton -> (Gdx.graphics.getWidth() - textButton.getWidth()) * 3 / 4, Gdx.graphics.getHeight() * 0.463f, stage);
         partyManageButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -143,8 +138,7 @@ public class CityScreen implements Screen {
             Initialize the Main Menu button and its listener.
          */
 
-        mainMenuButton = new TextButton(" Back to \n Main Menu ", textButtonStyle);
-        mainMenuButton.setPosition((Gdx.graphics.getWidth() - mainMenuButton.getWidth()) * 3 / 4, Gdx.graphics.getHeight() / 4f);
+        mainMenuButton = game.createNormalButton(" Back to \n Main Menu ", textButton -> (Gdx.graphics.getWidth() - textButton.getWidth()) * 3 / 4, Gdx.graphics.getHeight() / 4f, stage);
         mainMenuButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -159,8 +153,7 @@ public class CityScreen implements Screen {
             Creating the Battle Button.
          */
 
-        battleButton = new TextButton("Battle!", game.textButtonStyle);
-        battleButton.setPosition((Gdx.graphics.getWidth() - battleButton.getWidth()) / 2 + (Gdx.graphics.getWidth() / 192f), (Gdx.graphics.getHeight() - battleButton.getHeight()) / 2 + (Gdx.graphics.getHeight() / 108f));
+        battleButton = game.createMainButtonXCentered("Battle!", Gdx.graphics.getHeight() * 0.45f, stage);
         battleButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -168,18 +161,6 @@ public class CityScreen implements Screen {
                 game.setScreen(new BattleSelectScreen(game));
             }
         });
-
-        /*
-            Add all actors to the stage.
-         */
-
-        stage.addActor(charCreateButton);
-        stage.addActor(classCreateButton);
-        stage.addActor(spellCreateButton);
-        stage.addActor(shopButton);
-        stage.addActor(partyManageButton);
-        stage.addActor(mainMenuButton);
-        stage.addActor(battleButton);
     }
 
     @Override

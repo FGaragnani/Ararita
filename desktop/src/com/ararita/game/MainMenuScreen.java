@@ -46,9 +46,9 @@ public class MainMenuScreen implements Screen {
             Creating the three main buttons.
          */
 
-        mainButton = game.createMainButtonXCentered("Play", Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 0.63f, stage);
-        settingsButton = game.createMainButtonXCentered("Settings", Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 0.44f, stage);
-        exitButton = game.createMainButtonXCentered("Exit", Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 0.26f, stage);
+        mainButton = game.createMainButtonXCentered("Play", Gdx.graphics.getHeight() * 0.63f, stage);
+        settingsButton = game.createMainButtonXCentered("Settings", Gdx.graphics.getHeight() * 0.44f, stage);
+        exitButton = game.createMainButtonXCentered("Exit", Gdx.graphics.getHeight() * 0.26f, stage);
 
         /*
             Adding the title.

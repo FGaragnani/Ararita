@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * Handles the multiple screens in the game.
@@ -29,6 +30,7 @@ public class Ararita extends Game {
     public BitmapFont mediumFont;
 
     public TextButton.TextButtonStyle textButtonStyle;
+    public TextButton.TextButtonStyle textButtonNormalStyle;
     public Label.LabelStyle labelStyle;
     public SplitPane.SplitPaneStyle splitPaneStyle;
     public Slider.SliderStyle sliderStyle;
@@ -105,6 +107,9 @@ public class Ararita extends Game {
 
         textButtonStyle = skin.get("default", TextButton.TextButtonStyle.class);
         textButtonStyle.font = this.bigFont;
+
+        textButtonNormalStyle = skin2.get("default", TextButton.TextButtonStyle.class);
+        textButtonNormalStyle.font = this.normalFont;
 
         splitPaneStyle = skin.get("default-horizontal", SplitPane.SplitPaneStyle.class);
         sliderStyle = skin.get("default-horizontal", Slider.SliderStyle.class);
@@ -207,12 +212,20 @@ public class Ararita extends Game {
         stage.addActor(title);
     }
 
-    public TextButton createMainButtonXCentered(String buttonText, int screenWidth, float yPos, Stage stage) {
+    public TextButton createMainButtonXCentered(String buttonText, float yPos, Stage stage) {
 
         TextButton mainButton = new TextButton(buttonText, textButtonStyle);
-        mainButton.setPosition((screenWidth - mainButton.getWidth()) / 2f, yPos);
+        mainButton.setPosition((Gdx.graphics.getWidth() - mainButton.getWidth()) / 2f, yPos);
         stage.addActor(mainButton);
         return mainButton;
+    }
+
+    public TextButton createNormalButton(String buttonText, Function<TextButton, Float> xPos, float yPos, Stage stage) {
+
+        TextButton normalButton = new TextButton(buttonText, textButtonNormalStyle);
+        normalButton.setPosition(xPos.apply(normalButton), yPos);
+        stage.addActor(normalButton);
+        return normalButton;
     }
 
     public void createLabelVoid(String labelText, float xPos, float yPos, Stage stage) {
@@ -234,6 +247,5 @@ public class Ararita extends Game {
         slider.setPosition(xPos, yPos);
         stage.addActor(slider);
         return slider;
-
     }
 }

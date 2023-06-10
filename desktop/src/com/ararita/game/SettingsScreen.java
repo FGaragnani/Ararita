@@ -60,8 +60,8 @@ public class SettingsScreen implements Screen {
             Creating the two main buttons.
          */
 
-        backButton = game.createMainButtonXCentered("Back", Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 0.12f, stage);
-        deleteButton = game.createMainButtonXCentered("Erase Data", Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 0.33f, stage);
+        backButton = game.createMainButtonXCentered("Back",Gdx.graphics.getHeight() * 0.12f, stage);
+        deleteButton = game.createMainButtonXCentered("Erase Data",Gdx.graphics.getHeight() * 0.33f, stage);
 
         /*
             Setting the title.
