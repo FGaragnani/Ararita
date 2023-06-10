@@ -20,10 +20,6 @@ public class MainMenuScreen implements Screen {
     OrthographicCamera camera;
     Skin skin;
 
-    Label title;
-    Label.LabelStyle titleStyle;
-
-    TextButton.TextButtonStyle textButtonStyle;
     TextButton mainButton;
     TextButton settingsButton;
     TextButton exitButton;
@@ -51,23 +47,15 @@ public class MainMenuScreen implements Screen {
             Creating the three main buttons.
          */
 
-        this.textButtonStyle = game.textButtonStyle;
-        mainButton = new TextButton("Play", textButtonStyle);
-        settingsButton = new TextButton("Settings", textButtonStyle);
-        exitButton = new TextButton("Exit", textButtonStyle);
-        mainButton.setPosition((Gdx.graphics.getWidth() - mainButton.getWidth()) / 2, Gdx.graphics.getHeight() * 0.63f);
-        settingsButton.setPosition((Gdx.graphics.getWidth() - settingsButton.getWidth()) / 2, Gdx.graphics.getHeight() * 0.44f);
-        exitButton.setPosition((Gdx.graphics.getWidth() - mainButton.getWidth()) / 2, Gdx.graphics.getHeight() * 0.26f);
+        mainButton = game.createMainButtonXCentered("Play", Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 0.63f, stage);
+        settingsButton = game.createMainButtonXCentered("Settings", Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 0.44f, stage);
+        exitButton = game.createMainButtonXCentered("Exit", Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 0.26f, stage);
 
         /*
             Adding the title.
          */
 
-        titleStyle = skin.get("default", Label.LabelStyle.class);
-        titleStyle.font = game.titleFont;
-        title = new Label("ARARITA", titleStyle);
-        title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() * 0.86f);
-        title.setColor(Color.WHITE);
+        game.createTitleCentered("ARARITA", Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 0.86f, Color.WHITE, stage);
 
         /*
             Adding the buttons' listeners.
@@ -100,11 +88,6 @@ public class MainMenuScreen implements Screen {
                 Gdx.app.exit();
             }
         });
-
-        stage.addActor(mainButton);
-        stage.addActor(settingsButton);
-        stage.addActor(exitButton);
-        stage.addActor(title);
 
         game.playAudio(game.mainTheme);
         game.updateVolume();

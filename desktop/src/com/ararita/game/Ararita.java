@@ -3,8 +3,10 @@ package com.ararita.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
@@ -32,6 +34,7 @@ public class Ararita extends Game {
     public Slider.SliderStyle sliderStyle;
     public TextField.TextFieldStyle textFieldStyle;
     public SelectBox.SelectBoxStyle selectBoxStyle;
+    public Label.LabelStyle titleStyle;
 
     public java.util.List<String> spriteNames;
     public final int spriteFrameCols = 3;
@@ -106,6 +109,9 @@ public class Ararita extends Game {
 
         textFieldStyle = skin.get("default", TextField.TextFieldStyle.class);
         textFieldStyle.font = this.normalFont;
+
+        titleStyle = skin.get("default", Label.LabelStyle.class);
+        titleStyle.font = this.titleFont;
 
         selectBoxStyle = skin.get("default", SelectBox.SelectBoxStyle.class);
         selectBoxStyle.font = this.normalFont;
@@ -189,4 +195,23 @@ public class Ararita extends Game {
             audio = null;
         }
     }
+
+    public void createTitleCentered(String titleText, int screenWidth, float yPos, Color color, Stage stage){
+
+        Label title = new Label(titleText, titleStyle);
+        title.setPosition((screenWidth - title.getWidth()) / 2f, yPos);
+        title.setColor(color);
+        stage.addActor(title);
+
+    }
+
+    public TextButton createMainButtonXCentered(String buttonText, int screenWidth, float yPos, Stage stage){
+
+        TextButton mainButton = new TextButton(buttonText, textButtonStyle);
+        mainButton.setPosition((screenWidth - mainButton.getWidth()) / 2f, yPos);
+        stage.addActor(mainButton);
+        return mainButton;
+
+    }
+
 }
