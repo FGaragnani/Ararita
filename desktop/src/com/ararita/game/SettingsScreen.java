@@ -67,7 +67,7 @@ public class SettingsScreen implements Screen {
             Setting the title.
          */
 
-        game.createTitleCentered("SETTINGS", Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 0.86f, Color.WHITE, stage);
+        game.createTitleCentered("SETTINGS", Gdx.graphics.getHeight() * 0.86f, Color.WHITE, stage);
 
         /*
             Creating the dialog.

@@ -54,7 +54,7 @@ public class MainMenuScreen implements Screen {
             Adding the title.
          */
 
-        game.createTitleCentered("ARARITA", Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 0.86f, Color.WHITE, stage);
+        game.createTitleCentered("ARARITA", Gdx.graphics.getHeight() * 0.86f, Color.WHITE, stage);
 
         /*
             Adding the buttons' listeners.

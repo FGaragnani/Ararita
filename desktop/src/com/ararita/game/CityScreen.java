@@ -22,7 +22,6 @@ public class CityScreen implements Screen {
     OrthographicCamera camera;
     Skin skin;
 
-    TextButton.TextButtonStyle textButtonStyle;
     TextButton charCreateButton;
     TextButton classCreateButton;
     TextButton spellCreateButton;
@@ -47,9 +46,6 @@ public class CityScreen implements Screen {
         this.skin = new Skin(Gdx.files.internal(game.stylesPath));
         this.camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
-
-        textButtonStyle = skin.get("default", TextButton.TextButtonStyle.class);
-        textButtonStyle.font = game.normalFont;
 
         /*
             Audio initialization.

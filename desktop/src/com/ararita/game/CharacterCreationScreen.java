@@ -29,9 +29,6 @@ public class CharacterCreationScreen implements Screen {
     OrthographicCamera camera;
     Skin skin;
 
-    Label title;
-    Label.LabelStyle titleStyle;
-
     Label stats;
     float statX;
     float statY;
@@ -59,6 +56,7 @@ public class CharacterCreationScreen implements Screen {
     boolean newPlayer;
 
     public CharacterCreationScreen(final Ararita game, boolean newPlayer) throws IOException {
+
         /*
             First initializations.
          */
@@ -137,20 +135,13 @@ public class CharacterCreationScreen implements Screen {
             Setting the title.
          */
 
-        titleStyle = skin.get("default", Label.LabelStyle.class);
-        titleStyle.font = game.titleFont;
-        title = new Label("CHARACTER CREATION", titleStyle);
-        title.setColor(Color.BLACK);
-        title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() * 0.86f);
+        game.createTitleCentered("CHARACTER CREATION", Gdx.graphics.getHeight() * 0.86f, Color.BLACK, stage);
 
         /*
             Creating the TextField - for the character's name.
          */
 
-        TextField.TextFieldStyle textFieldStyle = game.textFieldStyle;
-        charNameField = new TextField("Character Name", textFieldStyle);
-        charNameField.setWidth(game.width400);
-        charNameField.setPosition((Gdx.graphics.getWidth() - charNameField.getWidth()) / 2, Gdx.graphics.getHeight() * 0.676f);
+        charNameField = game.createTextField("Character Name", game.width400, textField -> (Gdx.graphics.getWidth() - textField.getWidth()) / 2, Gdx.graphics.getHeight() * 0.676f, stage);
 
         /*
             Creating the SelectBox - for selecting the character's class.
@@ -159,16 +150,13 @@ public class CharacterCreationScreen implements Screen {
 
         JSONObject jsonGlobal = Global.getJSON(Global.globalSets);
 
-        charClassSelectBox = new SelectBox<>(game.selectBoxStyle);
+        charClassSelectBox = game.createSelectBox(game.width400, stringSelectBox -> (Gdx.graphics.getWidth() - stringSelectBox.getWidth()) / 2, Gdx.graphics.getHeight() * 0.54f, stage);
         Array<String> classArray = new Array<>();
         jsonGlobal.getJSONArray("classNamesSet").toList().forEach((str) -> classArray.add(str.toString()));
         if (!newPlayer) {
             classArray.add("Create new...");
         }
         charClassSelectBox.setItems(classArray);
-        charClassSelectBox.setWidth(game.width400);
-        charClassSelectBox.setPosition((Gdx.graphics.getWidth() - charClassSelectBox.getWidth()) / 2, Gdx.graphics.getHeight() * 0.54f);
-
         charClassSelectBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -184,13 +172,10 @@ public class CharacterCreationScreen implements Screen {
             Creating the Image Select Box and its listener.
          */
 
-        charImageSelectBox = new SelectBox<>(game.selectBoxStyle);
+        charImageSelectBox = game.createSelectBox(game.width400, stringSelectBox -> (Gdx.graphics.getWidth() - stringSelectBox.getWidth()) / 2, Gdx.graphics.getHeight() * 0.444f, stage);
         Array<String> imageArray = new Array<>();
         game.spriteNames.forEach(imageArray::add);
         charImageSelectBox.setItems(imageArray);
-        charImageSelectBox.setWidth(400);
-        charImageSelectBox.setPosition((Gdx.graphics.getWidth() - charImageSelectBox.getWidth()) / 2, Gdx.graphics.getHeight() * 0.444f);
-        charImageSelectBox.setSelected("Fighter");
         changeSprite(charImageSelectBox.getSelected());
         charImageSelectBox.addListener(new ChangeListener() {
             @Override
@@ -204,8 +189,7 @@ public class CharacterCreationScreen implements Screen {
             Creating its Listener.
          */
 
-        confirmButton = new TextButton("Confirm", game.textButtonStyle);
-        confirmButton.setPosition((Gdx.graphics.getWidth() - (confirmButton.getWidth())) / 2, Gdx.graphics.getHeight() * 0.21f);
+        confirmButton = game.createMainButtonXCentered("Confirm", Gdx.graphics.getHeight() * 0.21f, stage);
         confirmButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -235,8 +219,7 @@ public class CharacterCreationScreen implements Screen {
             Creating the Exit Button.
          */
 
-        exitButton = new TextButton("Exit", game.textButtonStyle);
-        exitButton.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, Gdx.graphics.getHeight() * 0.074f);
+        exitButton = game.createMainButtonXCentered("Exit", Gdx.graphics.getHeight() * 0.074f, stage);
         exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -249,23 +232,12 @@ public class CharacterCreationScreen implements Screen {
             Creating the class Stats label.
          */
 
-        stats = new Label("", game.labelStyle);
-        stats.setFontScale(game.statScaleX, game.statScaleY);
-        stats.setColor(Color.BLACK);
-        statX = Gdx.graphics.getWidth() / 6.4f;
-        statY = Gdx.graphics.getHeight() * 0.5f;
-        stats.setPosition(statX, statY);
+        stats = game.createStatLabel("", Color.BLACK, Gdx.graphics.getWidth() / 6.4f, Gdx.graphics.getHeight() * 0.5f, stage);
         statUpdate();
 
-        stage.addActor(title);
-        stage.addActor(charNameField);
-        stage.addActor(charClassSelectBox);
-        stage.addActor(charImageSelectBox);
-        stage.addActor(confirmButton);
-        if (!newPlayer) {
-            stage.addActor(exitButton);
+        if (newPlayer) {
+            stage.getActors().removeValue(exitButton, true);
         }
-        stage.addActor(stats);
         stage.addActor(spriteImage);
     }
 
@@ -348,7 +320,7 @@ public class CharacterCreationScreen implements Screen {
             jsonClass.getJSONArray("spellTypes").toList().forEach((str) -> text.append("\t- ").append(str.toString()).append("\n"));
             otherLines += jsonClass.getJSONArray("spellTypes").toList().size();
             stats.setText(text.toString());
-            stats.setPosition(statX, statY - (game.otherLinesFactor * (otherLines - 1)));
+            stats.setY((Gdx.graphics.getHeight() * 0.5f) - (game.otherLinesFactor * (otherLines - 1)));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

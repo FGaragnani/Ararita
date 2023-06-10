@@ -204,10 +204,10 @@ public class Ararita extends Game {
         }
     }
 
-    public void createTitleCentered(String titleText, int screenWidth, float yPos, Color color, Stage stage) {
+    public void createTitleCentered(String titleText, float yPos, Color color, Stage stage) {
 
         Label title = new Label(titleText, titleStyle);
-        title.setPosition((screenWidth - title.getWidth()) / 2f, yPos);
+        title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2f, yPos);
         title.setColor(color);
         stage.addActor(title);
     }
@@ -248,4 +248,34 @@ public class Ararita extends Game {
         stage.addActor(slider);
         return slider;
     }
+
+    public TextField createTextField(String initialText, float width, Function<TextField, Float> xPos, float yPos, Stage stage) {
+
+        TextField textField = new TextField(initialText, textFieldStyle);
+        textField.setWidth(width);
+        textField.setPosition(xPos.apply(textField), yPos);
+        stage.addActor(textField);
+        return textField;
+    }
+
+    public <T> SelectBox<T> createSelectBox(float width, Function<SelectBox<T>, Float> xPos, float yPos, Stage stage){
+
+        SelectBox<T> selectBox = new SelectBox<>(selectBoxStyle);
+        selectBox.setWidth(width);
+        selectBox.setPosition(xPos.apply(selectBox), yPos);
+        stage.addActor(selectBox);
+        return selectBox;
+    }
+
+    public Label createStatLabel(String initialText, Color color, float xPos, float yPos, Stage stage){
+
+        Label stat = new Label(initialText, labelStyle);
+        stat.setFontScale(statScaleX, statScaleY);
+        stat.setColor(color);
+        stat.setPosition(xPos, yPos);
+        stage.addActor(stat);
+        return stat;
+
+    }
+
 }
