@@ -30,9 +30,6 @@ public class CharacterCreationScreen implements Screen {
     Skin skin;
 
     Label stats;
-    float statX;
-    float statY;
-
     TextField charNameField;
     SelectBox<String> charClassSelectBox;
     SelectBox<String> charImageSelectBox;
