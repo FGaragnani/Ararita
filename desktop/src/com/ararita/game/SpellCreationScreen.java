@@ -31,16 +31,11 @@ public class SpellCreationScreen implements Screen {
     OrthographicCamera camera;
     Skin skin;
 
-    Label title;
-    Label.LabelStyle titleStyle;
-
     Label stats;
 
     TextField spellNameField;
     SelectBox<String> spellTypeSelectBox;
-    Label spellTypeLabel;
     SelectBox<String> spellPowerSelectBox;
-    Label spellPowerLabel;
     Label costLabel;
 
     SelectBox<String> statusEffectSelectBox;
@@ -119,19 +114,14 @@ public class SpellCreationScreen implements Screen {
             Setting the title.
          */
 
-        titleStyle = skin.get("default", Label.LabelStyle.class);
-        titleStyle.font = game.titleFont;
-        title = new Label("SPELL CREATION", titleStyle);
-        title.setColor(Color.BLACK);
-        title.setPosition((Gdx.graphics.getWidth() - title.getWidth()) / 2, Gdx.graphics.getHeight() - 150);
+        game.createTitleCentered("SPELL CREATION", Gdx.graphics.getHeight() * 0.86f, Color.BLACK, stage);
 
          /*
             Creating the button for confirmation.
             Creating its Listener.
          */
 
-        confirmButton = new TextButton("Confirm", game.textButtonStyle);
-        confirmButton.setPosition((Gdx.graphics.getWidth() - (confirmButton.getWidth())) / 2, Gdx.graphics.getHeight() * 0.21f);
+        confirmButton = game.createMainButtonXCentered("Confirm", Gdx.graphics.getHeight() * 0.21f, stage);
         confirmButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -157,8 +147,7 @@ public class SpellCreationScreen implements Screen {
             Creating the Exit Button.
          */
 
-        exitButton = new TextButton("Exit", game.textButtonStyle);
-        exitButton.setPosition((Gdx.graphics.getWidth() - (exitButton.getWidth())) / 2, Gdx.graphics.getHeight() * 0.074f);
+        exitButton = game.createMainButtonXCentered("Exit", Gdx.graphics.getHeight() * 0.074f, stage);
         exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -171,27 +160,20 @@ public class SpellCreationScreen implements Screen {
             Setting the stats Label.
          */
 
-        stats = new Label("", game.labelStyle);
-        stats.setFontScale(game.statScaleX, game.statScaleY);
-        stats.setColor(Color.BLACK);
-        stats.setPosition(Gdx.graphics.getWidth() * 0.13f, Gdx.graphics.getHeight() * 0.72f);
+        stats = game.createStatLabel("", Color.BLACK, Gdx.graphics.getWidth() * 0.13f, Gdx.graphics.getHeight() * 0.72f, stage);
 
         /*
             Creating the TextField - for the spell's name.
          */
 
-        spellNameField = new TextField("Spell Name", game.textFieldStyle);
-        spellNameField.setWidth(game.width400);
-        spellNameField.setPosition((Gdx.graphics.getWidth() - spellNameField.getWidth()) / 2, Gdx.graphics.getHeight() * 0.72f);
+        spellNameField = game.createTextField("Spell Name", game.width400, textField -> (Gdx.graphics.getWidth() - textField.getWidth()) / 2, Gdx.graphics.getHeight() * 0.72f, stage);
 
         /*
             Creating the SpellType Select Box and its label.
          */
 
-        spellTypeSelectBox = new SelectBox<>(game.selectBoxStyle);
+        spellTypeSelectBox = game.createSelectBox(game.width200, stringSelectBox -> (Gdx.graphics.getWidth() - stringSelectBox.getWidth()) / 2 + (Gdx.graphics.getWidth() / 20.2f), Gdx.graphics.getHeight() * 0.61f, stage);
         spellTypeSelectBox.setItems(spellLists);
-        spellTypeSelectBox.setWidth(game.width200);
-        spellTypeSelectBox.setPosition((Gdx.graphics.getWidth() - spellTypeSelectBox.getWidth()) / 2 + (Gdx.graphics.getWidth() / 20.2f), Gdx.graphics.getHeight() * 0.61f);
         spellTypeSelectBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -202,19 +184,14 @@ public class SpellCreationScreen implements Screen {
                 updateCharacters();
             }
         });
-        spellTypeLabel = new Label("Spell Type: ", game.labelStyle);
-        spellTypeLabel.setFontScale(game.descScaleX, game.descScaleY);
-        spellTypeLabel.setColor(Color.BLACK);
-        spellTypeLabel.setPosition((Gdx.graphics.getWidth() - spellTypeSelectBox.getWidth()) / 2 - (Gdx.graphics.getWidth() / 20.87f), Gdx.graphics.getHeight() * 0.628f);
+        game.createLabelVoid("Spell Type: ", (Gdx.graphics.getWidth() - spellTypeSelectBox.getWidth()) / 2 - (Gdx.graphics.getWidth() / 20.87f), Gdx.graphics.getHeight() * 0.628f, game.descScaleX, game.descScaleY, Color.BLACK, stage);
 
         /*
             Creating the Spell Power Select Box, its label and its listener.
          */
 
-        spellPowerSelectBox = new SelectBox<>(game.selectBoxStyle);
+        spellPowerSelectBox = game.createSelectBox(game.width200, stringSelectBox -> (Gdx.graphics.getWidth() - stringSelectBox.getWidth()) / 2 + (Gdx.graphics.getWidth() / 20.2f), Gdx.graphics.getHeight() * 0.49f, stage);
         spellPowerSelectBox.setItems(spellPowerList);
-        spellPowerSelectBox.setWidth(game.width200);
-        spellPowerSelectBox.setPosition((Gdx.graphics.getWidth() - spellTypeSelectBox.getWidth()) / 2 + (Gdx.graphics.getWidth() / 20.2f), Gdx.graphics.getHeight() * 0.49f);
         spellPowerSelectBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -222,18 +199,13 @@ public class SpellCreationScreen implements Screen {
                 updateCost();
             }
         });
-        spellPowerLabel = new Label("Spell Power: ", game.labelStyle);
-        spellPowerLabel.setFontScale(game.descScaleX, game.descScaleY);
-        spellPowerLabel.setColor(Color.BLACK);
-        spellPowerLabel.setPosition((Gdx.graphics.getWidth() - spellTypeSelectBox.getWidth()) / 2 - (Gdx.graphics.getWidth() / 19.2f), Gdx.graphics.getHeight() * 0.5f);
+        game.createLabelVoid("Spell Power: ", (Gdx.graphics.getWidth() - spellTypeSelectBox.getWidth()) / 2 - (Gdx.graphics.getWidth() / 19.2f), Gdx.graphics.getHeight() * 0.5f, game.descScaleX, game.descScaleY, Color.BLACK, stage);
 
         /*
             Creating the coin icon and the cost label.
          */
 
-        costLabel = new Label("", stats.getStyle());
-        costLabel.setFontScale(game.statScaleX, game.statScaleY);
-        costLabel.setColor(Color.BLACK);
+        costLabel = game.createStatLabel("", Color.BLACK, 0, 0, stage);
         coinTexture = new Texture(Gdx.files.local(game.coinPath));
         coinImage = new Image();
         coinImage.setDrawable(new TextureRegionDrawable(coinTexture));
@@ -259,10 +231,8 @@ public class SpellCreationScreen implements Screen {
             Creating the Status Effect Select Box.
          */
 
-        statusEffectSelectBox = new SelectBox<>(game.selectBoxStyle);
+        statusEffectSelectBox = game.createSelectBox((game.width300 + game.width200) / 2f, stringSelectBox -> Gdx.graphics.getWidth() * 0.76f, Gdx.graphics.getHeight() * 0.72f, stage);
         statusEffectSelectBox.setItems(statusEffectsList);
-        statusEffectSelectBox.setWidth((game.width300 + game.width200) / 2);
-        statusEffectSelectBox.setPosition(Gdx.graphics.getWidth() * 0.76f, Gdx.graphics.getHeight() * 0.72f);
         statusEffectSelectBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -276,14 +246,8 @@ public class SpellCreationScreen implements Screen {
             Creating the slider's label and the slider.
          */
 
-        probabilityLabel = new Label("Probability: 0.25 %", stats.getStyle());
-        probabilityLabel.setFontScale(game.descScaleX, game.descScaleY);
-        probabilityLabel.setColor(Color.BLACK);
-        probabilityLabel.setPosition(Gdx.graphics.getWidth() * 0.76f, Gdx.graphics.getHeight() * 0.574f);
-        probabilitySlider = new Slider(0.01f, 0.5f, 0.01f, false, game.sliderStyle);
-        probabilitySlider.setWidth(game.width300);
-        probabilitySlider.setValue(0.25f);
-        probabilitySlider.setPosition(Gdx.graphics.getWidth() * 0.75f, Gdx.graphics.getHeight() * 0.63f);
+        probabilityLabel = game.createLabel("Probability: 0.25%", Gdx.graphics.getWidth() * 0.76f, Gdx.graphics.getHeight() * 0.574f, game.descScaleX, game.descScaleY, Color.BLACK, stage);
+        probabilitySlider = game.createSlider(0.01f, 0.5f, 0.01f, false, game.width300, 0.25f, Gdx.graphics.getWidth() * 0.75f, Gdx.graphics.getHeight() * 0.63f, stage);
         probabilitySlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -332,9 +296,7 @@ public class SpellCreationScreen implements Screen {
             Creating the Character Select Box.
          */
 
-        characterSelectBox = new SelectBox<>(game.selectBoxStyle);
-        characterSelectBox.setWidth(game.width200 + game.width300);
-        characterSelectBox.setPosition(Gdx.graphics.getWidth() * 0.69f, Gdx.graphics.getHeight() * 0.444f);
+        characterSelectBox = game.createSelectBox(game.width200 + game.width300, stringSelectBox -> Gdx.graphics.getWidth() * 0.69f, Gdx.graphics.getHeight() * 0.444f, stage);
 
         /*
             Creating the five dialogs.
@@ -424,25 +386,11 @@ public class SpellCreationScreen implements Screen {
             Adding all actors.
          */
 
-        stage.addActor(confirmButton);
-        stage.addActor(exitButton);
-        stage.addActor(title);
-        stage.addActor(spellNameField);
-        stage.addActor(spellTypeSelectBox);
-        stage.addActor(spellTypeLabel);
-        stage.addActor(spellPowerSelectBox);
-        stage.addActor(spellPowerLabel);
-        stage.addActor(stats);
-        stage.addActor(costLabel);
         stage.addActor(coinImage);
         stage.addActor(currentMoney);
         stage.addActor(currentMoneyImage);
-        stage.addActor(statusEffectSelectBox);
-        stage.addActor(probabilitySlider);
-        stage.addActor(probabilityLabel);
         stage.addActor(statusPlus);
         stage.addActor(statusMinus);
-        stage.addActor(characterSelectBox);
 
         updateCharacters();
     }

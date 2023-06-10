@@ -232,11 +232,21 @@ public class Ararita extends Game {
         createLabel(labelText, xPos, yPos, stage);
     }
 
-    public Label createLabel(String labelText, float xPos, float yPos, Stage stage) {
+    public void createLabelVoid(String labelText, float xPos, float yPos, float xScale, float yScale, Color color, Stage stage) {
+        createLabel(labelText, xPos, yPos, xScale, yScale, color, stage);
+    }
+
+    public Label createLabel(String labelText, float xPos, float yPos, float xScale, float yScale, Color color, Stage stage) {
         Label label = new Label(labelText, labelStyle);
         label.setPosition(xPos, yPos);
+        label.setFontScale(xScale, yScale);
+        label.setColor(color);
         stage.addActor(label);
         return label;
+    }
+
+    public Label createLabel(String labelText, float xPos, float yPos, Stage stage) {
+        return createLabel(labelText, xPos, yPos, 1, 1, Color.WHITE, stage);
     }
 
     public Slider createSlider(float min, float max, float stepsize, boolean vertical, float width, float value, float xPos, float yPos, Stage stage) {
@@ -258,7 +268,7 @@ public class Ararita extends Game {
         return textField;
     }
 
-    public <T> SelectBox<T> createSelectBox(float width, Function<SelectBox<T>, Float> xPos, float yPos, Stage stage){
+    public <T> SelectBox<T> createSelectBox(float width, Function<SelectBox<T>, Float> xPos, float yPos, Stage stage) {
 
         SelectBox<T> selectBox = new SelectBox<>(selectBoxStyle);
         selectBox.setWidth(width);
@@ -267,7 +277,7 @@ public class Ararita extends Game {
         return selectBox;
     }
 
-    public Label createStatLabel(String initialText, Color color, float xPos, float yPos, Stage stage){
+    public Label createStatLabel(String initialText, Color color, float xPos, float yPos, Stage stage) {
 
         Label stat = new Label(initialText, labelStyle);
         stat.setFontScale(statScaleX, statScaleY);
@@ -275,7 +285,5 @@ public class Ararita extends Game {
         stat.setPosition(xPos, yPos);
         stage.addActor(stat);
         return stat;
-
     }
-
 }
