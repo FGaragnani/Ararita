@@ -53,15 +53,15 @@ public class SettingsScreen implements Screen {
             Creating the SoundEffects and Volume labels.
          */
 
-        soundEffectLabel = game.createLabel("Sound Effects: " + (float) game.soundEffects, soundEffectsSlider.getX() + (Gdx.graphics.getWidth() / 5.9f), soundEffectsSlider.getY() + (Gdx.graphics.getHeight() / 72f), stage);
-        volumeLabel = game.createLabel("Volume: " + (float) game.volume, volumeSlider.getX() + (Gdx.graphics.getWidth() / 5.9f), volumeSlider.getY() + (Gdx.graphics.getHeight() / 72f), stage);
+        soundEffectLabel = game.createLabel("Sound Effects: " + (float) game.soundEffects, soundEffectsSlider.getX() + (Gdx.graphics.getWidth() / 5.9f), soundEffectsSlider.getY() + (Gdx.graphics.getHeight() / 72f), game.descScaleX, game.descScaleY, Color.WHITE, stage);
+        volumeLabel = game.createLabel("Volume: " + (float) game.volume, volumeSlider.getX() + (Gdx.graphics.getWidth() / 5.9f), volumeSlider.getY() + (Gdx.graphics.getHeight() / 72f), game.descScaleX, game.descScaleY, Color.WHITE, stage);
 
         /*
             Creating the two main buttons.
          */
 
-        backButton = game.createMainButtonXCentered("Back",Gdx.graphics.getHeight() * 0.12f, stage);
-        deleteButton = game.createMainButtonXCentered("Erase Data",Gdx.graphics.getHeight() * 0.33f, stage);
+        backButton = game.createMainButtonXCentered("Back", Gdx.graphics.getHeight() * 0.12f, stage);
+        deleteButton = game.createMainButtonXCentered("Erase Data", Gdx.graphics.getHeight() * 0.33f, stage);
 
         /*
             Setting the title.

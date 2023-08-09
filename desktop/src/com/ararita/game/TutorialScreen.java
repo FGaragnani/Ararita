@@ -137,7 +137,7 @@ public class TutorialScreen implements Screen {
         tutorial = new TypingLabel("", skin);
         tutorial.setPosition(100, Gdx.graphics.getHeight() - 200);
 
-        confirm = game.createNormalButton("Continue", textButton -> (Gdx.graphics.getWidth() - confirm.getWidth()) / 2.0f, Gdx.graphics.getHeight() / 19.2f, stage);
+        confirm = game.createNormalButton("Continue", textButton -> (Gdx.graphics.getWidth() - textButton.getWidth()) / 2.0f, Gdx.graphics.getHeight() / 19.2f, stage);
         confirm.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
