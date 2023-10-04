@@ -25,10 +25,8 @@ import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 import com.rafaskoberg.gdx.typinglabel.TypingListener;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 public class BattleScreen implements Screen {
 
@@ -375,9 +373,36 @@ public class BattleScreen implements Screen {
                 for (PC character : party) {
                     try {
                         level = character.getLevel();
+                        List<Integer> statsO = List.of(character.getHP(), character.getMP(), character.getStrength(), character.getIntelligence(), character.getVigor(), character.getAgility(), character.getSpirit(), character.getArcane());
                         character.gainEXP(Math.max(EXP / party.size(), 1));
+                        List<Integer> statsN = List.of(character.getHP(), character.getMP(), character.getStrength(), character.getIntelligence(), character.getVigor(), character.getAgility(), character.getSpirit(), character.getArcane());
                         if (level != character.getLevel()) {
                             text.append(" ").append(character.getName()).append(" levelled up! \n");
+                            if (!Objects.equals(statsN.get(0), statsO.get(0))) {
+                                text.append("\tHP:").append(statsO.get(0)).append(" +").append(statsN.get(0) - statsO.get(0)).append(",");
+                            }
+                            if (!Objects.equals(statsN.get(1), statsO.get(1))) {
+                                text.append("\tMP:").append(statsO.get(1)).append(" +").append(statsN.get(0) - statsO.get(0)).append(",");
+                            }
+                            if (!Objects.equals(statsN.get(2), statsO.get(2))) {
+                                text.append("\tSTR:").append(statsO.get(2)).append(" +").append(statsN.get(2) - statsO.get(2)).append(",");
+                            }
+                            if (!Objects.equals(statsN.get(3), statsO.get(3))) {
+                                text.append("\tINT:").append(statsO.get(3)).append(" +").append(statsN.get(3) - statsO.get(3)).append(",");
+                            }
+                            if (!Objects.equals(statsN.get(4), statsO.get(4))) {
+                                text.append("\tVIG:").append(statsO.get(4)).append(" +").append(statsN.get(4) - statsO.get(4)).append(",");
+                            }
+                            if (!Objects.equals(statsN.get(5), statsO.get(5))) {
+                                text.append("\tAGI:").append(statsO.get(5)).append(" +").append(statsN.get(5) - statsO.get(5)).append(",");
+                            }
+                            if (!Objects.equals(statsN.get(6), statsO.get(6))) {
+                                text.append("\tSPR:").append(statsO.get(6)).append(" +").append(statsN.get(6) - statsO.get(6)).append(",");
+                            }
+                            if (!Objects.equals(statsN.get(7), statsO.get(7))) {
+                                text.append("\tARC:").append(statsO.get(7)).append(" +").append(statsN.get(7) - statsO.get(7)).append(",");
+                            }
+                            text.append("\n\n");
                         }
                         character.healAll();
                         character.update();
