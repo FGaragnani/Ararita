@@ -379,10 +379,10 @@ public class BattleScreen implements Screen {
                         if (level != character.getLevel()) {
                             text.append(" ").append(character.getName()).append(" levelled up! \n");
                             if (!Objects.equals(statsN.get(0), statsO.get(0))) {
-                                text.append("\tHP:").append(statsO.get(0)).append(" +").append(statsN.get(0) - statsO.get(0)).append(",");
+                                text.append("HP:").append(statsO.get(0)).append(" +").append(statsN.get(0) - statsO.get(0)).append(",");
                             }
                             if (!Objects.equals(statsN.get(1), statsO.get(1))) {
-                                text.append("\tMP:").append(statsO.get(1)).append(" +").append(statsN.get(0) - statsO.get(0)).append(",");
+                                text.append("\tMP:").append(statsO.get(1)).append(" +").append(statsN.get(1) - statsO.get(1)).append(",");
                             }
                             if (!Objects.equals(statsN.get(2), statsO.get(2))) {
                                 text.append("\tSTR:").append(statsO.get(2)).append(" +").append(statsN.get(2) - statsO.get(2)).append(",");
@@ -402,7 +402,7 @@ public class BattleScreen implements Screen {
                             if (!Objects.equals(statsN.get(7), statsO.get(7))) {
                                 text.append("\tARC:").append(statsO.get(7)).append(" +").append(statsN.get(7) - statsO.get(7)).append(",");
                             }
-                            text.append("\n\n");
+                            text.append("  \n\n");
                         }
                         character.healAll();
                         character.update();

@@ -8,8 +8,11 @@
         "Chaos"
     ],
     "otherCharacters": [],
-    "money": 0,
-    "spellNamesSet": [],
+    "money": 6519,
+    "spellNamesSet": [
+        "Void Bolt",
+        "Light Dart"
+    ],
     "weaponTypesSet": [
         "Sword",
         "Staff",
@@ -18,14 +21,22 @@
         "Bow",
         "Dagger"
     ],
-    "inventory": {},
+    "inventory": {
+        "Ether": 2,
+        "Potion": 10
+    },
     "statusEffectsSet": [
         "Burn",
         "Poison",
         "Paralysis",
         "Blindness"
     ],
-    "party": [],
+    "party": [
+        "Fosco",
+        "Luna",
+        "Presto",
+        "M"
+    ],
     "classNamesSet": [
         "Knight",
         "Black Mage",

@@ -63,7 +63,7 @@ public class TutorialScreen implements Screen {
 
                 """
                         There are - to start - only four classes you can choose from.
-                        In a little time, however, you'll be able to create your very own!
+                        In a little time, you'll be able to create your very own!
                         Let's get down to the basics, however.
                         A character has 6 main attributes:
                         STRENGTH: Determines its physical power;
@@ -71,20 +71,20 @@ public class TutorialScreen implements Screen {
                         VIGOR: The higher it is, the sturdier is your character;
                         AGILITY: Determines how fast your character is;
                         SPIRIT: Magic linked to health;
-                        increases also Wind, Light and Water spells' power;
+                        also increases Wind, Light and Water spells' power;
                         ARCANE: Magic linked to damage;
-                        increases also Earth, Chaos and Fire spells' power.
+                        also increases Earth, Chaos and Fire spells' power.
                         """,
 
                 """
-                        Moreover, a class has other two important elements:
+                        Moreover, a class has two other important elements:
                         PROFICIENCIES and SPELL TYPES.
                         The proficiencies indicate how a certain class is more able in using
                         a certain weapon type than others.
                         For example, Rangers are very good at handling bows.
                         The spell types are the types of spells
                         that a certain character may learn.
-                        Black Mage are capable of learning only Fire and Chaos spells.
+                        Black Mages are capable of learning only Fire and Chaos spells.
                         """,
 
                 """
@@ -105,7 +105,7 @@ public class TutorialScreen implements Screen {
                         EXP: Defeating enemies grant you Experience Points!
                         Collect them, and you'll level up!
                         Levelling up implies a stat growth,
-                        meaning that you'll character will become stronger!""",
+                        meaning that your character will become stronger!""",
 
                 """
                         Let's talk about spells! They are identified by their name:
