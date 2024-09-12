@@ -377,9 +377,9 @@ public class BattleScreen implements Screen {
                         character.gainEXP(Math.max(EXP / party.size(), 1));
                         List<Integer> statsN = List.of(character.getHP(), character.getMP(), character.getStrength(), character.getIntelligence(), character.getVigor(), character.getAgility(), character.getSpirit(), character.getArcane());
                         if (level != character.getLevel()) {
-                            text.append(" ").append(character.getName()).append(" levelled up! \n");
+                            text.append(" ").append(character.getName()).append(" levelled up! ").append(level).append(" -> ").append(character.getLevel()).append("\n");
                             if (!Objects.equals(statsN.get(0), statsO.get(0))) {
-                                text.append("HP:").append(statsO.get(0)).append(" +").append(statsN.get(0) - statsO.get(0)).append(",");
+                                text.append("\tHP:").append(statsO.get(0)).append(" +").append(statsN.get(0) - statsO.get(0)).append(",");
                             }
                             if (!Objects.equals(statsN.get(1), statsO.get(1))) {
                                 text.append("\tMP:").append(statsO.get(1)).append(" +").append(statsN.get(1) - statsO.get(1)).append(",");

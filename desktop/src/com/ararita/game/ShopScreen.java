@@ -173,8 +173,7 @@ public class ShopScreen implements Screen {
                     int howMany = 0;
                     try {
                         howMany = Integer.parseInt(numberBuyTextField.getText());
-                    } catch (NumberFormatException ignored) {
-                    }
+                    } catch (NumberFormatException ignored) {}
                     if (howMany == 0) {
                         return;
                     }

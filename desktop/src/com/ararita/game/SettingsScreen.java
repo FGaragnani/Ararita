@@ -29,6 +29,7 @@ public class SettingsScreen implements Screen {
     Label volumeLabel;
     TextButton deleteButton;
     TextButton backButton;
+    TextButton creditsButton;
 
     public SettingsScreen(final Ararita game) {
         /*
@@ -57,11 +58,13 @@ public class SettingsScreen implements Screen {
         volumeLabel = game.createLabel("Volume: " + (float) game.volume, volumeSlider.getX() + (Gdx.graphics.getWidth() / 5.9f), volumeSlider.getY() + (Gdx.graphics.getHeight() / 72f), game.descScaleX, game.descScaleY, Color.WHITE, stage);
 
         /*
-            Creating the two main buttons.
+            Creating the three main buttons.
          */
 
-        backButton = game.createMainButtonXCentered("Back", Gdx.graphics.getHeight() * 0.12f, stage);
-        deleteButton = game.createMainButtonXCentered("Erase Data", Gdx.graphics.getHeight() * 0.33f, stage);
+        backButton = game.createMainButtonXCentered("Back", Gdx.graphics.getHeight() * 0.1f, stage);
+        deleteButton = game.createMainButtonXCentered("Erase Data", Gdx.graphics.getHeight() * 0.3f, stage);
+        creditsButton = game.createNormalButton("Credits", textbutton -> Gdx.graphics.getWidth() * 0.87f,
+                Gdx.graphics.getHeight() * 0.1f, stage);
 
         /*
             Setting the title.
@@ -112,6 +115,17 @@ public class SettingsScreen implements Screen {
                 game.settingsUpdate();
                 dispose();
                 game.setScreen(new MainMenuScreen(game));
+            }
+        });
+
+        creditsButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.volume = (int) volumeSlider.getValue();
+                game.soundEffects = (int) soundEffectsSlider.getValue();
+                game.settingsUpdate();
+                dispose();
+                game.setScreen(new CreditsScreen(game));
             }
         });
 
